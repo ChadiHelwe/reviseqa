@@ -457,11 +457,11 @@ class Evaluator:
             "confidence_intervals_95": ci,
         }
 
-        json_path = os.path.join(base_dir, f"{model_name.replace("/", "_")}_{ts}_correctness.json")
+        json_path = os.path.join(base_dir, f"{model_name.replace('/', '_')}_{ts}_correctness.json")
         with open(json_path, "w") as jf:
             json.dump(correctness, jf, indent=2)
 
-        csv_path = os.path.join(base_dir, f"{model_name.replace("/", "_")}_{ts}_token_count_stats.csv")
+        csv_path = os.path.join(base_dir, f"{model_name.replace('/', '_')}_{ts}_token_count_stats.csv")
         with open(csv_path, "w", newline="") as cf:
             writer = csv.writer(cf)
             writer.writerow(["track","chain_idx","step","token_count","correct","tags"])
