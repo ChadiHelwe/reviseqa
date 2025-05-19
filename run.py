@@ -108,7 +108,7 @@ Examples:
     
     # Verify datasets
     verify_parser = subparsers.add_parser('verify', help='Verify dataset consistency')
-    verify_parser.add_argument('--verify-type', choices=['fol', 'xor'], required=True,
+    verify_parser.add_argument('--verify-type', choices=['fol'], required=True,
                              help='Type of verification to run')
     
     args = parser.parse_args()

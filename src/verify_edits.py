@@ -12,7 +12,9 @@ from pydantic import BaseModel
 from enum import Enum
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class AnswerEnum(str, Enum):
     TRUE = "True"
@@ -157,7 +159,7 @@ def main():
         description="Verify JSON edits with FOL and NL context."
     )
     parser.add_argument(
-        "--input_dir", required=True, help="Directory containing JSON files to verify."
+        "--input_dir", default="reviseqa_data/verification_1_fol", help="Directory containing JSON files to verify."
     )
     parser.add_argument(
         "--fol_dir",
