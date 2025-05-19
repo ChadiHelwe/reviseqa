@@ -1,4 +1,3 @@
-# Thank you Vaclav :)
 from statsmodels.stats.proportion import proportion_confint as pc
 import numpy as np
 from scipy.stats import binom
