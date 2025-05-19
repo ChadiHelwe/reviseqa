@@ -794,7 +794,6 @@ def parallel_make_dataset(data_path):
         futures = {
             executor.submit(process_example, i, example, output_dir): i
             for i, example in enumerate(data)
-            if i > 400
         }
 
         for future in as_completed(futures):

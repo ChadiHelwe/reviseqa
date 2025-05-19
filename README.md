@@ -77,12 +77,17 @@ N.B: To generate the initial examples, please check the ProverGen repo [here](ht
 python run.py generate-fol --input-file provergen_data/translated_data/easy-10-0_10.json
 ```
 
-3. Convert to natural language:
+3. Verify the generated FOL dataset:
+```bash
+python run.py verify --verify-type fol
+```
+
+4. Convert to natural language:
 ```bash
 python run.py generate-nl --input-dir reviseqa_data/verification_1_fol
 ```
 
-4. Run evaluation:
+5. Run evaluation:
 ```bash
 python run.py evaluate --data-dir reviseqa_data/nl/verified --model-name google/gemini-2.5-flash-preview
 ```
@@ -135,14 +140,11 @@ Options:
 
 ### Verifying Datasets
 
-Verify dataset consistency:
+Verify FOL dataset consistency:
 ```bash
 # Check FOL consistency
 python run.py verify --verify-type fol
 
-# Check for XOR operation issues
-python run.py verify --verify-type xor
-```
 
 ## Project Structure
 
