@@ -56,11 +56,8 @@ def evaluate_models(args):
 def verify_datasets(args):
     """Run verification on datasets"""
     if args.verify_type == 'fol':
-        from src.verification_1 import main as verify_fol_main
+        from src.verification_fol import main as verify_fol_main
         verify_fol_main()
-    elif args.verify_type == 'xor':
-        from src.xor_check import main as xor_check_main
-        xor_check_main()
     else:
         print(f"Unknown verification type: {args.verify_type}")
         sys.exit(1)
