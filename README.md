@@ -65,7 +65,7 @@ cp .env.example .env
 # Edit .env with your API keys for the models you want to use
 ```
 
-N.B: To generate the initial examples, please check the ProverGen repo [here](https://github.com/opendatalab/ProverGen), in addition if you find issues while compiling prover9 check the README file in the Prover9 repo [here](https://github.com/opendatalab/ProverGen/blob/main/README.md).
+N.B: To generate the initial examples, please check the ProverGen repo [here](https://github.com/opendatalab/ProverGen), in addition if you find issues while compiling prover9 check the README file in the ProverGen repo [here](https://github.com/opendatalab/ProverGen/blob/main/README.md).
 
 
 ## Quick Start
