@@ -366,7 +366,7 @@ class Evaluator:
             "implicit_no_reasoning",
             "explicit_no_reasoning",
             "implicit_no_correction",
-            "explicit_no_correction"
+            "explicit_no_correction",
             "implicit_no_reasoning_no_correction",
             "explicit_no_reasoning_no_correction",
         ]
