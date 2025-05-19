@@ -81,17 +81,11 @@ def make_difficulty_plot(df: pd.DataFrame, out_dir: str, track: str):
     # Compute normalized accuracy per model across difficulty levels
     df = df.copy()
     # Use transform instead of apply to keep index alignment
-    df['accuracy'] = df.groupby('model')['count'].transform(lambda x: x / x.sum())
+    df["accuracy"] = df.groupby("model")["count"].transform(lambda x: x / x.sum())
 
     sns.set_style("whitegrid")
     plt.figure()
-    sns.barplot(
-        data=df,
-        x="difficulty",
-        y="accuracy",
-        hue="model",
-        errorbar=None
-    )
+    sns.barplot(data=df, x="difficulty", y="accuracy", hue="model", errorbar=None)
     title = track.replace("_", " ").title()
     plt.title(f"{title} Performance by Difficulty (Normalized)")
     plt.xlabel("Difficulty")
@@ -126,9 +120,9 @@ def main():
 
     runs = load_results(args.json_dir)
 
-    degradation = {}     # track -> list of {model, tokens, accuracy}
-    permutations = {}    # track -> list of {model, tag, accuracy}
-    difficulty = {}      # track -> list of {model, difficulty, count}
+    degradation = {}  # track -> list of {model, tokens, accuracy}
+    permutations = {}  # track -> list of {model, tag, accuracy}
+    difficulty = {}  # track -> list of {model, difficulty, count}
 
     for run in runs:
         model = run.get("metadata", {}).get("model_name", "<unknown>")
@@ -139,43 +133,53 @@ def main():
             for b_str, stats in buckets.items():
                 b = int(b_str)
                 if b in (0, 1):
-                    merged["total"]   += stats["total"]
+                    merged["total"] += stats["total"]
                     merged["correct"] += stats["correct"]
-            degradation[track].append({
-                "model":    model,
-                "tokens":   1024,
-                "accuracy": merged["correct"] / merged["total"] if merged["total"] else 0.0
-            })
+            degradation[track].append(
+                {
+                    "model": model,
+                    "tokens": 1024,
+                    "accuracy": (
+                        merged["correct"] / merged["total"] if merged["total"] else 0.0
+                    ),
+                }
+            )
             for b_str, stats in buckets.items():
                 b = int(b_str)
                 if b <= 1:
                     continue
                 total, correct = stats["total"], stats["correct"]
-                degradation[track].append({
-                    "model":    model,
-                    "tokens":   b * 512,
-                    "accuracy": correct / total if total else 0.0
-                })
+                degradation[track].append(
+                    {
+                        "model": model,
+                        "tokens": b * 512,
+                        "accuracy": correct / total if total else 0.0,
+                    }
+                )
 
         for track, tag_map in run.get("permutation_stats", {}).items():
             permutations.setdefault(track, [])
             for tag, stats in tag_map.items():
                 total, correct = stats.get("total", 0), stats.get("correct", 0)
                 accuracy = correct / total if total else 0.0
-                permutations[track].append({
-                    "model":    model,
-                    "tag":      tag,
-                    "accuracy": accuracy,
-                })
+                permutations[track].append(
+                    {
+                        "model": model,
+                        "tag": tag,
+                        "accuracy": accuracy,
+                    }
+                )
 
         for track, counts in run.get("length_by_difficulty", {}).items():
             difficulty.setdefault(track, [])
             for lvl in ("easy", "medium", "hard"):
-                difficulty[track].append({
-                    "model":      model,
-                    "difficulty": lvl.title(),
-                    "count":      counts.get(lvl, 0),
-                })
+                difficulty[track].append(
+                    {
+                        "model": model,
+                        "difficulty": lvl.title(),
+                        "count": counts.get(lvl, 0),
+                    }
+                )
 
     for track in sorted(set(degradation) | set(permutations) | set(difficulty)):
         track_dir = os.path.join(args.out_dir, track)

@@ -65,19 +65,24 @@ cp .env.example .env
 # Edit .env with your API keys for the models you want to use
 ```
 
+N.B: To generate the initial examples, please check the ProverGen repo [here](https://github.com/opendatalab/ProverGen), in addition if you find issues while compiling prover9 check the README file in the Prover9 repo [here](https://github.com/opendatalab/ProverGen/blob/main/README.md).
+
+
 ## Quick Start
 
-1. Generate a FOL dataset from ProverGen data:
+1. Save your OPENROUTER api key in a ```.env``` file
+
+2. Generate a FOL dataset from ProverGen data:
 ```bash
 python run.py generate-fol --input-file provergen_data/translated_data/easy-10-0_10.json
 ```
 
-2. Convert to natural language:
+3. Convert to natural language:
 ```bash
 python run.py generate-nl --input-dir reviseqa_data/verification_1_fol
 ```
 
-3. Run evaluation:
+4. Run evaluation:
 ```bash
 python run.py evaluate --data-dir reviseqa_data/nl/verified --model-name google/gemini-2.5-flash-preview
 ```
@@ -152,8 +157,7 @@ reviseqa/
 │   ├── prover.py          # Theorem proving integration
 │   ├── data_structure.py  # Core data structures
 │   ├── utils.py           # Utility functions
-│   ├── verification_1.py  # FOL verification
-│   └── xor_check.py      # XOR operation checking
+│   └──  verification_fol.py  # FOL verification
 ├── scripts/
 │   └── evaluate_all.sh    # Batch evaluation script
 ├── data/                  # Static data files

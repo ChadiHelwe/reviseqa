@@ -118,10 +118,10 @@ def main():
     cnt = 0
     all_cnt = 0
     path = "reviseqa_data/fol"
-    
+
     # Create output directory if it doesn't exist
     os.makedirs("reviseqa_data/verification_1_fol", exist_ok=True)
-    
+
     for ex in os.listdir(path):
         example_path = os.path.join(path, ex)
         error_consistency = check_error_fol_context_with_edits(example_path)

@@ -13,9 +13,11 @@ from enum import Enum
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 
+
 class AnswerEnum(str, Enum):
     TRUE = "True"
     FALSE = "False"
+
 
 class StructuredResponse(BaseModel):
     reasoning: str
@@ -24,17 +26,17 @@ class StructuredResponse(BaseModel):
 
 
 def verify_file_model(filepath, client, model_name, fol_dir=None):
-    with open(filepath, 'r') as f:
+    with open(filepath, "r") as f:
         data = json.load(f)
     edits = data.get("edits", [])
     fol_data = None
     if fol_dir:
         fol_path = os.path.join(fol_dir, os.path.basename(filepath))
-        with open(fol_path, 'r') as ff:
+        with open(fol_path, "r") as ff:
             fol_data = json.load(ff)
     results = []
     cache_hit = True
-    with open(filepath, 'r') as cf:
+    with open(filepath, "r") as cf:
         cached_data = json.load(cf)
     edits = cached_data.get("edits", [])
     for edit in edits:
@@ -75,11 +77,14 @@ def verify_file_model(filepath, client, model_name, fol_dir=None):
             prompt_lines.append(f"NL: {nl}")
         prompt = "\n".join(prompt_lines)
         messages = [
-            {"role": "system", "content": (
-                "You are an assistant that reasons before only answering True or False, "
-                "identifying the mistake correctly so we can reflect on it later. "
-                "Verify if the FOL statement matches the natural language."
-            )},
+            {
+                "role": "system",
+                "content": (
+                    "You are an assistant that reasons before only answering True or False, "
+                    "identifying the mistake correctly so we can reflect on it later. "
+                    "Verify if the FOL statement matches the natural language."
+                ),
+            },
             {"role": "user", "content": prompt},
         ]
         response: StructuredResponse = client.chat.completions.create(
@@ -88,19 +93,21 @@ def verify_file_model(filepath, client, model_name, fol_dir=None):
             response_model=StructuredResponse,
             extra_body={"provider": {"require_parameters": True}},
         )
-        verified = (response.answer == AnswerEnum.TRUE)
+        verified = response.answer == AnswerEnum.TRUE
         results.append((verified, response.mistake))
     file_verified = all(v for v, _ in results)
     return results, file_verified
 
 
-def process_file(filepath, client, model_names, fol_dir=None, max_retries=3, retry_delay=2):
+def process_file(
+    filepath, client, model_names, fol_dir=None, max_retries=3, retry_delay=2
+):
     if fol_dir:
         fol_path = os.path.join(fol_dir, os.path.basename(filepath))
         if not os.path.exists(fol_path):
             return filepath, None, None
     try:
-        with open(filepath, 'r') as f:
+        with open(filepath, "r") as f:
             data = json.load(f)
         total_entries = len(data.get("edits", []))
     except Exception:
@@ -108,14 +115,18 @@ def process_file(filepath, client, model_names, fol_dir=None, max_retries=3, ret
 
     votes = {}
     results_per_model = {}
-    cached_file = os.path.join(os.path.dirname(filepath), "cached_votes", os.path.basename(filepath))
+    cached_file = os.path.join(
+        os.path.dirname(filepath), "cached_votes", os.path.basename(filepath)
+    )
     shutil.copy(filepath, cached_file)
     for model in model_names:
         results_list = None
         file_pass = None
         for attempt in range(1, max_retries + 1):
             try:
-                results_list, file_pass = verify_file_model(cached_file, client, model, fol_dir)
+                results_list, file_pass = verify_file_model(
+                    cached_file, client, model, fol_dir
+                )
                 break
             except Exception:
                 if attempt < max_retries:
@@ -125,13 +136,15 @@ def process_file(filepath, client, model_names, fol_dir=None, max_retries=3, ret
         votes[model] = file_pass
         results_per_model[model] = results_list
 
-    with open(cached_file, 'r+') as f:
+    with open(cached_file, "r+") as f:
         data = json.load(f)
         for idx, edit in enumerate(data.get("edits", [])):
             edit.setdefault("model_results", {})
             for model in model_names:
                 verified, mistake = results_per_model[model][idx]
-                edit["model_results"][model] = [{"verified": verified, "mistake": mistake}]
+                edit["model_results"][model] = [
+                    {"verified": verified, "mistake": mistake}
+                ]
         f.seek(0)
         json.dump(data, f, indent=2)
         f.truncate()
@@ -140,23 +153,25 @@ def process_file(filepath, client, model_names, fol_dir=None, max_retries=3, ret
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Verify JSON edits with FOL and NL context.")
-    parser.add_argument(
-        "--input_dir", required=True,
-        help="Directory containing JSON files to verify."
+    parser = argparse.ArgumentParser(
+        description="Verify JSON edits with FOL and NL context."
     )
     parser.add_argument(
-        "--fol_dir", default=None,
-        help="Optional directory containing FOL JSONs with predicates and context facts."
+        "--input_dir", required=True, help="Directory containing JSON files to verify."
     )
     parser.add_argument(
-        "--model_names", nargs="+",
+        "--fol_dir",
+        default=None,
+        help="Optional directory containing FOL JSONs with predicates and context facts.",
+    )
+    parser.add_argument(
+        "--model_names",
+        nargs="+",
         default=["google/gemini-2.5-flash-preview"],
-        help="LLM model identifiers for OpenRouter."
+        help="LLM model identifiers for OpenRouter.",
     )
     parser.add_argument(
-        "--batch_size", type=int, default=8,
-        help="Number of parallel workers."
+        "--batch_size", type=int, default=8, help="Number of parallel workers."
     )
     args = parser.parse_args()
 
@@ -185,12 +200,12 @@ def main():
 
     json_files = glob.glob(os.path.join(args.input_dir, "*.json"))
     stats = {}
-    stats['total_files_processed'] = len(json_files)
+    stats["total_files_processed"] = len(json_files)
     total_edits_original = 0
     explicit = []
     normal_files = []
     for filepath in json_files:
-        with open(filepath, 'r') as f:
+        with open(filepath, "r") as f:
             data = json.load(f)
         edits = data.get("edits", [])
         total_edits_original += len(edits)
@@ -198,22 +213,28 @@ def main():
             explicit.append((filepath, len(edits)))
         else:
             normal_files.append(filepath)
-    stats['total_edits_original'] = total_edits_original
-    stats['total_files_explicit_dropped'] = len(explicit)
-    stats['total_edits_explicit_dropped'] = sum(e for _, e in explicit)
+    stats["total_edits_original"] = total_edits_original
+    stats["total_files_explicit_dropped"] = len(explicit)
+    stats["total_edits_explicit_dropped"] = sum(e for _, e in explicit)
     for filepath, _ in explicit:
         base = os.path.basename(filepath)
-        newname = base.replace('.json', '_explicit.json')
+        newname = base.replace(".json", "_explicit.json")
         shutil.copy(filepath, os.path.join(unverified_dir, newname))
 
     results = []
     skipped = []
     with ThreadPoolExecutor(max_workers=args.batch_size) as executor:
         future_to_file = {
-            executor.submit(process_file, filepath, guided_client, args.model_names, args.fol_dir): filepath
+            executor.submit(
+                process_file, filepath, guided_client, args.model_names, args.fol_dir
+            ): filepath
             for filepath in normal_files
         }
-        for future in tqdm(as_completed(future_to_file), total=len(future_to_file), desc="Processing files"):
+        for future in tqdm(
+            as_completed(future_to_file),
+            total=len(future_to_file),
+            desc="Processing files",
+        ):
             filepath, votes, total_entries = future.result()
             if votes is None:
                 skipped.append(filepath)
@@ -229,7 +250,7 @@ def main():
     preserved_edits = 0
     pruned_count = 0
     edits_pruned = 0
-    with open(csv_path, 'w', newline='') as csvfile:
+    with open(csv_path, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         header = ["filename", "total_entries"] + args.model_names + ["majority"]
         writer.writerow(header)
@@ -246,36 +267,41 @@ def main():
                 preserved_edits += total_entries
             else:
                 shutil.copy(filepath, os.path.join(unverified_dir, base))
-                with open(filepath, 'r') as f_in:
+                with open(filepath, "r") as f_in:
                     data_full = json.load(f_in)
                 last_good = -1
-                for idx, edit in enumerate(data_full.get('edits', [])):
-                    ver_counts = sum(1 for m in args.model_names if edit['model_results'][m][0]['verified'])
+                for idx, edit in enumerate(data_full.get("edits", [])):
+                    ver_counts = sum(
+                        1
+                        for m in args.model_names
+                        if edit["model_results"][m][0]["verified"]
+                    )
                     if ver_counts > len(args.model_names) / 2:
                         last_good = idx
                     else:
                         break
                 if last_good >= 0:
                     truncated = data_full.copy()
-                    truncated['edits'] = data_full['edits'][:last_good+1]
-                    trunc_name = base.replace('.json', '_truncated.json')
+                    truncated["edits"] = data_full["edits"][: last_good + 1]
+                    trunc_name = base.replace(".json", "_truncated.json")
                     trunc_path = os.path.join(verified_dir, trunc_name)
-                    with open(trunc_path, 'w') as f_out:
+                    with open(trunc_path, "w") as f_out:
                         json.dump(truncated, f_out, indent=2)
                     pruned_count += 1
-                    edits_pruned += len(data_full['edits']) - (last_good + 1)
+                    edits_pruned += len(data_full["edits"]) - (last_good + 1)
 
-    stats['total_files_preserved'] = preserved_count
-    stats['total_files_pruned'] = pruned_count
-    stats['total_files_unverified'] = len(results) - preserved_count
-    stats['total_files_skipped'] = len(skipped)
-    stats['total_edits_preserved'] = preserved_edits
-    stats['total_edits_pruned'] = edits_pruned
+    stats["total_files_preserved"] = preserved_count
+    stats["total_files_pruned"] = pruned_count
+    stats["total_files_unverified"] = len(results) - preserved_count
+    stats["total_files_skipped"] = len(skipped)
+    stats["total_edits_preserved"] = preserved_edits
+    stats["total_edits_pruned"] = edits_pruned
 
     print(f"Summary CSV written to {csv_path}")
-    stats_path = os.path.join(args.input_dir, 'dataset_statistics.json')
-    with open(stats_path, 'w') as sf:
+    stats_path = os.path.join(args.input_dir, "dataset_statistics.json")
+    with open(stats_path, "w") as sf:
         json.dump(stats, sf, indent=2)
+
 
 if __name__ == "__main__":
     main()
