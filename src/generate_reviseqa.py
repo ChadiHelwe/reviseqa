@@ -4,10 +4,10 @@ import random
 import re
 import subprocess
 import tempfile
+import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from copy import deepcopy
 from dataclasses import asdict
-from time import time
 
 import instructor
 from dotenv import load_dotenv

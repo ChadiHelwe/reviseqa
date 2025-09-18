@@ -1,8 +1,7 @@
 import json
 import os
+import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from time import time
-from time import time
 from typing import List
 
 import instructor
