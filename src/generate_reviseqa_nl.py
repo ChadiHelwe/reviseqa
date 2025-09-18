@@ -1,6 +1,8 @@
 import json
 import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from time import time
+from time import time
 from typing import List
 
 import instructor
@@ -314,6 +316,7 @@ def process_example(path, example):
                     "content": "The number of edits in the generated JSON do not match the number of edits in the user input. Please retry and output a valid JSON only, with no extra explanation or text",
                 }
             )
+            time.sleep(1)
             error = True
         except Exception as e:
             print(e)
@@ -324,6 +327,7 @@ def process_example(path, example):
                     "content": "You generated an invalid JSON. Please retry and output a valid JSON only, with no extra explanation or text.",
                 }
             )
+            time.sleep(1)
             error = True
 
     if error:
@@ -388,7 +392,16 @@ def process_example(path, example):
         json.dump(output_json, f, indent=4)
 
 
-def parallel_make_dataset_nl(data_path):
+def parallel_make_dataset_nl(data_path, begin, end):
+
+    examples = []
+
+    for  example in os.listdir(data_path):
+        if example.endswith(".json"):
+            idx_example = int(example.split(".")[0].split("_")[-1])
+            if begin <= idx_example < end:
+                examples.append(example)
+    
 
     with ProcessPoolExecutor() as executor:
         futures = {
@@ -397,7 +410,7 @@ def parallel_make_dataset_nl(data_path):
                 data_path,
                 example,
             ): example
-            for example in os.listdir(data_path)
+            for example in examples
         }
 
         for future in as_completed(futures):

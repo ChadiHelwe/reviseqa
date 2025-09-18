@@ -1,0 +1,1 @@
+python run.py generate-fol --input-file merged_fol.json --begin 0 --end 1000 [--parallel]

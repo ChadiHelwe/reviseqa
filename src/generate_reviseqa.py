@@ -7,6 +7,7 @@ import tempfile
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from copy import deepcopy
 from dataclasses import asdict
+from time import time
 
 import instructor
 from dotenv import load_dotenv
@@ -602,6 +603,7 @@ def assumptions_modifier(
                                         }
                                     )
                                     edits_made = None
+                                    time.sleep(1)  # to avoid rate limiting
                                     continue
 
                         # exiting the inner loop
@@ -617,6 +619,7 @@ def assumptions_modifier(
                             "content": "You generated an invalid JSON. Please retry and output a valid JSON only, with no extra explanation or text.",
                         }
                     )
+                    time.sleep(1)  # to avoid rate limiting
                     continue
 
             # exiting the outer loop
@@ -625,6 +628,7 @@ def assumptions_modifier(
         except Exception as e:
             print(f"Error: {e}")
             print("Retrying...")
+            time.sleep(1)  # to avoid rate limiting
 
     return edited_prover9_input, edited_fol_input, edits_made
 
@@ -713,65 +717,72 @@ def process_example(example_nbr, example, output_dir="reviseqa_data/fol"):
             initial_goal, neg_goal = neg_goal, initial_goal
 
         for i in range(1, 8):
+            time.sleep(2)  # to avoid rate limiting
 
-            if initial_answer == "Uncertain":
-                modification_type = "UNCERTAIN"
-                edited_prove9_input, edited_fol_input, edits_made = (
-                    assumptions_modifier(
-                        assumptions,
-                        initial_goal,
-                        neg_goal,
-                        client,
-                        instructor_client,
-                        modification_type="UNCERTAIN",
+            for _ in range(50):
+                if initial_answer == "Uncertain":
+                    modification_type = "UNCERTAIN"
+                    edited_prove9_input, edited_fol_input, edits_made = (
+                        assumptions_modifier(
+                            assumptions,
+                            initial_goal,
+                            neg_goal,
+                            client,
+                            instructor_client,
+                            modification_type="UNCERTAIN",
+                        )
                     )
-                )
-                initial_answer = "True"
-            else:
-                modification_type = random.choice(["FLIP", "INVARIANT"])
-                print(modification_type)
-                edited_prove9_input, edited_fol_input, edits_made = (
-                    assumptions_modifier(
-                        assumptions,
-                        initial_goal,
-                        neg_goal,
-                        client,
-                        instructor_client,
-                        modification_type=modification_type,
+                    initial_answer = "True"
+                else:
+                    modification_type = random.choice(["FLIP", "INVARIANT"])
+                    print(modification_type)
+                    edited_prove9_input, edited_fol_input, edits_made = (
+                        assumptions_modifier(
+                            assumptions,
+                            initial_goal,
+                            neg_goal,
+                            client,
+                            instructor_client,
+                            modification_type=modification_type,
+                        )
                     )
-                )
+
+                    if edits_made is not None:
+                        assumptions = "\n".join(edited_fol_input["formulas(assumptions)"])
+
+                        if modification_type == "FLIP":
+                            neg_goal, initial_goal = initial_goal, neg_goal
+                            if initial_answer == "True":
+                                initial_answer = "False"
+                            else:
+                                initial_answer = "True"
 
                 if edits_made is not None:
-                    assumptions = "\n".join(edited_fol_input["formulas(assumptions)"])
+                    print("Edit#:", i)
+                    print("Edited Assumptions:", assumptions)
+                    print("Goal:", the_goal)
+                    # print("Negated Goal:", neg_goal)
+                    print("Answer:", initial_answer)
+                    print("Edits Made", edits_made)
 
-                    if modification_type == "FLIP":
-                        neg_goal, initial_goal = initial_goal, neg_goal
-                        if initial_answer == "True":
-                            initial_answer = "False"
-                        else:
-                            initial_answer = "True"
-
-            if edits_made is not None:
-                print("Edit#:", i)
-                print("Edited Assumptions:", assumptions)
-                print("Goal:", the_goal)
-                # print("Negated Goal:", neg_goal)
-                print("Answer:", initial_answer)
-                print("Edits Made", edits_made)
-
-                all_edits_example.append(
-                    {
-                        "Edit#": i,
-                        "Modification Type": modification_type,
-                        "Edited Assumptions": assumptions,
-                        "Initial Goal": the_goal,
-                        # "Previous Goal": initial_goal,
-                        # "Negated Goal": neg_goal,
-                        "Answer": initial_answer,
-                        "Edited Prover9 Input": edited_prove9_input,
-                        "Edits Made": edits_made.model_dump(),
-                    }
-                )
+                    all_edits_example.append(
+                        {
+                            "Edit#": i,
+                            "Modification Type": modification_type,
+                            "Edited Assumptions": assumptions,
+                            "Initial Goal": the_goal,
+                            # "Previous Goal": initial_goal,
+                            # "Negated Goal": neg_goal,
+                            "Answer": initial_answer,
+                            "Edited Prover9 Input": edited_prove9_input,
+                            "Edits Made": edits_made.model_dump(),
+                        }
+                    )
+                    break 
+                else:
+                    time.sleep(3)  # to avoid rate limiting
+                    continue
+                
 
         kb_example["edits_made"] = all_edits_example
 
@@ -779,11 +790,13 @@ def process_example(example_nbr, example, output_dir="reviseqa_data/fol"):
             json.dump(kb_example, f, indent=4)
 
 
-def parallel_make_dataset(data_path):
+def parallel_make_dataset(data_path, begin=0, end=None):
     data = read_file(data_path)
     # verified_data = []
     output_dir = "reviseqa_data/fol"
     os.makedirs(output_dir, exist_ok=True)
+    if end is None:
+        end = len(data)
 
     # for f in os.listdir("reviseqa_data/nl/xor_verified"):
     #     id_file = int(f.split(".")[0].replace("ex_", ""))
@@ -793,7 +806,7 @@ def parallel_make_dataset(data_path):
     with ProcessPoolExecutor() as executor:
         futures = {
             executor.submit(process_example, i, example, output_dir): i
-            for i, example in enumerate(data)
+            for i, example in enumerate(data[begin:end])
         }
 
         for future in as_completed(futures):

@@ -18,7 +18,7 @@ def generate_fol_dataset(args):
     from src.generate_reviseqa import make_dataset, parallel_make_dataset
     
     if args.parallel:
-        parallel_make_dataset(args.input_file)
+        parallel_make_dataset(args.input_file, args.begin, args.end)
     else:
         make_dataset(args.input_file)
 
@@ -26,8 +26,8 @@ def generate_fol_dataset(args):
 def generate_nl_dataset(args):
     """Generate natural language dataset from FOL data"""
     from src.generate_reviseqa_nl import parallel_make_dataset_nl
-    
-    parallel_make_dataset_nl(args.input_dir)
+
+    parallel_make_dataset_nl(args.input_dir, args.begin, args.end)
 
 
 def evaluate_models(args):
@@ -90,11 +90,15 @@ Examples:
     fol_parser = subparsers.add_parser('generate-fol', help='Generate FOL dataset from ProverGen data')
     fol_parser.add_argument('--input-file', required=True, help='Input ProverGen JSON file')
     fol_parser.add_argument('--parallel', action='store_true', help='Use parallel processing')
-    
+    fol_parser.add_argument('--begin', type=int, default=0, help='Begin index for parallel processing')
+    fol_parser.add_argument('--end', type=int, default=None, help='End index for parallel processing')
+
     # Generate NL dataset
     nl_parser = subparsers.add_parser('generate-nl', help='Generate natural language dataset from FOL')
     nl_parser.add_argument('--input-dir', required=True, help='Input directory with FOL files')
-    
+    nl_parser.add_argument('--begin', type=int, default=0, help='Begin index for processing')
+    nl_parser.add_argument('--end', type=int, default=None, help='End index for processing')
+
     # Evaluate models
     eval_parser = subparsers.add_parser('evaluate', help='Evaluate models on datasets')
     eval_parser.add_argument('--data-dir', required=True, help='Directory containing JSON example files')
