@@ -717,7 +717,7 @@ def process_example(example_nbr, example, output_dir="reviseqa_data/fol"):
             initial_goal, neg_goal = neg_goal, initial_goal
 
         for i in range(1, 8):
-            for _ in range(50):
+            for _ in range(30):
                 if initial_answer == "Uncertain":
                     modification_type = "UNCERTAIN"
                     edited_prove9_input, edited_fol_input, edits_made = (
