@@ -802,7 +802,7 @@ def parallel_make_dataset(data_path, begin=0, end=None):
     # Use as many workers as you have CPU cores (or fewer, if you’re IO‐bound)
     with ProcessPoolExecutor() as executor:
         futures = {
-            executor.submit(process_example, i, example, output_dir): i
+            executor.submit(process_example, i + begin, example, output_dir): i
             for i, example in enumerate(data[begin:end])
         }
 
