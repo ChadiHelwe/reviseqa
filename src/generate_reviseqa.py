@@ -810,6 +810,6 @@ def parallel_make_dataset(data_path, begin=0, end=None):
             i = futures[future]
             try:
                 future.result()
-                print(f"✅ Example {i} done")
+                print(f"✅ Example {i + begin} done")
             except Exception as e:
-                print(f"❌ Example {i} raised {e!r}")
+                print(f"❌ Example {i + begin} raised {e!r}")
