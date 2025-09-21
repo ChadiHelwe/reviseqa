@@ -47,67 +47,72 @@ def check_error_fol_context_with_edits(file_path):
 
     data = read_file(file_path)
     error = False
-    for edit in data["edits_made"]:
-        fol_context = edit["Edited Assumptions"].split("\n")
-        removed_fol_facts = edit["Edits Made"]["removed_facts"]
-        removed_fol_rules = edit["Edits Made"]["removed_rules"]
-        added_fol_facts = edit["Edits Made"]["added_facts"]
-        added_fol_rules = edit["Edits Made"]["added_rules"]
+    if len(data["edits_made"]) == 7 :
+        for edit in data["edits_made"]:
+            fol_context = edit["Edited Assumptions"].split("\n")
+            removed_fol_facts = edit["Edits Made"]["removed_facts"]
+            removed_fol_rules = edit["Edits Made"]["removed_rules"]
+            added_fol_facts = edit["Edits Made"]["added_facts"]
+            added_fol_rules = edit["Edits Made"]["added_rules"]
 
-        # print(fol_context)
-        # print(removed_fol_facts)
-        # print(removed_fol_rules)
-        # print(added_fol_facts)
-        # print(added_fol_rules)
-        # print("=====================================")
+            # print(fol_context)
+            # print(removed_fol_facts)
+            # print(removed_fol_rules)
+            # print(added_fol_facts)
+            # print(added_fol_rules)
+            # print("=====================================")
 
-        for i in removed_fol_facts:
-            if exist_match_fol_strings(i, fol_context):
-                print("----------------------------------")
-                print(fol_context)
-                print(removed_fol_facts)
-                print(removed_fol_rules)
-                print(added_fol_facts)
-                print(added_fol_rules)
-                print("--------------------------------")
-                print("Found:", i)
-                error = True
+            for i in removed_fol_facts:
+                if exist_match_fol_strings(i, fol_context):
+                    print("----------------------------------")
+                    print(fol_context)
+                    print(removed_fol_facts)
+                    print(removed_fol_rules)
+                    print(added_fol_facts)
+                    print(added_fol_rules)
+                    print("--------------------------------")
+                    print("Found:", i)
+                    error = True
 
-        for i in removed_fol_rules:
-            if exist_match_fol_strings(i, fol_context):
-                print("----------------------------------")
-                print(fol_context)
-                print(removed_fol_facts)
-                print(removed_fol_rules)
-                print(added_fol_facts)
-                print(added_fol_rules)
-                print("--------------------------------")
-                print("Found:", i)
-                error = True
+            for i in removed_fol_rules:
+                if exist_match_fol_strings(i, fol_context):
+                    print("----------------------------------")
+                    print(fol_context)
+                    print(removed_fol_facts)
+                    print(removed_fol_rules)
+                    print(added_fol_facts)
+                    print(added_fol_rules)
+                    print("--------------------------------")
+                    print("Found:", i)
+                    error = True
 
-        for i in added_fol_facts:
-            if not exist_match_fol_strings(i, fol_context):
-                print("----------------------------------")
-                print(fol_context)
-                print(removed_fol_facts)
-                print(removed_fol_rules)
-                print(added_fol_facts)
-                print(added_fol_rules)
-                print("--------------------------------")
-                print("Not Found:", i)
-                error = True
+            for i in added_fol_facts:
+                if not exist_match_fol_strings(i, fol_context):
+                    print("----------------------------------")
+                    print(fol_context)
+                    print(removed_fol_facts)
+                    print(removed_fol_rules)
+                    print(added_fol_facts)
+                    print(added_fol_rules)
+                    print("--------------------------------")
+                    print("Not Found:", i)
+                    error = True
 
-        for i in added_fol_rules:
-            if not exist_match_fol_strings(i, fol_context):
-                print("----------------------------------")
-                print(fol_context)
-                print(removed_fol_facts)
-                print(removed_fol_rules)
-                print(added_fol_facts)
-                print(added_fol_rules)
-                print("--------------------------------")
-                print("Not Found:", i)
-                error = True
+            for i in added_fol_rules:
+                if not exist_match_fol_strings(i, fol_context):
+                    print("----------------------------------")
+                    print(fol_context)
+                    print(removed_fol_facts)
+                    print(removed_fol_rules)
+                    print(added_fol_facts)
+                    print(added_fol_rules)
+                    print("--------------------------------")
+                    print("Not Found:", i)
+                    error = True
+    else:
+        print(f"Less than 7 edits in file: {file_path}")
+        print(f"Number of edits: {len(data['edits_made'])}")
+        error = True
 
     return error
 

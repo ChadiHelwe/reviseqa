@@ -1,1 +1,1 @@
-python run.py generate-nl --input-dir reviseqa_data/verification_1_fol --begin 0 --end 1000
+python run.py generate-nl --input-dir reviseqa_data/verification_1_fol --begin 0 --end 5000
