@@ -47,7 +47,8 @@ class ConsistencyError(Exception):
     pass
 
 
-MODEL = "anthropic/claude-3.7-sonnet"
+# MODEL = "anthropic/claude-3.7-sonnet"
+MODEL = "google/gemini-2.0-flash-001"
 
 FOL_TO_NL_PROMPT = """
 You are a Formal Logic, FOL-to-Natural-Language Translation Expert and JSON Schema Specialist.
@@ -398,6 +399,10 @@ def parallel_make_dataset_nl(data_path, begin, end):
     for  example in os.listdir(data_path):
         if example.endswith(".json"):
             idx_example = int(example.split(".")[0].split("_")[-1])
+            tmp_example_nl = "reviseqa_data/nl/" + example
+            if os.path.exists(tmp_example_nl):
+                print(f"Example {example} already exists, skipping...")
+                continue
             if begin <= idx_example < end:
                 examples.append(example)
     
