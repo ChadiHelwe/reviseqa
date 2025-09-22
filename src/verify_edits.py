@@ -103,7 +103,7 @@ def verify_file_model(filepath, client, model_name, fol_dir=None):
             response_model=StructuredResponse,
             extra_body={
                 "provider": {"require_parameters": True},
-                "reasoning": {"exclude": True}
+                # "reasoning": {"exclude": True}
             },
         )
         verified = response.answer == AnswerEnum.TRUE
