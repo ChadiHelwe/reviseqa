@@ -28,14 +28,22 @@ class StructuredResponse(BaseModel):
 
 
 def verify_file_model(filepath, client, model_name, fol_dir=None):
-    with open(filepath, "r") as f:
-        data = json.load(f)
+    try:
+        with open(filepath, "r") as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"Error loading file {filepath}: {e}")
+        return [], False
     edits = data.get("edits", [])
     fol_data = None
     if fol_dir:
         fol_path = os.path.join(fol_dir, os.path.basename(filepath))
-        with open(fol_path, "r") as ff:
-            fol_data = json.load(ff)
+        try:
+            with open(fol_path, "r") as ff:
+                fol_data = json.load(ff)
+        except Exception as e:
+            print(f"Warning: Could not load FOL file {fol_path}: {e}")
+            fol_data = None
     results = []
     cache_hit = True
     with open(filepath, "r") as cf:
@@ -93,7 +101,10 @@ def verify_file_model(filepath, client, model_name, fol_dir=None):
             model=model_name,
             messages=messages,
             response_model=StructuredResponse,
-            extra_body={"provider": {"require_parameters": True}},
+            extra_body={
+                "provider": {"require_parameters": True},
+                "reasoning": {"exclude": True}
+            },
         )
         verified = response.answer == AnswerEnum.TRUE
         results.append((verified, response.mistake))
@@ -112,7 +123,8 @@ def process_file(
         with open(filepath, "r") as f:
             data = json.load(f)
         total_entries = len(data.get("edits", []))
-    except Exception:
+    except Exception as e:
+        print(f"Error reading file {filepath}: {e}")
         return filepath, None, None
 
     votes = {}
@@ -130,10 +142,12 @@ def process_file(
                     cached_file, client, model, fol_dir
                 )
                 break
-            except Exception:
+            except Exception as e:
+                print(f"Attempt {attempt}/{max_retries} failed for {filepath} with model {model}: {e}")
                 if attempt < max_retries:
                     time.sleep(retry_delay)
         if results_list is None:
+            print(f"Failed to process {filepath} with model {model} after {max_retries} attempts")
             return filepath, None, None
         votes[model] = file_pass
         results_per_model[model] = results_list
@@ -180,6 +194,7 @@ def main():
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
         print("Error: OPENROUTER_API_KEY environment variable is not set.")
+        print("Please set it with: export OPENROUTER_API_KEY='your-key-here'")
         exit(1)
 
     openai_client = OpenAI(api_key=api_key, base_url="https://openrouter.ai/api/v1")
@@ -202,6 +217,7 @@ def main():
 
     json_files = glob.glob(os.path.join(args.input_dir, "*.json"))
     stats = {}
+    # json_files = json_files[:20]  # Limit to first 20 files for testing
     stats["total_files_processed"] = len(json_files)
     total_edits_original = 0
     explicit = []
@@ -258,7 +274,7 @@ def main():
         writer.writerow(header)
         for filepath, votes, total_entries in results:
             votes_list = [1 if votes[m] else 0 for m in args.model_names]
-            majority = sum(votes_list) > 0
+            majority = sum(votes_list) > len(votes_list) // 2
             row = [os.path.basename(filepath), total_entries] + votes_list + [majority]
             writer.writerow(row)
 
@@ -278,7 +294,7 @@ def main():
                         for m in args.model_names
                         if edit["model_results"][m][0]["verified"]
                     )
-                    if ver_counts > len(args.model_names) / 2:
+                    if ver_counts > len(args.model_names) // 2:
                         last_good = idx
                     else:
                         break

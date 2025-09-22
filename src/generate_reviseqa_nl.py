@@ -397,7 +397,7 @@ def parallel_make_dataset_nl(data_path, begin, end):
     examples = []
 
     for  example in os.listdir(data_path):
-        if example.endswith(".json"):
+        if example.endswith(".json") and example.startswith("prev_"):
             idx_example = int(example.split(".")[0].split("_")[-1])
             tmp_example_nl = "reviseqa_data/nl/" + example
             if os.path.exists(tmp_example_nl):
