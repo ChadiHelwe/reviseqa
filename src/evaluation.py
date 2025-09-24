@@ -234,7 +234,7 @@ class Conversation:
             while attempt < 5:
                 try:
                     response = self.client.chat.completions.create(
-                        model=self.model_name, messages=self.messages, max_retries=2
+                        model=self.model_name, messages=self.messages,
                     )
                     out = response.choices[0].message.content
                     self.messages.append({"role": "assistant", "content": out})
