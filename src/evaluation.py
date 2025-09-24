@@ -234,7 +234,7 @@ class Conversation:
             while attempt < 5:
                 try:
                     response = self.client.chat.completions.create(
-                        model=self.model_name, messages=self.messages
+                        model=self.model_name, messages=self.messages, max_retries=2
                     )
                     out = response.choices[0].message.content
                     self.messages.append({"role": "assistant", "content": out})
@@ -565,7 +565,6 @@ class Evaluator:
             "total_per_track": {t: len(self.token_stats[t]) for t in self.tracks},
             "tally_sum": tally,
             "length_by_difficulty": by_diff,
-            "step_by_step_performance": step_performance,
             "degradation_buckets": degradation_buckets,
             "permutation_stats": perm_stats,
             # "confidence_intervals_95": ci,

@@ -10,7 +10,7 @@ mkdir -p detailed_models_results
 
 echo "Results will be saved to models_results/ and detailed_models_results/"
 
-model_name="anthropic/claude-3.5-haiku"
+model_name="google/gemini-2.5-flash"
 # Run evaluation with small batch size and single model for testing
 python src/evaluation.py \
     --data-dir reviseqa_data/nl/testing_models_data/ \
