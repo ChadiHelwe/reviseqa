@@ -235,6 +235,7 @@ class Conversation:
                 try:
                     response = self.client.chat.completions.create(
                         model=self.model_name, messages=self.messages,
+                        extra_body={"provider": {"sort": "throughput"}}
                     )
                     out = response.choices[0].message.content
                     self.messages.append({"role": "assistant", "content": out})
@@ -252,6 +253,7 @@ class Conversation:
         try:
             if "claude" in self.model_name:
                 response: StructuredResponse = self.client.chat.completions.create(
+                    extra_body={"provider": {"sort": "throughput"}},
                     model=self.model_name,
                     messages=self.messages,
                     response_model=StructuredResponse,
@@ -263,7 +265,7 @@ class Conversation:
                     model=self.model_name,
                     messages=self.messages,
                     response_model=StructuredResponse,
-                    extra_body={"provider": {"require_parameters": True}},
+                    extra_body={"provider": {"require_parameters": True, "sort": "throughput"}},
                     max_retries=2,
                 )
                 return response

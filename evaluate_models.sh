@@ -10,7 +10,7 @@ mkdir -p detailed_models_results
 
 echo "Results will be saved to models_results/ and detailed_models_results/"
 
-model_name="google/gemini-2.5-flash"
+model_name="moonshotai/kimi-k2-0905"
 # Run evaluation with small batch size and single model for testing
 python src/evaluation.py \
     --data-dir reviseqa_data/nl/verified-400/ \
