@@ -19,8 +19,12 @@ from openai import OpenAI
 from pydantic import BaseModel
 import functools
 import requests
-
+from dotenv import load_dotenv
 from confidence import lor, lo
+
+
+
+load_dotenv()
 
 # Following exact format from ProverQA
 PROMPT_TEMPLATE = """Context:
@@ -56,6 +60,7 @@ class LogicDataset:
     explicit_data: List[List[LogicData]] = field(default_factory=list)
     implicit_data: List[List[LogicData]] = field(default_factory=list)
     implicit_shuffled_data: List[List[LogicData]] = field(default_factory=list)
+    filenames: List[str] = field(default_factory=list)
 
     def read_dir(self, data_dir: str, enable_truncated: bool = False) -> None:
         for fname in sorted(os.listdir(data_dir)):
@@ -156,6 +161,8 @@ class LogicDataset:
             self.implicit_data.append(implicit_chain)
             self.explicit_data.append(explicit_chain)
             self.implicit_shuffled_data.append(shuffled_chain)
+            # Store filename without .json extension
+            self.filenames.append(fname[:-5] if fname.endswith('.json') else fname)
 
     def __len__(self):
         return len(self.explicit_data)
@@ -271,6 +278,7 @@ def _evaluate_batch(args):
     batch_scores = []
     token_counts = []
     step_records: List[Dict[str, Any]] = []
+    detailed_predictions: List[Dict[str, Any]] = []
     length = 1
     mistake = False
     prev_correct = True
@@ -278,7 +286,7 @@ def _evaluate_batch(args):
 
     if guided and not model_supports_structured(model_name):
         guided = False
-    
+
     enc = tiktoken.get_encoding("cl100k_base")
     conv = Conversation(model_name=model_name, guided=guided)
 
@@ -292,6 +300,19 @@ def _evaluate_batch(args):
         reasoning=(first.reasoning if include_reasoning else ""),
         answer=first.answer,
     )
+
+    # Record first step (demonstration)
+    detailed_predictions.append({
+        "step": 0,
+        "context": first.context,
+        "question": first.question,
+        "prediction": first.answer,
+        "correct_answer": first.answer,
+        "reasoning": first.reasoning if include_reasoning else "",
+        "correct": True,
+        "tags": first.tags,
+        "is_demonstration": True
+    })
 
     for step_idx, entry in enumerate(batch_entries[1:], 1):
         if prev_correct or not include_correction:
@@ -307,32 +328,80 @@ def _evaluate_batch(args):
         token_count_history = sum(len(enc.encode(msg["content"])) for msg in conv.messages)
         token_counts.append(token_count_history)
         response = conv.send_request(role="user", content=prompt)
-        # correctness
+        # Extract prediction, reasoning, and correctness
         if hasattr(response, "answer"):
             predicted = (
                 response.answer.value
                 if hasattr(response.answer, "value")
                 else response.answer
             )
+            reasoning_output = getattr(response, "reasoning", "")
             correct_flag = int(predicted == entry.answer)
         else:
             try:
                 parsed = json.loads(response)
                 predicted = parsed.get("answer", "")
+                reasoning_output = parsed.get("reasoning", "")
                 correct_flag = int(entry.answer == predicted)
             except (json.JSONDecodeError, TypeError):
+                # If response is not valid JSON, treat the whole response as prediction
                 predicted = response if isinstance(response, str) else str(response)
-                correct_flag = int(entry.answer in predicted)
+                reasoning_output = ""
 
+                # Try to extract reasoning from the response string if it contains JSON-like structure
+                if isinstance(response, str) and '"reasoning"' in response and '"answer"' in response:
+                    try:
+                        # Try to find and parse JSON within the response using better regex
+                        import re
+                        # Look for JSON structure with proper nesting support
+                        json_match = re.search(r'\{.*?"reasoning".*?"answer".*?\}', response, re.DOTALL)
+                        if json_match:
+                            json_str = json_match.group()
+                            inner_parsed = json.loads(json_str)
+                            predicted = inner_parsed.get("answer", predicted)
+                            reasoning_output = inner_parsed.get("reasoning", "")
+                        else:
+                            # Fallback: try to parse the entire response as JSON
+                            inner_parsed = json.loads(response.strip())
+                            predicted = inner_parsed.get("answer", predicted)
+                            reasoning_output = inner_parsed.get("reasoning", "")
+                    except:
+                        # If all JSON parsing fails, try to extract answer from string patterns
+                        answer_match = re.search(r'"answer":\s*"([^"]*)"', response)
+                        reasoning_match = re.search(r'"reasoning":\s*"([^"]*)"', response, re.DOTALL)
+                        if answer_match:
+                            predicted = answer_match.group(1)
+                        if reasoning_match:
+                            reasoning_output = reasoning_match.group(1)
+
+                correct_flag = int(entry.answer == predicted)
 
         batch_scores.append(correct_flag)
-        # record step with tags
+
+        # Record detailed prediction data
+        detailed_predictions.append({
+            "step": step_idx,
+            "context": entry.context,
+            "question": entry.question,
+            "prediction": predicted,
+            "correct_answer": entry.answer,
+            "reasoning": reasoning_output,
+            "correct": bool(correct_flag),
+            "tags": entry.tags,
+            "is_demonstration": False,
+            "token_count": token_count_history
+        })
+
+        # record step with tags (for compatibility) and additional prediction data
         step_records.append({
             "chain_idx": start_idx,
             "step": step_idx,
             "token_count": token_count_history,
             "correct": correct_flag,
             "tags": entry.tags,
+            "prediction": predicted,
+            "correct_answer": entry.answer,
+            "reasoning": reasoning_output,
         })
 
         if correct_flag and not prev_correct:
@@ -344,7 +413,7 @@ def _evaluate_batch(args):
             prev_correct = False
             mistake = True
 
-    return path, start_idx, batch_scores, length, step_records
+    return path, start_idx, batch_scores, length, step_records, detailed_predictions
 
 class Evaluator:
     def __init__(
@@ -353,12 +422,14 @@ class Evaluator:
         batch_size: int = 1,
         model_name: str = "google/gemini-2.5-flash-preview",
         guided: bool = True,
-        shuffled: bool = False
+        shuffled: bool = False,
+        detailed_output_dir: str = None
     ) -> None:
         self.guided = guided
         self.dataset = dataset
         self.model_name = model_name
         self.batch_size = batch_size
+        self.detailed_output_dir = detailed_output_dir
 
         self.tracks = [
             "implicit",
@@ -376,6 +447,12 @@ class Evaluator:
         self.tally_score_per_prompt = {t: [[] for _ in range(len(self.dataset))] for t in self.tracks}
         self.length_score_per_prompt = {t: [0]*len(self.dataset) for t in self.tracks}
         self.token_stats: Dict[str, List[Dict[str, Any]]] = {t: [] for t in self.tracks}
+
+        # Create detailed output directory structure if specified
+        if self.detailed_output_dir:
+            os.makedirs(self.detailed_output_dir, exist_ok=True)
+            for track in self.tracks:
+                os.makedirs(os.path.join(self.detailed_output_dir, track), exist_ok=True)
 
     def return_tally_sum(self) -> Dict[str, int]:
         return {path: sum(sum(chain) for chain in scores) for path, scores in self.tally_score_per_prompt.items()}
@@ -399,11 +476,47 @@ class Evaluator:
             by_diff[path] = {"easy": easy, "medium": medium, "hard": hard}
         return by_diff
 
+    def return_step_by_step_performance(self) -> Dict[str, Dict[str, int]]:
+        """Calculate performance at each step position across all examples"""
+        step_performance: Dict[str, Dict[str, int]] = {}
+
+        for track in self.tracks:
+            step_counts = {}
+            total_examples = 0
+
+            # Count correct answers at each step position
+            for rec in self.token_stats[track]:
+                step = rec["step"]
+                if step not in step_counts:
+                    step_counts[step] = {"correct": 0, "total": 0}
+
+                step_counts[step]["total"] += 1
+                step_counts[step]["correct"] += rec["correct"]
+
+            # Get total number of examples for this track
+            if track.startswith("explicit"):
+                total_examples = len(self.dataset.explicit_data)
+            elif track.startswith("implicit_shuffled"):
+                total_examples = len(self.dataset.implicit_shuffled_data)
+            else:
+                total_examples = len(self.dataset.implicit_data)
+
+            # Format the results
+            track_performance = {}
+            for step in sorted(step_counts.keys()):
+                track_performance[str(step)] = step_counts[step]["correct"]
+            track_performance["total_examples"] = total_examples
+
+            step_performance[track] = track_performance
+
+        return step_performance
+
     def save_metrics(self, model_name: str, base_dir: str = "results") -> tuple[str, str]:
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
 
         tally = self.return_tally_sum()
         by_diff = self.return_length_by_difficulty()
+        step_performance = self.return_step_by_step_performance()
 
         # Degradation buckets with totals & correct
         bucket_size = 512
@@ -452,9 +565,10 @@ class Evaluator:
             "total_per_track": {t: len(self.token_stats[t]) for t in self.tracks},
             "tally_sum": tally,
             "length_by_difficulty": by_diff,
+            "step_by_step_performance": step_performance,
             "degradation_buckets": degradation_buckets,
             "permutation_stats": perm_stats,
-            "confidence_intervals_95": ci,
+            # "confidence_intervals_95": ci,
         }
 
         json_path = os.path.join(base_dir, f"{model_name.replace('/', '_')}_{ts}_correctness.json")
@@ -464,12 +578,54 @@ class Evaluator:
         csv_path = os.path.join(base_dir, f"{model_name.replace('/', '_')}_{ts}_token_count_stats.csv")
         with open(csv_path, "w", newline="") as cf:
             writer = csv.writer(cf)
-            writer.writerow(["track","chain_idx","step","token_count","correct","tags"])
+            writer.writerow(["track","chain_idx","step","token_count","correct","tags","prediction","correct_answer","reasoning"])
             for track, records in self.token_stats.items():
                 for rec in records:
-                    writer.writerow([track, rec["chain_idx"], rec["step"], rec["token_count"], rec["correct"], ";".join(rec.get("tags", []))])
+                    # Clean reasoning text for CSV (replace newlines and quotes)
+                    reasoning_text = rec.get("reasoning", "").replace("\n", " ").replace('"', '""')
+                    writer.writerow([
+                        track,
+                        rec["chain_idx"],
+                        rec["step"],
+                        rec["token_count"],
+                        rec["correct"],
+                        ";".join(rec.get("tags", [])),
+                        rec.get("prediction", ""),
+                        rec.get("correct_answer", ""),
+                        reasoning_text
+                    ])
 
         return json_path, csv_path
+
+    def _save_single_task_json(self, track: str, chain_idx: int, detailed_predictions: List[Dict[str, Any]]) -> None:
+        """Save detailed JSON file for a single task immediately after completion"""
+        if not self.detailed_output_dir:
+            return
+
+        track_dir = os.path.join(self.detailed_output_dir, track)
+        original_filename = self.dataset.filenames[chain_idx]
+        task_filename = f"{track}_{original_filename}.json"
+        task_filepath = os.path.join(track_dir, task_filename)
+
+        include_reasoning = not "_no_reasoning" in track
+        include_correction = not "_no_correction" in track
+
+        task_data = {
+            "metadata": {
+                "model_name": self.model_name,
+                "task_path": track,
+                "chain_index": chain_idx,
+                "include_reasoning": include_reasoning,
+                "include_correction": include_correction,
+                "total_steps": len(detailed_predictions),
+                "final_accuracy": sum(p["correct"] for p in detailed_predictions[1:]) / max(1, len(detailed_predictions) - 1) if len(detailed_predictions) > 1 else 0,
+            },
+            "predictions": detailed_predictions
+        }
+
+        with open(task_filepath, 'w') as f:
+            json.dump(task_data, f, indent=2)
+
 
     def evaluate(self):
         tasks = []
@@ -486,10 +642,14 @@ class Evaluator:
         with ThreadPoolExecutor(max_workers=self.batch_size) as executor:
             futures = {executor.submit(_evaluate_batch, t): t for t in tasks}
             for future in tqdm(as_completed(futures), total=len(futures), desc="Evaluating"):
-                path, idx, scores, length, step_records = future.result()
+                path, idx, scores, length, step_records, detailed_predictions = future.result()
                 self.tally_score_per_prompt[path][idx] = scores
                 self.length_score_per_prompt[path][idx] = length
                 self.token_stats[path].extend(step_records)
+
+                # Save detailed JSON file immediately after task completion
+                if self.detailed_output_dir:
+                    self._save_single_task_json(path, idx, detailed_predictions)
 
 def main():
     """Main function for evaluation"""
@@ -499,6 +659,7 @@ def main():
     parser.add_argument("--model-name", type=str, default="google/gemini-2.5-flash-preview", help="LLM model identifier")
     parser.add_argument("--guided", action="store_true", help="Enable structured-output guided mode")
     parser.add_argument("--results-dir", type=str, default="results", help="Directory in which to save metrics")
+    parser.add_argument("--detailed-output-dir", type=str, default=None, help="Directory in which to save detailed JSON files for each task")
     parser.add_argument("--enable_truncated", action="store_true", help="Use truncated reasoning for evaluation")
     parser.add_argument("--enable_shuffled", action="store_true", help="Use shuffled datasets for evaluation")
     args = parser.parse_args()
@@ -506,11 +667,13 @@ def main():
     dataset = LogicDataset()
     dataset.read_dir(args.data_dir, args.enable_truncated)
 
-    evaluator = Evaluator(dataset, batch_size=args.batch_size, model_name=args.model_name, guided=args.guided, shuffled=args.enable_shuffled)
+    evaluator = Evaluator(dataset, batch_size=args.batch_size, model_name=args.model_name, guided=args.guided, shuffled=args.enable_shuffled, detailed_output_dir=args.detailed_output_dir)
     evaluator.evaluate()
     os.makedirs(args.results_dir, exist_ok=True)
     json_path, csv_path = evaluator.save_metrics(model_name=args.model_name, base_dir=args.results_dir)
     print(f"Metrics written to:\n  {json_path}\n  {csv_path}")
+    if args.detailed_output_dir:
+        print(f"Detailed task JSON files written to: {args.detailed_output_dir}")
 
 
 if __name__ == "__main__":
