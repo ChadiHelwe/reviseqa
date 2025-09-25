@@ -10,13 +10,12 @@ mkdir -p detailed_models_results
 
 echo "Results will be saved to models_results/ and detailed_models_results/"
 
-model_name="moonshotai/kimi-k2-0905"
+model_name="anthropic/claude-sonnet-4"
 # Run evaluation with small batch size and single model for testing
 python src/evaluation.py \
     --data-dir reviseqa_data/nl/verified-400/ \
     --results-dir models_results/ \
     --detailed-output-dir detailed_models_results/$model_name \
-    --batch-size 1 \
     --model-name $model_name \
     --guided
 

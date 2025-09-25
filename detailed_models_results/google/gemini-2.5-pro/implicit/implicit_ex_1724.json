@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "google/gemini-2.5-pro",
+    "task_path": "implicit",
+    "chain_index": 40,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Analia needs training.\nAnalia does not require mentorship.\nAnalia has a vision.\nAnalia is not charismatic.\nAnalia does not motivate others.\nAnalia does not inspire others.\nAnalia faces challenges.\nEveryone who either lacks experience or needs training is required to have mentorship.\nIf someone lacks experience, then they seek guidance.\nIf Analia has a vision, then she either values her community or is charismatic, but not both.\nIf Analia either values her community or has compassion (but not both), then she motivates others.\nAnalia either overcomes obstacles on her own or seeks guidance from others, but not both.\nIf someone is spiritually guided and has compassion, then they inspire others.\nIf someone faces challenges and is mentally tough, then they can overcome obstacles.\nIf Analia is emotionally resilient, then she is either mentally tough or spiritually guided (but not both).\nAnalia is physically strong or emotionally resilient (or both).",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Analia needs training. Analia does not require mentorship.. Everyone who either lacks experience or needs training is required to have mentorship.. Therefore, Analia lacks experience.. Analia lacks experience.. If someone lacks experience, then they seek guidance.. Therefore, Analia seeks guidance from others.. Analia has a vision. Analia is not charismatic.. If Analia has a vision, then she either values her community or is charismatic, but not both.. Therefore, Analia values her community.. Analia values her community. Analia does not motivate others.. If Analia either values her community or has compassion (but not both), then she motivates others.. Therefore, Analia has compassion.. Analia seeks guidance from others.. Analia either overcomes obstacles on her own or seeks guidance from others, but not both.. Therefore, Analia does not overcome obstacles.. Analia has compassion. Analia does not inspire others.. If someone is spiritually guided and has compassion, then they inspire others.. Therefore, Analia is not spiritually guided.. Analia faces challenges. Analia does not overcome obstacles.. If someone faces challenges and is mentally tough, then they can overcome obstacles.. Therefore, Analia is not mentally tough.. Analia is not mentally tough. Analia is not spiritually guided.. If Analia is emotionally resilient, then she is either mentally tough or spiritually guided (but not both).. Therefore, Analia is not emotionally resilient.. Analia is not emotionally resilient.. Analia is physically strong or emotionally resilient (or both).. Therefore, Analia is not physically strong..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Analia needs training.\nAnalia does not require mentorship.\nAnalia has a vision.\nAnalia is not charismatic.\nAnalia does not motivate others.\nAnalia does not inspire others.\nAnalia faces challenges.\nFor all x, if x does not require mentorship, then x lacks experience if and only if x needs training.\nFor all x, if x lacks experience, then x seeks guidance.\nIf Analia has a vision, then either Analia is charismatic or Analia values her community, but not both.\nIf either Analia values her community or Analia has compassion, but not both, then Analia motivates others.\nEither Analia overcomes obstacles on her own or Analia seeks guidance from others, but not both.\nFor all x, if x is spiritually guided and x has compassion, then x inspires others.\nFor all x, if x faces challenges and x is mentally tough, then x can overcome obstacles.\nIf Analia is emotionally resilient, then either Analia is mentally tough or Analia is spiritually guided, but not both.\nEither Analia is physically strong or Analia is emotionally resilient (or both).\nAnalia lacks experience.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. Analia lacks experience (given as `LE(a)`).\n2. If someone lacks experience, they seek guidance (`LE(x) -> SG(x)`). Therefore, Analia seeks guidance (`SG(a)`).\n3. Analia either overcomes obstacles on her own or seeks guidance, but not both (`OO(a) XOR SG(a)`). Since she seeks guidance (`SG(a)`), she does not overcome obstacles on her own (`~OO(a)`).\n4. If someone faces challenges and is mentally tough, they can overcome obstacles (`(F(x) & MT(x)) -> OO(x)`). We know Analia faces challenges (`F(a)`) but does not overcome obstacles (`~OO(a)`). By Modus Tollens, the antecedent `(F(a) & MT(a))` must be false. Since `F(a)` is true, `MT(a)` must be false. Therefore, Analia is not mentally tough (`~MT(a)`).\n5. Analia has a vision and is not charismatic (`V(a)` and `~C(a)`). The rule 'If Analia has a vision, then either Analia is charismatic or Analia values her community, but not both' (`V(a) -> (C(a) XOR VC(a))`) implies that Analia values her community (`VC(a)`).\n6. Analia does not motivate others (`~MO(a)`). The rule 'If either Analia values her community or Analia has compassion, but not both, then Analia motivates others' (`(VC(a) XOR COMP(a)) -> MO(a)`) combined with `~MO(a)` implies that `(VC(a) XOR COMP(a))` is false. This means `VC(a)` and `COMP(a)` must have the same truth value. Since we know Analia values her community (`VC(a)`), she must also have compassion (`COMP(a)`).\n7. Analia does not inspire others (`~I(a)`). The rule 'if x is spiritually guided and x has compassion, then x inspires others' (`(SPG(x) & COMP(x)) -> I(x)`) combined with `~I(a)` implies `(SPG(a) & COMP(a))` is false. Since we know Analia has compassion (`COMP(a)`), it must be that she is not spiritually guided (`~SPG(a)`).\n8. We have established that Analia is not mentally tough (`~MT(a)`) and not spiritually guided (`~SPG(a)`). The rule 'If Analia is emotionally resilient, then either Analia is mentally tough or Analia is spiritually guided, but not both' (`ER(a) -> (MT(a) XOR SPG(a))`) has a consequent that is 'False XOR False', which is False. For the implication `ER(a) -> False` to be true, the antecedent `ER(a)` must be false. Therefore, Analia is not emotionally resilient (`~ER(a)`).\n9. The final premise states 'Either Analia is physically strong or Analia is emotionally resilient (or both)' (`PS(a) V ER(a)`). Since we have deduced that Analia is not emotionally resilient (`~ER(a)`), for this disjunction to be true, Analia must be physically strong (`PS(a)`).\n10. The question asks if the context entails 'Analia is not physically strong' (`~PS(a)`). Our deduction proves the opposite: 'Analia is physically strong' (`PS(a)`). Therefore, the provided conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 616
+    },
+    {
+      "step": 2,
+      "context": "Analia needs training.\nAnalia does not require mentorship.\nAnalia has a vision.\nAnalia is not charismatic.\nAnalia does not motivate others.\nAnalia does not inspire others.\nAnalia faces challenges.\nFor all x, if x does not require mentorship, then x lacks experience if and only if x needs training.\nFor all x, if x lacks experience, then x seeks guidance.\nIf Analia has a vision, then either Analia is charismatic or Analia values her community, but not both.\nIf either Analia values her community or Analia has compassion, but not both, then Analia motivates others.\nEither Analia overcomes obstacles on her own or Analia seeks guidance from others, but not both.\nFor all x, if x does not inspire others, then either x is not spiritually guided or x does not have compassion.\nFor all x, if x does not overcome obstacles on their own, then either x does not face challenges or x is not mentally tough.\nIf Analia is emotionally resilient, then either Analia is mentally tough or Analia is spiritually guided, but not both.\nEither Analia is physically strong or Analia is emotionally resilient (or both).\nAnalia lacks experience.\nAnalia seeks guidance.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. We are given that Analia seeks guidance (`SG(a)`).\n2. The rule 'Either Analia overcomes obstacles on her own or Analia seeks guidance from others, but not both' is a logical XOR (`OO(a) XOR SG(a)`). Since we know `SG(a)` is true, `OO(a)` must be false. Therefore, Analia does not overcome obstacles on her own (`~OO(a)`).\n3. The rule 'if x does not overcome obstacles on their own, then either x does not face challenges or x is not mentally tough' can be written as `~OO(x) -> (~F(x) V ~MT(x))`. For Analia, this is `~OO(a) -> (~F(a) V ~MT(a))`. We know `~OO(a)` is true (from step 2), so `~F(a) V ~MT(a)` must be true. We are given that Analia faces challenges (`F(a)`), which means `~F(a)` is false. For the disjunction to be true, `~MT(a)` must be true. Therefore, Analia is not mentally tough (`~MT(a)`).\n4. We are given that Analia has a vision (`V(a)`) and is not charismatic (`~C(a)`). The rule 'If Analia has a vision, then either Analia is charismatic or Analia values her community, but not both' is `V(a) -> (C(a) XOR VC(a))`. Since `V(a)` is true, `C(a) XOR VC(a)` must be true. Given `~C(a)`, `VC(a)` must be true for the XOR to hold. Therefore, Analia values her community (`VC(a)`).\n5. The rule 'If either Analia values her community or Analia has compassion, but not both, then Analia motivates others' is `(VC(a) XOR COMP(a)) -> MO(a)`. We are given that Analia does not motivate others (`~MO(a)`). By Modus Tollens, the antecedent must be false: `~(VC(a) XOR COMP(a))`. This is equivalent to `VC(a) <-> COMP(a)`, meaning they have the same truth value. Since we found `VC(a)` is true (step 4), `COMP(a)` must also be true. Therefore, Analia has compassion (`COMP(a)`).\n6. The rule 'if x does not inspire others, then either x is not spiritually guided or x does not have compassion' is `~I(x) -> (~SPG(x) V ~COMP(x))`. We are given `~I(a)`. So, `~SPG(a) V ~COMP(a)` must be true. We know from step 5 that Analia has compassion (`COMP(a)`), so `~COMP(a)` is false. For the disjunction to be true, `~SPG(a)` must be true. Therefore, Analia is not spiritually guided (`~SPG(a)`).\n7. The rule 'If Analia is emotionally resilient, then either Analia is mentally tough or Analia is spiritually guided, but not both' is `ER(a) -> (MT(a) XOR SPG(a))`. We have found that `~MT(a)` (step 3) and `~SPG(a)` (step 6). So, the consequent `MT(a) XOR SPG(a)` is `False XOR False`, which is `False`. The rule becomes `ER(a) -> False`. For this implication to hold, the antecedent `ER(a)` must be false. Therefore, Analia is not emotionally resilient (`~ER(a)`).\n8. The final rule is 'Either Analia is physically strong or Analia is emotionally resilient (or both)', which is `PS(a) V ER(a)`. Since we have concluded that Analia is not emotionally resilient (`~ER(a)`), `ER(a)` is false. For the disjunction `PS(a) V False` to be true, `PS(a)` must be true. Therefore, Analia is physically strong.\n9. The question asks if the conclusion 'Analia is not physically strong' (`~PS(a)`) is entailed. Our deduction proves the opposite (`PS(a)`). Therefore, the provided conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1645
+    },
+    {
+      "step": 3,
+      "context": "Analia needs training.\nAnalia does not require mentorship.\nAnalia has a vision.\nAnalia is not charismatic.\nAnalia does not motivate others.\nAnalia does not inspire others.\nAnalia faces challenges.\nFor all x, if x does not require mentorship, then x lacks experience if and only if x needs training.\nFor all x, if x lacks experience, then x seeks guidance.\nIf Analia has a vision, then either Analia is charismatic or Analia values her community, but not both.\nIf either Analia values her community or Analia has compassion, but not both, then Analia motivates others.\nEither Analia overcomes obstacles on her own or Analia seeks guidance from others, but not both.\nFor all x, if x does not inspire others, then either x is not spiritually guided or x does not have compassion.\nFor all x, if x does not overcome obstacles on their own, then either x does not face challenges or x is not mentally tough.\nIf Analia is emotionally resilient, then either Analia is mentally tough or Analia is spiritually guided, but not both.\nEither Analia is physically strong or Analia is emotionally resilient (or both).\nAnalia lacks experience.\nAnalia seeks guidance.\nAnalia values her community.\nAnalia has compassion.\nAnalia does not overcome obstacles on her own.\nAnalia is not spiritually guided.\nAnalia is not mentally tough.\nAnalia is not emotionally resilient.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context provides two key premises to answer this question. First, 'Either Analia is physically strong or Analia is emotionally resilient (or both)', which can be written as the logical statement (PS \u2228 ER). Second, the context explicitly states, 'Analia is not emotionally resilient' (\u00acER). According to the rule of disjunctive syllogism, if an 'or' statement (a disjunction) is true, and one of its parts is false, then the other part must be true. Since we know (PS \u2228 ER) is true and ER is false, we can definitively conclude that PS must be true. Therefore, the context entails that 'Analia is physically strong'. The question asks if the context entails 'Analia is not physically strong', which is the opposite of our conclusion. Thus, the statement is false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2864
+    },
+    {
+      "step": 4,
+      "context": "Analia needs training.\nAnalia does not require mentorship.\nAnalia has a vision.\nAnalia is not charismatic.\nAnalia does not motivate others.\nAnalia does not inspire others.\nAnalia faces challenges.\nFor all x, if x does not require mentorship, then x lacks experience if and only if x needs training.\nFor all x, if x lacks experience, then x seeks guidance.\nIf Analia has a vision, then either Analia is charismatic or Analia values her community, but not both.\nIf either Analia values her community or Analia has compassion, but not both, then Analia motivates others.\nEither Analia overcomes obstacles on her own or Analia seeks guidance from others, but not both.\nFor all x, if x does not inspire others, then either x is not spiritually guided or x does not have compassion.\nFor all x, if x does not overcome obstacles on their own, then either x does not face challenges or x is not mentally tough.\nIf Analia is emotionally resilient, then Analia is mentally tough if and only if Analia is spiritually guided.\nEither Analia is physically strong or Analia is emotionally resilient (or both).\nAnalia lacks experience.\nAnalia seeks guidance.\nAnalia values her community.\nAnalia has compassion.\nAnalia does not overcome obstacles on her own.\nAnalia is not spiritually guided.\nAnalia is not mentally tough.\nIf Analia has compassion, then Analia is not physically strong.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context provides a direct path to the conclusion. We are given two key pieces of information as premises: 1. 'Analia has compassion.' and 2. 'If Analia has compassion, then Analia is not physically strong.' This is a classic example of a logical form called Modus Ponens (If P, then Q. P is true. Therefore, Q is true). Since the premise 'Analia has compassion' is true, the conclusion 'Analia is not physically strong' must necessarily follow. Therefore, the context entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3391
+    },
+    {
+      "step": 5,
+      "context": "Analia needs training.\nAnalia does not require mentorship.\nAnalia has a vision.\nAnalia is not charismatic.\nAnalia does not motivate others.\nAnalia does not inspire others.\nAnalia faces challenges.\nFor all x, if x does not require mentorship, then x lacks experience if and only if x needs training.\nFor all x, if x lacks experience, then x seeks guidance.\nIf Analia has a vision, then either Analia is charismatic or Analia values her community, but not both.\nIf either Analia values her community or Analia has compassion, but not both, then Analia motivates others.\nEither Analia overcomes obstacles on her own or Analia seeks guidance from others, but not both.\nFor all x, if x does not inspire others, then either x is not spiritually guided or x does not have compassion.\nFor all x, if x does not overcome obstacles on their own, then either x does not face challenges or x is not mentally tough.\nIf Analia is emotionally resilient, then if Analia is mentally tough then Analia is spiritually guided, and if Analia is spiritually guided then Analia is mentally tough.\nEither Analia is physically strong or Analia is emotionally resilient (or both).\nAnalia lacks experience.\nAnalia seeks guidance.\nAnalia values her community.\nAnalia has compassion.\nAnalia does not overcome obstacles on her own.\nAnalia is not spiritually guided.\nAnalia is not mentally tough.\nIf Analia has compassion, then Analia is not physically strong.\nAnalia is emotionally resilient.\nEither Analia is not spiritually guided or Analia does not have compassion.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context provides two explicit statements that directly lead to the conclusion. The first statement is 'Analia has compassion.' The second statement is 'If Analia has compassion, then Analia is not physically strong.' This is a direct application of the logical rule of Modus Ponens (If P, then Q; P; therefore Q). Since we are given that 'Analia has compassion' (P) is true, the implication forces the conclusion 'Analia is not physically strong' (Q) to also be true. Therefore, the conclusion is entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 3860
+    },
+    {
+      "step": 6,
+      "context": "Analia needs training.\nAnalia does not require mentorship.\nAnalia has a vision.\nAnalia is not charismatic.\nAnalia does not motivate others.\nAnalia does not inspire others.\nAnalia faces challenges.\nFor all x, if x does not require mentorship, then x lacks experience if and only if x needs training.\nFor all x, if x lacks experience, then x seeks guidance.\nIf Analia has a vision, then either Analia is charismatic or Analia values her community, but not both.\nIf either Analia values her community or Analia has compassion, but not both, then Analia motivates others.\nEither Analia overcomes obstacles on her own or Analia seeks guidance from others, but not both.\nFor all x, if x does not inspire others, then either x is not spiritually guided or x does not have compassion.\nFor all x, if x does not overcome obstacles on their own, then either x does not face challenges or x is not mentally tough.\nIf Analia is emotionally resilient, then if Analia is mentally tough then Analia is spiritually guided, and if Analia is spiritually guided then Analia is mentally tough.\nEither Analia is physically strong or Analia is emotionally resilient (or both).\nAnalia lacks experience.\nAnalia seeks guidance.\nAnalia values her community.\nAnalia has compassion.\nAnalia does not overcome obstacles on her own.\nAnalia is not spiritually guided.\nAnalia is not mentally tough.\nAnalia has compassion and Analia is physically strong.\nAnalia is emotionally resilient.\nEither Analia is not spiritually guided or Analia does not have compassion.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context contains the explicit statement 'Analia has compassion and Analia is physically strong.' This statement directly asserts that Analia is, in fact, physically strong. The question asks whether the context entails the conclusion 'Analia is not physically strong.' Since the context explicitly states the opposite of the conclusion, the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 4365
+    },
+    {
+      "step": 7,
+      "context": "Analia needs training.\nAnalia does not require mentorship.\nAnalia has a vision.\nAnalia is not charismatic.\nAnalia does not motivate others.\nAnalia does not inspire others.\nAnalia faces challenges.\nFor all x, if x does not require mentorship, then x lacks experience if and only if x needs training.\nFor all x, if x lacks experience, then x seeks guidance.\nIf Analia has a vision, then either Analia is charismatic or Analia values her community, but not both.\nIf either Analia values her community or Analia has compassion, but not both, then Analia motivates others.\nEither Analia overcomes obstacles on her own or Analia seeks guidance from others, but not both.\nFor all x, if x does not inspire others, then either x is not spiritually guided or x does not have compassion.\nFor all x, if x does not overcome obstacles on their own, then either x does not face challenges or x is not mentally tough.\nIf Analia is emotionally resilient, then if Analia is mentally tough then Analia is spiritually guided, and if Analia is spiritually guided then Analia is mentally tough.\nEither Analia is physically strong or Analia is emotionally resilient (or both).\nAnalia lacks experience.\nAnalia seeks guidance.\nAnalia values her community.\nAnalia has compassion.\nAnalia does not overcome obstacles on her own.\nAnalia is not spiritually guided.\nAnalia is not mentally tough.\nAnalia is emotionally resilient.\nEither Analia is not spiritually guided or Analia does not have compassion.\nAnalia has compassion.\nAnalia is physically strong.\nAnalia lacks experience if and only if Analia needs training.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context provides the explicit statement 'Analia is physically strong.' The question asks if the context entails the conclusion 'Analia is not physically strong.' Since the provided context directly states the opposite of the conclusion, the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 4816
+    }
+  ]
+}
