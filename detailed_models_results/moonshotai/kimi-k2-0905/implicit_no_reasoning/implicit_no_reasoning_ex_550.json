@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "implicit_no_reasoning",
+    "chain_index": 276,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Angie supports local businesses.\nAngie works independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nIf someone donates to charity, then they help others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie perfects a bread recipe, then she attracts customers.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nFor all x, if x donates to charity, then x helps others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the context: Angie does not work independently \u21d2 \u00acWorksIndependently.\n'Angie either loves cooking or works independently, but not both' is an exclusive or, so LovesCooking XOR WorksIndependently. Since \u00acWorksIndependently, we get LovesCooking = true.\nAngie supports local businesses \u21d2 ParticipatesInLocalEvents (by the conditional).\n'Angie either participates in local events or volunteers her time, but not both' \u21d2 exactly one of ParticipatesInLocalEvents, VolunteersTime is true. So we already have ParticipatesInLocalEvents = true \u21d2 VolunteersTime = false.\n'Angie volunteers her time or donates to charity' \u21d2 since VolunteersTime = false, we must have DonatesToCharity = true.\n'For all x, if x donates to charity then x helps others' \u21d2 HelpsOthers = true.\nNow we have LovesCooking = true and HelpsOthers = true. The biconditional 'If Angie loves cooking and helps others, then she shares her passion' (and its converse) gives SharesPassion = true.\nThe biconditional between 'attracts customers' and the conjunction 'shares passion \u2227 builds community' means we need BuildsCommunity to get AttractsCustomers.\nWe have not fixed BuildsCommunity yet. However, look at: 'Angie either builds a community through her bakery or pursues her personal interests, but not both.' We know \u00acPursuesPersonalInterests (given), so PursuesPersonalInterests = false \u21d2 BuildsCommunity = true (exclusive or forces the other side true).\nNow SharesPassion = true and BuildsCommunity = true \u21d2 AttractsCustomers = true.\nThe biconditional 'If Angie attracts customers then she perfects a bread recipe' (and its converse) gives: AttractsCustomers = true \u21d4 PerfectsBreadRecipe = true.\nHence PerfectsBreadRecipe = true.\nTherefore the statement 'Angie did not perfect a bread recipe' is false; the context actually entails its negation. So the context does not entail the stated conclusion; rather it falsifies it. Thus the correct choice is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 258
+    },
+    {
+      "step": 2,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie pursues her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nFor all x, if x donates to charity, then x helps others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Step-by-step derivation:\n1. Angie does not work independently \u21d2 \u00acWorksIndependently.\n2. \u2018LovesCooking XOR WorksIndependently\u2019 \u21d2 since \u00acWorksIndependently, we get LovesCooking = true.\n3. Angie supports local businesses \u21d2 ParticipatesInLocalEvents.\n4. \u2018ParticipatesInLocalEvents XOR VolunteersTime\u2019 \u21d2 with ParticipatesInLocalEvents = true, VolunteersTime = false.\n5. \u2018VolunteersTime OR DonatesToCharity\u2019 \u21d2 with VolunteersTime = false, DonatesToCharity = true.\n6. Universal rule: DonatesToCharity \u21d2 HelpsOthers \u21d2 HelpsOthers = true.\n7. Now LovesCooking = true and HelpsOthers = true. Biconditional: (LovesCooking \u2227 HelpsOthers) \u2194 SharesPassion \u21d2 SharesPassion = true.\n8. Angie pursues personal interests \u21d2 PursuesPersonalInterests = true.\n9. \u2018BuildsCommunity XOR PursuesPersonalInterests\u2019 \u21d2 with PursuesPersonalInterests = true, BuildsCommunity = false.\n10. Biconditional: (SharesPassion \u2227 BuildsCommunity) \u2194 AttractsCustomers. LHS = true \u2227 false = false \u21d2 AttractsCustomers = false.\n11. Biconditional: AttractsCustomers \u2194 PerfectsBreadRecipe \u21d2 PerfectsBreadRecipe = false.\nTherefore the statement \u2018Angie did not perfect a bread recipe\u2019 is true in every model of the context; the context entails it.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 946
+    },
+    {
+      "step": 3,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nFor all x, if x donates to charity, then x helps others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the context: Angie does not work independently \u21d2 \u00acWorksIndependently. The exclusive-or \u2018LovesCooking XOR WorksIndependently\u2019 then forces LovesCooking = true. Angie supports local businesses \u21d2 ParticipatesInLocalEvents. The exclusive-or \u2018ParticipatesInLocalEvents XOR VolunteersTime\u2019 gives VolunteersTime = false. \u2018VolunteersTime OR DonatesToCharity\u2019 \u21d2 DonatesToCharity = true, hence HelpsOthers = true. With LovesCooking \u2227 HelpsOthers true, the biconditional (LovesCooking \u2227 HelpsOthers) \u2194 SharesPassion yields SharesPassion = true. Angie does not pursue personal interests \u21d2 PursuesPersonalInterests = false; the exclusive-or \u2018BuildsCommunity XOR PursuesPersonalInterests\u2019 then gives BuildsCommunity = true. Now SharesPassion \u2227 BuildsCommunity = true, so the biconditional (SharesPassion \u2227 BuildsCommunity) \u2194 AttractsCustomers makes AttractsCustomers = true. Finally, the biconditional AttractsCustomers \u2194 PerfectsBreadRecipe gives PerfectsBreadRecipe = true. Hence Angie did perfect a bread recipe; the statement \u2018Angie did not perfect a bread recipe\u2019 is false in every model. The context therefore does not entail it; instead it entails its negation. So the correct choice is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1503
+    },
+    {
+      "step": 4,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nAngie donates to charity and Angie does not help others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly states both \u2018Angie donates to charity\u2019 and \u2018Angie does not help others.\u2019 The universal rule \u2018For all x, if x donates to charity then x helps others\u2019 would force Angie to help others, contradicting \u2018Angie does not help others.\u2019 Thus the context is logically inconsistent: no model satisfies all sentences simultaneously. From a contradiction every proposition follows (ex contradictione quodlibet), so in particular the statement \u2018Angie did not perfect a bread recipe\u2019 is entailed. Hence the correct answer is True.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2017
+    },
+    {
+      "step": 5,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nEither Angie does not donate to charity, or Angie helps others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Step 1: Angie does not work independently \u21d2 \u00acWorksIndependently. From \u2018LovesCooking XOR WorksIndependently\u2019 we get LovesCooking = true. Step 2: Angie supports local businesses \u21d2 ParticipatesInLocalEvents. Step 3: \u2018ParticipatesInLocalEvents XOR VolunteersTime\u2019 \u21d2 with ParticipatesInLocalEvents = true, VolunteersTime = false. Step 4: \u2018VolunteersTime OR DonatesToCharity\u2019 \u21d2 DonatesToCharity = true. Step 5: \u2018Either \u00acDonatesToCharity OR HelpsOthers\u2019 with DonatesToCharity = true forces HelpsOthers = true. Step 6: Now LovesCooking \u2227 HelpsOthers = true; the biconditional (LovesCooking \u2227 HelpsOthers) \u2194 SharesPassion gives SharesPassion = true. Step 7: Angie does not pursue personal interests \u21d2 PursuesPersonalInterests = false; \u2018BuildsCommunity XOR PursuesPersonalInterests\u2019 \u21d2 BuildsCommunity = true. Step 8: SharesPassion \u2227 BuildsCommunity = true; the biconditional (SharesPassion \u2227 BuildsCommunity) \u2194 AttractsCustomers \u21d2 AttractsCustomers = true. Step 9: AttractsCustomers \u2194 PerfectsBreadRecipe \u21d2 PerfectsBreadRecipe = true. Hence Angie did perfect a bread recipe; the statement \u2018Angie did not perfect a bread recipe\u2019 is false in every model of the context. The context therefore does not entail it; instead it entails its negation, so the correct choice is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2370
+    },
+    {
+      "step": 6,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie pursues her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nEither Angie does not donate to charity, or Angie helps others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. \u00acWorksIndependently \u21d2 from \u2018LovesCooking XOR WorksIndependently\u2019 we get LovesCooking = true.\n2. Supports local businesses \u21d2 ParticipatesInLocalEvents.\n3. \u2018ParticipatesInLocalEvents XOR VolunteersTime\u2019 \u21d2 VolunteersTime = false.\n4. \u2018VolunteersTime OR DonatesToCharity\u2019 \u21d2 DonatesToCharity = true.\n5. \u2018\u00acDonatesToCharity OR HelpsOthers\u2019 with DonatesToCharity true forces HelpsOthers = true.\n6. LovesCooking \u2227 HelpsOthers = true; biconditional (LovesCooking \u2227 HelpsOthers) \u2194 SharesPassion \u21d2 SharesPassion = true.\n7. PursuesPersonalInterests = true; \u2018BuildsCommunity XOR PursuesPersonalInterests\u2019 \u21d2 BuildsCommunity = false.\n8. SharesPassion \u2227 BuildsCommunity = false; biconditional (SharesPassion \u2227 BuildsCommunity) \u2194 AttractsCustomers \u21d2 AttractsCustomers = false.\n9. AttractsCustomers \u2194 PerfectsBreadRecipe \u21d2 PerfectsBreadRecipe = false.\nThus \u2018Angie did not perfect a bread recipe\u2019 is true in every model; the context entails it.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2928
+    },
+    {
+      "step": 7,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nEither Angie does not donate to charity, or Angie helps others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. Angie does not work independently \u21d2 \u00acWorksIndependently. From \u2018LovesCooking XOR WorksIndependently\u2019 we get LovesCooking = true.\n2. Supports local businesses \u21d2 ParticipatesInLocalEvents.\n3. \u2018ParticipatesInLocalEvents XOR VolunteersTime\u2019 \u21d2 VolunteersTime = false.\n4. \u2018VolunteersTime OR DonatesToCharity\u2019 \u21d2 DonatesToCharity = true.\n5. \u2018\u00acDonatesToCharity OR HelpsOthers\u2019 with DonatesToCharity true forces HelpsOthers = true.\n6. LovesCooking \u2227 HelpsOthers = true; biconditional (LovesCooking \u2227 HelpsOthers) \u2194 SharesPassion \u21d2 SharesPassion = true.\n7. \u00acPursuesPersonalInterests; \u2018BuildsCommunity XOR PursuesPersonalInterests\u2019 \u21d2 BuildsCommunity = true.\n8. SharesPassion \u2227 BuildsCommunity = true; biconditional (SharesPassion \u2227 BuildsCommunity) \u2194 AttractsCustomers \u21d2 AttractsCustomers = true.\n9. AttractsCustomers \u2194 PerfectsBreadRecipe \u21d2 PerfectsBreadRecipe = true.\nHence Angie did perfect a bread recipe; the statement \u2018Angie did not perfect a bread recipe\u2019 is false in every model. The context entails its negation, so the correct choice is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 3419
+    }
+  ]
+}

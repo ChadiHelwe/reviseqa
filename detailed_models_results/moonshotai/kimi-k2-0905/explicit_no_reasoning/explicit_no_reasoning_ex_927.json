@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 325,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Annie values education.\nAnnie does not become a leader.\nAnnie does not inspire confidence.\nAnnie advocates for change.\nAnnie does not raise awareness.\nAnnie is dedicated to community service.\nFor anyone who values education and fosters independence, they can become a leader.\nEveryone who empowers others either inspires confidence or fosters independence (or both).\nEveryone who advocates for change either supports marginalized groups or empowers others (or both).\nAnnie raises awareness or challenges social norms.\nIf Annie fights for equality, then she either challenges social norms or supports marginalized groups (but not both).\nIf Annie is passionate about social justice, then she fights for equality.\nIf Annie is either passionate about social justice or dedicated to community service (but not both), then she makes a positive impact.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Annie fights for equality, then she either challenges social norms or supports marginalized groups (but not both).\n- If Annie is either passionate about social justice or dedicated to community service (but not both), then she makes a positive impact.\n\nAdded rules:\n- If Annie challenges social norms and supports marginalized groups, then she is passionate about social justice.\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, but not both.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the context we know:\n1. Annie is dedicated to community service (given).\n2. Annie does NOT raise awareness (given).\n3. Annie advocates for change \u2192 (supports marginalized OR empowers others).\n4. Everyone who empowers others \u2192 (inspires confidence OR fosters independence).\n5. Annie does NOT inspire confidence \u2192 so if she empowered others she would have to foster independence.\n6. Annie values education + fosters independence \u2192 can become a leader (but leadership isn\u2019t required for anything else).\n7. Annie challenges social norms OR raises awareness (given); since she does NOT raise awareness, she MUST challenge social norms.\n\nSo Annie:\n- is dedicated to community service\n- challenges social norms\n- does NOT raise awareness\n- does NOT inspire confidence\n\nNew biconditional rule:\nAnnie makes a positive impact \u2194 (passionate about social justice XOR dedicated to community service).\nWe already have \"dedicated to community service\" = true.\nTherefore the XOR is true exactly if \"passionate about social justice\" = false.\nHence:\nAnnie makes a positive impact \u2194 passionate about social justice is false.\nEquivalently:\nAnnie does NOT make a positive impact \u2194 passionate about social justice is true.\n\nSo the question reduces to: Is Annie passionate about social justice?\n\nNew rule: IF (challenges social norms AND supports marginalized) THEN passionate about social justice.\nWe know she challenges social norms (from 7), but we have no information whether she supports marginalized groups. That disjunct is not settled by any statement. Hence the antecedent of the new implication is uncertain, so we cannot conclude she is passionate about social justice; it remains possible she is, and possible she is not. Therefore we cannot determine the truth value of \"Annie does not make a positive impact.\"",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 266
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Annie does not raise awareness.\n\nAdded facts:\n- Annie does not fight for equality.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the updated context:\n- Annie is dedicated to community service (given).\n- Annie does NOT fight for equality (newly added).\n- The biconditional still holds: Annie makes a positive impact \u2194 (passionate about social justice XOR dedicated to community service).\n\nBecause Annie is dedicated to community service, the XOR is true only if she is NOT passionate about social justice. Thus:\n  Annie makes a positive impact \u21d4 she is NOT passionate about social justice.\n  Therefore: Annie does NOT make a positive impact \u21d4 she IS passionate about social justice.\n\nWe need to determine whether she is passionate about social justice.\n\nNew rule: IF (challenges social norms AND supports marginalized groups) THEN passionate about social justice.\n\nWe already derived that Annie must challenge social norms (from the old clause \u201cAnnie raises awareness OR challenges social norms\u201d minus the removed fact that she does not raise awareness; now that fact is gone, but we have no statement that she raises awareness, so both disjuncts are possible\u2014however, no contradiction arises if we assume she challenges social norms, and we have no information about supporting marginalized groups. Hence we cannot establish the antecedent of the new implication, so we cannot conclude she is passionate about social justice. It remains possible either way.\n\nSince we cannot establish whether she is passionate about social justice, we cannot establish whether she makes a positive impact. The conclusion \u2018Annie does not make a positive impact\u2019 is therefore not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 802
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, but not both.\n\nAdded rules:\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and it is not the case that she is both passionate about social justice and dedicated to community service.\n\nAdded facts:\n- Annie is not passionate about social justice.\n- Annie supports marginalized groups.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We are told directly that Annie is not passionate about social justice. The new biconditional rule is stated twice in equivalent words: Annie makes a positive impact iff (passionate about social justice OR dedicated to community service) AND NOT (both). Since she is NOT passionate about social justice, the \u2018both\u2019 clause is false, so the second conjunct is satisfied. She is given to be dedicated to community service, so the first disjunction is true. Hence the right-hand side of the biconditional is true, so Annie does make a positive impact. Therefore the claim \u2018Annie does not make a positive impact\u2019 is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1200
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Annie is dedicated to community service.\n\nAdded facts:\n- Annie is not dedicated to community service.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "New fact: Annie is NOT dedicated to community service. Given she is also not passionate about social justice (carried over), both disjuncts in the OR condition are false, so the right-hand side of the biconditional is false; hence Annie does not make a positive impact. That matches the conclusion exactly.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1489
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and it is not the case that she is both passionate about social justice and dedicated to community service.\n\nAdded rules:\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and either she is not passionate about social justice or she is not dedicated to community service.\n\nAdded facts:\n- Annie does not foster independence.\n- Annie does not empower others.\n- Annie does not challenge social norms.\n- Annie raises awareness.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The new biconditional is logically equivalent to the old one: \u2018A or B, and (not A or not B)\u2019 is exactly A XOR B. So again: Annie makes a positive impact iff (passionate about social justice XOR dedicated to community service). We still have: not passionate about social justice, and not dedicated to community service. Hence both sides of the XOR are false, so the XOR is false; therefore she does NOT make a positive impact. The added facts about independence, empowerment, challenging norms, and raising awareness do not affect this biconditional, so the conclusion remains entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1642
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Annie is not dedicated to community service.\n\nAdded facts:\n- Annie is dedicated to community service.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With Annie now dedicated to community service (and still not passionate about social justice), the XOR condition (passionate-SJ XOR dedicated-CS) becomes true. Hence the biconditional makes \u2018makes a positive impact\u2019 true. Therefore the statement \u2018Annie does not make a positive impact\u2019 is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1952
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Annie raises awareness.\n- Annie does not challenge social norms.\n- Annie is not passionate about social justice.\n- Annie does not fight for equality.\n\nAdded facts:\n- Annie does not raise awareness.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The biconditional is still the XOR: Annie makes a positive impact iff (passionate about social justice XOR dedicated to community service). All facts about passion, fighting equality, challenging norms, raising awareness have been removed\u2014only the new fact \u2018does not raise awareness\u2019 is added, which does not bear on the XOR. We therefore have no information whether Annie is passionate about social justice or not. Since dedication to community service is likewise not stated (the earlier fact was removed), both inputs to the XOR are unknown. Hence the truth value of \u2018makes a positive impact\u2019 cannot be determined from the context. The conclusion \u2018Annie does not make a positive impact\u2019 is therefore not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2101
+    }
+  ]
+}

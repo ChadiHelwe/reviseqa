@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit",
+    "chain_index": 105,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Edward has a green thumb.\nEdward does not enjoy gardening.\nEdward remains humble.\nEdward does not achieve fame.\nEdward does not inspire future generations.\nEdward values conservation.\nEdward does not share his knowledge.\nAnyone who has a green thumb either appreciates natural beauty or enjoys gardening (or both).\nEdward either gains recognition or remains humble, but not both.\nIf Edward leaves a lasting legacy, then he either achieves fame or gains recognition (but not both).\nEveryone who mentors others either leaves a lasting legacy or inspires future generations (or both).\nIf someone appreciates natural beauty and values conservation, then they can explore nature.\nAnyone who contributes to science either shares their knowledge or mentors others (or both).\nIf Edward explores nature, then he either studies botany or contributes to science (or both).\nIf Edward studies botany, then he discovers new species.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Edward has a green thumb. Edward does not enjoy gardening.. Anyone who has a green thumb either appreciates natural beauty or enjoys gardening (or both).. Therefore, Edward appreciates natural beauty.. Edward remains humble.. Edward either gains recognition or remains humble, but not both.. Therefore, Edward does not gain recognition.. Edward does not achieve fame. Edward does not gain recognition.. If Edward leaves a lasting legacy, then he either achieves fame or gains recognition (but not both).. Therefore, Edward does not leave a lasting legacy.. Edward does not leave a lasting legacy. Edward does not inspire future generations.. Everyone who mentors others either leaves a lasting legacy or inspires future generations (or both).. Therefore, Edward does not mentor others.. Edward appreciates natural beauty. Edward values conservation.. If someone appreciates natural beauty and values conservation, then they can explore nature.. Therefore, Edward explores nature.. Edward does not share his knowledge. Edward does not mentor others.. Anyone who contributes to science either shares their knowledge or mentors others (or both).. Therefore, Edward does not contribute to science.. Edward explores nature. Edward does not contribute to science.. If Edward explores nature, then he either studies botany or contributes to science (or both).. Therefore, Edward studies botany.. Edward studies botany.. If Edward studies botany, then he discovers new species.. Therefore, Edward does not discover new species..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Edward does not enjoy gardening.\n\nAdded rules:\n- If Edward remains humble and it is not the case that Edward gains recognition, then Edward does not discover new species.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the original reasoning chain we still have: Edward has a green thumb \u21d2 Edward appreciates natural beauty; Edward remains humble \u21d2 Edward does not gain recognition. Edward appreciates natural beauty and values conservation \u21d2 Edward explores nature; Edward does not share knowledge and does not mentor \u21d2 Edward does not contribute to science; exploring nature + not contributing to science \u21d2 Edward studies botany. (This last step is actually forced by the disjunction in the rule.) Since Edward studies botany, under the earlier rule he would discover new species, but now the new added rule overrides: if Edward remains humble and does not gain recognition (both of which hold), then he does not discover new species. This new conditional is satisfied, so we conclude Edward does not discover new species.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 552
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Edward remains humble.\n\nAdded facts:\n- Edward gains recognition.\n- Edward does not enjoy gardening.\n- Edward does not leave a lasting legacy.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Edward has a green thumb and does not enjoy gardening \u21d2 he appreciates natural beauty. He values conservation \u21d2 he explores nature. He does not share knowledge and does not mentor \u21d2 he does not contribute to science. Exploring nature without contributing to science forces him to study botany (explore \u2192 study botany OR contribute to science; second disjunct false, so first must hold). Once he studies botany, the rule \u2018If Edward studies botany, then he discovers new species\u2019 applies; nothing now blocks it, since the \u2018humble + no recognition \u2192 not discover\u2019 rule has been removed and he now gains recognition. Hence he discovers new species, so \u2018does not discover\u2019 is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 783
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Edward gains recognition.\n\nRemoved rules:\n- Everyone who mentors others either leaves a lasting legacy or inspires future generations (or both).\n- If Edward explores nature, then he either studies botany or contributes to science (or both).\n\nAdded rules:\n- For all x, if x is not Edward, then if x mentors others, then x either leaves a lasting legacy or inspires future generations (or both).\n\nAdded facts:\n- It is not the case that Edward gains recognition.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Edward appreciates natural beauty and values conservation \u21d2 Edward explores nature. No rule now forces Edward to study botany or to contribute to science. We know Edward does not share knowledge and does not mentor, so he does not contribute to science; that does not matter because the old \u2018explore \u2192 study botany \u2228 contribute\u2019 rule is removed. Without being compelled to study botany, Edward may or may not study botany; no premises settle this. Since discovering new species requires studying botany, its truth is likewise unsettled. Hence we cannot determine whether Edward discovers new species.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1000
+    },
+    {
+      "step": 4,
+      "context": "Added facts:\n- Edward remains humble.\n- Edward appreciates natural beauty.\n- Edward explores nature.\n- Edward contributes to science.\n- Edward mentors others.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Edward contributes to science. No premise requires a scientist either to study botany or to discover new species (the only relevant rule is that studying botany guarantees discovery). Since nothing compels Edward to study botany, we cannot determine whether he does so, and therefore cannot determine whether he discovers new species.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1259
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Edward remains humble and it is not the case that Edward gains recognition, then he does not discover new species.\n\nAdded rules:\n- If Edward mentors others, then he studies botany.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Context now states Edward mentors others. The added rule states that if Edward mentors others, then he studies botany. Thus Edward studies botany. The rule still present is: If Edward studies botany, then he discovers new species. Therefore Edward discovers new species, so the claim that he does not discover new species is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1412
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Edward studies botany, then he discovers new species.\n\nAdded rules:\n- If Edward studies botany, then he does not discover new species.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From previous steps we still have: Edward mentors others \u21d2 Edward studies botany (via the \u201cif mentors then studies botany\u201d rule). The newly added rule says: if Edward studies botany, then he does not discover new species. Since Edward studies botany, this directly yields that Edward does not discover new species.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1580
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x contributes to science and does not share his knowledge, then x mentors others.\n- For all x, if x has a green thumb and does not enjoy gardening, then x appreciates natural beauty.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added rules merely restate implications already satisfied in Edward\u2019s case (he does mentor others and does appreciate natural beauty), so nothing changes the previous chain: mentors \u2192 studies botany, and studies botany \u2192 does not discover new species. Thus Edward does not discover new species.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1739
+    }
+  ]
+}

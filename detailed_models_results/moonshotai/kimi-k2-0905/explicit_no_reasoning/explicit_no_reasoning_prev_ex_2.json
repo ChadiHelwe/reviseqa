@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 346,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Ibrahim does not see beauty.\nIbrahim has reflection.\nIbrahim loves trails.\nIbrahim likes camping.\nIbrahim gains perspective.\nIbrahim reaches the summit.\nIbrahim does not appreciate the land.\nIbrahim does not navigate terrain.\nAny hiker who sees beauty or has reflection can feel connected.\nIf Ibrahim loves trails, then he either likes camping or enjoys the outdoors, but not both.\nIf a hiker finds serenity, then they feel connected and gain perspective.\nIf Ibrahim reaches the summit, then he finds serenity and builds a cairn.\nAny hiker who enjoys the outdoors or respects nature will appreciate the land.\nIf Ibrahim either navigates terrain or explores the wild (but not both), then he respects nature.\nIbrahim either marks the trail or explores the wild.\nIf Ibrahim builds a cairn and marks the trail, then he leaves a legacy.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Ibrahim explores the wild, then he respects nature.\n- If Ibrahim builds a cairn, then if he marks the trail, then he leaves a legacy.\n\nAdded facts:\n- Ibrahim does not enjoy the outdoors.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the context, we know: 1) Ibrahim reaches the summit \u2192 he finds serenity and builds a cairn. 2) If a hiker finds serenity \u2192 they feel connected and gain perspective. Ibrahim gains perspective (given), so he must feel connected (since the implication is bidirectional in effect here). 3) To feel connected, a hiker must see beauty or have reflection. Ibrahim has reflection (given), so this condition is satisfied. 4) Ibrahim builds a cairn (from reaching summit). 5) New rule: If Ibrahim builds a cairn, then if he marks the trail, then he leaves a legacy. This is a nested conditional: (builds cairn \u2192 (marks trail \u2192 leaves legacy)). Since Ibrahim builds a cairn, the inner conditional becomes: if he marks the trail, then he leaves a legacy. 6) We need to determine whether Ibrahim marks the trail. We know: Ibrahim either marks the trail or explores the wild (but not both). Also: If Ibrahim explores the wild \u2192 he respects nature. But we are told Ibrahim does not appreciate the land. And: Any hiker who enjoys the outdoors or respects nature will appreciate the land. Since Ibrahim does not appreciate the land, he cannot respect nature (because if he respected nature, he would appreciate the land). Therefore, Ibrahim does not respect nature. From this and the rule that exploring the wild \u2192 respects nature, we conclude Ibrahim does not explore the wild. Since he either marks the trail or explores the wild (but not both), and he does not explore the wild, he must mark the trail. 7) Now: he builds a cairn and marks the trail \u2192 by the added rule (builds cairn \u2192 (marks trail \u2192 leaves legacy)), and since both antecedents are true, the consequent 'leaves legacy' follows. Therefore, Ibrahim leaves a legacy.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 282
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- Any hiker who enjoys the outdoors or respects nature will appreciate the land.\n\nAdded rules:\n- For any x, if x does not appreciate the land, then it is not the case that x enjoys the outdoors or respects nature.\n\nAdded facts:\n- Ibrahim marks the trail.\n- Ibrahim does not explore the wild.\n- Ibrahim feels connected.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We are told Ibrahim marks the trail and builds a cairn (because he reached the summit \u21d2 builds a cairn). The rule is: if Ibrahim builds a cairn, then if he marks the trail, then he leaves a legacy. Since both antecedents (builds cairn and marks the trail) are true, modus ponens twice yields that Ibrahim leaves a legacy. No missing or blocking conditions remain; the conclusion follows with certainty.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 773
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Ibrahim reaches the summit, then he finds serenity and builds a cairn.\n- If Ibrahim either navigates terrain or explores the wild (but not both), then he respects nature.\n\nAdded rules:\n- If Ibrahim reaches the summit, then he finds serenity and does not build a cairn.\n- If Ibrahim either navigates terrain or explores the wild (but not both), then he does not respect nature.\n- If Ibrahim does not build a cairn, then he does not leave a legacy.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the added rule: if Ibrahim reaches the summit \u2192 he does not build a cairn. Another added rule: if he does not build a cairn \u2192 he does not leave a legacy. Thus, reaching the summit guarantees he does not build a cairn, which in turn guarantees he does not leave a legacy. Whether he actually reaches the summit is irrelevant: in every model where the context holds, if he reaches the summit he fails to build a cairn and hence fails to leave a legacy, and if he does not reach the summit we have no information that would force him to build a cairn (the only route to building a cairn was via reaching the summit, and that is now negated). Therefore, in no model does he both build a cairn and leave a legacy; the context entails he does not leave a legacy.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 981
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For any x, if x does not appreciate the land, then x does not enjoy the outdoors and x does not respect nature.\n- If Ibrahim leaves a legacy, then he builds a cairn.\n\nAdded facts:\n- Ibrahim does not build a cairn.\n- Ibrahim finds serenity.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We are explicitly told Ibrahim does not build a cairn. The added rule states: if Ibrahim leaves a legacy, then he builds a cairn. Its contrapositive is: if he does not build a cairn, then he does not leave a legacy. Since the premise \u2018does not build a cairn\u2019 is true, modus tollens gives that Ibrahim does not leave a legacy.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1309
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Ibrahim does not respect nature.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The new fact only tells us Ibrahim does not respect nature. No rule links respect (or lack of it) to building a cairn or leaving a legacy. Whether he builds a cairn depends on reaching the summit (added rule: summit \u2192 serenity and does not build a cairn), but we are not told whether he reaches the summit. Without knowing if he builds a cairn, we cannot determine if he leaves a legacy (legacy requires building a cairn). Hence the truth value of \u2018Ibrahim leaves a legacy\u2019 cannot be determined from the given information.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1498
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, if x feels connected then x feels connected.\n- For all x, either x builds a cairn or x does not build a cairn.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The two added rules are tautologies (identity and excluded middle) and give no new factual information about Ibrahim. Nothing in the current context states or implies that Ibrahim builds a cairn; without building a cairn he cannot leave a legacy (from the earlier rule \u2018leaves legacy \u2192 builds a cairn\u2019). Since we lack any premise guaranteeing he builds a cairn, we cannot establish that he leaves a legacy; nor do we have anything that outright prevents it. Thus the conclusion is not entailed and is not contradicted\u2014its truth value is undetermined.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1670
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Ibrahim does not build a cairn.\n\nRemoved rules:\n- If Ibrahim reaches the summit, then he finds serenity and does not build a cairn.\n\nAdded facts:\n- Ibrahim builds a cairn.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We are told Ibrahim builds a cairn. The rule \u2018If Ibrahim leaves a legacy, then he builds a cairn\u2019 is still in force, but it gives only a necessary condition, not a sufficient one. Nothing in the current context states that building a cairn is enough (by itself or in combination with other given facts) to make him leave a legacy; additional unstated conditions might be required. Therefore the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1889
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 350,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Vincenzo sets an example.\nVincenzo does not inspire his team.\nVincenzo is not creative.\nVincenzo knows ingredients.\nVincenzo trains colleagues.\nVincenzo does not succeed in business.\nVincenzo cannot create a menu.\nVincenzo does not enjoy cuisine.\nVincenzo is a picky eater.\nIf someone sets an example and motivates others, then they inspire their team.\nIf Vincenzo is creative, then he knows ingredients and cooks well.\nIf Vincenzo either trains colleagues or motivates others (but not both), then he is able to lead staff.\nIf someone manages a team and leads staff, then they can succeed in business.\nIf Vincenzo runs a restaurant, then he can manage a team and create a menu.\nIf Vincenzo cooks well or appreciates flavors, then he can run a restaurant.\nEvery food connoisseur appreciates flavors or enjoys cuisine.",
+      "question": "Does the context entail the conclusion 'Vincenzo is either a food connoisseur or a picky eater, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Vincenzo is creative, then he knows ingredients and if Vincenzo is creative, then he cooks well.\n- For all x, if it is not the case that x appreciates flavors or x enjoys cuisine, then x is not a food connoisseur.\n\nAdded facts:\n- Vincenzo is not a food connoisseur.",
+      "question": "Does the context entail the conclusion 'Vincenzo is either a food connoisseur or a picky eater, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Given facts say Vincenzo is a picky eater and is not a food connoisseur. The statement to test is the exclusive disjunction: (food_connoisseur \u2228 picky_eater) \u2227 \u00ac(food_connoisseur \u2227 picky_eater). With Vincenzo being neither a food connoisseur nor both, the first disjunct is false and the entire exclusive-or is false. Thus the context actually contradicts the conclusion, so the entailment fails.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 321
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Vincenzo is creative, then he knows ingredients and if Vincenzo is creative, then he cooks well.\n- For all x, if it is not the case that x appreciates flavors or x enjoys cuisine, then x is not a food connoisseur.\n\nAdded rules:\n- If Vincenzo is creative, then he knows ingredients and he cooks well.\n- If Vincenzo does not motivates others, then he is able to lead staff.\n- For all x, if x is a food connoisseur, then x appreciates flavors or x enjoys cuisine.",
+      "question": "Does the context entail the conclusion 'Vincenzo is either a food connoisseur or a picky eater, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the background we know Vincenzo is stated to be a picky eater and that he does not inspire/motivate others. The new rule says that if he does not motivate others he is able to lead staff, so he can lead staff. Nothing in the updated context says he is a food connoisseur, and the earlier fact that he does not enjoy cuisine and the rule linking connoisseurship to appreciating flavors or enjoying cuisine give no basis to infer he is one. Hence he is a picky eater and not a food connoisseur, making the exclusive-or true.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 555
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Vincenzo is not a food connoisseur.\n\nAdded rules:\n- If Vincenzo is a picky eater, then he is a food connoisseur.",
+      "question": "Does the context entail the conclusion 'Vincenzo is either a food connoisseur or a picky eater, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From unchanged statements, Vincenzo is a picky eater. The newly added rule states that 'If Vincenzo is a picky eater, then he is a food connoisseur.' Modus ponens therefore gives: Vincenzo is a food connoisseur. Hence both disjuncts are true, violating the exclusive-or requirement, so the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 876
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Vincenzo is a picky eater, then he is a food connoisseur.\n\nAdded facts:\n- Vincenzo is not a food connoisseur.",
+      "question": "Does the context entail the conclusion 'Vincenzo is either a food connoisseur or a picky eater, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The background still states Vincenzo is a picky eater. The newly re-inserted fact explicitly says Vincenzo is not a food connoisseur. Thus precisely one side of the exclusive-or holds, so the conclusion follows necessarily.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1070
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Vincenzo is creative, then he knows ingredients and he cooks well.\n\nAdded rules:\n- If Vincenzo is creative then he knows ingredients and if Vincenzo is creative then he cooks well.\n- If Vincenzo is a food connoisseur, then he can succeed in business.\n\nAdded facts:\n- Either Vincenzo is a picky eater or he is a food connoisseur.",
+      "question": "Does the context entail the conclusion 'Vincenzo is either a food connoisseur or a picky eater, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The new fact gives an inclusive disjunction: Vincenzo is a picky eater OR a food connoisseur (possibly both). To satisfy the exclusive-or conclusion we must rule out the \u2018both\u2019 case. Nothing provided lets us decide whether he is one, the other, or both; therefore the exclusivity required by the conclusion is neither guaranteed nor contradicted. Thus the entailment cannot be established.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1234
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Vincenzo is not a food connoisseur.\n\nRemoved rules:\n- For all x, if x is a food connoisseur, then x appreciates flavors or x enjoys cuisine.\n- If Vincenzo is a food connoisseur, then he can succeed in business.\n\nAdded rules:\n- If Vincenzo is a picky eater, then he is a food connoisseur.\n- If Vincenzo is a food connoisseur and Vincenzo is not a picky eater, then he can succeed in business.\n- For all x, if x is a food connoisseur and x is not a picky eater, then x appreciates flavors or x enjoys cuisine.",
+      "question": "Does the context entail the conclusion 'Vincenzo is either a food connoisseur or a picky eater, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We still have the unchanged fact that Vincenzo is a picky eater. The newly added rule \u201cIf Vincenzo is a picky eater, then he is a food connoisseur\u201d therefore forces him to be a food connoisseur as well. Hence both disjuncts are true, violating the required exclusivity, so the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1484
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Vincenzo is creative then he knows ingredients and if Vincenzo is creative then he cooks well.\n- If either Vincenzo trains colleagues or Vincenzo motivates others (but not both), then he is able to lead staff.\n\nAdded rules:\n- If Vincenzo is creative, then he knows ingredients and he cooks well.\n- If either Vincenzo trains colleagues or Vincenzo motivates others, but not both, then he is able to lead staff.\n- If Vincenzo is not a food connoisseur, then he is not a picky eater.",
+      "question": "Does the context entail the conclusion 'Vincenzo is either a food connoisseur or a picky eater, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The unchanged fact states Vincenzo is a picky eater. The newly inserted rule says: if he is not a food connoisseur, then he is not a picky eater. Since he is a picky eater, contraposition forces him to be a food connoisseur. Thus both disjuncts hold, violating the required exclusivity, so the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1784
+    }
+  ]
+}

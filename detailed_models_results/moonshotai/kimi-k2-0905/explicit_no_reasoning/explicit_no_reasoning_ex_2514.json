@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 110,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Sweety is not quickly plated after being cooked.\nSweety has high quality.\nSweety is not wild caught.\nSweety is not tender.\nSweety has a delicate flavor.\nSweety is not respected.\nSweety is either quickly plated after being cooked or stays too long on the grill, but not both.\nAny fish that stays too long on the grill will be overcooked.\nIf Sweety has high quality, then she is either freshly caught or wild caught.\nSweety is either a chef's special or overcooked, but not both.\nAll fish with high moisture are tender.\nIf Sweety is palatable and freshly caught, then she is a chef's special.\nIf Sweety either has high moisture or a firm texture (but not both), then she is palatable.\nIf Sweety is a prized catch, then she has a firm texture and a delicate flavor.\nIf Sweety is either a school leader or a prized catch (but not both), then she is respected.",
+      "question": "Does the context entail the conclusion 'Sweety is a school leader.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Sweety has high quality, then she is either freshly caught or wild caught.\n\nAdded rules:\n- If Sweety has a firm texture and a delicate flavor, then she is a prized catch.\n\nAdded facts:\n- Sweety has a firm texture.",
+      "question": "Does the context entail the conclusion 'Sweety is a school leader.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Known facts: Sweety has high quality, is not wild caught, is not tender, has delicate flavor, is not respected, is not quickly plated, and has firm texture. From 'All fish with high moisture are tender' and Sweety is not tender, we deduce Sweety has low moisture. From 'If Sweety either has high moisture or a firm texture (but not both), then she is palatable' and Sweety has firm texture (so not high moisture), it follows Sweety is palatable. From new rule 'If Sweety has a firm texture and a delicate flavor, then she is a prized catch' and Sweety has both, Sweety is a prized catch. From 'If Sweety is either a school leader or a prized catch (but not both), then she is respected' and Sweety is a prized catch, for the implication to hold (and we know she is not respected), the antecedent must be true (since if false, implication would be vacuously true but we need consistency). Since Sweety is not respected, the only way the implication holds is if she is a prized catch and not a school leader (because if she were both, it would violate 'but not both', and if only school leader, she would be respected, which she is not). Thus, she must be a prized catch and not a school leader. Therefore, Sweety is not a school leader, so the statement 'Sweety is a school leader' is false.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 313
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Sweety has a firm texture and a delicate flavor, then she is a prized catch.\n\nAdded rules:\n- If Sweety is overcooked, then she is not a prized catch.",
+      "question": "Does the context entail the conclusion 'Sweety is a school leader.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the original facts: Sweety is not quickly plated, has high quality, is not wild caught, is not tender, has delicate flavor, is not respected, and is either quickly plated or stays too long on the grill (but not both) \u2192 since not quickly plated, she stays too long on the grill. Any fish that stays too long on the grill is overcooked \u2192 Sweety is overcooked. Added rule: If overcooked, then not a prized catch \u2192 Sweety is not a prized catch. Rule: Sweety is either a chef\u2019s special or overcooked (but not both) \u2192 since overcooked, she is not a chef\u2019s special. Rule: If palatable and freshly caught \u2192 chef\u2019s special. But she is not chef\u2019s special, so either not palatable or not freshly caught (or both). We already have: not tender \u2192 low moisture (since high moisture \u21d2 tender). Rule: If either high moisture or firm texture (but not both) \u2192 palatable. She has low moisture, so to be palatable she must have firm texture and not high moisture (which she is). No info denies firm texture, so assume she has firm texture \u2192 satisfies condition \u2192 palatable. So she is palatable and low moisture. Now, she is not a prized catch (from above). Rule: If either school leader or prized catch (but not both) \u2192 respected. She is not respected, so the antecedent must be false (otherwise implication would force respected). Therefore, it is not the case that (school leader XOR prized catch). Since she is not a prized catch, the only way the XOR is false is if she is also not a school leader (because if she were a school leader and not prized, the XOR would be true, implying respected, contradiction). Hence she must not be a school leader. Thus, 'Sweety is a school leader' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 724
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If either Sweety has high moisture or she has a firm texture, but not both, then she is palatable.\n\nAdded rules:\n- If Sweety does not have high moisture, then she is palatable.\n\nAdded facts:\n- Sweety is not freshly caught.\n- Sweety does not have high moisture.\n- Sweety is palatable.\n- Sweety is not a chef's special.",
+      "question": "Does the context entail the conclusion 'Sweety is a school leader.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Known: Sweety is overcooked (same chain as before: not quickly plated \u2192 too long on grill \u2192 overcooked). Overcooked \u21d2 not prized catch (new rule) \u2192 Sweety is not prized. She is not respected (given). Rule: If (school leader XOR prized catch) \u2192 respected. She is not respected, so the antecedent must be false \u2192 (school leader XOR prized catch) is false. Since she is not prized, the XOR is false only if she is also not a school leader (if she were, XOR would be true). Therefore, she is not a school leader. Hence the statement is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1216
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Sweety is overcooked, then she is not a prized catch.\n\nAdded rules:\n- If Sweety has high quality, then she is a school leader.\n\nAdded facts:\n- Sweety is overcooked and she is a prized catch.",
+      "question": "Does the context entail the conclusion 'Sweety is a school leader.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given: Sweety has high quality. Added rule: If Sweety has high quality, then she is a school leader. Therefore, Sweety is a school leader.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1491
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Sweety stays too long on the grill.",
+      "question": "Does the context entail the conclusion 'Sweety is a school leader.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Sweety stays too long on the grill \u2192 overcooked. Overcooked vs. high quality: no rule links overcooked to loss of high quality, so high quality (still given) survives. Rule still present: high quality \u2192 school leader. Hence Sweety is a school leader.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1639
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Sweety is a prized catch.\n- Sweety is overcooked.",
+      "question": "Does the context entail the conclusion 'Sweety is a school leader.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Sweety has high quality (given) and the rule \u201cIf Sweety has high quality, then she is a school leader\u201d is active, so she must be a school leader. The new facts that she is a prized catch and overcooked do not affect that implication, so the conclusion still follows.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1771
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Sweety has high quality, then she is not freshly caught and she is not wild caught.\n- If Sweety is a prized catch, then she has a firm texture and she has a delicate flavor.\n\nAdded rules:\n- If Sweety has high quality, then she is not freshly caught.\n- If Sweety has high quality, then she is not wild caught.\n- If Sweety is a prized catch, then she has a firm texture.\n- If Sweety is a prized catch, then she has a delicate flavor.\n\nAdded facts:\n- Sweety is a school leader.",
+      "question": "Does the context entail the conclusion 'Sweety is a school leader.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added fact directly states 'Sweety is a school leader.' This is explicitly given, so the conclusion is entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1912
+    }
+  ]
+}

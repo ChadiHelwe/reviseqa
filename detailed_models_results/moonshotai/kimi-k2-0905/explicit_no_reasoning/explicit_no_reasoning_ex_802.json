@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 313,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jazmine is not processing her grief.\nJazmine is introspective.\nJazmine writes poetry.\nJazmine cannot communicate effectively.\nIf Jazmine uses symbols, then she is processing her grief.\nJazmine either explores imagery or uses symbols.\nIf Jazmine is introspective, then she either keeps a private journal or writes poetry, but not both.\nFor Jazmine, either she keeps a private journal or she openly shares her feelings, but not both.\nIf someone creates artistic work and explores imagery, then they can communicate effectively.\nIf Jazmine either openly shares her feelings or creates artistic work (but not both), then she is emotionally expressed.\nJazmine is either emotionally expressed or emotionally suppressed, but not both.",
+      "question": "Does the context entail the conclusion 'Jazmine is not emotionally suppressed.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Jazmine uses symbols, then she is processing her grief.\n\nAdded rules:\n- If Jazmine uses symbols, then she is not processing her grief.\n- If Jazmine uses symbols, then she creates artistic work.\n- If Jazmine uses symbols, then she does not explore imagery.\n- If Jazmine is introspective, then she uses symbols.\n- If it is not the case that Jazmine either openly shares her feelings or creates artistic work (but not both), then she is not emotionally expressed.",
+      "question": "Does the context entail the conclusion 'Jazmine is not emotionally suppressed.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "Start from the fixed facts: Jazmine is introspective (given). Added rule: If introspective, then uses symbols \u2192 Jazmine uses symbols. Added rule: symbols \u21d2 not explore imagery. Fixed rule: symbols \u2228 imagery exclusive \u2192 since she does symbols, she cannot explore imagery. Added rule: symbols \u21d2 creates artistic work \u2192 Jazmine creates artistic work. Add that to the exclusive-or in the fixed rule: either openly share feelings OR create artistic work (but not both) \u2192 since she creates artistic work, she must NOT openly share feelings. So only one of the disjuncts in the premise \u201cIf Jazmine either openly shares her feelings or creates artistic work (but not both), then she is emotionally expressed\u201d is true, satisfying the exclusive-or condition, so the antecedent is true, hence she is emotionally expressed. Fixed rule: emotionally expressed and emotionally suppressed are mutually exclusive and exhaustive. Therefore she is not emotionally suppressed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 258
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- Either Jazmine keeps a private journal or she openly shares her feelings.\n- It is not the case that Jazmine keeps a private journal and she openly shares her feelings.\n- Either Jazmine is emotionally expressed or she is emotionally suppressed.\n- It is not the case that Jazmine is emotionally expressed and she is emotionally suppressed.\n- It is not the case that Jazmine creates artistic work and explores imagery.",
+      "question": "Does the context entail the conclusion 'Jazmine is not emotionally suppressed.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given facts: Jazmine is introspective and writes poetry. From \u2018introspective \u2192 (keeps journal XOR writes poetry)\u2019 and we already know she writes poetry, so she cannot keep a journal (exclusive). From the new added rule: (keeps journal XOR openly shares feelings) and she does not keep a journal, so she must openly share feelings. From the added rule against creating-artistic-work AND exploring-imagery, at most one holds; no info forces either, so both disjuncts in \u2018openly shares XOR creates artistic work\u2019 remain possible. Thus the antecedent of the conditional \u2018(openly shares XOR creates artistic work) \u2192 emotionally expressed\u2019 need not be true, so emotionally expressed is not forced. Because emotionally expressed/emotionally suppressed are exhaustive and exclusive, if we cannot establish expressed, suppression remains possible. Hence the conclusion \u2018not emotionally suppressed\u2019 is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 608
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Jazmine either openly shares her feelings or creates artistic work (but not both), then she is emotionally expressed.\n- If it is not the case that Jazmine either openly shares her feelings or creates artistic work (but not both), then she is not emotionally expressed.\n\nAdded rules:\n- Either it is not the case that Jazmine either openly shares her feelings or creates artistic work (but not both), or she is emotionally expressed.\n- Either Jazmine either openly shares her feelings or creates artistic work (but not both), or she is not emotionally expressed.\n\nAdded facts:\n- Jazmine uses symbols.",
+      "question": "Does the context entail the conclusion 'Jazmine is not emotionally suppressed.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "Add the new fact: Jazmine uses symbols. From the (unchanged) exclusive rule \u2018symbols XOR imagery\u2019, she does not explore imagery. From the (unchanged) rule \u2018If introspective, then (keeps journal XOR writes poetry)\u2019 and from the added rule \u2018(keeps journal XOR openly shares feelings)\u2019 we still deduce she openly shares feelings (same steps as before). That makes the disjunctive antecedent B = (openly shares XOR creates artistic work) true, since she openly shares feelings regardless of whether she creates art. Now the two new rules are: (\u00acB \u2228 E) and (B \u2228 \u00acE). Substituting B true gives true for the first rule (\u00acB false, so need E true) and the second rule (B true, so satisfied regardless of E). The first rule therefore forces E = emotionally expressed to be true. Since emotionally expressed and emotionally suppressed are exclusive and exhaustive, she cannot be emotionally suppressed. The context thus entails the conclusion.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 946
+    },
+    {
+      "step": 4,
+      "context": "Added facts:\n- Jazmine openly shares her feelings.\n- Jazmine does not keep a private journal.",
+      "question": "Does the context entail the conclusion 'Jazmine is not emotionally suppressed.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given facts: Jazmine openly shares her feelings and does not keep a private journal (consistent with the added rule that journal and openly sharing are mutually exclusive). All conditionals linking 'openly shares' or 'creates artistic work' to emotional expressed/suppressed have been removed, and no remaining rule forces emotional expressed; thus Jazmine could still be either emotionally expressed or emotionally suppressed. Hence the context does not guarantee she is 'not emotionally suppressed.'",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1348
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Either Jazmine either openly shares her feelings or creates artistic work (but not both), or she is not emotionally expressed.",
+      "question": "Does the context entail the conclusion 'Jazmine is not emotionally suppressed.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "All previous conditionals tying the \u2018openly shares / creates-art\u2019 disjunction to emotional expressed/suppressed have been removed. The only remaining relevant rule is the new one: (\u00acB \u2228 E) where B is the exclusive-or (openly shares or creates artistic work). B is true because Jazmine openly shares her feelings, so \u00acB is false, forcing E (emotionally expressed) to be true. Since emotionally expressed and emotionally suppressed are mutually exclusive and exhaustive, once E is established she cannot be emotionally suppressed. Thus the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1525
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Jazmine openly shares her feelings, then she is not emotionally expressed.",
+      "question": "Does the context entail the conclusion 'Jazmine is not emotionally suppressed.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Added rule: openly shares \u2192 not emotionally expressed. Given fact: Jazmine openly shares her feelings. Therefore she is not emotionally expressed. Exhaustive, exclusive dichotomy: emotionally expressed vs emotionally suppressed. Not expressed \u21d2 must be suppressed. Hence she is emotionally suppressed, contradicting the conclusion \u2018not emotionally suppressed.\u2019 Therefore the context actually entails the opposite; the statement is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1731
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Either it is not the case that Jazmine either openly shares her feelings or creates artistic work (but not both), or she is emotionally expressed.\n- If Jazmine openly shares her feelings, then she is not emotionally expressed.\n\nAdded rules:\n- If Jazmine openly shares her feelings and creates artistic work, then she is emotionally expressed.",
+      "question": "Does the context entail the conclusion 'Jazmine is not emotionally suppressed.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "With the two removed rules gone, nothing links \u2018openly shares\u2019 alone to emotional expressed/suppressed. The only new conditional is: (openly shares \u2227 creates artistic work) \u2192 emotionally expressed. We know Jazmine openly shares her feelings, but we have no information about whether she creates artistic work, so the antecedent of this conditional might be true or false. Without establishing that she is emotionally expressed, and with the expressed/suppressed states still exhaustive and exclusive, she could be either. Thus the truth of \u2018not emotionally suppressed\u2019 cannot be determined from the context.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1888
+    }
+  ]
+}

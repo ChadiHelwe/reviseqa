@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 373,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Gwen does not take breaks.\nGwen exercises regularly.\nGwen feels good.\nGwen conducts research.\nGwen does not publish papers.\nGwen works hard.\nEveryone manages stress or takes breaks.\nIf Gwen exercises regularly and manages stress, then she gets enough rest.\nIf a person eats well, then they feel good.\nFor Gwen, either she gets enough rest or she stays healthy, but it's not necessarily the case that getting enough rest and staying healthy go hand in hand.\nEveryone who conducts research either publishes papers or reads widely (or both).\nIf Gwen eats well or achieves her goals, then she stays healthy.\nIf Gwen reads widely, then she is scholarly.\nIf someone is successful and works hard, then they achieve their goals.\nIf Gwen is either athletic or scholarly (but not both), then she is successful.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Everyone manages stress or takes breaks.\n- Either Gwen gets enough rest or she stays healthy, but not both.\n- If a person eats well, then they feel good.\n\nAdded rules:\n- For all x, if x does not take breaks, then x manages stress.\n- For all x, if x does not feel good, then x does not eat well.\n- Gwen gets enough rest or Gwen stays healthy, and it is not the case that Gwen gets enough rest and Gwen stays healthy.\n- If Gwen conducts research and Gwen does not publish papers, then Gwen reads widely.\n\nAdded facts:\n- Gwen reads widely.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given facts: Gwen exercises regularly, works hard, does not take breaks, conducts research, does not publish papers, reads widely, and the new rules say Gwen manages stress (from \u00actakes breaks\u2192manages stress), and from (conducts research \u2227 \u00acpublish papers)\u2192reads widely, which is satisfied. Goal: entail 'Gwen is athletic.'\n\nKey conditional: If Gwen is either athletic or scholarly (but not both), then she is successful. We are not told whether Gwen is athletic or scholarly, nor whether she is successful, so we cannot derive athletic via the conditional. The only paths to success require being exactly one of athletic or scholarly. Gwen reads widely \u2192 scholarly (from if reads widely \u2192 scholarly). So Gwen is scholarly.\n\nBecause Gwen is scholarly, the disjunction \"athletic xor scholarly\" is true (only scholarly). Hence, by the conditional, Gwen is successful. \n\nNow use: If successful and works hard \u2192 achieves goals. Gwen is successful and works hard \u2192 Gwen achieves goals.\n\nFinally: If eats well or achieves goals \u2192 stays healthy. Gwen achieves goals, so Gwen stays healthy.\n\nBut the earlier rule said: Gwen gets enough rest or stays healthy, and not both. Gwen stays healthy, so Gwen does NOT get enough rest.\n\nNow check rest derivation: If exercises regularly and manages stress \u2192 gets enough rest. Gwen exercises regularly and manages stress, so we must conclude Gwen gets enough rest. But we just derived Gwen does NOT get enough rest. Contradiction.\n\nHence, the context (given additions) is inconsistent. In classical logic an inconsistent set of premises entails every proposition, including 'Gwen is athletic.' Thus, the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 270
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Gwen exercises regularly and Gwen manages stress, then Gwen gets enough rest.\n\nAdded rules:\n- If Gwen manages stress, then she is not athletic.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From prior steps we already have: Gwen manages stress (because she does not take breaks and the rule \u2018\u00actakes breaks \u2192 manages stress\u2019 holds). The newly added rule is: If Gwen manages stress, then she is not athletic. Applying modus ponens gives \u2018Gwen is not athletic.\u2019 Therefore, the statement \u2018Gwen is athletic\u2019 is false under the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 795
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Gwen manages stress, then she is not athletic.\n\nAdded facts:\n- Gwen is athletic.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The new fact explicitly states Gwen is athletic, so the conclusion is directly given by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 946
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- Everyone who conducts research either publishes papers or reads widely (or both).\n\nAdded rules:\n- For all x, not x conducts research or x publishes papers or x reads widely.\n\nAdded facts:\n- Gwen is scholarly.\n- Gwen is not successful or Gwen achieves her goals.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The added universal statement is logically identical to the removed rule, so nothing about research/publishing/reading changes. New facts: Gwen is scholarly, and (\u00acsuccessful \u2228 achieves goals). Our target is whether Gwen is athletic. From earlier steps we know Gwen exercises regularly \u2192 athletic is plausible, but the only rule linking athletic to anything is: (athletic xor scholarly) \u2192 successful. Gwen is scholarly, so for the antecedent to be true she must not be athletic. This would force successful, but we are not told whether she is successful, nor do we have any rule that forces her to be athletic. Being scholarly alone gives no implication that she is athletic; the conditional only fires if exactly one of athletic/scholarly holds, and we already have scholarly, so athletic would make the antecedent false and tells us nothing. No other premise entails athletic. Therefore the truth of \u2018Gwen is athletic\u2019 is not determined.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1029
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Gwen is athletic or Gwen is scholarly, but not both, then Gwen is successful.\n- If Gwen conducts research and Gwen does not publish papers, then Gwen reads widely.\n\nAdded rules:\n- If Gwen is athletic or Gwen is scholarly, and it is not the case that Gwen is both athletic and scholarly, then Gwen is successful.\n- If Gwen conducts research, then if Gwen does not publish papers, then Gwen reads widely.\n- For all y, if y does not take breaks, then y manages stress.\n- For all x, if x eats well, then they feel good.\n- Not Gwen reads widely or Gwen is scholarly.\n\nAdded facts:\n- Gwen is athletic or Gwen is not athletic.\n- Gwen manages stress.\n- Gwen is athletic or Gwen is scholarly.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the added facts we have: 'Gwen manages stress' and 'Gwen is athletic or Gwen is scholarly'. The new rule 'Not Gwen reads widely or Gwen is scholarly' is equivalent to 'Gwen does not read widely OR Gwen is scholarly'. We also know Gwen conducts research and does not publish papers, so using the contrapositive of the new research rule: if she does not read widely, she must be scholarly. Since we have no evidence she reads widely, the disjunction forces her to be scholarly. Now, with 'Gwen is athletic or Gwen is scholarly' and knowing she is scholarly, the disjunction is satisfied regardless of athletic status. No rule forces her to be athletic, and no contradiction arises if she is not. Thus, her being athletic is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1321
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Gwen is athletic.\n\nAdded rules:\n- For all x, if x manages stress, then x is not athletic.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The universal rule says every individual who manages stress is not athletic. Earlier steps already established that Gwen manages stress. Instantiation gives \u2018Gwen is not athletic.\u2019 Hence the statement \u2018Gwen is athletic\u2019 is false in this context.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1702
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if x manages stress, then x is not athletic.\n\nAdded rules:\n- If Gwen manages stress, then Gwen is athletic.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We already know Gwen manages stress. The newly added conditional states: If Gwen manages stress, then Gwen is athletic. Applying modus ponens yields Gwen is athletic. Thus the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1835
+    }
+  ]
+}

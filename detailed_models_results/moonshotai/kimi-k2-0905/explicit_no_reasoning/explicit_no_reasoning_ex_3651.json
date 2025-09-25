@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 194,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Flame plays a crucial role.\nFlame does not have a distinctive appearance.\nFlame does not feed on sap.\nFlame is beneficial.\nFlame does not have value.\nFlame does not pollinate plants.\nIf Flame plays a crucial role, then she is either endangered or has a distinctive appearance, but not both.\nFlame either lives on the nopal cactus or feeds on sap.\nIf Flame is beneficial, then she either provides a food source or is endangered, but not both.\nFlame either contributes to the ecosystem or provides a food source, but not both.\nIf Flame either supports the economy or contributes to the ecosystem (but not both), then she has value.\nIf Flame lives on the nopal cactus, then she either pollinates plants or produces dye, but not both.\nIf Flame produces dye, then she either creates art or supports the economy, but not both.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Flame either supports the economy or contributes to the ecosystem (but not both), then she has value.\n\nAdded rules:\n- If Flame does not have value, then she supports the economy if and only if she contributes to the ecosystem.\n\nAdded facts:\n- Flame is endangered.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We now know Flame has no value and is endangered. From the new biconditional \"no value \u2192 (supports economy \u2194 contributes to ecosystem)\" we get that she both supports the economy and contributes to the ecosystem. Because Flame contributes to the ecosystem, the disjunction \"contributes to the ecosystem or provides a food source (but not both)\" forces her not to provide a food source. With \"is beneficial \u2192 (provides food source or is endangered, not both)\" and Flame being beneficial and endangered, she must not provide a food source, consistent with the above. The only remaining route to \"creates art\" is through the chain: lives on nopal \u2192 (pollinates \u2295 produces dye) \u2192 (produces dye \u2192 (creates art \u2295 supports economy)). We already have \"supports economy\" so the exclusive-or in the dye clause prevents us from deriving that she produces dye, hence we cannot derive that she creates art. Therefore the statement is not entailed and is false under the given facts.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 286
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Flame produces dye, then she either creates art or supports the economy, but not both.\n\nAdded rules:\n- If Flame produces dye, then she either creates art or supports the economy, or both.\n- If Flame produces dye, then it is not the case that she both creates art and supports the economy.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We still have Flame endangered, no value, beneficial, supports-economy, contributes-ecosystem, no-food-source. To reach \u2018creates art\u2019 we still need Flame to produce dye via the nopal chain, but we lack any fact that forces her to live on nopal. Hence neither dye production nor art creation is guaranteed. The altered dye rules (inclusive-or plus mutual-exclusion) still leave three possible dye outcomes: art-only, economy-only, neither; so even if she did produce dye, art is not certain. Thus \u2018creates art\u2019 is neither proven nor disproven.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 594
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- Either Flame does not produce dye, or she does not create art, or she does not support the economy.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From previous deductions Flame already supports the economy. The new disjunction says \u2018\u00acdye \u2228 \u00acart \u2228 \u00acecon\u2019. Since Flame does support the economy, \u2018\u00acecon\u2019 is false, so the disjunction reduces to \u2018\u00acdye \u2228 \u00acart\u2019. Hence if Flame produced dye, this would force \u00acart. So art can be true only if Flame does not produce dye. Yet she produces dye only if she lives on nopal, and nothing in the context forces her to live on nopal. Therefore both (\u00acdye \u2227 art) and (\u00acdye \u2227 \u00acart) are compatible with all facts, meaning art\u2019s truth value is not entailed in either direction.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 822
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Flame produces dye, then she either creates art or supports the economy, but not both.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From all prior steps we already know Flame supports the economy (and is endangered, has no value, is beneficial, contributes to ecosystem, does not provide food). The restored rule is: produce dye \u2192 (create art \u2295 support economy). Because Flame already supports the economy, the exclusive\u2010or forces that she cannot create art if she produces dye. That gives two possibilities: 1) she does not produce dye, so art may or may not hold; 2) she produces dye, which forces \u00acart. Since nothing in the context compels her to produce dye, art could still be true (only if \u00acdye) or false (either \u00acdye or dye). Hence the context neither guarantees art nor rules it out.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1052
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Flame does not have value, then she supports the economy if and only if she contributes to the ecosystem.\n\nAdded rules:\n- If Flame does not have value, then she either supports the economy or contributes to the ecosystem, but not both.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Flame has no value, so the new rule says she does exactly one of {supports economy, contributes to ecosystem}. From earlier deductions we still have: Flame is beneficial, endangered, does not provide a food source, and must do one of contribute-ecosystem / provide-food (but not both). Since she provides no food, she must contribute to the ecosystem; the new rule then forces her NOT to support the economy. Now follow the dye\u2192art chain: if she produced dye, the rule \u2018produces dye \u2192 (creates art XOR supports economy)\u2019 would require creates-art (because she does not support economy). But producing dye requires living on nopal, and nothing in the context says she lives on nopal. Hence she may or may not produce dye. If she did produce dye, she would necessarily create art; if she does not produce dye, art is free. Since both cases remain consistent with all facts, the context neither entails art nor its negation.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1283
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Flame does not have a distinctive appearance.\n- Flame is endangered.\n\nAdded facts:\n- Flame has a distinctive appearance.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "With Flame having a distinctive appearance, the original conditional \u2018If Flame plays a crucial role, then she is either endangered or has a distinctive appearance (but not both)\u2019 is satisfied regardless of endangered status. All prior derivations that relied on Flame being endangered (and thus forced into other properties) no longer necessarily hold. Specifically, we no longer have that Flame must contribute to the ecosystem, support the economy, or produce dye. The only certain path to \u2018creates art\u2019 is via producing dye and the rule dye \u2192 (art XOR supports-economy). Since nothing now compels her to produce dye, and her economic/ecosentric status is underdetermined, art is not guaranteed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1594
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Flame produces dye, then it is not the case that she both creates art and supports the economy.\n\nAdded rules:\n- If Flame produces dye and creates art, then she does not support the economy.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We still have Flame has a distinctive appearance, plays a crucial role, is beneficial, and has no value. From earlier steps we derived she must contribute to the ecosystem and not provide a food source, but her economy-support status is not fixed by the given rules. The only way art can be forced is if producing dye leads to creating art. The new rule 'dye + art \u2192 \u00acsupport economy' is weaker than the previous XOR: it allows the combination dye + art + support economy to be true (it only restricts the case where dye and art both hold and she supports economy). Thus even if she produced dye, art is not compelled. Since nothing forces her to produce dye (it would require living on nopal, which is not stated), art is not entailed. Additionally, no rule prevents art, so art could be false. Hence the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1818
+    }
+  ]
+}

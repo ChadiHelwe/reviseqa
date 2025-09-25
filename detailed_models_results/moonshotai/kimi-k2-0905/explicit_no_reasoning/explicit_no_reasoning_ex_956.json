@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 330,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Tomas has authority.\nTomas writes publications.\nTomas is not diligent.\nTomas has expertise.\nTomas does not do pioneering work.\nTomas does not transform the field of chemistry.\nTomas is not established in his field.\nTomas is precise in his work.\nAnyone who has authority or writes publications shares knowledge.\nTomas either shares knowledge or contributes to science, but not both.\nIf Tomas makes accurate measurements, then he is either diligent or has expertise (but not both).\nEveryone who is innovative either does pioneering work or transforms their field (or both).\nAnyone who makes accurate measurements or is highly respected contributes to science.\nIf Tomas is influential, then he is either established in his field or highly respected, but not both.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x does not do pioneering work and x does not transform the field of chemistry, then x is not innovative.\n- For all x, if x does not contribute to science, then x does not make accurate measurements and x is not highly respected.\n\nAdded facts:\n- Tomas shares knowledge and Tomas does not contribute to science.\n- Tomas has authority or Tomas is innovative.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the added facts: Tomas shares knowledge and does not contribute to science (henceforth S\u2010not\u2010C). By the contrapositive of the second added rule, since Tomas does not contribute to science, he fails both antecedent conditions: Tomas does not make accurate measurements (\u00acAM) and is not highly respected (\u00acHR). From the first added rule, anyone who neither does pioneering work (\u00acPW) nor transforms chemistry (\u00acTFC) is not innovative. Known from the base context: Tomas \u00acPW and \u00acTFC, so Tomas is not innovative (\u00acInn). The added fact also states Tomas has authority OR is innovative (A \u2228 Inn). Since \u00acInn, we infer Tomas has authority (A), which is consistent with the base context. In summary for Tomas: \u00acAM, \u00acHR, \u00acInn, A, S\u2010not\u2010C. Now test the conditional: \u2018If Tomas is precise, then he is either innovative or influential, but not both.\u2019 Its antecedent is \u2018Tomas is precise\u2019 (P). The consequent is the exclusive\u2010or: (Inn \u2228 Inf) \u2227 \u00ac(Inn \u2227 Inf). We already know \u00acInn, so the consequent simplifies to just Inf. Hence the conditional becomes P \u2192 Inf. We now check for every admissible model whether P \u2192 Inf holds. In any model, Inf is established iff (Est \u2227 \u00acHR) \u2228 (HR \u2227 \u00acEst) with HR false, so Inf \u21d4 Est. Therefore P \u2192 Inf becomes P \u2192 Est. In the base context and added facts, being precise (P) imposes no constraint on being established (Est), so P can be true while Est is false. Thus P true and Est false (i.e., Inf false) is admissible, making P \u2192 Inf false in that model. Therefore the conditional is not entailed by the premises; the entailment fails.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 267
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Tomas shares knowledge.\n- Tomas does not make accurate measurements.\n- Tomas is not highly respected.\n- Tomas is not influential.\n- Tomas is not innovative.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The conclusion is the material conditional: if Tomas is precise (P), then (Inn \u2228 Inf) XOR (Inn \u2227 Inf). Given the added facts we know Inn = false and Inf = false. Thus the consequent (Inn \u2228 Inf) XOR (Inn \u2227 Inf) evaluates to false. Therefore the conditional becomes P \u2192 false, which is logically equivalent to \u00acP. However, the premises never state that Tomas is not precise; precision is only mentioned as a property he \u2018has\u2019 in the original context but is not retracted. Hence there remain models satisfying all premises in which P is true, making P \u2192 false false in those models. Since the conditional fails in at least one admissible model, it is not entailed; therefore the correct answer is False.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 802
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Either Tomas is not influential, or he is either established in his field or highly respected, but not both.\n\nAdded facts:\n- Tomas is influential and it is not the case that he is either established in his field or highly respected, but not both.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added fact states that Tomas is influential (Inf = true) and it is not the case that he is either established or highly respected in the exclusive-or sense (so the XOR statement is false). From the base context we already know Tomas is not innovative (Inn = false). The conclusion is the conditional: if Tomas is precise (P), then (Inn \u2228 Inf) XOR (Inn \u2227 Inf). Since Inn = false and Inf = true, the consequent simplifies to true (because false \u2228 true = true and false \u2227 true = false, so true XOR false = true). Thus the conditional becomes P \u2192 true, which is always true regardless of P. Hence in every model satisfying the premises the conditional holds; therefore it is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1053
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Tomas is influential and it is not the case that he is either established in his field or highly respected, but not both.\n\nAdded rules:\n- Either Tomas is not influential, or he is either established in his field or highly respected, but not both.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The conclusion is the material conditional: if Tomas is precise (P), then (Inn \u2228 Inf) XOR (Inn \u2227 Inf). From the base context we know Tomas is not innovative (Inn = false). The added rule is: \u00acInf \u2228 (Est XOR HR). This gives two possible cases. Case 1: Inf = false. Then the consequent (false \u2228 false) XOR false = false, so the conditional becomes P \u2192 false, equivalent to \u00acP. Since the premises do not guarantee \u00acP (precision is not forced false), models exist with P true, making the conditional false. Case 2: Inf = true. Then the added rule forces Est XOR HR to hold; the consequent becomes (false \u2228 true) XOR false = true, so the conditional is P \u2192 true, which is always true. Because Case 1 is still admissible and in it the conditional can fail, the statement is not entailed by the premises. Hence the correct classification is Uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1319
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Either Tomas is not influential, or he is either established in his field or highly respected, but not both.\n\nAdded facts:\n- Tomas is influential.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The conclusion is the conditional: if Tomas is precise (P), then (Inn \u2228 Inf) XOR (Inn \u2227 Inf). From the base context we know Tomas is not innovative (Inn = false). The added fact states Inf = true. Thus the consequent becomes (false \u2228 true) XOR (false \u2227 true) = true XOR false = true. Hence the conditional simplifies to P \u2192 true, which is logically valid regardless of P. Therefore every model satisfying the premises makes the conditional true, so it is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1638
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, x is innovative if and only if x does pioneering work or transforms the field of chemistry.\n- For all x, x contributes to science if and only if x makes accurate measurements or is highly respected.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the base context we already have: Tomas \u00acPW, \u00acTFC, \u00acInn, \u00acHR, \u00acAM, and (from earlier steps) Inf = true. The first added rule makes Inn \u2194 (PW \u2228 TFC), so Inn remains false. The second rule makes Contrib \u2194 (AM \u2228 HR), so Contrib is false. The conclusion is P \u2192 [(Inn \u2228 Inf) XOR (Inn \u2227 Inf)]. With Inn = false and Inf = true, the consequent is true, so the conditional becomes P \u2192 true, which holds in every model.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1856
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x does pioneering work or transforms the field of chemistry then x is innovative.\n- For all x, if x contributes to science, then x makes accurate measurements or is highly respected.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Base facts unchanged: Tomas \u00acPW, \u00acTFC, \u00acInn, \u00acHR, \u00acAM, and (from earlier) Inf = true. The first added rule is only a one-way conditional (PW\u2228TFC \u2192 Inn), so Inn can still be false. The second added rule is Contrib \u2192 (AM\u2228HR), which is already satisfied because Contrib is false. Thus Inn remains false and Inf true, so the consequent (Inn\u2228Inf) XOR (Inn\u2227Inf) is true. The conditional P \u2192 true is logically valid, hence entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2097
+    }
+  ]
+}

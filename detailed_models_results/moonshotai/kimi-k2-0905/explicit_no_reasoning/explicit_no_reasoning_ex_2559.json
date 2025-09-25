@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 120,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Marcus does not achieve recognition.\nMarcus makes breakthroughs.\nMarcus receives awards.\nMarcus has practical skills.\nMarcus asks questions.\nMarcus teaches others.\nIf Marcus is dedicated, then he will achieve recognition.\nIf Marcus makes breakthroughs, then he publishes papers and receives awards.\nEither Marcus seeks knowledge or he has practical skills, but not both.\nIf Marcus either asks questions or has curiosity (but not both), then he seeks knowledge.\nIf Marcus conducts research, then he either publishes papers or teaches others, but not both.\nIf someone has curiosity, then they value discovery and are persistent.\nMarcus conducts research or has expertise.\nIf Marcus has expertise, then he is either persistent or successful (but not both).\nIf Marcus is either dedicated or adventurous (but not both), then he is successful.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Marcus has expertise, then he is either persistent or successful, but not both.\n- If Marcus is either dedicated or adventurous (but not both), then he is successful.\n\nAdded rules:\n- If Marcus has expertise, then he is not successful.\n- If Marcus is adventurous, then he is successful.\n\nAdded facts:\n- Marcus publishes papers.\n- Marcus does not seek knowledge.\n- Marcus does not conduct research.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From the added facts: Marcus does not conduct research and Marcus publishes papers. From the rule \u2018If Marcus conducts research, then he either publishes papers or teaches others, but not both\u2019, nothing forces teaching others because the antecedent \u2018conducts research\u2019 is false, so the rule is vacuously satisfied. From \u2018Either Marcus seeks knowledge or he has practical skills, but not both\u2019 and the added fact that Marcus does not seek knowledge, it follows that Marcus has practical skills. From \u2018If Marcus either asks questions or has curiosity (but not both), then he seeks knowledge\u2019 and the fact that Marcus does not seek knowledge, the antecedent must be false; thus Marcus does neither (asks questions \u2227 has curiosity) is false, so at most one of asking questions or having curiosity holds, but since the implication requires the antecedent to be false, we only get that it is not the case that exactly one holds, hence Marcus either does both or does neither. However, no fact states he asks questions or has curiosity, so we cannot determine. From added rule: \u2018If Marcus is adventurous, then he is successful.\u2019 We have no information about whether Marcus is successful or not, nor any fact that prevents him from being adventurous. Therefore we cannot conclude he is not adventurous; the statement \u2018Marcus is not adventurous\u2019 is not entailed. Hence the answer is False (i.e., the context does NOT entail \u2018Marcus is not adventurous\u2019).",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 260
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Marcus does not conduct research.\n\nRemoved rules:\n- If Marcus conducts research, then he either publishes papers or teaches others, but not both.\n\nAdded rules:\n- If Marcus conducts research, then he is adventurous.\n- If Marcus has practical skills, then he is successful.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We already know Marcus has practical skills (because he does not seek knowledge and the exclusive-or rule forces practical skills). The new rule \u2018If Marcus has practical skills, then he is successful\u2019 lets us infer Marcus is successful. Now consider the two possibilities for research. (1) If Marcus conducts research, the new rule \u2018If Marcus conducts research, then he is adventurous\u2019 makes him adventurous; but we have no fact that says he conducts research, so this case is not forced. (2) If Marcus does NOT conduct research, we merely lose that path to adventure; nothing else blocks adventure. In neither case are we forced to conclude he is NOT adventurous. Since the context leaves both \u2018adventurous\u2019 and \u2018not adventurous\u2019 possible, the statement \u2018Marcus is not adventurous\u2019 is not entailed. Therefore the correct evaluation is False (i.e., the context fails to entail the conclusion).",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 682
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Marcus does not seek knowledge.\n- Marcus has practical skills.\n\nAdded facts:\n- Marcus does not conduct research.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the exclusive-or rule \u2018Either Marcus seeks knowledge or he has practical skills, but not both\u2019 and no longer having any fact that denies seeking knowledge or asserts practical skills, we do not know which side of the xor holds; Marcus might seek knowledge and lack practical skills, or vice versa. Marcus does not conduct research (added fact), so the rule \u2018If Marcus conducts research, then he is adventurous\u2019 is vacuously satisfied and gives no information. No other rule or fact connects to adventurousness. Thus the truth value of \u2018Marcus is adventurous\u2019 is undetermined by the context; the conclusion \u2018Marcus is not adventurous\u2019 is neither guaranteed nor ruled out. Hence the entailment does not hold, so the correct choice is Uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 980
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Marcus does not conduct research.\n\nAdded facts:\n- Marcus does not have expertise.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Marcus does not have expertise (new fact). The only remaining rules that can affect adventurousness are: \u2018If Marcus conducts research, then he is adventurous\u2019 and the earlier chain that having practical skills \u2192 successful, and \u2018If Marcus is adventurous, then he is successful.\u2019 We do not know whether Marcus conducts research; if he does, he must be adventurous, but that conditional does not force research. Since we have no fact that he conducts research, and no rule that requires or forbids adventurousness, both possibilities (adventurous or not) remain open. Therefore the context does not guarantee \u2018Marcus is not adventurous\u2019; the statement is not entailed, so the correct evaluation is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1214
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Marcus is not adventurous, then he does not conduct research.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The new rule is a one-way implication: not adventurous \u2192 does not conduct research. Its contrapositive is: conducts research \u2192 adventurous. That is exactly the same as the existing rule \u2018If Marcus conducts research, then he is adventurous,\u2019 so no new information is added. All previous uncertainties remain: we still do not know whether Marcus conducts research or is adventurous. Hence the context still fails to entail \u2018Marcus is not adventurous,\u2019 so the correct evaluation remains False.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1432
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Marcus does not have expertise.\n\nAdded rules:\n- If Marcus conducts research, then he is dedicated.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "No fact or rule now links Marcus\u2019s dedication, research activity, expertise, or success to whether he is adventurous. The only adventurous-related rule remains: \u2018If Marcus conducts research, then he is adventurous.\u2019 We have no information about whether Marcus conducts research; if he does, he is adventurous, but that conditional does not force research. Since both possibilities (adventurous or not) remain open, the context does not entail \u2018Marcus is not adventurous.\u2019 Hence the correct choice is False.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1600
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Marcus conducts research, then he is dedicated.\n\nAdded rules:\n- If Marcus either publishes papers or teaches others, then he conducts research.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We already know Marcus publishes papers. The new rule states that if Marcus either publishes papers or teaches others, then he conducts research. Since Marcus publishes papers, he satisfies the antecedent, so we must conclude Marcus conducts research. From the still-present rule 'If Marcus conducts research, then he is adventurous,' Marcus must be adventurous. Therefore, Marcus is adventurous, so the claim 'Marcus is not adventurous' is false, and the context actually entails its negation. Thus the context does not entail 'Marcus is not adventurous'; the correct evaluation is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1780
+    }
+  ]
+}

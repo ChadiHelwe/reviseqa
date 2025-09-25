@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 260,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Gracelyn builds nests.\nGracelyn raises her young.\nGracelyn migrates seasonally.\nGracelyn either teaches hunting skills or builds nests, but not both.\nEvery bird that raises its young is either a parent or teaches hunting skills (or both).\nIf Gracelyn is a parent, then she either migrates seasonally or finds food, but not both.\nEvery bird either protects its territory or finds food.\nFor Gracelyn, either she protects her territory or she cares for others, but not both.\nEvery bird that forms strong bonds with others cares for them.",
+      "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x does not care for others, then x does not form strong bonds with others.\n- For all x, either x does not raise its young, or x is a parent, or x teaches hunting skills.",
+      "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the original context we already derived that Gracelyn cares for others (she builds nests and therefore does not protect territory, and from the exclusive \u2018protect territory or care for others\u2019 we get care for others). The new general rule says that if a bird does not care for others, it does not form strong bonds; contrapositively, any bird that cares for others must form strong bonds. Since Gracelyn cares for others, she must form strong bonds. Whether those bonds are with \u2018fellow petrels\u2019 is immaterial: the original context only speaks about \u2018others\u2019 and \u2018her young\u2019, and nothing contradicts those others being petrels. Hence the statement is entailed.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 229
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Gracelyn either teaches hunting skills or builds nests, but not both.\n\nAdded rules:\n- For all x, if x cares for others, then x forms strong bonds with them.\n\nAdded facts:\n- Gracelyn is not a parent.\n- Gracelyn finds food.\n- Gracelyn does not protect her territory.",
+      "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "With the exclusive disjunction removed, Gracelyn can both build nests and teach hunting skills. She also builds nests (original fact), so nothing prevents her from also teaching hunting skills. Together with her not being a parent, this satisfies the sufficient condition for raising young. Still, building nests alone suffices to infer she does not protect territory, yet she does find food, satisfying all applicable rules. Even with the added rule that caring implies forming strong bonds, there is still no information that establishes whether she actually cares for others (the conclusion 'cares for others' is not entailed), nor is there any information identifying the individuals (fellow petrels) with whom she might bond. Hence the statement is neither proven nor disproven.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 468
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Gracelyn does not protect her territory.\n\nAdded rules:\n- For all x, if x migrates seasonally and x builds nests, then x protects its territory.",
+      "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The prior reasoning chain that led to \u2018True\u2019 relied on knowing Gracelyn does not protect territory, which let us infer she cares for others, which (via the added rule) gives strong bonds. That key fact is now removed, so the chain breaks. With the new rule, we only know that if a bird both migrates and builds nests then it protects territory; Gracelyn does both, so she protects territory. Nothing in the context says whether protecting territory implies or excludes caring for others, and there is no other path to establish that she cares for others. Therefore we cannot determine whether she forms strong bonds (with petrels or anyone).",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 753
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all x, x forms strong bonds with others if and only if x cares for them.\n\nAdded facts:\n- Gracelyn protects her territory.\n- Gracelyn teaches hunting skills.",
+      "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With the biconditional \u2018forms strong bonds \u2194 cares for others\u2019, we must establish whether Gracelyn cares for others. We only know she protects her territory and teaches hunting skills; nothing in the context relates protecting territory to caring for others, and teaching hunting skills does not entail caring either. Therefore we lack any premise that forces Gracelyn to care for others, so we cannot conclude she forms strong bonds; nor is there anything that positively prevents it. Hence the statement is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 990
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, if x does not protect its territory, then it is not the case that x migrates seasonally and x builds nests.\n- If Gracelyn is a parent, then Gracelyn migrates seasonally if and only if Gracelyn does not find food.\n\nAdded facts:\n- It is not the case that it is not the case that Gracelyn protects her territory.",
+      "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added fact \u2018It is not the case that it is not the case that Gracelyn protects her territory\u2019 simplifies to \u2018Gracelyn protects her territory.\u2019 With that, the first new rule (contrapositive of the earlier rule) is automatically satisfied and gives no new information. We still have no premise that determines whether Gracelyn cares for others, and hence (via the biconditional) whether she forms strong bonds. Since caring is neither established nor ruled out, the statement is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1198
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Gracelyn protects her territory.\n- It is not the case that it is not the case that Gracelyn protects her territory.\n\nRemoved rules:\n- For all x, if x migrates seasonally and x builds nests, then x protects its territory.\n- For all x, if x does not protect its territory, then it is not the case that x migrates seasonally and x builds nests.\n\nAdded facts:\n- Gracelyn does not protect her territory.",
+      "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Gracelyn does not protect her territory. From the remaining rule \u2018Every bird either protects its territory or finds food\u2019 and the fact that she finds food, nothing about caring for others follows. Likewise, building nests, raising young, teaching hunting skills, and migrating seasonally give no information about whether she cares for others. Because the biconditional still states she forms strong bonds iff she cares for others, and caring is neither established nor contradicted, we cannot determine whether she forms strong bonds. Hence the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1454
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, x does not form strong bonds with others if and only if x does not care for them.",
+      "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added biconditional is equivalent to \u2018x forms strong bonds \u2194 x cares for others.\u2019 In the previous (correct) True answer we had already derived that Gracelyn cares for others (because she does not protect her territory, satisfying the exclusive disjunction with \u2018cares for others\u2019). Therefore, by the new biconditional, she must form strong bonds. Nothing in the context contradicts those bonds being with \u2018fellow petrels.\u2019",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1728
+    }
+  ]
+}

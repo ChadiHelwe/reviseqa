@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit",
+    "chain_index": 317,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Frank has resources.\nFrank can make a discovery.\nFrank does not continue his research.\nFrank faces adversity.\nFrank remains resilient.\nFrank thinks creatively.\nIf Frank has resources or receives funding, then he can make a discovery.\nAnyone who receives funding or is successful can continue their research.\nIf Frank faces adversity, then he either remains resilient or pursues his passion (but not both).\nFrank pursues his passion or works tirelessly.\nAnyone who works tirelessly and thinks creatively can achieve a breakthrough.\nIf Frank makes progress, then he is successful.\nFrank is either dedicated or makes progress.\nIf Frank is dedicated, then he can either achieve a breakthrough or inspire others, but not both.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Frank has resources. Frank can make a discovery.. If Frank has resources or receives funding, then he can make a discovery.. Therefore, . Frank does not continue his research.. Anyone who receives funding or is successful can continue their research.. Therefore, Frank is not successful.. Frank faces adversity. Frank remains resilient.. If Frank faces adversity, then he either remains resilient or pursues his passion (but not both).. Therefore, Frank does not pursue his passion.. Frank does not pursue his passion.. Frank pursues his passion or works tirelessly.. Therefore, Frank works tirelessly.. Frank works tirelessly. Frank thinks creatively.. Anyone who works tirelessly and thinks creatively can achieve a breakthrough.. Therefore, Frank achieves a breakthrough.. Frank is not successful.. If Frank makes progress, then he is successful.. Therefore, Frank does not make progress.. Frank does not make progress.. Frank is either dedicated or makes progress.. Therefore, Frank is dedicated.. Frank is dedicated. Frank achieves a breakthrough.. If Frank is dedicated, then he can either achieve a breakthrough or inspire others, but not both.. Therefore, Frank inspires others..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x receives funding or x is successful, then x continues their research.\n- For all x, if x works tirelessly and x thinks creatively, then x achieves a breakthrough.\n\nAdded rules:\n- For all x, if x receives funding or x is successful, then x does not continue their research.\n- For all x, if x works tirelessly and x thinks creatively, then x does not achieve a breakthrough.\n- For all x, if x works tirelessly, then x is dedicated.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Frank has resources \u21d2 Frank can make a discovery. Frank does not continue research. The new rule says: receives-funding \u2228 successful \u21d2 does-not-continue-research. Frank not continuing is therefore compatible with either receiving funding or being successful, so success status is still unknown. Frank faces adversity and remains resilient, so by the adversity-resilience-or-passion rule Frank does NOT pursue his passion. With \"pursues passion \u2228 works tirelessly\" and not pursuing passion, Frank must work tirelessly. From the new rule \"works tirelessly \u21d2 dedicated,\" Frank is dedicated. Another new rule: \"works tirelessly \u2227 thinks creatively \u21d2 does NOT achieve breakthrough.\" Frank works tirelessly and thinks creatively \u21d2 Frank does NOT achieve a breakthrough. The dedicated rule: if dedicated then (achieve breakthrough XOR inspire others). Since Frank does NOT achieve a breakthrough, the only way for the XOR to hold is that he DOES inspire others. Thus the conclusion follows.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 455
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x works tirelessly and x thinks creatively, then x does not achieve a breakthrough.\n\nAdded rules:\n- If Frank works tirelessly, then he achieves a breakthrough.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Frank has resources \u21d2 can make discovery. Frank does not continue research. New rule: receives-funding \u2228 successful \u21d2 does-not-continue-research, so again success status is unknown. Frank faces adversity and is resilient \u21d2 does not pursue passion (exclusive). Hence Frank works tirelessly. New rule: works tirelessly \u21d2 achieves a breakthrough, so Frank achieves a breakthrough. Dedication: Frank works tirelessly (no direct rule gives dedication), but Frank is either dedicated OR makes progress. If Frank made progress he would be successful (old rule), but success is not established, so we cannot be sure he makes progress; therefore dedication status is not forced. Even if dedicated, the rule is: dedicated \u21d2 (achieve breakthrough XOR inspire others). Frank does achieve a breakthrough, so under that XOR he must NOT inspire others. Whether dedicated or not, we cannot have both breakthrough and inspiring others. Since breakthrough is certain, inspiring others is impossible. Therefore the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 788
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, if x continues his research, then x does not receive funding and x is not successful.\n- If Frank is dedicated, then he either achieves a breakthrough or inspires others, but they do not both happen.\n\nAdded facts:\n- Frank does not pursue his passion.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Frank has resources \u21d2 can make discovery. Frank does not continue research (given). New added rule: continues-research \u21d2 (\u00acreceive-funding \u2227 \u00acsuccessful); contrapositive is receive-funding \u2228 successful \u21d2 continues-research. Since Frank does not continue, he neither receives funding nor is successful; hence Frank is not successful. Frank faces adversity and remains resilient, so (from adversity rule) he does not pursue his passion (already given). With \"pursues passion \u2228 works tirelessly\" and not pursuing passion, Frank works tirelessly. Working tirelessly and thinking creatively used to imply breakthrough, but that rule has been removed; no rule currently links them, so breakthrough status is undetermined. Frank is either dedicated or makes progress. If he made progress he would be successful (old rule \"progress \u21d2 successful\"), but we know he is not successful, so he cannot make progress. Therefore Frank must be dedicated. Added rule: dedicated \u21d2 (achieves-breakthrough XOR inspires others). Since we do not know whether he achieves a breakthrough, both options are still open; the XOR only prevents both, but does not decide which occurs. Hence we cannot determine whether he inspires others.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1060
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Frank is dedicated, then he either achieves a breakthrough or inspires others, but not both.\n- If Frank works tirelessly, then he is dedicated and he achieves a breakthrough.\n- If Frank does not pursue his passion, then he works tirelessly.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Frank faces adversity and remains resilient \u21d2 by the adversity rule (resilient XOR pursues passion) Frank does NOT pursue his passion. New rule: \u00acpursue passion \u21d2 works tirelessly, so Frank works tirelessly. New rule: works tirelessly \u21d2 (dedicated \u2227 achieves breakthrough). Hence Frank is dedicated and achieves a breakthrough. Dedication rule: dedicated \u21d2 (breakthrough XOR inspires others). Since breakthrough is true, inspires others must be false. Therefore Frank does not inspire others.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1399
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Frank works tirelessly, then he achieves a breakthrough.\n- If Frank works tirelessly, then he is dedicated and he achieves a breakthrough.\n\nAdded rules:\n- If Frank works tirelessly, then he does not achieve a breakthrough.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Frank faces adversity and remains resilient \u21d2 does not pursue his passion. With \u2018pursues passion \u2228 works tirelessly\u2019, Frank must work tirelessly. Added rule: works tirelessly \u21d2 does not achieve a breakthrough. Hence Frank does not achieve a breakthrough. Frank is either dedicated or makes progress. If he made progress he would be successful, but we cannot establish success (and not continuing research is compatible with either), so dedication is not forced; Frank could be dedicated or not. The dedication rule says: if dedicated then (achieves breakthrough XOR inspires others). Since breakthrough is false, the XOR would require inspires others to be true. But we do not know Frank is dedicated; if he is not dedicated, the rule gives no constraint. Hence we cannot determine whether he inspires others.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1606
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Frank works tirelessly.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Given fact: Frank works tirelessly. From the adversity-resilience rule we already have that Frank does not pursue his passion, so this fact is consistent. Working tirelessly and thinking creatively no longer guarantees a breakthrough (that rule was removed), so breakthrough status is open. Frank is either dedicated or makes progress. If he made progress he would be successful, but success is not established, so he might or might not be dedicated. The dedication rule: if dedicated then (achieves breakthrough XOR inspires others). Since we do not know whether Frank is dedicated, and we do not know breakthrough status, both disjuncts remain possible; the rule does not force either outcome. Hence we cannot determine whether Frank inspires others.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1867
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Frank is dedicated, then he either achieves a breakthrough or inspires others, but they do not both happen.\n\nAdded facts:\n- If Frank is dedicated and Frank does not achieve a breakthrough, then Frank inspires others.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Frank works tirelessly (given), faces adversity and is resilient \u21d2 does not pursue passion, consistent. Breakthrough status is not determined (no rule now links working tirelessly to breakthrough). Frank is either dedicated or makes progress; if he made progress he would be successful, but success is not established, so dedication is possible but not guaranteed. New conditional: dedicated \u2227 \u00acbreakthrough \u21d2 inspires others. Since we do not know whether Frank is dedicated and we do not know breakthrough status, the antecedent is unknown; thus the consequent is not forced. Therefore we cannot conclude that Frank inspires others.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2076
+    }
+  ]
+}

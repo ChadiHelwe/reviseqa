@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit",
+    "chain_index": 112,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Paris supports entrepreneurship.\nParis does not drive progress.\nParis embraces diversity.\nParis does not flourish economically.\nParis does not host intellectual events.\nParis does not have landmarks.\nIf Paris either fosters innovation or supports entrepreneurship (but not both), then it drives progress.\nAny city that embraces diversity and attracts visionaries will flourish economically.\nIf a city thrives artistically and fosters innovation, then it attracts visionaries.\nParis either hosts intellectual events or is a tourist destination, but not both.\nIf Paris is a tourist destination, then it either has landmarks or preserves its history (but not both).\nIf a city inspires creativity, then it thrives artistically.\nIf Paris either preserves its history or is culturally enriching (but not both), then it inspires creativity.\nParis is either culturally enriching or culturally barren, but not both.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Paris supports entrepreneurship. Paris does not drive progress.. If Paris either fosters innovation or supports entrepreneurship (but not both), then it drives progress.. Therefore, Paris fosters innovation.. Paris embraces diversity. Paris does not flourish economically.. Any city that embraces diversity and attracts visionaries will flourish economically.. Therefore, Paris does not attract visionaries.. Paris fosters innovation. Paris does not attract visionaries.. If a city thrives artistically and fosters innovation, then it attracts visionaries.. Therefore, Paris does not thrive artistically.. Paris does not host intellectual events.. Paris either hosts intellectual events or is a tourist destination, but not both.. Therefore, Paris is a tourist destination.. Paris is a tourist destination. Paris does not have landmarks.. If Paris is a tourist destination, then it either has landmarks or preserves its history (but not both).. Therefore, Paris preserves its history.. Paris does not thrive artistically.. If a city inspires creativity, then it thrives artistically.. Therefore, Paris does not inspire creativity.. Paris preserves its history. Paris does not inspire creativity.. If Paris either preserves its history or is culturally enriching (but not both), then it inspires creativity.. Therefore, Paris is culturally enriching.. Paris is culturally enriching.. Paris is either culturally enriching or culturally barren, but not both.. Therefore, Paris is culturally barren..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Paris is a tourist destination and Paris does not have landmarks, then Paris preserves its history.\n- If Paris either preserves its history or is culturally enriching, and it is not the case that Paris preserves its history and Paris is culturally enriching, then it inspires creativity.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "We derive step-by-step from the original context plus the two added biconditional-style rules.\n\n1. Paris supports entrepreneurship. (stated)\n2. Paris does not drive progress. (stated)\n3. Rule: If (Paris fosters innovation OR supports entrepreneurship) but not both, then it drives progress.  \n   Paris supports entrepreneurship (1).  If Paris did NOT foster innovation, then the antecedent would be satisfied (supports entrepreneurship but not both), and the consequence would be that Paris drives progress \u2013 contradicting (2).  Therefore Paris MUST foster innovation.  We get:\n   Paris fosters innovation. (4)\n   Paris does not attract visionaries. (5) \u2013 because the diversity-plus-visionaries rule would force flourishing economically, which does not happen (Paris does not flourish economically).\n\n4. Rule: If a city thrives artistically AND fosters innovation \u2192 attracts visionaries. \n   Paris fosters innovation (4). If Paris also thrived artistically, it would attract visionaries, contradicting (5).  So Paris does not thrive artistically. (6)\n\n5. Paris does not host intellectual events. (stated) \n   Rule: Paris either hosts intellectual events OR is a tourist destination, but not both.  Hence Paris is a tourist destination (7).\n\n6. Paris does not have landmarks. (stated) \n   Rule: If (Paris is a tourist destination \u2227 does not have landmarks) \u2192 Paris preserves its history.  Apply: Paris is a tourist destination (7) and does not have landmarks, so\n   Paris preserves its history (8).\n\n7. Paris does not inspire creativity (9) \u2013 because it does not thrive artistically (6) and \u201cinspires creativity \u21d2 thrives artistically\u201d. \n\n8. Paris is in exactly one of {preserves its history, culturally enriching}.  Paris preserves its history (8).  Hence Paris is NOT culturally enriching. (10)\n\n9. Rule: Paris is either culturally enriching OR culturally barren, but not both.  From (10) we get:\n   Paris is culturally barren. (11)\n\nTherefore the context plus the added rules entail that Paris is culturally barren.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 542
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Paris either fosters innovation or supports entrepreneurship (but not both), then it drives progress.\n\nAdded rules:\n- If Paris preserves its history, then Paris is not culturally enriching.\n\nAdded facts:\n- Paris does not foster innovation.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "With the removed biconditional rule we no longer have any link forcing Paris to foster innovation.  The added fact is: Paris does NOT foster innovation.  We keep the other original statements and the new rule:\n\n- Paris does NOT drive progress (stated)\n- Paris embraces diversity (stated) \n- Paris does NOT flourish economically (stated)\n- Paris does NOT host intellectual events (stated)\n- Paris does NOT thrive artistically (implied as before, via: fosters-innovation rule removed, but artistic-thrive still depends on later creativity step)\n- Added rule: If Paris preserves its history \u2192 Paris is NOT culturally enriching\n\nKey derivations\n1. Paris does not host intellectual events \u2192 Paris is a tourist destination (from the \u201ceither host or tourist-destination, not both\u201d axiom)\n2. Paris is a tourist destination and does NOT have landmarks \u2192 Paris preserves its history (from the conditional \u201cT.D. \u2227 \u00aclandmarks \u2192 preserves history\u201d).  So Paris preserves its history\n3. Apply added rule: preserves history \u21d2 NOT culturally enriching \u2192 Paris is NOT culturally enriching\n4. Given axiom: Paris is either culturally enriching or culturally barren, not both.  Since Paris is not culturally enriching, it must be culturally barren\n\nThus the context (revised exactly as described) entails that Paris is culturally barren",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1118
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For any x, either x does not embrace diversity, or x does not attract visionaries, or x flourishes economically.\n\nAdded facts:\n- Paris is either culturally enriching or culturally barren.\n- It is not the case that Paris is both culturally enriching and culturally barren.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The new axiom is the contrapositive of the former diversity-plus-visionaries-give-flourishing rule and adds nothing new (it is logically equivalent).  All facts and rules that previously led to \u2018culturally enriching \u21d4 preserves history\u2019, and \u2018Paris preserves history therefore Paris culture is enrichment or barren with exclusivity\u2019.  By already established derivation within the context Paris proves to be NOT culturally enriching, so per the stated exclusion Paris must be culturally barren.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1516
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Paris does not have landmarks.\n\nAdded rules:\n- If Paris has landmarks, then Paris is culturally enriching.\n\nAdded facts:\n- Paris has landmarks.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Newly added fact: Paris has landmarks. Added rule: If Paris has landmarks, then Paris is culturally enriching. Both together force Paris to be culturally enriching. The exclusion axiom: Paris is either culturally enriching or culturally barren, but not both. Hence, once Paris is culturally enriching, it cannot be culturally barren. Therefore the conclusion 'Paris is culturally barren' is false",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1729
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Paris has landmarks, then Paris is culturally enriching.\n\nAdded facts:\n- Paris has landmarks and Paris is not culturally enriching.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The statement now directly asserts: \u201cParis is not culturally enriching.\u201d The longstanding \u201ceither culturally enriching or culturally barren\u201d axiom (with the \u201cnot both\u201d clause) forces a unique assignment once one side is fixed. Therefore, if Paris is not culturally enriching, the only remaining possibility under that partition is that Paris is culturally barren. The added fact Paris has landmarks adds no contradicting information, since the rule linking landmarks to culturally enriching has been removed. All other assumptions remain consistent. Hence we may firmly conclude Paris is culturally barren.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1900
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- Either Paris hosts intellectual events or Paris is a tourist destination, and it is not the case that Paris hosts intellectual events and Paris is a tourist destination.\n- For any x, either x does not inspire creativity or x thrives artistically.\n\nAdded facts:\n- Paris is not culturally enriching.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly states 'Paris is not culturally enriching'. Combined with the mutually-exclusive partition fact 'Paris is either culturally enriching or culturally barren', the only possible assignment is that Paris is culturally barren. All other information (new rules and facts) is compatible with this, so the conclusion is strictly entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2099
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Paris is a tourist destination and does not preserve its history, then it has landmarks.\n- For any x, if x does not thrive artistically, then x does not inspire creativity.\n\nAdded facts:\n- If Paris is culturally enriching, then Paris is not culturally barren.\n- If Paris is culturally barren, then Paris is not culturally enriching.\n- If Paris is culturally enriching, then Paris does not preserve its history.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From earlier derivations (still valid: no landmarks; tourist destination; diversity without flourishing; no thrives artistically) we have Paris preserves its history. New conditional: culturally enriching \u2192 \u00acpreserve history. Since Paris DOES preserve history, this conditional forces Paris to be NOT culturally enriching. The trichotomy added simply re-asserts exclusivity between enriching and barren. Therefore, being not enriching, Paris must be culturally barren.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2283
+    }
+  ]
+}

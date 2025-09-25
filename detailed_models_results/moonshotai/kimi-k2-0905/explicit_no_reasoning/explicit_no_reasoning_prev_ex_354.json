@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 365,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Hayley does not read books.\nHayley does not appreciate life.\nHayley does not enjoy nature.\nHayley has a routine.\nHayley is methodical.\nHayley is disciplined.\nHayley does not care deeply.\nHayley does not feel happy.\nIf Hayley either lives a simple life or reads books (but not both), then she appreciates life.\nIf Hayley either enjoys nature or is content (but not both), then she lives a simple life.\nIf Hayley has a routine, then she is either organized or methodical, but not both.\nIf Hayley manages her time well, then she is either organized or disciplined, but not both.\nAll responsible people care deeply and manage their time well.\nIf Hayley keeps pets, then she is responsible.\nIf Hayley either owns chickens or keeps pets (but not both), then she feels happy.\nIf Hayley either owns chickens or loves animals (but not both), then she is content.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Hayley does not live a simple life.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Hayley does not live a simple life (given). From the conditional \"If Hayley either enjoys nature or is content (but not both), then she lives a simple life,\" the contrapositive is: if she does NOT live a simple life, then it is NOT the case that (enjoys-nature XOR content). Thus Hayley and content have the same truth-value. Because Hayley does not enjoy nature (stated), the XOR is false, so content must also be false; hence Hayley is not content. Next consider: \"If Hayley either owns chickens or loves animals (but not both), then she is content.\" We know the consequent (content) is false, so the antecedent must be false: it is not true that (owns-chickens XOR loves-animals). Therefore owns-chickens and loves-animals have the same truth-value. Next: \"If Hayley either owns chickens or keeps pets (but not both), then she feels happy.\" Hayley does not feel happy (given), so the antecedent must be false: owns-chickens and keeps-pets have the same truth-value. Combining these two same-truth-value requirements forces owns-chickens, keeps-pets, and loves-animals all to be equal in truth-value. Suppose loves-animals is false; then keeps-pets is false, so Hayley is not responsible (because responsible \u21d2 keeps-pets). But responsible people care deeply (given) and Hayley does not care deeply, so she is indeed not responsible; this is consistent. However, we must also satisfy: \"If Hayley manages her time well, then she is either organized or disciplined, but not both.\" Hayley is disciplined (given), so if she managed her time well, she would have to be organized and not disciplined, which contradicts her being disciplined. Therefore Hayley does not manage her time well. All responsible people manage their time well; since she fails to do so, she is not responsible, again consistent with keeps-pets = false. Thus the assumptions loves-animals = false (and therefore keeps-pets = false) satisfy every given fact. Therefore the context does not force loves-animals to be true; it is compatible that she does not love animals. Hence the statement \"Hayley loves animals\" is not entailed.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 298
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Hayley is responsible, then she cares deeply.\n- If Hayley keeps pets, then she cares deeply.\n\nAdded facts:\n- Hayley is not responsible.\n- Hayley is not content.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We already knew Hayley is not responsible and does not care deeply, so the new rule \u2018responsible \u2192 cares deeply\u2019 changes nothing. The key rules are: (1) (owns-chickens XOR loves-animals) \u2192 content; (2) (owns-chickens XOR keeps-pets) \u2192 happy. Given Hayley is not content and not happy, both antecedents must be false, so owns-chickens \u2261 loves-animals and owns-chickens \u2261 keeps-pets. Hence loves-animals \u2261 keeps-pets. Suppose loves-animals is true; then keeps-pets is true, so by the new rule \u2018keeps-pets \u2192 cares deeply\u2019 Hayley would care deeply, contradicting the given fact that she does not. Therefore loves-animals must be false. Thus the context forces \u2018Hayley loves animals\u2019 to be false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 832
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Hayley keeps pets, then she is responsible.\n- If Hayley keeps pets, then she cares deeply.\n\nAdded rules:\n- If Hayley does not care deeply, then she keeps pets.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the new rule, Hayley does not care deeply \u21d2 she keeps pets. Given she does not care deeply, she must keep pets. Earlier we established that owns-chickens \u2261 keeps-pets and owns-chickens \u2261 loves-animals, so keeps-pets \u2261 loves-animals. Since keeps-pets is true, loves-animals is also true. Thus the context entails that Hayley loves animals.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1115
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Hayley does not care deeply, then she keeps pets.\n\nAdded rules:\n- If Hayley does not care deeply, then she does not keep pets.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Hayley does not care deeply (given). The new rule states: not care deeply \u2192 not keep pets. Therefore Hayley does not keep pets. Earlier equivalences showed owns-chickens \u2261 keeps-pets and owns-chickens \u2261 loves-animals, so keeps-pets \u2261 loves-animals. Since keeps-pets is false, loves-animals must also be false. Thus the context entails that Hayley does not love animals.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1304
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Hayley loves animals, then she is content.\n- If Hayley owns chickens, then she feels happy.\n- If Hayley is responsible, then she manages her time well.\n- If Hayley keeps pets, then she cares deeply.\n\nAdded facts:\n- Hayley does not keep pets.\n- Hayley does not own chickens.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With the new facts Hayley does not keep pets and does not own chickens, the earlier equivalences (owns-chickens \u2261 keeps-pets \u2261 loves-animals) no longer hold because they depended on conditionals whose antecedents are now false. The only rule mentioning loves-animals is \u2018loves animals \u2192 content\u2019. Hayley is not content (given), so the contrapositive gives: not content \u2192 not loves animals. Therefore Hayley does not love animals.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1490
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Hayley has a routine, then she is not organized.\n- If Hayley manages her time well, then she is not organized.\n\nAdded facts:\n- Hayley does not love animals.\n- Hayley is not organized.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added fact explicitly states Hayley does not love animals, directly contradicting the conclusion. Therefore the context guarantees the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1719
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Hayley does not love animals.\n- Hayley is not content.\n\nAdded rules:\n- If Hayley does not own chickens, then she loves animals.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From an earlier step we derived that Hayley does not own chickens. The newly added rule states: does not own chickens \u2192 loves animals. Since the antecedent is true, the consequent must be true: Hayley loves animals.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1855
+    }
+  ]
+}

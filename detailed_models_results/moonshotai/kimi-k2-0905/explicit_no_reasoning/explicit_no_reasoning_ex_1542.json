@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 29,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Luz recycles waste.\nLuz does not train others.\nLuz advocates for change.\nLuz mobilizes the community.\nLuz does not organize her community.\nLuz supports local workers.\nLuz does not create jobs.\nIf Luz either recycles waste or trains others (but not both), then she improves livelihoods.\nIf Luz builds networks, then she either advocates for change or mobilizes the community (but not both).\nLuz either fights for rights or organizes her community.\nAnyone who builds networks or improves livelihoods can empower others.\nIf someone fights for rights and supports local workers, then they can become a community leader.\nIf Luz either creates jobs or empowers others (but not both), then she is resourceful.\nIf Luz is resourceful, then she is either a successful entrepreneur or a community leader, but not both.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x fights for rights and x supports local workers, then x can become a community leader.\n\nAdded rules:\n- For all x, if x fights for rights and x supports local workers, then x cannot become a community leader.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Starting from the earlier derivation we know: 1) Luz recycles waste and Luz does not train others \u21d2 the clause p XOR q (recycles XOR trains) is true. 2) From the added rule, when p XOR q is true she improves livelihoods, so she improves livelihoods. 3) From \"Anyone who builds networks or improves livelihoods can empower others\" and (2) we get she can empower others. 4) From \"If someone creates jobs XOR empowers others then she is resourceful\" and the fact that she does not create jobs but can empower others, the XOR condition is satisfied, so she is resourceful. 5) The chain \"resourceful \u21d2 (successful-entrepreneur XOR community-leader)\" forces Luz to be exactly one of the two. Now, for community-leader status the new rule says: if Luz fights for rights and supports local workers \u2192 she cannot become a community leader. We know she supports local workers; since the context also entails \"Luz either fights for rights or organizes her community\" and she does not organize, disjunctive syllogism forces her to fight for rights. So both antecedents are true and by modus ponens she cannot be a community leader. Given the exclusive-or at step 5, being not-a-community-leader entails she must be a successful entrepreneur. Thus the statement \"Luz is not a successful entrepreneur\" is definitively false under the given context (with the revised rule).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 278
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x fights for rights and x supports local workers, then x cannot become a community leader.\n\nAdded rules:\n- If Luz fights for rights and Luz supports local workers, then Luz can become a community leader.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "As before, Luz recycles but does not train \u21d2 she improves livelihoods; hence she can empower others; she does not create jobs \u21d2 the condition (create-jobs XOR empower) is satisfied \u21d2 she is resourceful; therefore she is exactly one of successful-entrepreneur or community-leader. Fighting for rights and supporting local workers is sufficient (though not necessary) for community-leader possibility. Because the context now adds that rule, the two possibilities (successful-entrepreneur or community-leader) remain open; nothing forces one over the other. So we cannot definitively say she is not a successful entrepreneur; nor can we say she is. The claim is therefore uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 684
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Luz either recycles waste or trains others, but not both, then she improves livelihoods.\n\nAdded rules:\n- If Luz does not improve livelihoods, then Luz recycling waste is equivalent to Luz training others.\n\nAdded facts:\n- Luz either recycles waste or trains others, but not both.\n- Luz does not build networks.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the added fact we have \u2018recycles XOR trains\u2019. The new rule reads: if she does not improve livelihoods, then (recycles \u21d4 trains). The antecedent (not improving livelihoods) would require both recycling and training to be equivalent, contradicting the XOR fact. Hence by modus tollens she must improve livelihoods (otherwise a contradiction). So she improves livelihoods. She does not build networks. The rule \u2018build networks OR improve livelihoods \u21d2 empower\u2019 gives \u2018empower\u2019. She does not create jobs, so the job-creating side of the later XOR is false; hence the condition \u2018(create jobs XOR empower) \u21d2 resourceful\u2019 is satisfied, so she is resourceful. Resourceful implies she is exactly one of successful-entrepreneur or community-leader. We have no information making community-leader impossible (the rule connecting rights/workers/leader is missing), so she could still be a community-leader. Therefore nothing prevents her from being a successful entrepreneur either. Thus we cannot entail \u2018she is not a successful entrepreneur\u2019 from the context.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 915
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Luz does not organize her community.\n\nAdded rules:\n- If Luz does not fight for rights, then Luz cannot become a community leader.\n\nAdded facts:\n- Luz organizes her community.\n- Luz does not fight for rights.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From previous steps: Luz recycles and does not train \u21d2 improves livelihoods \u21d2 can empower others; does not create jobs \u21d2 (create-jobs XOR empower) satisfied \u21d2 resourceful \u21d2 (successful-entrepreneur XOR community-leader). Added facts: Luz organizes her community and does not fight for rights. The added rule: if she does not fight for rights, then she cannot become a community leader. By modus ponens, Luz cannot be a community leader. Given the XOR at the end of the earlier chain, being not-a-community-leader forces her to be a successful entrepreneur. Hence she is a successful entrepreneur, so the statement 'Luz is not a successful entrepreneur' is false, and its negation is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1269
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Luz does not fight for rights.\n\nRemoved rules:\n- If Luz does not improve livelihoods, then Luz recycling waste is equivalent to Luz training others.\n- If Luz does not fight for rights, then Luz cannot become a community leader.\n\nAdded rules:\n- If it is not the case that Luz recycling waste is equivalent to Luz training others, then she improves livelihoods.\n\nAdded facts:\n- Luz fights for rights.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We still have the fact that Luz recycles XOR trains. Under the added rule, if recycling is not equivalent to training, then she improves livelihoods. Since exactly one of recycling or training is true, the biconditional 'recycling \u21d4 training' is false, so she improves livelihoods. Hence she can empower others, and (because she does not create jobs) she is resourceful. Resourceful implies (successful-entrepreneur XOR community-leader). She fights for rights and supports local workers. With the removed rule no longer blocking her, we have no information preventing her from being a community leader. Thus she could be a community leader, in which case she cannot be a successful entrepreneur, or she could be a successful entrepreneur (if she is not a community leader). Both possibilities remain open, so we cannot conclude that she is not a successful entrepreneur.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1529
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Luz fights for rights and Luz supports local workers, then Luz can become a community leader.\n- If it is not the case that Luz recycling waste is equivalent to Luz training others, then she improves livelihoods.\n\nAdded rules:\n- If Luz cannot become a community leader, then either Luz does not fight for rights or Luz does not support local workers.\n- If Luz either recycles waste or trains others, but not both, then she improves livelihoods.\n\nAdded facts:\n- It is not the case that Luz recycling waste is equivalent to Luz training others.\n- Luz fights for rights and Luz supports local workers.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the added fact, recycling is not equivalent to training, and we retain the fact that Luz recycles XOR trains, so the biconditional is indeed false. The re-instated conditional 'recycles XOR trains \u21d2 improves livelihoods' fires, so she improves livelihoods, hence can empower others, and (since she does not create jobs) becomes resourceful. Resourceful implies (successful-entrepreneur XOR community-leader). The new rule: 'cannot become community-leader \u21d2 (does not fight for rights OR does not support local workers)' is the contrapositive of 'fights for rights AND supports local workers \u21d2 can become community-leader.' Since Luz both fights for rights and supports local workers, modus ponens gives: she can become a community leader. So being a community leader remains possible. Hence she might be a community-leader (and thus not a successful-entrepreneur) or might not. Therefore we cannot entail that she is not a successful entrepreneur.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1854
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Luz either fights for rights or organizes her community.\n\nAdded rules:\n- If Luz does not fight for rights, then Luz organizes her community.\n\nAdded facts:\n- Luz recycles waste and Luz does not train others.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Luz recycles and does not train (given). This satisfies the condition for the unchanged rule 'recycles XOR trains \u21d2 improves livelihoods,' so she improves livelihoods. From earlier steps this makes her resourceful, and resourceful implies (successful-entrepreneur XOR community-leader). The removed disjunction 'fights for rights OR organizes' is no longer present, and its replacement only says: if she does not fight for rights, then she organizes. This gives no basis to decide whether she fights for rights or not, hence no way to block her from being a community leader. Therefore both sides of the XOR remain possible: she could be a community leader (hence not a successful entrepreneur) or vice-versa. We cannot conclude she is not a successful entrepreneur.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2243
+    }
+  ]
+}

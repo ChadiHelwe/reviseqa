@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 150,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Lilian has financial expertise.\nLilian does not achieve economic success.\nLilian speaks multiple languages.\nLilian does not work cross-culturally.\nLilian faces significant challenges.\nIf Lilian makes informed decisions and has financial expertise, then she can achieve economic success.\nLilian makes informed decisions or has strategic vision.\nIf Lilian speaks multiple languages, then she either works cross-culturally or is globally minded (or both).\nIf Lilian has strategic vision, then she will either succeed professionally or face significant challenges (but not both).\nIf Lilian thinks broadly, then she will succeed professionally.\nLilian is either narrowly focused or thinks broadly.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Lilian does not work cross-culturally.\n\nAdded rules:\n- If Lilian works cross-culturally, then she is not globally minded.\n\nAdded facts:\n- Lilian works cross-culturally.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the added facts we know Lilian works cross-culturally. The added rule says: if she works cross-culturally then she is NOT globally minded, so Lilian is not globally minded. The original disjunction says Lilian is either narrowly focused or thinks broadly (exactly one). Since she is not globally minded, the conclusion reduces to asking whether she is narrowly focused (and not both). Whether she is narrowly focused or thinks broadly is still open, so we cannot determine she is narrowly focused. Hence the exclusive disjunction \u2018globally minded or narrowly focused, but not both\u2019 is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 243
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Lilian has strategic vision, then she is narrowly focused.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the added facts Lilian works cross-culturally, so by the new rule she is not globally minded. The original conditional \u2018If speaks multiple languages \u2192 works cross-culturally or globally minded\u2019 is satisfied. We still lack any fact or rule that forces Lilian to have strategic vision, so we cannot deduce she is narrowly focused via the new rule. Since she is not globally minded, the only way the exclusive disjunction \u2018globally minded or narrowly focused, but not both\u2019 can be true is if she is narrowly focused; but that is not entailed by the context. Therefore the conclusion is not guaranteed.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 464
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Lilian does not achieve economic success.\n\nAdded rules:\n- If Lilian achieves economic success, then she is globally minded.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "With the removal of \u2018Lilian does not achieve economic success\u2019 we no longer know her economic outcome; she may or may not achieve it. The new rule only tells us that if she does achieve economic success then she is globally minded, giving no information when she does not. Hence we still have no fact entailing that she is globally minded, nor any rule forcing her to be narrowly focused. Consequently the exclusive disjunction \u2018globally minded or narrowly focused, but not both\u2019 is neither guaranteed true nor guaranteed false; its truth value is not entailed by the context.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 676
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Lilian has strategic vision, then she does not succeed professionally.\n- If Lilian does not succeed professionally, then she does not think broadly.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the original context we already have that Lilian faces significant challenges. The original rule \u2018If has strategic vision \u2192 succeed professionally XOR face significant challenges\u2019 therefore forces her NOT to succeed professionally (since she does face challenges). The new chain \u2018has strategic vision \u2192 not succeed professionally \u2192 not think broadly\u2019 means that if she had strategic vision she would not think broadly, i.e. would be narrowly focused. However, nothing in the context actually states or entails that she has strategic vision; that antecedent is still open. Hence we are not forced to conclude she is narrowly focused, and her globally-minded status also remains open. Therefore the exclusive disjunction \u2018globally minded or narrowly focused, but not both\u2019 is not entailed.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 889
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Lilian has strategic vision, then she does not think broadly.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We know Lilian faces significant challenges. From the original rule \u2018If has strategic vision \u2192 succeed professionally XOR face significant challenges\u2019, since she faces challenges she cannot succeed professionally, so if she has strategic vision she fails professionally. The added rule \u2018If has strategic vision \u2192 not think broadly\u2019 means having strategic vision implies she is narrowly focused. Now consider the two cases of the original disjunction \u2018thinks broadly XOR narrowly focused\u2019. Case 1: she thinks broadly. Then she does not have strategic vision (contrapositive of added rule), and the original \u2018If thinks broadly \u2192 succeed professionally\u2019 would make her succeed professionally\u2014but she cannot succeed because she faces challenges. Hence this case is impossible. Case 2: she is narrowly focused. This is consistent (no contradiction arises). Therefore she must be narrowly focused. Earlier we still have that working cross-culturally makes her not globally minded, so she is not globally minded. Thus she is narrowly focused and not globally minded, satisfying the exclusive disjunction \u2018globally minded or narrowly focused, but not both\u2019 in the only possible way. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1139
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Lilian makes informed decisions and has financial expertise, then she can achieve economic success.\n\nAdded rules:\n- Lilian thinks broadly if and only if she succeeds professionally.\n\nAdded facts:\n- Lilian does not make informed decisions.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the added facts Lilian does not make informed decisions. The original disjunction says she either thinks broadly or is narrowly focused (exactly one). The new biconditional \u2018thinks broadly \u2194 succeeds professionally\u2019 means she thinks broadly exactly when she succeeds professionally. We still know she faces significant challenges, and from the original rule \u2018If has strategic vision \u2192 succeed professionally XOR face significant challenges\u2019 it follows that she does not succeed professionally (because she faces challenges). Hence by the biconditional she does not think broadly, so she must be narrowly focused. Additionally, she works cross-culturally, so the rule \u2018If works cross-culturally \u2192 not globally minded\u2019 makes her not globally minded. Therefore she is narrowly focused and not globally minded, satisfying the exclusive disjunction \u2018globally minded or narrowly focused, but not both\u2019 in the only possible way. Thus the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1450
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Lilian works cross-culturally.\n\nAdded facts:\n- Lilian does not work cross-culturally.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1751
+    }
+  ]
+}

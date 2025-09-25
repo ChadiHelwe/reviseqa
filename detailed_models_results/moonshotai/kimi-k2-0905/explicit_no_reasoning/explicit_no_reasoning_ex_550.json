@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 276,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Angie supports local businesses.\nAngie works independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nIf someone donates to charity, then they help others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie perfects a bread recipe, then she attracts customers.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Angie works independently.\n\nAdded rules:\n- If Angie loves cooking and helps others, then she shares her passion.\n- If Angie shares her passion and builds a community, then she attracts customers.\n- If Angie attracts customers, then she perfects a bread recipe.\n\nAdded facts:\n- Angie does not work independently.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Angie does not work independently \u2192 (with added rule: \"either loves cooking or works independently, but not both\") forces Angie to love cooking. From the original context we know Angie volunteers her time (she can\u2019t be in local events). The rules: donate-to-charity \u2192 help others, and donate/volunteer, let Angie choose donation; thus she helps others. Combining \"loves cooking\" and \"helps others\" (added rule) \u2192 shares passion. From original knowledge we still keep: she supports local businesses \u2192 participates local events; she either volunteers or is in events \u2192 we know she is in events, so she supports local businesses. The prior statements: shares passion and builds community \u2192 attracts customers; attracts customers \u2192 perfects recipe. Nothing blocks her from taking this chain, yet nothing forces her to take it either. So \"perfects a bread recipe\" is possible but not guaranteed; therefore the statement \"she did NOT perfect it\" is not entailed, i.e., we are uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 258
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Angie does not pursue her personal interests.\n\nAdded facts:\n- Angie pursues her personal interests.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Adding only that Angie pursues her personal interests gives no information about whether she perfected a bread recipe. The previous reasoning chain that could have led to perfecting a recipe still depends on choices (e.g., whether she loves cooking, shares passion, attracts customers), none of which are forced or blocked by her simply pursuing personal interests. Therefore we cannot infer that she did or did not perfect the recipe; the claim 'Angie did not perfect a bread recipe' is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 576
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Angie pursues her personal interests.\n\nAdded facts:\n- Angie does not pursue her personal interests.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The rule 'Angie either builds a community through her bakery or pursues her personal interests, but not both' now forces her to build a community (since she does not pursue personal interests). To build community we earlier required her to share passion (via original rule 'If Angie shares her passion and builds a community, then she attracts customers'); sharing passion requires loving cooking and helping others (original rule). Loving cooking conflicts with working independently, so she cannot work independently; combined with volunteering/charity choices, the chain proceeds to attract customers. Finally added rule: 'If Angie attracts customers, then she perfects a bread recipe.' Therefore, given the added fact, she must perfect a bread recipe; hence the statement that she did NOT perfect it is false, so the context entails its negation, making the conclusion 'Angie did not perfect a bread recipe' False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 759
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x donates to charity, then x helps others.\n\nAdded facts:\n- Angie donates to charity and Angie does not help others.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The removed rule previously forced any donor to help others. With that rule gone, the new fact that Angie donates but does not help others is consistent. To perfect a bread recipe, the earlier chain required her to help others (as part of the conditions for sharing passion). Since she explicitly does not help others, she cannot satisfy one of the necessary antecedents in that chain, so she cannot reach \u2018attracts customers\u2019 and thus cannot perfect a bread recipe. Hence the context entails that Angie did not perfect a bread recipe.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1020
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Angie donates to charity and Angie does not help others.\n\nAdded rules:\n- Either Angie does not donate to charity, or Angie helps others.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The new disjunctive rule only tells us Angie cannot both donate and fail to help others, but does not force her to donate or to help. Without knowing which disjunct is true we do not know whether she helps others, and whether she helps is required in the chain that leads to perfecting a bread recipe. Since the truth of \u2018helps others\u2019 is not determined, the chain can neither be guaranteed nor blocked, leaving the perfection of the recipe uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1225
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Angie does not pursue her personal interests.\n\nAdded facts:\n- Angie pursues her personal interests.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The fact that Angie pursues her personal interests blocks the only option that previously forced her to build a community (via the removal of \u2018does not pursue\u2019). Without being required to build a community, none of the downstream conditions (sharing passion, attracting customers, perfecting a recipe) are compelled, and nothing else in the context blocks her from taking that path either. Hence we cannot conclude she did not perfect the recipe; the statement is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1417
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Angie pursues her personal interests.\n\nAdded facts:\n- Angie does not pursue her personal interests.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With Angie not pursuing personal interests, the exclusive-or rule compels her to build a community through her bakery. The earlier derivations showed that community-building (together with other forced choices like loving cooking, helping others, sharing passion, attracting customers) makes her perfect a bread recipe unavoidable. Therefore the claim that she did not perfect it is false; the context entails its negation.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1594
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 223,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Luka embraces modernization.\nLuka appreciates quality.\nLuka lives in a rural area.\nLuka gathers plants.\nLuka lives off the land.\nLuka cannot live self-sufficiently.\nLuka cannot create unique pieces.\nLuka either supports his local community or embraces modernization, but not both.\nIf Luka appreciates quality, then he either supports the local community or values tradition, but not both.\nIf Luka lives in a rural area, then he either gathers plants or harvests wood (but not both).\nAnyone who lives off the land and forages natural resources can live self-sufficiently.\nIf Luka either harvests wood or forages natural resources (but not both), then he uses local materials.\nAnyone who preserves craftsmanship or uses local materials can create unique pieces.\nIf Luka values tradition, then he either preserves craftsmanship or promotes sustainability, but not both.",
+      "question": "Does the context entail the conclusion 'Luka promotes sustainability.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Luka cannot create unique pieces.\n- Luka gathers plants.\n\nAdded facts:\n- Luka does not forage natural resources.\n- Luka preserves craftsmanship.\n- Luka does not gather plants.",
+      "question": "Does the context entail the conclusion 'Luka promotes sustainability.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With the removed/added facts, the key chain becomes:\n1. Luka embraces modernization (given).\n2. From the modern-vs-local exclusion, Luka therefore does NOT support the local community.\n3. He appreciates quality (given), so the conditional \"If appreciates quality \u2192 (supports local OR values tradition, but not both)\" forces him to value tradition (since he doesn\u2019t support local).\n4. Valuing tradition triggers: \"values tradition \u2192 (preserves craftsmanship OR promotes sustainability, but not both).\"\n5. We are told Luka preserves craftsmanship (added fact), so the exclusive-or in that conditional blocks him from also promoting sustainability. Hence he does NOT promote sustainability. The statements therefore entail the negation of the conclusion, i.e., the answer is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 285
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Luka preserves craftsmanship, then he can live self-sufficiently.",
+      "question": "Does the context entail the conclusion 'Luka promotes sustainability.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The reasoning hinges on whether Luka values tradition, which is uncertain from the facts we can definitively derive. Assuming Luka values tradition, then the exclusive deciding rule requires either preserving craftsmanship or promoting sustainability but not both. Since we cannot definitively determine if Luka values tradition (we only know if he appreciates quality, he either supports local community or values tradition, but we know he embraces modernization, which precludes supporting local community, so he must value tradition). Given Luka values tradition (as shown here), and since he already preserves craftsmanship, he cannot also promote sustainability, hence the answer is False.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 535
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Luka preserves craftsmanship, then he can live self-sufficiently.",
+      "question": "Does the context entail the conclusion 'Luka promotes sustainability.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "With the rule that would have forced craftsmanship\u21d2self-sufficiency removed, nothing in the remaining context fixes whether Luka values tradition. The only path to that conclusion is: embraces modernization \u21d2 not support-local, then via the quality-appreciation conditional (support-local XOR value-tradition) we would get value-tradition. But the context never states that Luka actually appreciates quality; it only gives a conditional. Because the antecedent is not asserted, we cannot derive value-tradition, and therefore cannot trigger the later conditional that would force a choice between preserving craftsmanship and promoting sustainability. Hence the truth of \u2018promotes sustainability\u2019 is not entailed one way or the other.",
+      "correct": false,
+      "tags": [
+        "removed_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 718
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Luka values tradition and Luka preserves craftsmanship, then he promotes sustainability.\n\nAdded facts:\n- Luka does not support his local community.\n- Luka harvests wood.\n- Luka uses local materials.\n- Luka creates unique pieces.",
+      "question": "Does the context entail the conclusion 'Luka promotes sustainability.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the added facts:\n1. Luka does not support his local community.\n2. Given he embraces modernization and the earlier rule that he either supports local community or embraces modernization (but not both), this is consistent.\n3. The quality-appreciation conditional: If appreciates quality \u2192 (support local XOR value tradition). Since he does NOT support local, the consequent requires he value tradition (to satisfy the XOR). Hence Luka values tradition.\n4. Added rule: If (values tradition AND preserves craftsmanship) \u2192 promotes sustainability.\n5. Added fact: Luka creates unique pieces. From earlier rules, anyone who preserves craftsmanship OR uses local materials can create unique pieces; we are told he uses local materials (added fact), so this is satisfied. However, we are not explicitly told he preserves craftsmanship, so we cannot unconditionally apply the added rule.\nYet we can close the gap: Since he values tradition, the earlier rule 'If values tradition \u2192 (preserves craftsmanship XOR promotes sustainability)' applies. But with the new conditional, if he did preserve craftsmanship he would necessarily promote sustainability, which would violate that XOR (he would have both). Therefore the only consistent possibility under these rules is that he does NOT preserve craftsmanship and instead promotes sustainability. Thus the context forces 'promotes sustainability' to be true.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 940
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Luka preserves craftsmanship.\n\nAdded rules:\n- If Luka uses local materials, then he does not promote sustainability.",
+      "question": "Does the context entail the conclusion 'Luka promotes sustainability.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the added rule, anyone who uses local materials does not promote sustainability. The added facts explicitly state Luka uses local materials, so this rule immediately forces Luka not to promote sustainability. This directly contradicts the conclusion, so the context entails the negation of the claim, i.e., it is false that Luka promotes sustainability.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1324
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Luka uses local materials, then he does not promote sustainability.\n\nAdded rules:\n- If Luka uses local materials, then he preserves craftsmanship.",
+      "question": "Does the context entail the conclusion 'Luka promotes sustainability.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We still have: Luka uses local materials (given). New rule: uses local materials \u2192 preserves craftsmanship, so Luka preserves craftsmanship. Earlier, we already derived Luka values tradition (because he does not support the local community and the quality-appreciation conditional forces value-tradition). With both value-tradition and preserves-craftsmanship true, the previously added conditional \u2018If values tradition and preserves craftsmanship \u2192 promotes sustainability\u2019 fires, yielding promotes-sustainability. No remaining rule blocks this. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1477
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- Either Luka does not appreciate quality, or Luka supports his local community, or Luka values tradition.\n\nAdded facts:\n- Luka preserves craftsmanship.",
+      "question": "Does the context entail the conclusion 'Luka promotes sustainability.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The new disjunction states: \u00acappreciates-quality OR supports-local OR values-tradition. From earlier, Luka embraces-modernization \u21d2 does not support-local, so the second disjunct fails. The context never establishes he does not appreciate quality. Hence we cannot determine he values tradition. Valuing tradition is critical\u2014it is required to trigger the rule that would make him promote sustainability (since he also preserves craftsmanship). Without knowing if he values tradition, we cannot say either way whether he promotes sustainability; it remains undetermined.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1677
+    }
+  ]
+}

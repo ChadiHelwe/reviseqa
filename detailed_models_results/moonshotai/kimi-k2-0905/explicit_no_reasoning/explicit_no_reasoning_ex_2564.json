@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 121,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kassidy cannot find inspiration.\nKassidy is flexible.\nAnyone who appreciates culture or prefers solitude can find inspiration.\nKassidy is either flexible or values planning, but not both.\nIf someone values planning, they do not necessarily embrace spontaneity, and if someone embraces spontaneity, they do not necessarily value planning.\nIf someone loves routine, they do not necessarily embrace spontaneity, and if someone embraces spontaneity, they do not necessarily love routine.\nIf someone loves routine, they do not necessarily enjoy travel, and if someone enjoys travel, they do not necessarily love routine.\nIf Kassidy enjoys travel, then she is either a homebody or prefers solitude, but not both.\nKassidy is either adventurous or a homebody, but not both.",
+      "question": "Does the context entail the conclusion 'Kassidy is not adventurous.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, either x enjoys travel or x values planning, but not both.\n- For all x, if x cannot find inspiration, then x does not appreciate culture and x does not prefer solitude.",
+      "question": "Does the context entail the conclusion 'Kassidy is not adventurous.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. Kassidy cannot find inspiration \u21d2 by the new rule she neither appreciates culture nor prefers solitude.\n2. Anyone who can find inspiration does so only if they appreciate culture OR prefer solitude. Since Kassidy lacks both, she is blocked from ever finding inspiration; nothing can supply it.\n3. From (1) we know Kassidy does NOT prefer solitude.\n4. Rule: For all x, x either enjoys travel or values planning, but not both. So Kassidy does exactly one of {enjoys travel, values planning}.\n5. Claim 1: Assume Kassidy enjoys travel. Then by the last conditional in the original context, since she enjoys travel she is either a homebody or prefers solitude (but not both). She does NOT prefer solitude (from 3), so she would have to be a homebody. But the original context also says she is either adventurous or a homebody but not both. Being a homebody means she is NOT adventurous. So under travel\u21d2homebody\u21d2not adventurous.\n6. Claim 2: Assume Kassidy values planning (and therefore does not enjoy travel). We want to see if she could be adventurous. The context gives no direct link between valuing planning and being adventurous, so this branch alone does not force her to be non-adventurous. However, Kassidy is already known to be flexible (given). The original context asserts for every person: they are either flexible or values planning, but not both. Therefore if she values planning she would NOT be flexible. But she IS flexible (stated). Hence she cannot value planning. Therefore this branch is impossible.\n7. Since the planning branch is ruled out, she must (from 4) enjoy travel. Then from 5 she must be a homebody, hence not adventurous.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 264
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- For all x, if x cannot find inspiration, then x does not appreciate culture.\n- For all x, if x cannot find inspiration, then x does not prefer solitude.\n\nAdded facts:\n- Kassidy is flexible or Kassidy is not flexible.",
+      "question": "Does the context entail the conclusion 'Kassidy is not adventurous.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The new facts/rules add no usable information: the tautology \u2018Kassidy is flexible or not flexible\u2019 is always true, and the two conditional rules only repeat that \u2018cannot-find-inspiration \u21d2 lacks culture\u2019 and \u2018cannot-find-inspiration \u21d2 lacks solitude,\u2019 both of which we already used last round and which still leave us with the same two mutually-exclusive exhaustive cases for Kassidy (travel vs. planning). The earlier derivation that she must travel (because she can\u2019t value planning while remaining flexible) and therefore must be a homebody and hence not adventurous still holds; nothing here weakens or strengthens it. Thus the conclusion remains entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 733
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Kassidy enjoys travel, then Kassidy is either a homebody or prefers solitude, but not both.\n\nAdded rules:\n- If Kassidy enjoys travel, then Kassidy is a homebody if and only if she prefers solitude.",
+      "question": "Does the context entail the conclusion 'Kassidy is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The key issue is whether Kassidy must enjoy travel.  From the previous steps we still know:\n1. Kassidy is flexible (given).\n2. Everyone either enjoys travel or values planning exclusively (added rule from round 2).\n3. The original \u2018either flexible or values planning, but not both\u2019 still applies.\nHence Kassidy cannot value planning (because she is flexible), so she must enjoy travel.\n\nNow, under the new biconditional:\n   If Kassidy enjoys travel, then (she is a homebody \u2194 she prefers solitude).\n\nWe also still have:\n   Kassidy cannot find inspiration \u21d2 she does not prefer solitude.\n\nSo Kassidy does NOT prefer solitude.  With the biconditional that becomes:\n   homebody \u2194 prefers-solitude \u2261 homebody \u2194 False \u21d2 homebody is False.\nTherefore, if she enjoys travel, she is NOT a homebody.\n\nThe original disjunction \u2018adventurous or homebody, but not both\u2019 is still in force.  Not being a homebody forces her to be adventurous.  Since we have already derived that she must enjoy travel, she must therefore be adventurous.  Hence the statement \u2018Kassidy is not adventurous\u2019 is actually false in every model of the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 963
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Kassidy is flexible.\n\nAdded rules:\n- For all x, if x cannot find inspiration, then x is a homebody.",
+      "question": "Does the context entail the conclusion 'Kassidy is not adventurous.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We no longer know Kassidy is flexible.  The new rule says anyone who cannot find inspiration is a homebody, and Kassidy cannot find inspiration, so Kassidy is a homebody.  Original disjunction: Kassidy is either adventurous or a homebody, but not both.  Being a homebody forces her not to be adventurous.  Thus she is not adventurous in every model.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1338
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- For all x, if x cannot find inspiration, then x is a homebody.\n\nAdded facts:\n- Kassidy is flexible.",
+      "question": "Does the context entail the conclusion 'Kassidy is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We are back to knowing only that Kassidy cannot find inspiration, is flexible, and that everyone either enjoys travel or values planning (exclusively).  Flexibility blocks the \u2018values planning\u2019 branch, so Kassidy must enjoy travel.  The only travel-related rule now in force is the biconditional added two rounds ago: if she enjoys travel, then (homebody \u2194 prefers solitude).  We still derive that Kassidy does not prefer solitude (because she cannot find inspiration and lacks solitude), so the biconditional gives homebody \u2194 False \u21d2 she is not a homebody.  Original disjunction: adventurous or homebody, not both.  Not being a homebody forces her to be adventurous.  Hence she is adventurous, so \u2018Kassidy is not adventurous\u2019 is false in every model.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1495
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Kassidy is flexible.\n\nAdded rules:\n- For all x, if x values planning, then x is a homebody.\n\nAdded facts:\n- Kassidy is not flexible.",
+      "question": "Does the context entail the conclusion 'Kassidy is not adventurous.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Kassidy cannot find inspiration, so (as before) she neither appreciates culture nor prefers solitude.  The exhaustive exclusive choice \u2018enjoys travel or values planning\u2019 remains.  We now know Kassidy is *not* flexible.\n1. Suppose she values planning.  Then the new rule makes her a homebody; being a homebody implies she is *not* adventurous.\n2. Suppose instead she enjoys travel.  The biconditional \u2018if enjoys travel then (homebody \u2194 prefers solitude)\u2019 applies.  She does *not* prefer solitude, so the biconditional yields homebody \u2194 False \u21d2 she is *not* a homebody.  The original disjunction \u2018adventurous or homebody, not both\u2019 then forces her to be adventurous.\nThus one branch makes her non-adventurous, the other makes her adventurous.  Nothing else in the context decides between the two branches, so the truth value of \u2018Kassidy is not adventurous\u2019 varies across models.  The statement is therefore not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1738
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- Kassidy is flexible or Kassidy values planning.\n- It is not the case that Kassidy is flexible and Kassidy values planning.\n- Kassidy is adventurous or Kassidy is a homebody.\n- It is not the case that Kassidy is adventurous and Kassidy is a homebody.\n\nAdded facts:\n- Kassidy does not appreciate culture.\n- Kassidy does not prefer solitude.",
+      "question": "Does the context entail the conclusion 'Kassidy is not adventurous.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the new pair of rules we get the classic exclusive-or: Kassidy is flexible or values planning, but not both.  The same exclusive-or applies to adventurous/homebody.  We do not yet know which side of either disjunction holds.  Kassidy cannot find inspiration (given at the start of the sequence), so the earlier rules tell us she does not appreciate culture and does not prefer solitude (both now restated as added facts).  No rule links those negatives to either flexibility/planning or adventurous/homebody.  Hence both exclusive-or pairs remain undecided\u2014two binary choices independent of each other and of the inspiration-related facts.  Therefore \u2018Kassidy is not adventurous\u2019 is neither forced nor blocked; its truth value varies across models.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2041
+    }
+  ]
+}

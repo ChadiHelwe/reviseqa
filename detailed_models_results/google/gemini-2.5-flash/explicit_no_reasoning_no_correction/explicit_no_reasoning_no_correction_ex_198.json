@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "google/gemini-2.5-flash",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 59,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Girlfriend is a talented chef.\nGirlfriend does not work in a restaurant.\nGirlfriend hosts dinner parties.\nIf Girlfriend is a talented chef, then she either works in a restaurant or prefers homemade meals, but not both.\nIf Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both.\nGirlfriend either cooks for others or enjoys savory foods, but not both.\nGirlfriend either loves sweets or enjoys savory foods, but not both.\nGirlfriend either loves sweets or eats in moderation.\nEither GF has a big appetite or she eats in moderation, but not both.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Either Girlfriend has a big appetite or she eats in moderation, but not both.\n\nAdded rules:\n- Either Girlfriend has a big appetite or she eats in moderation.\n- Either Girlfriend does not have a big appetite or she does not eat in moderation.\n\nAdded facts:\n- Girlfriend prefers homemade meals.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's break down the given information and analyze the implications.\n\nFacts:\n1. Girlfriend is a talented chef (TC)\n2. Girlfriend does not work in a restaurant (NWR)\n3. Girlfriend hosts dinner parties (HDP)\n4. Girlfriend prefers homemade meals (PHM)\n\nRules:\n5. If TC, then (WR XOR PHM)\n6. If cooks for others (CFO), then (HDP XOR PHM)\n7. CFO XOR enjoys savory foods (ESF)\n8. loves sweets (LS) XOR ESF\n9. LS or eats in moderation (EIM)\n10. Either Girlfriend has a big appetite (BA) or she eats in moderation (EIM).\n11. Either Girlfriend does not have a big appetite (not BA) or she does not eat in moderation (not EIM).\n\nFrom Rule 5 and Fact 1 (TC is True):\n- TC -> (WR XOR PHM) is True.\n- Since TC is True, (WR XOR PHM) must be True.\n- We know from Fact 2 (NWR), that WR is False.\n- So, (False XOR PHM) is True. This means PHM must be True.\n- This matches Fact 4 (PHM is True), so there's no contradiction here.\n\nFrom Rule 6 and Fact 4 (PHM is True) and Fact 3 (HDP is True):\nHDP is True, PHM is True.\n- If CFO -> (HDP XOR PHM) is True.\n- (HDP XOR PHM) means (True XOR True) which evaluates to False.\n- So, if CFO, then False. This implies CFO must be False.\n\nFrom Rule 7 and CFO is False:\n- CFO XOR ESF is True.\n- False XOR ESF is True, which means ESF must be True.\n\nFrom Rule 8 and ESF is True:\n- LS XOR ESF is True.\n- LS XOR True is True, which means LS must be False.\n\nFrom Rule 9 and LS is False:\n- LS or EIM is True.\n- False or EIM is True, which means EIM must be True.\n\nFrom Rule 10 and Rule 11, they jointly represent (BA XOR EIM):\n- Rule 10: BA or EIM\n- Rule 11: not BA or not EIM (which is equivalent to not (BA and EIM))\n- Together, these mean (BA or EIM) AND not (BA and EIM), which is the definition of XOR.\n- So, BA XOR EIM is True.\n\nWe found EIM is True.\n- From (BA XOR EIM) being True, and EIM being True, it means BA must be False.\n\nTherefore, the conclusion 'GF has a big appetite' (BA) is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 225
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both.\n\nAdded facts:\n- Girlfriend cooks for others.\n- Girlfriend does not eat in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's break down the given information and analyze the implications.\n\n**Facts:**\n1.  Girlfriend is a talented chef (TC)\n2.  Girlfriend does not work in a restaurant (NWR)\n3.  Girlfriend hosts dinner parties (HDP)\n4.  Girlfriend prefers homemade meals (PHM) - *This was inferred in the previous step and added with 'Added facts'*\n5.  Girlfriend cooks for others (CFO)\n6.  Girlfriend does not eat in moderation (NEIM)\n\n**Rules:**\n7.  If Girlfriend is a talented chef (TC), then she either works in a restaurant (WR) or prefers homemade meals (PHM), but not both. (TC -> (WR XOR PHM))\n8.  Girlfriend either cooks for others (CFO) or enjoys savory foods (ESF), but not both. (CFO XOR ESF)\n9.  Girlfriend either loves sweets (LS) or enjoys savory foods (ESF), but not both. (LS XOR ESF)\n10. Girlfriend either loves sweets (LS) or eats in moderation (EIM). (LS OR EIM)\n11. Either Girlfriend has a big appetite (BA) or she eats in moderation (EIM). (BA OR EIM)\n12. Either Girlfriend does not have a big appetite (~BA) or she does not eat in moderation (~EIM). (~BA OR ~EIM)\n\n**Analysis:**\n\n*   **From Fact 1 (TC) and Fact 2 (NWR) and Rule 7 (TC -> (WR XOR PHM)):**\n    *   Since TC is True, (WR XOR PHM) must be True.\n    *   NWR means WR is False.\n    *   So, (False XOR PHM) is True, which implies PHM is True.\n\n*   **From Fact 5 (CFO) and Rule 8 (CFO XOR ESF):**\n    *   Since CFO is True, and (CFO XOR ESF) is True, then ESF must be False.\n\n*   **From ESF is False and Rule 9 (LS XOR ESF):**\n    *   Since ESF is False, and (LS XOR ESF) is True, then LS must be True.\n\n*   **From LS is True and Rule 10 (LS OR EIM):**\n    *   Since LS is True, (LS OR EIM) is True (regardless of EIM's value). This rule doesn't give us new information about EIM.\n\n*   **From Fact 6 (NEIM):**\n    *   NEIM means EIM is False.\n\n*   **From EIM is False and Rule 11 (BA OR EIM):**\n    *   Since EIM is False, and (BA OR EIM) is True, then BA must be True.\n\n*   **From BA is True, EIM is False, and Rule 12 (~BA OR ~EIM):**\n    *   ~BA is False.\n    *   ~EIM is True.\n    *   (False OR True) is True. This is consistent.\n\nTherefore, the conclusion 'GF has a big appetite' (BA) is entailed as True.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 970
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Girlfriend does not eat in moderation.\n\nAdded facts:\n- Girlfriend does not cook for others.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's re-evaluate the context with the new facts and removed fact.\n\n**Current Facts:**\n1.  Girlfriend is a talented chef (TC)\n2.  Girlfriend does not work in a restaurant (NWR)\n3.  Girlfriend hosts dinner parties (HDP)\n4.  Girlfriend prefers homemade meals (PHM) (Inferred from initial facts and rule)\n5.  Girlfriend does not cook for others (NCFO)\n\n**Rules:**\n6.  If TC, then (WR XOR PHM)\n7.  CFO XOR ESF\n8.  LS XOR ESF\n9.  LS or EIM\n10. BA or EIM\n11. ~BA or ~EIM\n\n**Step-by-step derivation:**\n\n1.  **From Fact 1 (TC) and Fact 2 (NWR) and Rule 6 (TC -> (WR XOR PHM)):**\n    *   TC is True, so (WR XOR PHM) must be True.\n    *   NWR means WR is False.\n    *   (False XOR PHM) is True, which implies PHM is True. (This confirms PHM as a derived fact, consistent with earlier steps).\n\n2.  **From Fact 5 (NCFO) and Rule 7 (CFO XOR ESF):**\n    *   NCFO means CFO is False.\n    *   Since (CFO XOR ESF) is True, and CFO is False, it means ESF must be True.\n\n3.  **From ESF is True and Rule 8 (LS XOR ESF):**\n    *   Since (LS XOR ESF) is True, and ESF is True, it means LS must be False.\n\n4.  **From LS is False and Rule 9 (LS or EIM):**\n    *   Since (LS or EIM) is True, and LS is False, it means EIM must be True.\n\n5.  **From EIM is True and Rules 10 & 11 (BA XOR EIM):**\n    *   Rule 10 (BA or EIM) and Rule 11 (~BA or ~EIM) together mean (BA XOR EIM).\n    *   Since (BA XOR EIM) is True, and EIM is True, it means BA must be False.\n\n**Conclusion:** Based on the derived steps, 'GF has a big appetite' (BA) is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1785
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- Either Girlfriend has a big appetite or she eats in moderation.\n- Either Girlfriend does not have a big appetite or she does not eat in moderation.\n\nAdded rules:\n- Either Girlfriend has a big appetite or she eats in moderation, but not both.\n\nAdded facts:\n- Girlfriend enjoys savory foods.\n- Girlfriend does not love sweets.\n- Girlfriend eats in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's break down the given information and track the truth values of propositions.\n\n**Facts provided or directly inferable (from previous steps like PHM):**\n1.  Girlfriend is a talented chef (TC) = True\n2.  Girlfriend does not work in a restaurant (NWR) = True\n3.  Girlfriend hosts dinner parties (HDP) = True\n4.  Girlfriend prefers homemade meals (PHM) = True (Derived from TC, NWR, and R5)\n5.  Girlfriend does not cook for others (NCFO) = True (meaning CFO = False)\n6.  Girlfriend enjoys savory foods (ESF) = True\n7.  Girlfriend does not love sweets (NLS) = True (meaning LS = False)\n8.  Girlfriend eats in moderation (EIM) = True\n\n**Rules:**\n9.  If TC, then (WR XOR PHM)\n10. CFO XOR ESF\n11. LS XOR ESF\n12. LS or EIM\n13. BA XOR EIM (This is the new combined rule for 'big appetite' and 'eats in moderation')\n\n**Let's evaluate step-by-step:**\n\n*   **From Fact 1 (TC) and Fact 2 (NWR) and Rule 9 (TC -> (WR XOR PHM)):**\n    *   TC is True. So (WR XOR PHM) must be True.\n    *   NWR means WR is False.\n    *   (False XOR PHM) is True, which implies PHM is True. (This is consistent with our derived facts).\n\n*   **From Fact 5 (CFO = False) and Rule 10 (CFO XOR ESF):**\n    *   CFO is False. Rule states (False XOR ESF) is True.\n    *   This implies ESF is True. (This is consistent with Fact 6).\n\n*   **From Fact 6 (ESF = True) and Fact 7 (LS = False) and Rule 11 (LS XOR ESF):**\n    *   LS is False. ESF is True. Rule states (False XOR True) which is True. (This is consistent with our facts).\n\n*   **From Fact 7 (LS = False) and Fact 8 (EIM = True) and Rule 12 (LS OR EIM):**\n    *   LS is False. EIM is True. Rule states (False OR True) which is True. (This is consistent with our facts).\n\n*   **From Fact 8 (EIM = True) and Rule 13 (BA XOR EIM):**\n    *   Rule 13 states (BA XOR EIM) is True.\n    *   Since EIM is True, for the XOR to be True, BA must be False.\n\n**Conclusion:** Based on the current context, 'GF has a big appetite' (BA) is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2399
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Girlfriend eats in moderation.\n\nRemoved rules:\n- Girlfriend either loves sweets or eats in moderation.\n\nAdded rules:\n- Girlfriend does not love sweets and she does not eat in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's re-evaluate the context with the new rules and removed facts.\n\n**Current Facts:**\n1.  Girlfriend is a talented chef (TC) = True\n2.  Girlfriend does not work in a restaurant (NWR) = True\n3.  Girlfriend hosts dinner parties (HDP) = True\n4.  Girlfriend prefers homemade meals (PHM) = True (Derived from TC, NWR, and R6)\n5.  Girlfriend does not cook for others (NCFO) = True (meaning CFO = False)\n6.  Girlfriend enjoys savory foods (ESF) = True\n7.  Girlfriend does not love sweets (NLS) = True (meaning LS = False)\n\n**Rules:**\n8.  If TC, then (WR XOR PHM)\n9.  CFO XOR ESF\n10. LS XOR ESF\n11. BA XOR EIM\n12. Girlfriend does not love sweets (NLS) AND she does not eat in moderation (NEIM). (~LS AND ~EIM)\n\n**Step-by-step derivation:**\n\n1.  **From Fact 1 (TC), Fact 2 (NWR), and Rule 8 (TC -> (WR XOR PHM)):**\n    *   TC is True, so (WR XOR PHM) must be True.\n    *   NWR means WR is False.\n    *   (False XOR PHM) is True, which implies PHM is True. (Consistent with derived facts).\n\n2.  **From Fact 5 (CFO = False) and Rule 9 (CFO XOR ESF):**\n    *   CFO is False. Rule 9 (False XOR ESF) is True, which implies ESF is True. (Consistent with Fact 6).\n\n3.  **From Fact 6 (ESF = True), Fact 7 (LS = False), and Rule 10 (LS XOR ESF):**\n    *   LS is False. ESF is True. Rule 10 (False XOR True) is True. (Consistent with our facts).\n\n4.  **From Rule 12 (~LS AND ~EIM):**\n    *   This rule directly states that LS is False AND EIM is False.\n    *   This is consistent with Fact 7 (NLS --> LS=False).\n    *   Thus, we now know EIM is False.\n\n5.  **From EIM is False and Rule 11 (BA XOR EIM):**\n    *   Rule 11 states (BA XOR EIM) is True.\n    *   Since EIM is False, for the XOR to be True, BA must be True.\n\n**Conclusion:** Based on the current context, 'GF has a big appetite' (BA) is True.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3169
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Girlfriend does not love sweets and she does not eat in moderation.\n\nAdded rules:\n- Girlfriend either loves sweets or eats in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's re-evaluate the context with the new rules and removed facts.\n\n**Current Facts:**\n1.  Girlfriend is a talented chef (TC) = True\n2.  Girlfriend does not work in a restaurant (NWR) = True\n3.  Girlfriend hosts dinner parties (HDP) = True\n4.  Girlfriend prefers homemade meals (PHM) = True (Derived earlier)\n5.  Girlfriend does not cook for others (NCFO) = True (meaning CFO = False)\n6.  Girlfriend enjoys savory foods (ESF) = True\n7.  Girlfriend does not love sweets (NLS) = True (meaning LS = False)\n\n**Rules:**\n8.  If TC, then (WR XOR PHM)\n9.  CFO XOR ESF\n10. LS XOR ESF\n11. BA XOR EIM\n12. LS OR EIM (Added rule)\n\n**Step-by-step derivation:**\n\n1.  **From Fact 1 (TC), Fact 2 (NWR), and Rule 8 (TC -> (WR XOR PHM)):**\n    *   TC is True, so (WR XOR PHM) must be True.\n    *   NWR means WR is False.\n    *   (False XOR PHM) is True, which implies PHM is True. (Consistent with derived facts).\n\n2.  **From Fact 5 (CFO = False) and Rule 9 (CFO XOR ESF):**\n    *   CFO is False. Rule 9 (False XOR ESF) is True, which implies ESF is True. (Consistent with Fact 6).\n\n3.  **From Fact 6 (ESF = True), Fact 7 (LS = False), and Rule 10 (LS XOR ESF):**\n    *   LS is False. ESF is True. Rule 10 (False XOR True) is True. (Consistent with our facts).\n\n4.  **From Fact 7 (LS = False) and Rule 12 (LS OR EIM):**\n    *   LS is False. Rule 12 states (False OR EIM) is True.\n    *   This implies EIM must be True.\n\n5.  **From EIM is True and Rule 11 (BA XOR EIM):**\n    *   Rule 11 states (BA XOR EIM) is True.\n    *   Since EIM is True, for the XOR to be True, BA must be False.\n\n**Conclusion:** Based on the current context, 'GF has a big appetite' (BA) is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3869
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- Girlfriend enjoys savory foods and she does not love sweets.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's re-evaluate the context with the new facts and existing rules.\n\n**Current Facts:**\n1.  Girlfriend is a talented chef (TC) = True\n2.  Girlfriend does not work in a restaurant (NWR) = True\n3.  Girlfriend hosts dinner parties (HDP) = True\n4.  Girlfriend prefers homemade meals (PHM) = True (Derived earlier)\n5.  Girlfriend does not cook for others (NCFO) = True (meaning CFO = False)\n6.  Girlfriend enjoys savory foods (ESF) = True\n7.  Girlfriend does not love sweets (NLS) = True (meaning LS = False)\n\n**Rules:**\n8.  If TC, then (WR XOR PHM)\n9.  CFO XOR ESF\n10. LS XOR ESF\n11. BA XOR EIM\n12. LS OR EIM\n\n**Step-by-step derivation:**\n\n1.  **From Fact 1 (TC), Fact 2 (NWR), and Rule 8 (TC -> (WR XOR PHM)):**\n    *   TC is True, so (WR XOR PHM) must be True.\n    *   NWR means WR is False.\n    *   (False XOR PHM) is True, which implies PHM is True. (Consistent with derived facts).\n\n2.  **From Fact 5 (CFO = False) and Rule 9 (CFO XOR ESF):**\n    *   CFO is False. Rule 9 (False XOR ESF) is True, which implies ESF is True. (This aligns with Fact 6: 'Girlfriend enjoys savory foods').\n\n3.  **From Fact 6 (ESF = True), Fact 7 (LS = False), and Rule 10 (LS XOR ESF):**\n    *   LS is False. ESF is True. Rule 10 (False XOR True) is True. This is consistent with the new fact 'Girlfriend enjoys savory foods and she does not love sweets'.\n\n4.  **From Fact 7 (LS = False) and Rule 12 (LS OR EIM):**\n    *   LS is False. Rule 12 states (False OR EIM) is True.\n    *   This implies EIM must be True.\n\n5.  **From EIM is True and Rule 11 (BA XOR EIM):**\n    *   Rule 11 states (BA XOR EIM) is True.\n    *   Since EIM is True, for the XOR to be True, BA must be False.\n\n**Conclusion:** Based on the current context, 'GF has a big appetite' (BA) is False.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 4524
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 119,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Dr. Dalia Hernandez does not develop theories.\nDalia collects samples.\nDr. Dalia Hernandez publishes research.\nDr. Dalia Hernandez teaches at a university.\nDr. Dalia Hernandez does not advance knowledge.\nDalia does not contribute to science.\nDalia explores microbiology.\nDr. Dalia Hernandez either develops theories or builds models, but not both.\nIf Dr. Dalia Hernandez collects samples, then she either designs experiments or builds models, but not both.\nIf Dr. Dalia Hernandez publishes research, then she either teaches at a university or investigates ecology, but not both.\nDr. Dalia Hernandez either analyzes data or designs experiments, but not both.\nFor all scientists, if they either conduct fieldwork or analyze data (but not both), then they advance knowledge.\nIf Dr. Dalia Hernandez either pursues a PhD or conducts fieldwork (but not both), then she contributes to science.\nIf Dr. Dalia Hernandez pursues a PhD, then she either explores microbiology or studies decomposition (but not both).\nDr. Dalia Hernandez either investigates ecology or studies synthesis.\nIf Dr. Dalia Hernandez either studies decomposition or studies synthesis (but not both), then she makes groundbreaking discoveries.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Dalia pursues a PhD and Dalia explores microbiology, then it is not the case that Dalia studies decomposition.\n- If Dalia publishes research and Dalia teaches at a university, then it is not the case that Dalia investigates ecology.\n- If Dalia collects samples and Dalia builds models, then it is not the case that Dalia designs experiments.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We are asked whether the context entails that Dr. Dalia Hernandez does NOT make groundbreaking discoveries. The only way to make that conclusion is if we can prove that she does NOT satisfy at least one of the alternative antecedents (studying decomposition or studying synthesis) in the rule: 'If Dr. Dalia Hernandez either studies decomposition or studies synthesis (but not both), then she makes groundbreaking discoveries.' We already know that she explores microbiology, so by the constraint 'explores microbiology' XOR 'studies decomposition' in the PhD path, she cannot study decomposition if she still works in microbiology. However, the modified context does not state whether she pursues a PhD or not, and therefore we still don't know definitively whether she chooses synthesis rather than decomposition (or vice versa). Even the additional constraints in the second block only impose further pairwise incompatibilities; none of them force synthesis to be false. Nothing in the entire set of rules rules out a consistent scenario in which she studies synthesis and so triggers the 'makes groundbreaking discoveries' rule. Since the truth of 'does not make groundbreaking discoveries' is not derivable under every admissible model, the conclusion is not entailed; it is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 353
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Dalia publishes research, then either Dalia teaches at a university or Dalia investigates ecology, but not both.\n- If Dalia publishes research and Dalia teaches at a university, then it is not the case that Dalia investigates ecology.\n\nAdded rules:\n- If Dalia publishes research and Dalia teaches at a university, then Dalia investigates ecology.\n- If Dalia investigates ecology, then it is not the case that Dalia studies synthesis.\n- If it is not the case that either Dalia studies decomposition or Dalia studies synthesis, but not both, then it is not the case that Dalia makes groundbreaking discoveries.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We know Dr. Hernandez publishes research (given). From the new rule added, if she publishes and teaches then she investigates ecology; since she teaches at a university, we now have that she investigates ecology. From the second added rule: if she investigates ecology, then she does NOT study synthesis. Thus it is certain that she does NOT study synthesis. Similarly, because she explores microbiology and if she pursued a PhD she would have to choose microbiology XOR decomposition, we already knew she cannot be studying decomposition. Hence she studies neither decomposition nor synthesis. The third added rule states: if it is not the case that (studies decomposition OR studies synthesis, but not both), then she does NOT make groundbreaking discoveries. Since she studies neither, the disjunction is false, so the antecedent of that rule is satisfied. Therefore the consequent \"she does NOT make groundbreaking discoveries\" follows. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 733
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Dalia investigates ecology, then it is not the case that Dalia studies synthesis.\n- If Dalia publishes research and Dalia teaches at a university, then Dalia investigates ecology.\n\nAdded rules:\n- If Dalia publishes research and Dalia teaches at a university, then Dalia studies synthesis.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Dr. Hernandez publishes research and teaches, so the new rule forces her to study synthesis. Since she already explores microbiology, she cannot study decomposition (from the earlier constraint that PhD-level microbiology and decomposition are mutually exclusive). Thus she satisfies \u2018studies synthesis but not decomposition\u2019, i.e. \u201ceither studies decomposition or studies synthesis, but not both\u201d is true (because synthesis is true and decomposition is false). The conditional rule states that if that exclusive-disjunction holds, then she makes groundbreaking discoveries. Therefore she does make them; consequently the claim that she does NOT make them is false. The statement is therefore not entailed; its negation is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1115
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If either Dalia pursues a PhD or Dalia conducts fieldwork, but not both, then Dalia contributes to science.\n\nAdded rules:\n- If it is not the case that Dalia contributes to science, then either Dalia pursues a PhD or Dalia conducts fieldwork, but not both.\n- If Dalia conducts fieldwork, then Dalia studies decomposition.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We still know Dalia explores microbiology; that is fixed. Whether she makes groundbreaking discoveries hinges on the truth of the exclusive-or \u201cstudies decomposition or studies synthesis, but not both.\u201d The new rules do not settle which of decomposition/synthesis she actually studies. If she studies synthesis (and not decomposition), the rule fires and she does make discoveries. The added implications are all one-way conditionals without forcing fieldwork or preventing synthesis; therefore models exist with and without her making the discoveries. Hence the claim that she does NOT is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1378
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Dalia collects samples, then either Dalia designs experiments or Dalia builds models, but not both.\n- If Dalia collects samples and Dalia builds models, then it is not the case that Dalia designs experiments.\n\nAdded rules:\n- If Dalia collects samples, then Dalia designs experiments.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the new rule, since Dalia collects samples she must design experiments. The earlier rule \u2018Dalia either analyzes data or designs experiments, but not both\u2019 then blocks her from analyzing data. A further universal rule states that any scientist who either conducts fieldwork or analyzes data (but not both) advances knowledge. Because she does neither (no fieldwork stated and data analysis ruled out), this universal antecedent is false for her, so nothing forces her to advance knowledge\u2014consistent with the given claim that she does not. Now consider the discoveries rule: she makes them iff she studies exactly one of {decomposition, synthesis}. She already explores microbiology, so if she took the PhD path she could not study decomposition; synthesis would then be her only route to the exclusive-or condition. Yet nothing in the revised context decides whether she pursues a PhD, conducts fieldwork, or ultimately studies synthesis. Thus consistent models exist where she does make discoveries and where she does not. Hence the statement \u2018she does not make groundbreaking discoveries\u2019 is not guaranteed true in every model; it is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1634
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Dalia collects samples, then Dalia designs experiments.\n\nAdded rules:\n- If Dalia collects samples, then it is not the case that Dalia designs experiments.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The new rule plus the fact that she collects samples implies she does NOT design experiments. A previous rule states she either analyzes data OR designs experiments, but not both. Since she doesn't design experiments, she must be analyzing data. From the universal rule, if a scientist conducts fieldwork OR analyzes data (but not both), then they advance knowledge. Since she analyzes data, this condition holds, meaning she advances knowledge. But this produces a direct contradiction with the given statement that she does NOT advance knowledge; in classical entailment a contradiction refutes the model, so no model can satisfy all the stated facts. Because the premises are jointly impossible, any conclusion\u2014including the one in question\u2014follows vacuously.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1987
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if either x conducts fieldwork or x analyzes data, but not both, then x advances knowledge.\n\nAdded facts:\n- Dalia pursues a PhD.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "With the universal rule removed, no conditional forces Dalia to advance knowledge, so the given claim that she does not advance knowledge is now consistent. She explores microbiology and now definitely pursues a PhD. From the rule 'If Dalia pursues a PhD, then either explores microbiology or studies decomposition, but not both,' we get that she cannot study decomposition. To make groundbreaking discoveries she must study exactly one of {decomposition, synthesis}; decomposition is out, so the only possibility is synthesis. However, no rule currently states or denies that she studies synthesis; it remains optional. Hence models exist in which she studies synthesis and makes discoveries, and models in which she does not study synthesis and fails to make discoveries. Since the claim 'she does not make groundbreaking discoveries' is not true in every admissible model, it is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2231
+    }
+  ]
+}
