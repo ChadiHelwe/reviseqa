@@ -10,7 +10,7 @@ mkdir -p detailed_models_results
 
 echo "Results will be saved to models_results/ and detailed_models_results/"
 
-model_name="deepseek/deepseek-r1-0528-qwen3-8b"
+model_name="moonshotai/kimi-k2-0905"
 # Run evaluation with small batch size and single model for testing
 python src/evaluation.py \
     --data-dir reviseqa_data/nl/verified-400/ \
