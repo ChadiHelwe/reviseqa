@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_correction",
+    "chain_index": 25,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jonas achieves success.\nJonas learns from failure.\nJonas does not face stiff competition.\nJonas produces a masterpiece.\nJonas does not rehearse diligently.\nJonas does not overcome his fears.\nJonas does not develop a unique style.\nJonas is not a passionate performer.\nIf Jonas takes risks, then he will either achieve success or learn from failure (but not both).\nJonas either possesses talent or faces stiff competition, but not both.\nIf Jonas produces a masterpiece, then he will earn recognition.\nIf someone impresses audiences, then they possess talent and rehearse diligently.\nAnyone who gains confidence will either overcome their fears or take risks (or both).\nAnyone who is dedicated to their craft will either develop a unique style or gain confidence (or both).\nIf Jonas is a passionate performer, then he will impress audiences and outshine others.",
+      "question": "Does the context entail the conclusion 'If Jonas is dedicated to his craft, then he will outshine others and earn recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Jonas achieves success. Jonas learns from failure.. If Jonas takes risks, then he will either achieve success or learn from failure (but not both).. Therefore, Jonas does not take risks.. Jonas does not face stiff competition.. Jonas either possesses talent or faces stiff competition, but not both.. Therefore, Jonas possesses talent.. Jonas produces a masterpiece.. If Jonas produces a masterpiece, then he will earn recognition.. Therefore, Jonas earns recognition.. Jonas possesses talent. Jonas does not rehearse diligently.. If someone impresses audiences, then they possess talent and rehearse diligently.. Therefore, Jonas does not impress audiences.. Jonas does not overcome his fears. Jonas does not take risks.. Anyone who gains confidence will either overcome their fears or take risks (or both).. Therefore, Jonas does not gain confidence.. Jonas does not develop a unique style. Jonas does not gain confidence.. Anyone who is dedicated to their craft will either develop a unique style or gain confidence (or both).. Therefore, Jonas is not dedicated to his craft.. Jonas is not a passionate performer. Jonas does not impress audiences.. If Jonas is a passionate performer, then he will impress audiences and outshine others.. Therefore, . Jonas is not dedicated to his craft. Jonas earns recognition.. . Therefore, If Jonas is dedicated to his craft, then he will outshine others and earn recognition..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Jonas learns from failure.\n\nAdded facts:\n- Jonas is dedicated to his craft.\n- Jonas does not outshine others.",
+      "question": "Does the context entail the conclusion 'If Jonas is dedicated to his craft, then he will outshine others and earn recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Adding \"Jonas is dedicated to his craft\" and keeping every other given/entailed fact:\n1. Jonas is dedicated \u2192 must satisfy: develop unique style OR gain confidence (or both).  Given he develops no unique style, he must gain confidence.\n2. Gain confidence \u2192 must satisfy: overcome fears OR take risks (or both).  Given he overcomes no fears, he must take risks.\n3. Take risks \u2192 succeeds OR learns from failure (exclusive).  Since the removed fact is the only mention of learning from failure and success is still asserted, the rule forces him to succeed (and not learn).  Nothing contradicts this.\n4. From masterpiece we still have: earns recognition.\nHowever, the new fact \"Jonas does not outshine others\" is added.  The conclusion we are asked to test is the conditional: \"If Jonas is dedicated to his craft, then he will outshine others and earn recognition.\"  We are not asserting the antecedent is true for everyone; we test what follows for any instance the antecedent holds.  In every model where the antecedent holds (and all stated facts including the new ones), the consequent must be true.  But here the consequent\u2019s first conjunct (outshine others) is false in the very model we are given (the antecedent is true yet outshining fails).  Hence the conditional fails: its antecedent is true but its consequent is false in this scenario. Therefore the context (with the new facts) does not entail the conditional; indeed the conditional is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 555
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Jonas is not a passionate performer.\n- Jonas does not rehearse diligently.\n- Jonas does not outshine others.\n\nAdded facts:\n- Jonas is a passionate performer.",
+      "question": "Does the context entail the conclusion 'If Jonas is dedicated to his craft, then he will outshine others and earn recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Add \u2018Jonas is a passionate performer\u2019.  From that: he impresses audiences AND outshines others.  \u2018Impresses audiences\u2019 requires talent + diligent rehearsal, so we must also add that he rehearses diligently (the context now satisfies this).  He still has talent, still produces a masterpiece, therefore still earns recognition.  All added/removed facts are compatible with the previous entailments except the removed \u2018does not outshine\u2019; that negative is now overridden.  The conditional to test is: \u2018If dedicated \u2192 (outshine AND earn recognition)\u2019.  We need to see whether in every model in which Jonas is dedicated the consequent holds.  From the rules: dedicated \u2192 (develop unique style OR gain confidence).  We still have that he develops no unique style, so to satisfy dedicated he must gain confidence.  Gain confidence \u2192 (overcome fears OR take risks).  He overcomes no fears, so must take risks.  Take risks \u2192 (succeed OR learn-from-failure) exclusive.  He still succeeds, so that branch works.  Thus a dedicated Jonas takes risks, gains confidence, succeeds, produces a masterpiece, earns recognition, is passionate, impresses, and outshines others.  Therefore in the only model antecedent true, consequent is true.  No counter-model exists given the updated context, so the conditional is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 965
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Jonas is a passionate performer, then he will impress audiences and outshine others.\n\nAdded rules:\n- If Jonas is a passionate performer, then he will impress audiences and he will not outshine others.",
+      "question": "Does the context entail the conclusion 'If Jonas is dedicated to his craft, then he will outshine others and earn recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With the new rule, a passionate Jonas impresses audiences but does NOT outshine others.  Nothing else forces anyone to outshine others; the only other mention is in the conclusion we are testing.  Could a dedicated Jonas fail to outshine?  Yes: he could be passionate (hence not outshining) and still satisfy all other constraints.  Since there is at least one model where the antecedent \u2018dedicated\u2019 is true but \u2018outshine others\u2019 is false, the conditional fails.  Therefore the context does not entail the statement; the conditional is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1339
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x impresses audiences, then x possesses talent and x rehearses diligently.\n\nAdded rules:\n- For all x, if x impresses audiences, then x possesses talent.\n- For all x, if x impresses audiences, then x rehearses diligently.\n\nAdded facts:\n- Jonas does not outshine others.\n- Jonas earns recognition.",
+      "question": "Does the context entail the conclusion 'If Jonas is dedicated to his craft, then he will outshine others and earn recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The split universal rule is logically equivalent to the original, so entailments remain unchanged.  Added facts: Jonas does not outshine others, and earns recognition (already entailed).  The conditional to test is: dedicated \u2192 (outshine AND earn recognition).  Since we now explicitly have \u2018does not outshine others\u2019, any model where Jonas is dedicated makes the antecedent true and the first conjunct of the consequent false, hence the whole consequent false.  Therefore the conditional is falsified in the very scenario the context describes, so the context does not entail it; instead it refutes it.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1556
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Jonas does not outshine others.\n\nRemoved rules:\n- If Jonas is a passionate performer, then he will impress audiences and he will not outshine others.\n\nAdded rules:\n- If Jonas is a passionate performer, then he will outshine others.",
+      "question": "Does the context entail the conclusion 'If Jonas is dedicated to his craft, then he will outshine others and earn recognition.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We must check whether in every model where Jonas is dedicated to his craft he both outshines others and earns recognition.  Earn recognition is already guaranteed (he produces a masterpiece).  For outshining: the only rule that forces anyone to outshine is the new one: passionate performer \u2192 outshines.  A dedicated Jonas need not be passionate.  From the chain dedicated \u2192 (develop unique style or gain confidence), and with no unique style, he must gain confidence; gain confidence \u2192 (overcome fears or take risks); with fears not overcome, he must take risks; take risks \u2192 (succeed or learn-from-failure) exclusive; he succeeds, so that is consistent.  Nothing in this path makes him passionate, so he might not be.  If he is not passionate, the new rule is silent, and no other rule compels outshining.  Hence a model exists where he is dedicated yet not passionate and does not outshine others.  Because the consequent\u2019s first part can be false while the antecedent is true, the conditional is not entailed.  Therefore the answer is Uncertain (we lack a guarantee).",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1809
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- Anyone who gains confidence will either overcome their fears or take risks (or both).\n- Anyone who is dedicated to their craft will either develop a unique style or gain confidence (or both).\n\nAdded rules:\n- For all x, if x gains confidence and x does not overcome their fears, then x takes risks.\n- For all x, if x is dedicated to their craft and x does not develop a unique style, then x gains confidence.",
+      "question": "Does the context entail the conclusion 'If Jonas is dedicated to his craft, then he will outshine others and earn recognition.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The new rules are logically equivalent to the removed ones, so previous entailments are preserved.  Jonas still earns recognition (via masterpiece).  To test the conditional: assume Jonas is dedicated.  He does not develop a unique style \u21d2 by new rule he gains confidence.  He does not overcome fears \u21d2 by new rule he takes risks.  Taking risks (with success) keeps everything consistent.  However, nothing forces him to be passionate, and the only rule that could make him outshine is the contingent rule for passionate performers (if added earlier) or nothing at all.  Since dedication alone never compels passion, a model exists where he is dedicated, non-passionate, and fails to outshine.  Thus the consequent\u2019s first conjunct can be false while the antecedent is true \u21d2 the conditional is not guaranteed.  (Recognition is guaranteed, but outshining is not.)  Hence we cannot entail the full conjunction.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2153
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Jonas does not outshine others, then Jonas is not a passionate performer.\n\nAdded facts:\n- Jonas gains confidence.\n- Jonas takes risks.\n- Jonas does not learn from failure.\n- Jonas possesses talent.",
+      "question": "Does the context entail the conclusion 'If Jonas is dedicated to his craft, then he will outshine others and earn recognition.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Assume Jonas is dedicated.  From earlier facts he does not develop a unique style, so by the rule \u2018dedicated \u2227 \u00acunique \u2192 gains confidence\u2019 he must gain confidence (already true).  Gaining confidence without overcoming fears forces him to take risks (already true).  Taking risks and not learning from failure \u21d2 he succeeds.  Succeeding + produces masterpiece \u21d2 earns recognition (guaranteed).  To get \u2018outshine\u2019 we need him to be passionate.  The new contrapositive rule says: if he does NOT outshine \u21d2 not passionate.  But we want the converse: if he IS passionate \u21d2 he DOES outshine.  That converse is not stated, so being passionate is sufficient for outshining but not proven necessary.  Could a dedicated Jonas be non-passionate?  Yes\u2014nothing forces passion.  In that case he might fail to outshine, satisfying the conditional premise but falsifying the consequent.  Hence a counter-model exists: dedicated, non-passionate, does not outshine, yet still earns recognition.  Since the full conjunction \u2018outshine AND earn recognition\u2019 can be false while the antecedent is true, the conditional is not entailed.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2490
+    }
+  ]
+}

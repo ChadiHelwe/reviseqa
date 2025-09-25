@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_correction",
+    "chain_index": 42,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Opal has a varied texture.\nOpal is not visually stunning.\nOpal has stratified layers.\nOpal does not have natural beauty.\nOpal is shaped by water.\nOpal is not a unique landform.\nIf Opal has a dynamic shape and varied texture, then it is visually stunning.\nOpal is either ancient or has a dynamic shape.\nIf Opal is an ancient geological formation, then it either has stratified layers or varied geology, but not both.\nOpal either has a stable structure or has natural beauty.\nOpal either has a stable structure or has distinctive features, but not necessarily both.\nAll geological formations that are shaped by water either have distinctive features or have rugged terrain (or both).\nOpal either has varied geology or supports diverse ecosystems.\nIf Opal has rugged terrain, then it is formed by volcanic activity and supports diverse ecosystems.\nIf Opal is either formed by erosion or formed by volcanic activity (but not both), then it is a unique landform.",
+      "question": "Does the context entail the conclusion 'Opal is formed by erosion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Opal has a varied texture. Opal is not visually stunning.. If Opal has a dynamic shape and varied texture, then it is visually stunning.. Therefore, Opal does not have a dynamic shape.. Opal does not have a dynamic shape.. Opal is either ancient or has a dynamic shape.. Therefore, Opal is an ancient geological formation.. Opal is an ancient geological formation. Opal has stratified layers.. If Opal is an ancient geological formation, then it either has stratified layers or varied geology, but not both.. Therefore, Opal does not have varied geology.. Opal does not have natural beauty.. Opal either has a stable structure or has natural beauty.. Therefore, Opal has a stable structure.. Opal has a stable structure.. Opal either has a stable structure or has distinctive features, but not necessarily both.. Therefore, Opal does not have distinctive features.. Opal is shaped by water. Opal does not have distinctive features.. All geological formations that are shaped by water either have distinctive features or have rugged terrain (or both).. Therefore, Opal has rugged terrain.. Opal does not have varied geology.. Opal either has varied geology or supports diverse ecosystems.. Therefore, Opal supports diverse ecosystems.. Opal has rugged terrain. Opal supports diverse ecosystems.. If Opal has rugged terrain, then it is formed by volcanic activity and supports diverse ecosystems.. Therefore, Opal is formed by volcanic activity.. Opal is formed by volcanic activity. Opal is not a unique landform.. If Opal is either formed by erosion or formed by volcanic activity (but not both), then it is a unique landform.. Therefore, Opal is formed by erosion..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Opal is ancient, then it either has stratified layers or varied geology, but not both.\n\nAdded rules:\n- If Opal is ancient, then it has stratified layers or varied geology.\n- If Opal is ancient, then it does not have stratified layers or does not have varied geology.\n\nAdded facts:\n- Opal does not have distinctive features.\n- It is not the case that Opal is formed by erosion or formed by volcanic activity, but not both.",
+      "question": "Does the context entail the conclusion 'Opal is formed by erosion.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Opal has varied texture and is not visually stunning; from the conditional that a dynamic shape + varied texture \u2192 visually stunning we conclude Opal lacks a dynamic shape. With Opal either ancient or dynamic, it must therefore be ancient. From the two new rules: (i) ancient \u21d2 (stratified \u2228 varied geology), (ii) ancient \u21d2 (\u00acstratified \u2228 \u00acvaried geology). Opal has stratified layers, so (ii) forces \u00acvaried geology (it cannot have both). Opal lacks natural beauty, so with the stable-structure \u2228 beauty disjunction it has stable structure. Opal is shaped by water and lacks distinctive features; the water-shaping rule requires distinctive features or rugged terrain, so Opal must have rugged terrain. Rugged terrain \u2192 volcanic activity + supports ecosystems, so Opal is volcanic. Opal is therefore both volcanic and not volcanic (since it is stable and lacks varied geology, and cannot be both volcanic and stable), a contradiction. The new fact adds: it is NOT the case that (erosion XOR volcanic) holds, so Opal cannot be formed by exactly one of the two. Since volcanic is entailed, erosion cannot be the sole process, but nothing compels erosion at all; the only forced formation is volcanic. Thus erosion is not established and in fact cannot occur without violating the XOR exclusion. Hence Opal is not formed by erosion.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 660
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- It is not the case that Opal is formed by erosion or formed by volcanic activity, but not both.\n\nAdded rules:\n- Opal is formed by erosion if and only if it is formed by volcanic activity.\n\nAdded facts:\n- Opal has rugged terrain.\n- Opal is formed by volcanic activity.\n- Opal is formed by erosion.",
+      "question": "Does the context entail the conclusion 'Opal is formed by erosion.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added facts explicitly state that Opal is formed by erosion. Since this is given as true in the context, the conclusion is directly entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1101
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Opal is ancient, then it has stratified layers or varied geology.\n- If Opal is ancient, then it does not have stratified layers or does not have varied geology.\n\nAdded facts:\n- Opal supports diverse ecosystems.\n- Opal has a stable structure.\n- Opal does not have a dynamic shape.\n- Opal is ancient.",
+      "question": "Does the context entail the conclusion 'Opal is formed by erosion.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Opal is ancient and lacks a dynamic shape (given). From \u2018Opal either has a stable structure or has natural beauty\u2019 and the fact that Opal does not have natural beauty (from original context), we retain that Opal has a stable structure (also newly given). Opal supports diverse ecosystems (newly given). No rule now links ancient status to stratified/varied geology, and no fact says Opal has rugged terrain or is shaped by water. Without rugged terrain, the conditional that would force volcanic activity (and then the disjunction about erosion/volcanic \u21d2 unique landform) never triggers. Likewise, nothing asserts Opal is shaped by water, so the water-shaping rule is silent. No remaining statement connects Opal\u2019s formation to erosion. Hence erosion is neither entailed nor ruled out.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1247
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Opal is not a unique landform, then Opal is formed by erosion if and only if it is formed by volcanic activity.",
+      "question": "Does the context entail the conclusion 'Opal is formed by erosion.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Original information still tells us Opal is not a unique landform, so the newly added biconditional applies: Opal is formed by erosion \u2194 Opal is formed by volcanic activity. No premise asserts Opal is volcanic, nor that it is erosional; the biconditional only links the two. Thus Opal could be both, or neither, consistent with all statements. Because neither side of the equivalence is established, erosion is not entailed.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1535
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Opal is formed by erosion if and only if it is formed by volcanic activity.\n\nAdded rules:\n- If Opal is shaped by water, then it has distinctive features or has rugged terrain.",
+      "question": "Does the context entail the conclusion 'Opal is formed by erosion.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The new rule is identical to one already present in the original context, so nothing changes. No premise states or forces Opal to be shaped by erosion; earlier reasoning leaves the question open.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1704
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Opal is formed by erosion if and only if it is formed by volcanic activity.",
+      "question": "Does the context entail the conclusion 'Opal is formed by erosion.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The added fact is a biconditional: Opal is formed by erosion \u2194 Opal is formed by volcanic activity. This only links the two possibilities; it does not establish that either is true. Since neither Opal being formed by erosion nor by volcanic activity is asserted or entailed by any other premise, the truth-value of erosion remains undetermined.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1828
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Opal is formed by erosion.\n\nAdded facts:\n- Opal is not formed by erosion.",
+      "question": "Does the context entail the conclusion 'Opal is formed by erosion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context explicitly states that Opal is not formed by erosion, which directly contradicts the conclusion that it is formed by erosion. Therefore, the conclusion is false based on the given facts.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1964
+    }
+  ]
+}
