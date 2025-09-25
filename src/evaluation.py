@@ -583,7 +583,12 @@ class Evaluator:
             for track, records in self.token_stats.items():
                 for rec in records:
                     # Clean reasoning text for CSV (replace newlines and quotes)
-                    reasoning_text = rec.get("reasoning", "").replace("\n", " ").replace('"', '""')
+                    reasoning = rec.get("reasoning", "")
+                    if isinstance(reasoning, list):
+                        reasoning_text = " ".join(str(item) for item in reasoning)
+                    else:
+                        reasoning_text = str(reasoning)
+                    reasoning_text = reasoning_text.replace("\n", " ").replace('"', '""')
                     writer.writerow([
                         track,
                         rec["chain_idx"],

@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "google/gemini-2.5-flash",
+    "task_path": "implicit_no_reasoning",
+    "chain_index": 373,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Gwen does not take breaks.\nGwen exercises regularly.\nGwen feels good.\nGwen conducts research.\nGwen does not publish papers.\nGwen works hard.\nEveryone manages stress or takes breaks.\nIf Gwen exercises regularly and manages stress, then she gets enough rest.\nIf a person eats well, then they feel good.\nFor Gwen, either she gets enough rest or she stays healthy, but it's not necessarily the case that getting enough rest and staying healthy go hand in hand.\nEveryone who conducts research either publishes papers or reads widely (or both).\nIf Gwen eats well or achieves her goals, then she stays healthy.\nIf Gwen reads widely, then she is scholarly.\nIf someone is successful and works hard, then they achieve their goals.\nIf Gwen is either athletic or scholarly (but not both), then she is successful.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Gwen does not take breaks.\nGwen exercises regularly.\nGwen feels good.\nGwen conducts research.\nGwen does not publish papers.\nGwen works hard.\nGwen reads widely.\nFor all x, if x does not take breaks, then x manages stress.\nIf Gwen exercises regularly and Gwen manages stress, then Gwen gets enough rest.\nFor all x, if x does not feel good, then x does not eat well.\nGwen gets enough rest or Gwen stays healthy, and it is not the case that Gwen gets enough rest and Gwen stays healthy.\nFor all x, if x conducts research, then x publishes papers or x reads widely.\nIf Gwen eats well or Gwen achieves her goals, then Gwen stays healthy.\nIf Gwen reads widely, then Gwen is scholarly.\nFor all x, if x is successful and x works hard, then x achieves their goals.\nIf Gwen is athletic or Gwen is scholarly, but not both, then Gwen is successful.\nIf Gwen conducts research and Gwen does not publish papers, then Gwen reads widely.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's break down the given information and infer new facts.\n\n1.  **Gwen does not take breaks.** (Given)\n2.  **For all x, if x does not take breaks, then x manages stress.** (Given)\n    *   From (1) and (2), we infer: **Gwen manages stress.**\n\n3.  **Gwen exercises regularly.** (Given)\n4.  **If Gwen exercises regularly and Gwen manages stress, then Gwen gets enough rest.** (Given)\n    *   From (3), (2') 'Gwen manages stress', and (4), we infer: **Gwen gets enough rest.**\n\n5.  **Gwen gets enough rest or Gwen stays healthy, and it is not the case that Gwen gets enough rest and Gwen stays healthy.** (Given - Exclusive OR)\n    *   From (4') 'Gwen gets enough rest' and (5), since it's an exclusive OR, we infer: **Gwen does not stay healthy.**\n\n6.  **Gwen feels good.** (Given)\n7.  **For all x, if x does not feel good, then x does not eat well.** (Given - Contrapositive: If x eats well, then x feels good)\n    *   This current information (6 and 7) does not directly tell us if Gwen eats well or not, as the rule is 'if NOT good, then NOT eat well'. We know 'good', so the antecedent of the contrapositive is not met. However, if 'Gwen eats well' implies 'Gwen feels good', then 'Gwen feels good' doesn't necessarily mean 'Gwen eats well'.\n\n8.  **If Gwen eats well or Gwen achieves her goals, then Gwen stays healthy.** (Given)\n    *   From (5') 'Gwen does not stay healthy' and (8), by modus tollens, we infer: **NOT (Gwen eats well or Gwen achieves her goals).**\n    *   This means: **Gwen does not eat well AND Gwen does not achieve her goals.**\n\n9.  **Gwen works hard.** (Given)\n10. **For all x, if x is successful and x works hard, then x achieves their goals.** (Given)\n    *   We know from (8') that **Gwen does not achieve her goals.**\n    *   From (9) 'Gwen works hard', (8') 'Gwen does not achieve her goals', and (10), if 'Gwen is successful' AND 'Gwen works hard' implies 'Gwen achieves her goals', and 'Gwen does not achieve her goals' is true, then it must be that NOT ('Gwen is successful' AND 'Gwen works hard'). Since 'Gwen works hard' is true, it must be that **Gwen is not successful.**\n\n11. **Gwen conducts research.** (Given)\n12. **Gwen does not publish papers.** (Given)\n13. **If Gwen conducts research and Gwen does not publish papers, then Gwen reads widely.** (Given)\n    *   From (11), (12), and (13), we infer: **Gwen reads widely.** (This is redundant due to the next rule, but consistent).\n\n14. **For all x, if x conducts research, then x publishes papers or x reads widely.** (Given)\n    *   From (11) 'Gwen conducts research' and (14), we know 'Gwen publishes papers OR Gwen reads widely'.\n    *   Since (12) 'Gwen does not publish papers', we infer: **Gwen reads widely.** (Confirms 13')\n\n15. **If Gwen reads widely, then Gwen is scholarly.** (Given)\n    *   From (14') 'Gwen reads widely' and (15), we infer: **Gwen is scholarly.**\n\n16. **If Gwen is athletic or Gwen is scholarly, but not both, then Gwen is successful.** (Given - Exclusive OR for the antecedent)\n    *   We know from (10') that **Gwen is not successful.**\n    *   From (16) and (10'), by modus tollens, we infer: **NOT (Gwen is athletic XOR Gwen is scholarly).**\n    *   This means either (Gwen is athletic AND Gwen is scholarly) OR (Gwen is not athletic AND Gwen is not scholarly).\n    *   We know from (15') that **Gwen is scholarly.**\n    *   Since Gwen is scholarly, and it's not (athletic XOR scholarly), then it cannot be (Gwen is not athletic AND Gwen is not scholarly). Therefore, it must be the case that (Gwen is athletic AND Gwen is scholarly).\n    *   Thus, we infer: **Gwen is athletic.**\n\nAll steps logically lead to 'Gwen is athletic.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 270
+    },
+    {
+      "step": 2,
+      "context": "Gwen does not take breaks.\nGwen exercises regularly.\nGwen feels good.\nGwen conducts research.\nGwen does not publish papers.\nGwen works hard.\nGwen reads widely.\nFor all x, if x does not take breaks, then x manages stress.\nFor all x, if x does not feel good, then x does not eat well.\nGwen gets enough rest or Gwen stays healthy, and it is not the case that Gwen gets enough rest and Gwen stays healthy.\nFor all x, if x conducts research, then x publishes papers or x reads widely.\nIf Gwen eats well or Gwen achieves her goals, then Gwen stays healthy.\nIf Gwen reads widely, then Gwen is scholarly.\nFor all x, if x is successful and x works hard, then x achieves their goals.\nIf Gwen is athletic or Gwen is scholarly, but not both, then Gwen is successful.\nIf Gwen conducts research and Gwen does not publish papers, then Gwen reads widely.\nIf Gwen manages stress, then she is not athletic.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's break down the given information and infer new facts.\n\n1.  **Gwen does not take breaks.** (Given)\n2.  **For all x, if x does not take breaks, then x manages stress.** (Given)\n    *   From (1) and (2), we infer: **Gwen manages stress.**\n\n3.  **If Gwen manages stress, then she is not athletic.** (Given - New rule from this iteration)\n    *   From (2') 'Gwen manages stress' and (3), we infer: **Gwen is not athletic.**\n\nNow, let's re-evaluate the question 'Does the context entail the conclusion 'Gwen is athletic.'' with this new inference.\n\nSince we have directly inferred 'Gwen is not athletic', the conclusion 'Gwen is athletic' must be false.\n\nWe can stop here, as we have reached a direct contradiction to the conclusion, based on the new piece of information provided.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1623
+    },
+    {
+      "step": 3,
+      "context": "Gwen does not take breaks.\nGwen exercises regularly.\nGwen feels good.\nGwen conducts research.\nGwen does not publish papers.\nGwen works hard.\nGwen reads widely.\nFor all x, if x does not take breaks, then x manages stress.\nFor all x, if x does not feel good, then x does not eat well.\nGwen gets enough rest or Gwen stays healthy, and it is not the case that Gwen gets enough rest and Gwen stays healthy.\nFor all x, if x conducts research, then x publishes papers or x reads widely.\nIf Gwen eats well or Gwen achieves her goals, then Gwen stays healthy.\nIf Gwen reads widely, then Gwen is scholarly.\nFor all x, if x is successful and x works hard, then x achieves their goals.\nIf Gwen is athletic or Gwen is scholarly, but not both, then Gwen is successful.\nIf Gwen conducts research and Gwen does not publish papers, then Gwen reads widely.\nGwen is athletic.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The last statement in the context explicitly states: 'Gwen is athletic.' Therefore, the conclusion 'Gwen is athletic' is directly entailed by the given context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2096
+    },
+    {
+      "step": 4,
+      "context": "Gwen does not take breaks.\nGwen exercises regularly.\nGwen feels good.\nGwen conducts research.\nGwen does not publish papers.\nGwen works hard.\nGwen reads widely.\nGwen is scholarly.\nFor all x, if x does not take breaks, then x manages stress.\nFor all x, if x does not feel good, then x does not eat well.\nGwen gets enough rest or Gwen stays healthy, and it is not the case that Gwen gets enough rest and Gwen stays healthy.\nFor all x, not x conducts research or x publishes papers or x reads widely.\nIf Gwen eats well or Gwen achieves her goals, then Gwen stays healthy.\nIf Gwen reads widely, then Gwen is scholarly.\nFor all x, if x is successful and x works hard, then x achieves their goals.\nIf Gwen is athletic or Gwen is scholarly, but not both, then Gwen is successful.\nIf Gwen conducts research and Gwen does not publish papers, then Gwen reads widely.\nGwen is athletic.\nGwen is not successful or Gwen achieves her goals.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly states 'Gwen is athletic.' Therefore, the conclusion 'Gwen is athletic' is directly present in the context and is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2381
+    },
+    {
+      "step": 5,
+      "context": "Gwen does not take breaks.\nGwen exercises regularly.\nGwen feels good.\nGwen conducts research.\nGwen does not publish papers.\nGwen works hard.\nGwen reads widely.\nGwen is scholarly.\nFor all x, if x does not take breaks, then x manages stress.\nFor all x, if x does not feel good, then x does not eat well.\nGwen gets enough rest or Gwen stays healthy, and it is not the case that Gwen gets enough rest and Gwen stays healthy.\nFor all x, not x conducts research or x publishes papers or x reads widely.\nIf Gwen eats well or Gwen achieves her goals, then Gwen stays healthy.\nIf Gwen reads widely, then Gwen is scholarly.\nFor all x, if x is successful and x works hard, then x achieves their goals.\nIf Gwen is athletic or Gwen is scholarly, and it is not the case that Gwen is both athletic and scholarly, then Gwen is successful.\nIf Gwen conducts research, then if Gwen does not publish papers, then Gwen reads widely.\nGwen is athletic.\nGwen is not successful or Gwen achieves her goals.\nGwen is athletic or Gwen is not athletic.\nGwen manages stress.\nGwen is athletic or Gwen is scholarly.\nFor all y, if y does not take breaks, then y manages stress.\nFor all x, if x eats well, then they feel good.\nNot Gwen reads widely or Gwen is scholarly.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context contains the explicit statement: 'Gwen is athletic.' This direct statement entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2678
+    },
+    {
+      "step": 6,
+      "context": "Gwen does not take breaks.\nGwen exercises regularly.\nGwen feels good.\nGwen conducts research.\nGwen does not publish papers.\nGwen works hard.\nGwen reads widely.\nGwen is scholarly.\nFor all x, if x does not take breaks, then x manages stress.\nFor all x, if x does not feel good, then x does not eat well.\nGwen gets enough rest or Gwen stays healthy, and it is not the case that Gwen gets enough rest and Gwen stays healthy.\nFor all x, not x conducts research or x publishes papers or x reads widely.\nIf Gwen eats well or Gwen achieves her goals, then Gwen stays healthy.\nIf Gwen reads widely, then Gwen is scholarly.\nFor all x, if x is successful and x works hard, then x achieves their goals.\nIf Gwen is athletic or Gwen is scholarly, and it is not the case that Gwen is both athletic and scholarly, then Gwen is successful.\nIf Gwen conducts research, then if Gwen does not publish papers, then Gwen reads widely.\nGwen is not successful or Gwen achieves her goals.\nGwen is athletic or Gwen is not athletic.\nGwen manages stress.\nGwen is athletic or Gwen is scholarly.\nFor all y, if y does not take breaks, then y manages stress.\nFor all x, if x eats well, then they feel good.\nNot Gwen reads widely or Gwen is scholarly.\nFor all x, if x manages stress, then x is not athletic.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's first establish some basic facts:\n1.  **Gwen does not take breaks.** (Given)\n2.  **For all x, if x does not take breaks, then x manages stress.** (Given)\n    *   From (1) and (2), we infer: **Gwen manages stress.**\n\nNow, let's look at a new rule:\n3.  **For all x, if x manages stress, then x is not athletic.** (Given)\n    *   From (2') 'Gwen manages stress' and (3), we infer: **Gwen is not athletic.**\n\nThe question is whether the context entails the conclusion 'Gwen is athletic.' Since we have derived 'Gwen is not athletic' directly from the context, the conclusion 'Gwen is athletic' must be false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3039
+    },
+    {
+      "step": 7,
+      "context": "Gwen does not take breaks.\nGwen exercises regularly.\nGwen feels good.\nGwen conducts research.\nGwen does not publish papers.\nGwen works hard.\nGwen reads widely.\nGwen is scholarly.\nFor all x, if x does not take breaks, then x manages stress.\nFor all x, if x does not feel good, then x does not eat well.\nGwen gets enough rest or Gwen stays healthy, and it is not the case that Gwen gets enough rest and Gwen stays healthy.\nFor all x, not x conducts research or x publishes papers or x reads widely.\nIf Gwen eats well or Gwen achieves her goals, then Gwen stays healthy.\nIf Gwen reads widely, then Gwen is scholarly.\nFor all x, if x is successful and x works hard, then x achieves their goals.\nIf Gwen is athletic or Gwen is scholarly, and it is not the case that Gwen is both athletic and scholarly, then Gwen is successful.\nIf Gwen conducts research, then if Gwen does not publish papers, then Gwen reads widely.\nGwen is not successful or Gwen achieves her goals.\nGwen is athletic or Gwen is not athletic.\nGwen manages stress.\nGwen is athletic or Gwen is scholarly.\nFor all y, if y does not take breaks, then y manages stress.\nFor all x, if x eats well, then they feel good.\nNot Gwen reads widely or Gwen is scholarly.\nIf Gwen manages stress, then Gwen is athletic.",
+      "question": "Does the context entail the conclusion 'Gwen is athletic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's follow the chain of implications:\n\n1.  **Gwen does not take breaks.** (Given)\n2.  **For all x, if x does not take breaks, then x manages stress.** (Given)\n    *   From (1) and (2), we infer: **Gwen manages stress.**\n\n3.  **If Gwen manages stress, then Gwen is athletic.** (Given as the last statement in the context)\n    *   From (2') 'Gwen manages stress' and (3), we directly infer: **Gwen is athletic.**\n\nTherefore, the context explicitly entails the conclusion 'Gwen is athletic.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3573
+    }
+  ]
+}

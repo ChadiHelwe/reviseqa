@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "google/gemini-2.5-flash",
+    "task_path": "implicit",
+    "chain_index": 300,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Navy has advanced navigation.\nNavy is not efficient.\nNavy does not have multiple propellers.\nNavy is not maneuverable.\nThe Navy requires frequent maintenance.\nIf Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.\nIf Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.\nAll reliable ships have an experienced crew and a strong engine.\nNavy is either capable of pulling large cargo or requires frequent maintenance, but not both.\nIf Navy can handle rough seas or has a strong engine, then she can pull large cargo.\nIf Navy has a bullnose design, then she can handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Navy has advanced navigation. Navy is not efficient.. If Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.. Therefore, Navy has an experienced crew.. Navy does not have multiple propellers. Navy is not maneuverable.. If Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.. Therefore, Navy is not reliable.. Navy is not reliable. Navy has an experienced crew.. All reliable ships have an experienced crew and a strong engine.. Therefore, . The Navy requires frequent maintenance.. Navy is either capable of pulling large cargo or requires frequent maintenance, but not both.. Therefore, Navy cannot pull large cargo.. Navy cannot pull large cargo.. If Navy can handle rough seas or has a strong engine, then she can pull large cargo.. Therefore, Navy cannot handle rough seas.. Navy cannot handle rough seas.. If Navy has a bullnose design, then she can handle rough seas.. Therefore, Navy does not have a bullnose design..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Navy has advanced navigation.\nNavy is not efficient.\nNavy does not have multiple propellers.\nNavy is not maneuverable.\nThe Navy requires frequent maintenance.\nIf Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.\nIf Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.\nFor all x, if x is reliable, then x has an experienced crew and x has a strong engine.\nIf Navy can handle rough seas or has a strong engine, then she can pull large cargo.\nIf Navy has a bullnose design, then she can handle rough seas.\nNavy has a strong engine.\nIf Navy can pull large cargo then Navy has a bullnose design.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's break down the given information and deduce the implications:\n\n1.  **Navy has advanced navigation.**\n2.  **Navy is not efficient.**\n3.  **If Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.**\n    *   Since Navy has advanced navigation (1) and is not efficient (2), it *must* be that Navy does *not* have an experienced crew. (Because if she had an experienced crew, given she has advanced navigation, she would be efficient due to the 'but not both' clause and the 'either/or' clause. But she is not efficient).\n\n4.  **Navy does not have multiple propellers.**\n5.  **Navy is not maneuverable.**\n6.  **If Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.**\n    *   Since Navy does not have multiple propellers (4) and is not maneuverable (5), it *must* be that Navy is *not* reliable. (Because if she were reliable, given she does not have multiple propellers, she would be maneuverable due to the 'but not both' clause and the 'either/or' clause. But she is not maneuverable).\n\n7.  **For all x, if x is reliable, then x has an experienced crew and x has a strong engine.**\n    *   We deduced that Navy is *not* reliable (from 6).\n\n8.  **Navy has a strong engine.** (Given directly)\n\n9.  **If Navy can handle rough seas or has a strong engine, then she can pull large cargo.**\n    *   We know Navy has a strong engine (8). Therefore, the premise 'Navy can handle rough seas or has a strong engine' is true.\n    *   This implies that **Navy can pull large cargo**.\n\n10. **If Navy can pull large cargo then Navy has a bullnose design.** (Given directly)\n    *   We deduced that Navy can pull large cargo (from 9).\n    *   Therefore, **Navy has a bullnose design**.\n\nConclusion: The context entails that 'Navy has a bullnose design'. The question asks if the context entails 'Navy does not have a bullnose design'. Since our deduction is the opposite, the answer is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 455
+    },
+    {
+      "step": 2,
+      "context": "Navy has advanced navigation.\nNavy is not efficient.\nNavy does not have multiple propellers.\nNavy is not maneuverable.\nThe Navy requires frequent maintenance.\nIf Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.\nIf Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.\nFor all x, if x is reliable, then x has an experienced crew and x has a strong engine.\nIf Navy can handle rough seas or has a strong engine, then she can pull large cargo.\nIf Navy has a bullnose design, then she can handle rough seas.\nNavy has a strong engine.\nIf Navy has a strong engine and is not reliable, then she cannot handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's break down the context step-by-step to deduce facts about the Navy.\n\n1.  **Navy has advanced navigation.** (Given)\n2.  **Navy is not efficient.** (Given)\n3.  **If Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.** (Given)\n    *   From (1) and (2), and the rule (3), we can deduce that Navy does *not* have an experienced crew. If she had an experienced crew AND advanced navigation, the 'but not both' clause would mean efficiency is not guaranteed based on this rule. However, if she had advanced navigation AND lacked an experienced crew, then the 'either...or (but not both)' premise would be satisfied, implying efficiency. But she is *not* efficient. This implies that the premise of the conditional is false, meaning it's not the case that 'Navy either has advanced navigation or has an experienced crew (but not both)'. Since she *does* have advanced navigation, to make the 'either/or (but not both)' statement false, she *must* also have an experienced crew. Wait, let me re-evaluate this. The rule is `(A XOR B) -> E`. We have `A` (advanced navigation) and `NOT E` (not efficient). If `B` (experienced crew) were true, then `A XOR B` would be true (since A is true, and B is true, so, not 'but not both'). No, `A XOR B` means `(A AND NOT B) OR (B AND NOT A)`. If `A` is true (advanced navigation) and `E` is false (not efficient), then `A XOR B` must be false. For `A XOR B` to be false, since `A` is true, `B` must also be true. So, `Navy has an experienced crew`. Let me re-verify this again. If (A and not B) or (B and not A), then E. We have A. We have not E. So, (A and not B) or (B and not A) must be false. Since A is true, for (A and not B) to be false, (not B) must be false, meaning B must be true. If A is true and B is true, then (B and not A) is false. So if A is true and B is true, then (A and not B) or (B and not A) is false. So, *Navy has an experienced crew* is deduced from (1), (2), and (3).\n    \n4.  **Navy does not have multiple propellers.** (Given)\n5.  **Navy is not maneuverable.** (Given)\n6.  **If Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.** (Given)\n    *   This is `(MP XOR R) -> M`. We have `NOT MP` (from 4) and `NOT M` (from 5). For `(MP XOR R) -> M` to be true while `M` is false, `MP XOR R` must be false. Since `MP` is false, for `MP XOR R` (which is `(MP AND NOT R) OR (R AND NOT MP)`) to be false, both `(MP AND NOT R)` and `(R AND NOT MP)` must be false. Since `MP` is false, `(MP AND NOT R)` is false. For `(R AND NOT MP)` to be false, since `NOT MP` is true, `R` must be false. Therefore, **Navy is not reliable.**\n\n7.  **For all x, if x is reliable, then x has an experienced crew and x has a strong engine.** (Given)\n    *   Since we deduced Navy is *not reliable* (from 6), this statement doesn't directly tell us anything new about Navy's experienced crew or strong engine (it's the contrapositive that would be useful for that, but we don't need it yet).\n\n8.  **Navy has a strong engine.** (Given)\n\n9.  **If Navy has a strong engine and is not reliable, then she cannot handle rough seas.** (Given)\n    *   We know Navy has a strong engine (8) and is not reliable (6). Both conditions for the premise are met.\n    *   Therefore, **Navy cannot handle rough seas.**\n\n10. **If Navy has a bullnose design, then she can handle rough seas.** (Given)\n    *   This is `BD -> HRS`. We know `NOT HRS` (Navy cannot handle rough seas, from 9).\n    *   By modus tollens, if `BD -> HRS` and `NOT HRS`, then `NOT BD`. Therefore, **Navy does not have a bullnose design.**\n\nAll steps lead to 'Navy does not have a bullnose design'.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1201
+    },
+    {
+      "step": 3,
+      "context": "Navy has advanced navigation.\nNavy is not efficient.\nNavy does not have multiple propellers.\nNavy is not maneuverable.\nThe Navy requires frequent maintenance.\nIf Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.\nIf Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.\nFor all x, if x is reliable, then x has an experienced crew and x has a strong engine.\nIf Navy can handle rough seas or has a strong engine, then she can pull large cargo.\nIf Navy has a bullnose design, then she can handle rough seas.\nNavy has a strong engine.\nIf Navy has a strong engine and is not reliable, then she cannot handle rough seas.\nNavy has an experienced crew.\nNavy is not reliable.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's break down the given information and deduce the implications:\n\n1.  **Navy has a strong engine.** (Given)\n2.  **Navy is not reliable.** (Given)\n3.  **If Navy has a strong engine and is not reliable, then she cannot handle rough seas.** (Given)\n    *   Since (1) 'Navy has a strong engine' is true, and (2) 'Navy is not reliable' is true, the premise of the conditional statement 'If Navy has a strong engine and is not reliable' is true.\n    *   Therefore, the conclusion of this conditional must be true: **Navy cannot handle rough seas.**\n\n4.  **If Navy has a bullnose design, then she can handle rough seas.** (Given)\n    *   Let 'BD' be 'Navy has a bullnose design' and 'HRS' be 'Navy can handle rough seas'. The statement is `BD -> HRS`.\n    *   From (3), we deduced that `NOT HRS` (Navy cannot handle rough seas).\n    *   Using modus tollens (`(P -> Q) AND NOT Q` implies `NOT P`), if `(BD -> HRS)` and `NOT HRS`, then `NOT BD`.\n    *   Therefore, **Navy does not have a bullnose design.**\n\nThe context directly entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2512
+    },
+    {
+      "step": 4,
+      "context": "Navy has advanced navigation.\nNavy is not efficient.\nNavy does not have multiple propellers.\nNavy is not maneuverable.\nThe Navy requires frequent maintenance.\nIf Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.\nIf Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.\nFor all x, if x is reliable, then x has an experienced crew and x has a strong engine.\nIf Navy can handle rough seas or has a strong engine, then she can pull large cargo.\nIf Navy has a bullnose design, then she can handle rough seas.\nNavy has a strong engine.\nNavy has an experienced crew.\nNavy is not reliable.\nIf Navy has a strong engine and is not reliable, then she can handle rough seas.\nIf Navy can handle rough seas, then she has a bullnose design.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's analyze the relevant statements:\n\n1.  **Navy has a strong engine.** (Given)\n2.  **Navy is not reliable.** (Given)\n3.  **If Navy has a strong engine and is not reliable, then she can handle rough seas.** (Given)\n    *   Since (1) 'Navy has a strong engine' is true and (2) 'Navy is not reliable' is true, the premise 'Navy has a strong engine and is not reliable' is true.\n    *   Therefore, from (3), it directly follows that **Navy can handle rough seas.**\n\n4.  **If Navy can handle rough seas, then she has a bullnose design.** (Given)\n    *   From our deduction in the previous step, 'Navy can handle rough seas' is true.\n    *   Therefore, from (4), it directly follows that **Navy has a bullnose design.**\n\nThe question asks if the context entails the conclusion 'Navy does not have a bullnose design.' Our deduction shows that Navy *does* have a bullnose design. Therefore, the conclusion 'Navy does not have a bullnose design' is false given the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3054
+    },
+    {
+      "step": 5,
+      "context": "Navy has advanced navigation.\nNavy is not efficient.\nNavy does not have multiple propellers.\nNavy is not maneuverable.\nThe Navy requires frequent maintenance.\nIf either Navy has advanced navigation and does not have an experienced crew, or Navy does not have advanced navigation and has an experienced crew, then she is efficient.\nIf Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.\nFor all x, if x is reliable, then x has an experienced crew and x has a strong engine.\nIf Navy can handle rough seas or has a strong engine, then she can pull large cargo.\nIf Navy has a bullnose design, then she can handle rough seas.\nNavy has a strong engine.\nNavy has an experienced crew.\nNavy is not reliable.\nIf Navy has a strong engine and is not reliable, then she can handle rough seas.\nIf Navy can handle rough seas, then she has a bullnose design.\nNavy can pull large cargo.\nNavy has a bullnose design if and only if she can handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's break down the relevant statements from the context:\n\n1.  **Navy has a strong engine.** (Given)\n2.  **Navy is not reliable.** (Given)\n3.  **If Navy has a strong engine and is not reliable, then she can handle rough seas.** (Given)\n    *   Since (1) and (2) are true, the premise of (3) is true. Therefore, we can conclude: **Navy can handle rough seas.**\n\n4.  **Navy has a bullnose design if and only if she can handle rough seas.** (Given)\n    *   This is a biconditional statement: `BD <-> HRS`. This means if one side is true, the other is true, and if one side is false, the other is false.\n    *   From (3), we deduced that **Navy can handle rough seas** (`HRS` is true).\n    *   Therefore, based on the biconditional (4), **Navy has a bullnose design.** (`BD` is true).\n\nThe conclusion to be evaluated is 'Navy does not have a bullnose design.' Our analysis directly leads to 'Navy has a bullnose design.' Therefore, the stated conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 3568
+    },
+    {
+      "step": 6,
+      "context": "Navy has advanced navigation.\nNavy is not efficient.\nNavy does not have multiple propellers.\nNavy is not maneuverable.\nThe Navy requires frequent maintenance.\nIf either Navy has advanced navigation and does not have an experienced crew, or Navy does not have advanced navigation and has an experienced crew, then she is efficient.\nIf Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.\nFor all x, if x is reliable, then x has an experienced crew and x has a strong engine.\nIf Navy can handle rough seas or has a strong engine, then she can pull large cargo.\nIf Navy has a bullnose design, then she can handle rough seas.\nNavy has a strong engine.\nNavy has an experienced crew.\nNavy is not reliable.\nIf Navy can handle rough seas, then she has a bullnose design.\nNavy can pull large cargo.\nNavy has a bullnose design if and only if she can handle rough seas.\nNavy has a strong engine and is not reliable, and she cannot handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's break down the relevant information from the context:\n\n1.  **Navy has a strong engine and is not reliable, and she cannot handle rough seas.** (Given)\n    *   From this, we directly extract: **Navy cannot handle rough seas.**\n\n2.  **If Navy has a bullnose design, then she can handle rough seas.** (Given)\n    *   Let 'BD' be 'Navy has a bullnose design' and 'HRS' be 'Navy can handle rough seas'. The statement is `BD -> HRS`.\n    *   From (1), we know `NOT HRS` (Navy cannot handle rough seas).\n    *   By modus tollens (`(P -> Q) AND NOT Q` implies `NOT P`), if `(BD -> HRS)` and `NOT HRS`, then `NOT BD`.\n    *   Therefore, **Navy does not have a bullnose design.**\n\nThis directly matches the conclusion in the question.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 4129
+    },
+    {
+      "step": 7,
+      "context": "Navy has advanced navigation.\nNavy is not efficient.\nNavy does not have multiple propellers.\nNavy is not maneuverable.\nThe Navy requires frequent maintenance.\nIf either Navy has advanced navigation and does not have an experienced crew, or Navy does not have advanced navigation and has an experienced crew, then she is efficient.\nIf Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.\nFor all x, if x is reliable, then x has an experienced crew and x has a strong engine.\nIf Navy can handle rough seas or has a strong engine, then she can pull large cargo.\nIf Navy has a bullnose design, then she can handle rough seas.\nNavy has a strong engine.\nNavy has an experienced crew.\nNavy is not reliable.\nIf Navy can handle rough seas, then she has a bullnose design.\nNavy can pull large cargo.\nNavy has a bullnose design if and only if she can handle rough seas.\nIf Navy has a strong engine, then she can handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's break down the relevant information:\n\n1.  **Navy has a strong engine.** (Given)\n2.  **If Navy has a strong engine, then she can handle rough seas.** (Given)\n    *   From (1) and (2), we can directly conclude: **Navy can handle rough seas.**\n\n3.  **Navy has a bullnose design if and only if she can handle rough seas.** (Given)\n    *   This is a biconditional statement (`BD <-> HRS`). Since we concluded 'Navy can handle rough seas' (`HRS` is true) from step 2, it must be that 'Navy has a bullnose design' (`BD` is true).\n    *   Therefore, **Navy has a bullnose design.**\n\nThe question asks if the context entails the conclusion 'Navy does not have a bullnose design.' Our deduction is the opposite: 'Navy has a bullnose design.' Therefore, the conclusion 'Navy does not have a bullnose design' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 4632
+    }
+  ]
+}
