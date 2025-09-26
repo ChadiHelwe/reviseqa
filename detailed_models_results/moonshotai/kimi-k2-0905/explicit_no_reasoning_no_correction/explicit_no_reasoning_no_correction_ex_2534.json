@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 115,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Brandon studies wildlife.\nBrandon does not advocate for protection.\nBrandon does not lead projects.\nBrandon does not support eco-causes.\nIf Brandon studies wildlife, then he either advocates for protection or is a dedicated researcher (or both).\nIf Brandon leads projects, then he will publish papers.\nIf Brandon is a dedicated researcher, then he protects habitats and publishes papers.\nIf Brandon either protects habitats or is a wildlife advocate (but not both), then he supports eco-causes.\nBrandon is either a wildlife advocate or an environmentalist, but not both.\nBrandon is either a conservationist or an environmentalist, but not both.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Brandon does not publish papers, then he does not lead projects.\n\nAdded facts:\n- Brandon is a dedicated researcher.\n- Brandon publishes papers.\n- Brandon protects habitats.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We are told explicitly that Brandon is a dedicated researcher. From the rule \u2018If Brandon is a dedicated researcher, then he protects habitats and publishes papers\u2019 we get both habitat protection and paper publication (which is also given). Now apply the disjunction: Brandon is either a wildlife advocate or an environmentalist but not both, and either a conservationist or an environmentalist but not both. If he were an environmentalist, then he could not be a wildlife advocate (by the first exclusive-or) and could not be a conservationist (by the second exclusive-or). However, the rule \u2018If Brandon either protects habitats or is a wildlife advocate (but not both), then he supports eco-causes\u2019 would force him to support eco-causes: because he protects habitats, the antecedent holds, so eco-causes support follows. But the initial data says Brandon does not support eco-causes, hence he cannot be an environmentalist. Therefore he must be a conservationist (and a wildlife advocate).",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 227
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Brandon leads projects, then he will publish papers.\n\nAdded rules:\n- If Brandon studies wildlife, then he is a dedicated researcher.\n- Either Brandon does not lead projects, or he publishes papers.\n\nAdded facts:\n- Brandon is not an environmentalist.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given: Brandon studies wildlife and is not an environmentalist. By the new rule, studying wildlife \u21d2 dedicated researcher, so Brandon is a dedicated researcher. From the rule \u2018If Brandon is a dedicated researcher, then he protects habitats and publishes papers,\u2019 we get both habitat protection and paper publishing. Now examine the alternatives: Brandon is either a conservationist or an environmentalist but not both. Since we are told he is not an environmentalist, he must be a conservationist. This conclusion is forced regardless of other details, so the context entails that Brandon is a conservationist.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 508
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Brandon is not an environmentalist.\n\nRemoved rules:\n- If Brandon either protects habitats or is a wildlife advocate (but not both), then he supports eco-causes.\n\nAdded facts:\n- Brandon is an environmentalist.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given: Brandon is an environmentalist. From the context he is either a conservationist or an environmentalist, but not both. Being an environmentalist directly excludes being a conservationist. Therefore the statement \u2018Brandon is a conservationist\u2019 is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 719
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Brandon is an environmentalist.\n\nAdded rules:\n- If Brandon protects habitats, then he is a wildlife advocate.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Known from previous steps: Brandon studies wildlife \u2192 dedicated researcher \u2192 protects habitats & publishes papers. Now add the new rule: protects habitats \u21d2 wildlife advocate, so Brandon is a wildlife advocate. The disjunctions state (1) wildlife advocate XOR environmentalist and (2) conservationist XOR environmentalist. Being a wildlife advocate forces him not to be an environmentalist (by 1), hence by (2) he must be a conservationist.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 857
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Brandon protects habitats.\n\nRemoved rules:\n- If Brandon is a dedicated researcher, then he protects habitats and publishes papers.\n- If Brandon protects habitats, then he is a wildlife advocate.\n\nAdded rules:\n- If Brandon does not protect habitats, then he is not a wildlife advocate.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We still know Brandon studies wildlife, so via the rule introduced two steps ago he is a dedicated researcher. The facts that previously linked dedicated researcher to habitat protection and publishing have been removed, and we are told explicitly he does not protect habitats. The newly added contrapositive rule states: not protect habitats \u21d2 not wildlife advocate, so Brandon is not a wildlife advocate. From the disjunctions: (1) wildlife advocate XOR environmentalist and (2) conservationist XOR environmentalist, not being a wildlife advocate leaves his classification between environmentalist and conservationist undetermined. Because he could be either an environmentalist or a conservationist without violating any stated rule, the context does not decide the matter.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1013
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Brandon does not publish papers, then he does not lead projects.\n\nAdded facts:\n- Brandon does not protect habitats.\n- Brandon is an environmentalist.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given explicitly that Brandon is an environmentalist, and the context states that one is either a conservationist or an environmentalist but not both. Thus being an environmentalist directly excludes being a conservationist, making the statement 'Brandon is a conservationist' false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1254
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Brandon does not protect habitats.\n- Brandon is an environmentalist.\n\nAdded facts:\n- Brandon is a wildlife advocate.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Provided as a new fact: Brandon is a wildlife advocate. The first exclusivity clause says wildlife advocate XOR environmentalist; thus Brandon is not an environmentalist. The second exclusivity clause says conservationist XOR environmentalist, so he must be a conservationist. No remaining information can block this deduction.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1382
+    }
+  ]
+}

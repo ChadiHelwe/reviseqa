@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 325,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Annie values education.\nAnnie does not become a leader.\nAnnie does not inspire confidence.\nAnnie advocates for change.\nAnnie does not raise awareness.\nAnnie is dedicated to community service.\nFor anyone who values education and fosters independence, they can become a leader.\nEveryone who empowers others either inspires confidence or fosters independence (or both).\nEveryone who advocates for change either supports marginalized groups or empowers others (or both).\nAnnie raises awareness or challenges social norms.\nIf Annie fights for equality, then she either challenges social norms or supports marginalized groups (but not both).\nIf Annie is passionate about social justice, then she fights for equality.\nIf Annie is either passionate about social justice or dedicated to community service (but not both), then she makes a positive impact.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Annie fights for equality, then she either challenges social norms or supports marginalized groups (but not both).\n- If Annie is either passionate about social justice or dedicated to community service (but not both), then she makes a positive impact.\n\nAdded rules:\n- If Annie challenges social norms and supports marginalized groups, then she is passionate about social justice.\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, but not both.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Fixed facts: val_edu=yes; leader=no; conf=no; chg=yes; awr=no; svc=yes. 3rd rule: everyone who advocates change empowers others or supports marginalized groups. Since awr=no, from \u201cawr \u2228 chn\u201d we get chn=yes, so Annie challenges social norms. With chg=yes we now have: chn=yes, emp/smg must hold. Next rule added (biconditional): Annie makes a positive impact iff exactly one of {passionate social justice, community service}. She is dedicated to community service (given), so one side of the XOR is already true; to satisfy the biconditional the other side must be false (otherwise both would be true, contradicting the XOR), so passionate social justice = no. Hence by the iff, positive impact = no. Therefore the conclusion \u201cAnnie does not make a positive impact\u201d is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 266
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Annie does not raise awareness.\n\nAdded facts:\n- Annie does not fight for equality.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the original context we still have: leader=no, conf=no, chg=yes, svc=yes.  From the new added fact: fight_equality=no.  The new biconditional is \u2018makes_positive_impact \u2194 exactly-one-of(psj, svc)\u2019.  She is affirmed to be dedicated to community service (svc=yes).  Nothing in the remaining rules now forces psj to be either true or false.  She could be psj=yes or psj=no without violating any premise.  Therefore the biconditional could either be satisfied or not, so her making a positive impact cannot be pinned down: both values remain possible.  Hence the statement \u2018Annie does not make a positive impact\u2019 is neither guaranteed true nor guaranteed false.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 601
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, but not both.\n\nAdded rules:\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and it is not the case that she is both passionate about social justice and dedicated to community service.\n\nAdded facts:\n- Annie is not passionate about social justice.\n- Annie supports marginalized groups.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Fixed facts: val_edu=yes; leader=no; conf=no; chg=yes; svc=yes; eql=no; psj=no (new); smg=yes (new).  The new biconditional is \u2018makes_positive_impact \u2194 exactly-one-of(psj, svc)\u2019.  Since svc=yes and psj=no, exactly one is true, so the biconditional is satisfied; thus positive_impact=yes.  Therefore the statement \u2018Annie does not make a positive impact\u2019 is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 822
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Annie is dedicated to community service.\n\nAdded facts:\n- Annie is not dedicated to community service.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Added fact: svc=no.  Biconditional: positive_impact \u2194 exactly-one-of(psj, svc).  With svc=no, exactly one of {psj, svc} depends only on psj.  Nothing in the context now fixes psj; it can independently be true or false.  Therefore exactly-one-of(psj, svc) is true when psj=yes and false when psj=no.  Hence positive_impact could be either true or false; neither conclusion is forced.  Thus the claim \u2018Annie does not make a positive impact\u2019 is neither entailed nor contradicted.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1065
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and it is not the case that she is both passionate about social justice and dedicated to community service.\n\nAdded rules:\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and either she is not passionate about social justice or she is not dedicated to community service.\n\nAdded facts:\n- Annie does not foster independence.\n- Annie does not empower others.\n- Annie does not challenge social norms.\n- Annie raises awareness.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Key added facts: ind=no (not foster independence), emp=no (not empower others), chn=no (not challenge norms), awr=yes.  Via General Background Rule 3, anyone who advocates change (chg=yes) either supports marginalized groups (smg) or empowers others (emp); emp=no forces smg=yes.  The factual biconditional for positive impact is now stated as: positive_impact \u2194 ( (psj \u2228 svc) \u2227 (\u00acpsj \u2228 \u00acsvc) ), i.e. still exactly-one-of(psj, svc).  But current context no longer fixes svc or psj.  To satisfy the advocacy rule (smg=yes) while lacking empowerment and lacking independence, no rule forces psj or svc either way.  Thus both psj and svc remain free; exactly-one-of(psj, svc) can therefore be either true or false depending on their values.  Hence \u2018positive_impact\u2019 is not determined; it is neither guaranteed to hold nor guaranteed to fail.  So the conclusion \u2018Annie does not make a positive impact\u2019 is neither entailed nor contradicted.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1257
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Annie is not dedicated to community service.\n\nAdded facts:\n- Annie is dedicated to community service.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We regain svc=yes.  The biconditional is still positive_impact \u2194 exactly-one-of(psj, svc).  With svc=yes, satisfaction now depends solely on psj.  No premise fixes psj; it can independently be true or false, so exactly-one-of(psj, svc) may either hold or fail.  Hence positive_impact can be either true or false, and its negation is neither entailed nor contradicted.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1654
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Annie raises awareness.\n- Annie does not challenge social norms.\n- Annie is not passionate about social justice.\n- Annie does not fight for equality.\n\nAdded facts:\n- Annie does not raise awareness.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The only facts that now fix the auxiliary propositions are: chg=yes \u21d2 smg=yes (emp is still free).  All of psj, svc, eql, chn, ind are unset.  The biconditional positive_impact \u2194 exactly-one-of(psj, svc) therefore can be either true or false depending on psj and svc.  Hence the truth value of \u2018positive_impact\u2019 is undetermined, and its negation is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1814
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 255,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Evan does not pursue sustainability.\nEvan cannot command high prices for his apples.\nEvan does not produce high-quality crops.\nEvan does not strive for perfection.\nEvan is dedicated to his craft.\nEvan either values quality or pursues sustainability, but not both.\nIf someone has expert knowledge, then they can command high prices for their products or services.\nAnyone who is experienced in agriculture or has expert knowledge can produce high-quality crops.\nIf Evan values quality, then he is either innovative in his practices or strives for perfection, but not both.\nIf Evan is dedicated to his craft, then he is either experienced in agriculture or passionate about farming (but not both).\nIf Evan is passionate about farming, then he is innovative in his practices and achieves recognition.",
+      "question": "Does the context entail the conclusion 'Evan achieves recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x is experienced in agriculture or x has expert knowledge, then x produces high-quality crops.\n\nAdded facts:\n- Evan values quality.\n- Evan does not have expert knowledge.\n- Evan is not experienced in agriculture.",
+      "question": "Does the context entail the conclusion 'Evan achieves recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the new fact that Evan values quality and the rule that if Evan values quality then he is either innovative or strives for perfection (but Evan does not strive for perfection), Evan must be innovative. Evan is dedicated to his craft, so by the rule he is either experienced in agriculture or passionate about farming (but not both). The new facts state Evan is not experienced in agriculture, so he must be passionate about farming. The rule says if Evan is passionate about farming then he is innovative (already satisfied) and achieves recognition. Therefore Evan achieves recognition is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 257
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Evan is passionate about farming, then he is innovative in his practices and achieves recognition.\n\nAdded rules:\n- If Evan is passionate about farming, then he is innovative in his practices and does not achieve recognition.",
+      "question": "Does the context entail the conclusion 'Evan achieves recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the same chain as before, Evan still ends up passionate about farming (since he values quality \u2192 innovative; dedicated \u2192 not experienced \u2192 passionate). But the revised rule now says passion only gives innovation and explicitly not recognition. Nothing else in context forces recognition; hence recognition is not entailed and is actually precluded by the new rule.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 461
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Evan is not experienced in agriculture.\n\nRemoved rules:\n- For all x, if x does not produce high quality crops, then x is not experienced in agriculture and x does not have expert knowledge.\n\nAdded rules:\n- For all x, if x does not produce high-quality crops, then x does not have expert knowledge.\n- If Evan is not passionate about farming and Evan is innovative in his practices, then he achieves recognition.\n\nAdded facts:\n- Evan is experienced in agriculture.",
+      "question": "Does the context entail the conclusion 'Evan achieves recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From earlier steps: Evan values quality \u2192 innovative; Evan dedicated \u2192 either experienced or passionate (but not both). With the added fact that Evan is experienced, he cannot be passionate. So Evan is experienced, innovative, and not passionate. Applying the new conditional rule: \u2018If Evan is not passionate and Evan is innovative, then he achieves recognition,\u2019 the antecedent is satisfied, so recognition follows. Thus the context now entails Evan achieves recognition.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 614
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Evan is experienced in agriculture.\n\nAdded facts:\n- Evan is not experienced in agriculture.",
+      "question": "Does the context entail the conclusion 'Evan achieves recognition.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "After removing the fact that Evan is experienced and adding that he is not experienced, we revert to a state where Evan is dedicated to his craft, values quality, is innovative, but is not experienced in agriculture. From the dedication rule this leaves him passionate about farming. With the previous rule removed that linked passion to recognition, and no replacement rule providing a path to recognition, there is no longer any entailment of recognition. Recognition is neither guaranteed nor ruled out given the current rules and facts, leaving it uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 842
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Evan is passionate about farming, then he is innovative in his practices.\n- If Evan is passionate about farming, then he does not achieve recognition.\n- For all x, if x has expert knowledge, then x produces high-quality crops.\n- For all x, if x cannot command high prices for their apples, then x does not have expert knowledge.\n- Evan is passionate about farming or Evan is not innovative in his practices or Evan achieves recognition.",
+      "question": "Does the context entail the conclusion 'Evan achieves recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "All prior steps still hold: Evan values quality \u2192 innovative; Evan dedicated \u2192 not experienced \u2192 passionate. The new disjunction is: passionate \u2228 \u00acinnovative \u2228 recognition. Since Evan is both passionate and innovative, the first two disjuncts are true, so the whole disjunction is true regardless of recognition. The new rule \u201cIf passionate then not achieve recognition\u201d means passion explicitly blocks recognition. Hence recognition is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1006
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Evan is passionate about farming or Evan is not passionate about farming.\n- Evan achieves recognition or Evan does not achieve recognition.",
+      "question": "Does the context entail the conclusion 'Evan achieves recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The two new facts are tautologies (P \u2228 \u00acP and Q \u2228 \u00acQ) and add no information. All prior facts and rules remain in force: Evan is passionate about farming, and the rule \u201cIf Evan is passionate about farming, then he does not achieve recognition\u201d still applies. This rule directly entails that Evan does not achieve recognition. Therefore, the conclusion \u2018Evan achieves recognition\u2019 is false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1228
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Evan is innovative in his practices, then he is either passionate about farming or achieves recognition, but not both.",
+      "question": "Does the context entail the conclusion 'Evan achieves recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the previous state, Evan is both passionate and innovative, so Evan is innovative is true. The new rule reads: innovative \u2192 (passionate XOR recognition). Since Evan is already passionate, the only way to satisfy the XOR is for recognition to be false. Hence the context still entails Evan does NOT achieve recognition; the conclusion 'Evan achieves recognition.' remains false rather than uncertain.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1382
+    }
+  ]
+}

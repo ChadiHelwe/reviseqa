@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 47,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jemma does not attend workshops.\nJemma is not community-oriented.\nJemma has expert knowledge.\nJemma does not advance biodiversity.\nJemma publishes papers.\nIf Jemma either participates in citizen science or attends workshops (but not both), then she is community-oriented.\nJemma either has a laboratory or participates in citizen science, but not both.\nAll entomology contributors have expert knowledge and advance biodiversity.\nIf Jemma has a laboratory, then she collects moths and publishes papers.\nJemma either collects moths or studies butterflies, but not both.\nFor all insect enthusiasts, if they either study butterflies or specialize in beetles, then they contribute to entomology.\nJemma is either a specialist in beetles or a specialist in other insects, but not both.",
+      "question": "Does the context entail the conclusion 'Jemma is not a specialist in other insects.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Jemma contributes to entomology, then Jemma has expert knowledge and Jemma advances biodiversity.\n- If Jemma either studies butterflies or specializes in beetles, then Jemma contributes to entomology.\n\nAdded facts:\n- Jemma does not participate in citizen science.\n- Jemma has a laboratory.\n- Jemma collects moths.\n- Jemma does not study butterflies.",
+      "question": "Does the context entail the conclusion 'Jemma is not a specialist in other insects.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We need to check whether Jemma must lack the predicate \"specialist in other insects.\" Start with the new facts. Jemma has a laboratory (given) and does not participate in citizen science (given). Together with \"Jemma either has a laboratory or participates in citizen science, but not both,\" this satisfies that disjunction already, so no new conflict. Jemma collects moths (given) and does not study butterflies (given); they satisfy the disjunction \"collects moths or studies butterflies, but not both.\" Because Jemma does not study butterflies, the antecedent of \"If Jemma either studies butterflies or specializes in beetles, then Jemma contributes to entomology\" is false, so that rule does not force her to contribute to entomology; likewise, the rule \"For all insect enthusiasts, if they either study butterflies or specialize in beetles, then they contribute to entomology\" also fails to trigger. Therefore Jemma might or might not specialize in beetles, and she might or might not be a specialist in other insects, as long as at most one of those two holds. Nothing in the constraints removes the possibility that the beetle specialist is false and the other-insect specialist is true; therefore it is not guaranteed that she is not a specialist in other insects.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 264
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Jemma collects moths and publishes papers.\n- Jemma does not contribute to entomology.",
+      "question": "Does the context entail the conclusion 'Jemma is not a specialist in other insects.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From earlier deductions we already know: Jemma has expert knowledge, does not advance biodiversity, does not attend workshops, is not community-oriented, has a lab, does not do citizen science, collects moths, does not study butterflies, and does not contribute to entomology. She must be either a beetle specialist or a specialist in other insects (but not both). The only rules that could force her to contribute to entomology are (i) the general rule that studying butterflies or specializing in beetles \u21d2 contributes to entomology, and (ii) the fact that all entomology contributors advance biodiversity (but we already know she does not advance biodiversity, hence she cannot be an entomology contributor). Since she does not study butterflies, the antecedent of (i) is satisfied only if she specializes in beetles; but if she specialized in beetles she would contribute to entomology, contradicting the new fact that she does NOT contribute to entomology. Therefore she cannot be a beetle specialist. Because she must be exactly one of {beetle specialist, specialist in other insects}, the remaining option is that she is a specialist in other insects. So the conclusion \u201cJemma is not a specialist in other insects\u201d is actually false in every admissible model; the context therefore entails that the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 657
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Jemma either collects moths or studies butterflies, but not both.\n\nAdded rules:\n- For all x, if it is not the case that x has expert knowledge and x advances biodiversity, then x does not contribute to entomology.\n\nAdded facts:\n- If Jemma is not community-oriented, then it is not the case that Jemma either participates in citizen science or attends workshops, but not both.",
+      "question": "Does the context entail the conclusion 'Jemma is not a specialist in other insects.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We need to determine whether every model consistent with the context forces Jemma to lack the property \"specialist in other insects.\" Factual givens about Jemma: she does not attend workshops, is not community-oriented, has expert knowledge, does not advance biodiversity, publishes papers, does not participate in citizen science, has a laboratory, collects moths, does not study butterflies, and does not contribute to entomology. She is either a specialist in beetles or in other insects, exclusively. Rules used in turn: Since Jemma is not community-oriented, the new conditional \"If Jemma is not community-oriented, then it is not the case that she either participates in citizen science or attends workshops (but not both)\" is triggered; its consequent requires that she does NOT satisfy the exclusive-or of (citizen-science \u2228 workshops). We already have \u00accitizen-science and \u00acworkshops, so that exclusive-or is false; hence the implication is satisfied in this direction but places no further constraint. Crucially, the universal rule \"For all x, if it is not the case that (x has expert knowledge \u2227 x advances biodiversity) then x does not contribute to entomology\" applies: Jemma has expert knowledge but does not advance biodiversity, so the antecedent is true, therefore she must not contribute to entomology, which matches the explicit fact and is consistent. The only way Jemma could contribute to entomology would be if she both had expert knowledge and advanced biodiversity, which she does not. Now consider her two exclusive specialism choices: (1) specialist in beetles or (2) specialist in other insects. If she were a beetle specialist, then by the rule \"If she either studies butterflies or specializes in beetles then she contributes to entomology,\" she would have to contribute to entomology, contradicting the given fact that she does not contribute to entomology. Hence she cannot be a beetle specialist. Therefore the only remaining option is that she is a specialist in other insects. Every admissible model assigns her that specialism, so the claim \"Jemma is not a specialist in other insects\" is false in all models; the context therefore entails the negation of that claim, i.e. the statement itself is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 997
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x either studies butterflies or specializes in beetles, then x contributes to entomology.\n- If Jemma either studies butterflies or specializes in beetles, then Jemma contributes to entomology.\n\nAdded facts:\n- Jemma either studies butterflies or specializes in beetles, but not both.",
+      "question": "Does the context entail the conclusion 'Jemma is not a specialist in other insects.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Jemma\u2019s catalogue of fixed facts keeps her from contributing to entomology (she has expert knowledge but does not advance biodiversity, so the rule \"if not(expert \u2227 advances biodiversity) then does not contribute\" blocks entomology contribution). The new fact says: Jemma either studies butterflies XOR specializes in beetles. She already definitely does NOT study butterflies (that fact has never been removed), so the XOR forces her to specialize in beetles. The remaining specialism dichotomy is \"specialist in beetles XOR specialist in other insects\"; once she is a beetle specialist she cannot simultaneously be a specialist in other insects. Hence in every model she lacks the property \"specialist in other insects,\" so the statement \"Jemma is not a specialist in other insects\" is true in every admissible interpretation; the context entails it.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1597
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- It is not the case that Jemma has expert knowledge and Jemma advances biodiversity.\n- Jemma either specializes in beetles or specializes in other insects, and it is not the case that Jemma both specializes in beetles and specializes in other insects.",
+      "question": "Does the context entail the conclusion 'Jemma is not a specialist in other insects.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We already know Jemma has expert knowledge but does NOT advance biodiversity; hence the added statement \u00ac(expert \u2227 advances biodiversity) is simply a restatement of what we already have, and it still blocks her from contributing to entomology (so she definitely does not contribute to entomology). The second added fact explicitly repeats the same XOR we already possess: exactly one of {beetle-specialist, other-insect-specialist}. Nothing new removes the possibility of either disjunct. She could be the beetle specialist, or she could be the other-insect specialist; both choices remain compatible with every rule and fact (since the rules that used to force beetle specialists into entomology were removed earlier). Because at least one model has her as a specialist in other insects, the claim \"Jemma is not a specialist in other insects\" is not guaranteed true. Hence the context does not entail that conclusion; its truth value is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1879
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- Jemma either studies butterflies or specializes in beetles, and it is not the case that Jemma both studies butterflies and specializes in beetles.",
+      "question": "Does the context entail the conclusion 'Jemma is not a specialist in other insects.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The new rule asserts Jemma satisfies (studies-butterflies XOR specializes-in-beetles). We already know she does NOT study butterflies (that fact is still on record), so the XOR forces her to specialize in beetles. The separate specialism disjunction says: specialist-in-beetles XOR specialist-in-other-insects. Since she is now required to be a beetle specialist, the second disjunct must be false; therefore she cannot be a specialist in other insects. Hence in every model she lacks that property, so the statement \"Jemma is not a specialist in other insects\" is true in all admissible interpretations; the context entails it.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2172
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Jemma either studies butterflies or specializes in beetles, but not both.\n- Jemma either studies butterflies or specializes in beetles, and it is not the case that Jemma both studies butterflies and specializes in beetles.\n- If Jemma is not community-oriented, then it is not the case that Jemma either participates in citizen science or attends workshops, but not both.\n\nAdded rules:\n- It is not the case that Jemma either studies butterflies or specializes in beetles, but not both.",
+      "question": "Does the context entail the conclusion 'Jemma is not a specialist in other insects.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added rule is the negation of an exclusive-or: \u00ac( (butterfly \u2228 beetle) \u2227 \u00ac(butterfly \u2227 beetle) ), i.e. the exclusive-or is false. An exclusive-or is false when both sides have the same truth value. Hence butterfly and beetle must be equivalent: either both true or both false. We still have the standing fact \u00acbutterfly (Jemma does not study butterflies), so butterfly = F; equivalently beetle must also be F. Thus Jemma is NOT a specialist in beetles. The only remaining specialism option under the unchanged XOR \u2018beetle-specialist or other-insect-specialist (but not both)\u2019 is that she IS a specialist in other insects. Therefore in every model she possesses that property, so \u201cJemma is not a specialist in other insects\u201d is false in every model; the context entails that the statement is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2383
+    }
+  ]
+}

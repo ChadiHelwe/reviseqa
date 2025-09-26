@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 292,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Arlette does not have clear thoughts.\nArlette is not at peace.\nArlette meditates regularly.\nArlette practices mindfulness.\nArlette grows flowers.\nArlette does not spread joy to those around her.\nIf Arlette either feels content or has clear thoughts (but not both), then she is at peace.\nIf Arlette meditates regularly, then she either feels content or cultivates gratitude (but not both).\nIf Arlette practices mindfulness, then she either finds inner peace or cultivates gratitude (but not both).\nIf Arlette grows flowers, then she loves nature.\nIf someone appreciates simple things and loves nature, then they can find inner peace.\nFor all humans, if someone has a carefree spirit, then they either appreciate the simple things in life or spread joy to those around them (or both).",
+      "question": "Does the context entail the conclusion 'Arlette does not have a carefree spirit.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x does not find inner peace, then either x does not appreciate simple things or x does not love nature.\n\nAdded facts:\n- Arlette does not feel content.\n- Arlette loves nature.",
+      "question": "Does the context entail the conclusion 'Arlette does not have a carefree spirit.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts: Arlette meditates regularly and does not feel content. Rule 2 (meditate \u2192 content XOR gratitude) therefore forces Arlette to cultivate gratitude (she can't be content). Rule 3 (mindfulness \u2192 inner peace XOR gratitude) gives inner peace XOR gratitude; since gratitude is already forced by Rule 2, Rule 3 then requires that Arlette not find inner peace. Now use the new rule: if not inner peace then (not appreciate simple things or not love nature). We are told Arlette loves nature, so the disjunct 'not love nature' is false, forcing 'not appreciate simple things' to be true. Rule 5: carefree spirit \u2192 (appreciate simple OR spread joy). Arlette neither appreciates simple things nor spreads joy, so both disjuncts are false; therefore she cannot have a carefree spirit. Hence 'Arlette does not have a carefree spirit' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 273
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Arlette feels content and Arlette does not have clear thoughts, then Arlette is at peace.\n- If Arlette does not feel content and Arlette has clear thoughts, then Arlette is at peace.",
+      "question": "Does the context entail the conclusion 'Arlette does not have a carefree spirit.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We earlier derived Arlette does not appreciate simple things and does not spread joy. Rule 5 (carefree spirit \u2192 appreciate simple OR spread joy) still applies; with both disjuncts false, Arlette can't satisfy its premise, so cannot have a carefree spirit regardless of Arlette's contentment/clarity/peace links. The newly-added two-condition conditionals about peace do not affect our previous chain (meditate \u2192 gratitude \u2192 no inner peace \u2192 no appreciate simple \u2192 blocked for carefree spirit). Hence Arlette definitely lacks a carefree spirit.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 562
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Arlette does not feel content.\n- Arlette does not spread joy to those around her.\n\nAdded rules:\n- For all x, if x spreads joy to those around them, then x has a carefree spirit.\n\nAdded facts:\n- Arlette feels content.\n- Arlette spreads joy to those around her.",
+      "question": "Does the context entail the conclusion 'Arlette does not have a carefree spirit.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The conclusion to test is 'Arlette does not have a carefree spirit.' However, we are told Arlette spreads joy, and a new rule states 'if someone spreads joy, then they have a carefree spirit.' This directly gives Arlette a carefree spirit. The earlier chain that could block the carefree spirit relied on facts no longer present (no contentment / no joy-spreading). With those removed and with Arlette now known to spread joy, the premise for the carefree-spirit rule is satisfied, yielding Arlette has a carefree spirit. Hence 'Arlette does not have a carefree spirit' is false; the context falsifies it rather than entailing it.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 775
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Arlette meditates regularly, then either Arlette feels content or Arlette cultivates gratitude, and it is not the case that Arlette both feels content and cultivates gratitude.\n- If Arlette practices mindfulness, then either Arlette finds inner peace or Arlette cultivates gratitude, and it is not the case that Arlette both finds inner peace and cultivates gratitude.\n- For all x, if x does not find inner peace, then it is not the case that x both appreciates simple things and loves nature.\n\nAdded facts:\n- Either Arlette has a carefree spirit or Arlette does not have a carefree spirit.",
+      "question": "Does the context entail the conclusion 'Arlette does not have a carefree spirit.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We already know Arlette meditates regularly and practices mindfulness, and feels content. The new versions of Rules 2 and 3 still allow her to feel content (and thus prevent her from cultivating gratitude). This forces no inner peace (since gratitude and inner peace are mutually exclusive under Rule 3). With no inner peace, the new contrapositive rule forbids her both loving nature and appreciating simple things. However, Arlette is known to grow flowers, so she loves nature; thus she must not appreciate simple things. Whether she has or lacks a carefree spirit therefore hinges on whether she spreads joy, which the context no longer fixes (and the new rules give no replacement for ascertaining her joy-spreading). Since we cannot establish the truth value of the carefree-spirit condition ('appreciate simple OR spread joy'), we cannot determine that she lacks a carefree spirit. The stated disjunction is trivially true but provides no information. Hence the truth of 'Arlette does not have a carefree spirit' cannot be decided.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1028
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Arlette spreads joy to those around her.\n- Arlette feels content.\n\nAdded facts:\n- Arlette does not spread joy to those around her.\n- Arlette does not feel content.",
+      "question": "Does the context entail the conclusion 'Arlette does not have a carefree spirit.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Arlette meditates regularly and does not feel content \u21d2 by the revised Rule 2 she must cultivate gratitude. Rule 3 (mindfulness \u2192 inner peace XOR gratitude) then blocks inner peace, because she already has gratitude. No inner peace plus her love of nature (from flower-growing) forces, via the contrapositive of the added rule, that she does not appreciate simple things. Universal rule: carefree spirit \u2192 (appreciate simple OR spread joy). Now Arlette neither appreciates simple things nor spreads joy; consequently neither disjunct in the implication\u2019s consequent is satisfied. Therefore the implication\u2019s consequent is false; its antecedent (carefree spirit) would have to be false to avoid a contradiction. Thus Arlette lacks a carefree spirit.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1419
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Arlette does not spread joy to those around her.\n\nAdded facts:\n- Arlette spreads joy to those around her.",
+      "question": "Does the context entail the conclusion 'Arlette does not have a carefree spirit.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We previously derived that Arlette does not find inner peace and therefore does not appreciate simple things. With the new fact she spreads joy, the condition for a carefree spirit (appreciate-simple OR spread-joy) is satisfied through the second disjunct; so she may have a carefree spirit. The context no longer fixes whether she spreads joy (now asserted) AND the appreciation of simple things (still not), so possession of a carefree spirit is possible but not guaranteed. Hence the negation 'she does not have a carefree spirit' is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1663
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Arlette spreads joy to those around her.\n\nAdded facts:\n- Arlette does not spread joy to those around her.",
+      "question": "Does the context entail the conclusion 'Arlette does not have a carefree spirit.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Arlette meditates but does not feel content \u21d2 Rule 2 forces gratitude. Mindfulness Rule 3 (inner-peace XOR gratitude) \u21d2 inner peace blocked. Rule 4: no inner peace + loves nature \u21d2 no appreciation of simple things. Carefree-spirit rule: appreciate-simple OR spread-joy \u21d2 both disjuncts false (no appreciation, no joy-spreading). Therefore carefree spirit impossible \u21d2 'Arlette does not have a carefree spirit' holds in all models.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1854
+    }
+  ]
+}

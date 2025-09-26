@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 39,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Mack discovers new species.\nMack claims new territory.\nMack does not fly long distances.\nMack exercises his wings.\nMack builds a nest.\nMack has a mate.\nIf Mack explores new areas, then he either discovers new species or claims new territory (but not both).\nAny bird that flies long distances or migrates seasonally will explore new areas.\nMack either migrates seasonally or gets enough rest, but not both.\nIf Mack exercises his wings, then he is either getting enough rest or staying healthy (but not both).\nAll birds that drink water stay healthy.\nEvery bird either drinks water or finds food.\nIf Mack builds a nest and finds food, then he will have chicks.\nIf Mack has a mate and has chicks, then he will sing a serenade.",
+      "question": "Does the context entail the conclusion 'Mack will sing a serenade.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Mack drinks water.\n- Mack does not find food.",
+      "question": "Does the context entail the conclusion 'Mack will sing a serenade.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With the new facts, Mack drinks water but does not find food. From the rules, since Mack drinks water he stays healthy. Since he does not find food, the antecedent of the \u2018If Mack builds a nest and finds food, then he will have chicks\u2019 rule is false, so nothing forces chicks. Without chicks, the second antecedent (\u2018Mack has a mate and has chicks\u2019) for singing a serenade is not satisfied, so the serenade rule does not fire. Nothing else compels singing. Therefore the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 267
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Mack drinks water.\n\nAdded facts:\n- Mack does not drink water.",
+      "question": "Does the context entail the conclusion 'Mack will sing a serenade.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Mack does not drink water, so he must find food (since every bird either drinks water or finds food). From the wing-exercise rule, Mack exercises his wings, so he either gets enough rest or stays healthy (but not both). All birds that drink water stay healthy, but Mack does not drink, so staying healthy is not guaranteed by that rule; health status remains open. The nest-building plus food rule would give chicks only if Mack both builds a nest and finds food. We know he builds a nest and now that he finds food, so he will have chicks. Given he has a mate, the mate-and-chicks rule would then force a serenade. However, nothing guarantees that Mack stays healthy or gets rest; if he stays healthy, he is fine, but if he instead gets rest (and might not stay healthy), we do not know whether a non-drinking bird that exercises wings can stay healthy. Because the either-or choice between rest and health is not resolved, and without certainty that he stays healthy, we cannot be sure the chain completes. Hence we cannot definitively entail the serenade.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 440
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Every bird either drinks water or finds food.\n\nAdded rules:\n- For all x, not having chicks is equivalent to either not building a nest or not finding food.\n- For all x, not singing a serenade is equivalent to either not having a mate or not having chicks.",
+      "question": "Does the context entail the conclusion 'Mack will sing a serenade.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The added rules are contrapositives of the original ones, so they add no new force. We already know Mack builds a nest and has a mate, but we still lack any information about whether he finds food (and hence whether he has chicks). Without knowing he finds food, we cannot establish he has chicks, and without chicks we cannot establish he sings. Thus the truth of the serenade remains undetermined.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 728
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Mack does not find food.\n\nRemoved rules:\n- For all x, not having chicks is equivalent to either not building a nest or not finding food.\n\nAdded rules:\n- If Mack gets enough rest, then Mack finds food.",
+      "question": "Does the context entail the conclusion 'Mack will sing a serenade.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We know Mack exercises his wings, so (by the wing-exercise rule) he either gets enough rest or stays healthy (but not both). The new rule says that if he gets enough rest, then he finds food. However, we do not know which of the two disjuncts (gets rest vs. stays healthy) is true. If he gets rest, he will find food, build a nest, and thus have chicks, leading to a serenade. If instead he stays healthy (and does not get rest), we have no information about whether he finds food; without food, he would not have chicks and would not sing. Since both possibilities remain open, the serenade is not guaranteed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 915
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- For all x, not singing a serenade is equivalent to either not having a mate or not having chicks.\n\nAdded rules:\n- For all x, if x does not sing a serenade, then x does not have a mate or x does not have chicks.\n- For all x, if x does not have a mate or x does not have chicks, then x does not sing a serenade.\n- For all x, if x does not stay healthy, then x does not drink water.\n\nAdded facts:\n- Mack does not migrate seasonally.",
+      "question": "Does the context entail the conclusion 'Mack will sing a serenade.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Mack does not migrate seasonally. From the either-or rule about migration/rest, Mack must get enough rest (and cannot be getting rest and migrating). From the new conditional, if Mack gets enough rest then Mack finds food; so Mack finds food. We already have that Mack builds a nest and has a mate. With nest + food \u2192 chicks, Mack will have chicks. With mate + chicks \u2192 sings a serenade, Mack will sing. All premises needed are now assured, so the conclusion follows.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1151
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- If Mack explores new areas, then he either discovers new species or claims new territory (but not both).\n\nAdded rules:\n- Either Mack does not explore new areas, or he either discovers new species or claims new territory (but not both).\n\nAdded facts:\n- Mack does not explore new areas.\n- If Mack does not have a mate or Mack does not have chicks, then Mack does not sing a serenade.",
+      "question": "Does the context entail the conclusion 'Mack will sing a serenade.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "With the new either-or rule, the consequent (discovers or claims territory) is required only if Mack explores; but the added fact says he does not explore, so that rule is satisfied vacuously. Therefore we lose the earlier guarantee that Mack finds food. Without knowing whether he finds food, we cannot establish he has chicks. The new conditional states that if he lacks a mate or lacks chicks, he does not sing; equivalently, singing requires both mate and chicks. Although we know he has a mate, chick-hood is still undetermined, so the serenade cannot be entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1411
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x flies long distances, then x explores new areas.\n- For all x, if x migrates seasonally, then x explores new areas.\n- For all x, not singing a serenade is equivalent to either not having a mate or not having chicks.\n\nAdded facts:\n- Mack gets enough rest.\n- Mack does not stay healthy.\n- Mack finds food.\n- Mack has chicks.\n- Mack will sing a serenade.",
+      "question": "Does the context entail the conclusion 'Mack will sing a serenade.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The conclusion 'Mack will sing a serenade' is explicitly listed among the added facts, so it is directly asserted within the context.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1663
+    }
+  ]
+}

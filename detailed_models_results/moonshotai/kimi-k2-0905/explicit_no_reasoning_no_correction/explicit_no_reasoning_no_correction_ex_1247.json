@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 14,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Canaan does not volunteer regularly.\nCanaan does not donate to charity.\nCanaan has expertise.\nCanaan mentors others.\nCanaan does not support emergency services.\nCanaan is dedicated to his craft.\nIf Canaan contributes to the social good, then he either volunteers regularly or donates to charity (but not both).\nIf Canaan has expertise, then he either serves his community or mentors others (but not both).\nIf Canaan either enhances public safety or supports emergency services (but not both), then he contributes to the social good.\nCanaan either improves infrastructure or enhances public safety.\nIf Canaan is dedicated to his craft, then he is either a skilled tradesperson or serves his community (or both).\nIf Canaan is a skilled tradesperson, then he can either earn the respect of his peers or improve the infrastructure of his community, but not both.",
+      "question": "Does the context entail the conclusion 'Canaan does not earn the respect of his peers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Canaan either improves infrastructure or enhances public safety.\n\nAdded facts:\n- Canaan does not improve infrastructure and Canaan does not enhance public safety.",
+      "question": "Does the context entail the conclusion 'Canaan does not earn the respect of his peers.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "With the removed rule and the added facts we know:\n- Canaan does not improve infrastructure.\n- Canaan does not enhance public safety.\nHence the antecedent of the rule \"If Canaan either enhances public safety or supports emergency services (but not both), then he contributes to the social good\" is false, so the conditional gives no information about social-good contribution.\nWe still have:\n- Canaan is dedicated to his craft \u21d2 he is either a skilled tradesperson or serves his community (or both).\n- If skilled tradesperson \u21d2 he can either earn peer respect or improve infrastructure (but not both).\nSince he does not improve infrastructure, the disjunction \"earn respect OR improve infrastructure\" is satisfied only if he earns respect. Therefore, if he were a skilled tradesperson, he would have to earn respect. However, we do not know whether he is a skilled tradesperson at all (he might instead serve his community without being a tradesperson). Because the premise allows both possibilities, the statement \"Canaan does not earn the respect of his peers\" is neither guaranteed true nor guaranteed false; its truth value is undetermined by the given information.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 292
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Canaan is a skilled tradesperson, then he either earns the respect of his peers or improves the infrastructure of his community, but not both.\n\nAdded rules:\n- If Canaan is a skilled tradesperson, then either he earns the respect of his peers and does not improve the infrastructure of his community, or he does not earn the respect of his peers and he improves the infrastructure of his community.\n\nAdded facts:\n- Canaan does not serve his community.",
+      "question": "Does the context entail the conclusion 'Canaan does not earn the respect of his peers.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We know:\n1. Canaan is dedicated to his craft.\n2. If dedicated to his craft \u21d2 he is either a skilled tradesperson or serves his community (or both).\n3. Canaan does not serve his community.\n\nFrom 1\u20133: he must be a skilled tradesperson (the only remaining disjunct).\n\nAdded rule: if skilled tradesperson \u21d2 (earns respect & \u00acimprove infrastructure) OR (\u00acearn respect & improve infrastructure).\nWe have no information about whether he improves infrastructure or earns respect; both disjuncts of the added rule remain possible. Hence we cannot determine whether he earns respect.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 615
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Canaan is a skilled tradesperson, then either he earns the respect of his peers and does not improve the infrastructure of his community, or he does not earn the respect of his peers and he improves the infrastructure of his community.\n\nAdded rules:\n- If Canaan is dedicated to his craft, then he is a skilled tradesperson.\n- If Canaan is a skilled tradesperson, then he either earns the respect of his peers or improves the infrastructure of his community, but not both.\n\nAdded facts:\n- Canaan does not contribute to the social good.",
+      "question": "Does the context entail the conclusion 'Canaan does not earn the respect of his peers.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "1. Canaan is dedicated to his craft (given).\n2. Added rule: dedicated \u21d2 skilled tradesperson. Hence Canaan is a skilled tradesperson.\n3. Added rule for skilled tradesperson: earns respect XOR improves infrastructure.\n4. Known: Canaan does not contribute to social good.\n5. Rule: if (enhances public safety XOR supports emergency services) \u21d2 contributes to social good. Since social-good contribution is false, the antecedent must be false, so Canaan does neither; in particular he does not enhance public safety.\n6. Rule: improves infrastructure OR enhances public safety. Since he does not enhance public safety, he must improve infrastructure.\n7. From 3 and 6: he improves infrastructure, so (by XOR) he cannot earn respect. Therefore he does not earn the respect of his peers.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 896
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Canaan does not improve infrastructure and Canaan does not enhance public safety.\n\nAdded rules:\n- If Canaan is a skilled tradesperson, then he improves the infrastructure of his community.\n\nAdded facts:\n- Canaan does not enhance public safety.",
+      "question": "Does the context entail the conclusion 'Canaan does not earn the respect of his peers.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Key givens: Canaan is dedicated to his craft. From the retained rule \u2018dedicated \u21d2 skilled tradesperson or serves community\u2019 and the fact he does not serve the community (still in force), he must be a skilled tradesperson. The new rule says a skilled tradesperson improves infrastructure. Hence Canaan improves infrastructure. The only rule left that mentions peer respect is the removed one; no remaining statement links infrastructure improvement to peer respect. Therefore we have no information about whether he earns respect\u2014both outcomes are logically compatible with the context.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1235
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Canaan is a skilled tradesperson, then he either earns the respect of his peers or improves the infrastructure of his community, but not both.\n\nAdded rules:\n- If Canaan is a skilled tradesperson, then he either earns the respect of his peers or improves the infrastructure of his community, and it is not the case that he both earns the respect of his peers and improves the infrastructure of his community.\n- If Canaan is a skilled tradesperson and he improves the infrastructure of his community, then he does not earn the respect of his peers.\n- If Canaan is dedicated to his craft and he does not serve his community, then he is a skilled tradesperson.",
+      "question": "Does the context entail the conclusion 'Canaan does not earn the respect of his peers.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the retained facts: Canaan is dedicated to his craft and does not serve his community. The newly-added rule \u2018If dedicated and does not serve community \u2192 skilled tradesperson\u2019 forces Canaan to be a skilled tradesperson. No information is given about whether he improves infrastructure. If he does improve it, the second added rule guarantees he does not earn respect. If he does not improve it, the first added rule (an exclusive-or) requires that he earns respect instead. Both scenarios remain possible, so we cannot determine whether he earns respect.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1446
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Canaan is a skilled tradesperson, then he either earns the respect of his peers or improves the infrastructure of his community, and it is not the case that he both earns the respect of his peers and improves the infrastructure of his community.\n- If Canaan is a skilled tradesperson and he improves the infrastructure of his community, then he does not earn the respect of his peers.\n\nAdded rules:\n- If Canaan is a skilled tradesperson, then he earns the respect of his peers if and only if he improves the infrastructure of his community.",
+      "question": "Does the context entail the conclusion 'Canaan does not earn the respect of his peers.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Canaan is dedicated to his craft and does not serve his community. The rule \u2018If dedicated and does not serve community \u2192 skilled tradesperson\u2019 (still present) makes Canaan a skilled tradesperson. The new biconditional says: earns respect \u2194 improves infrastructure. We have no information about whether Canaan improves infrastructure (or enhances public safety), so both improves/does-not-improve remain possible. Hence the truth of \u2018earns respect\u2019 is also undetermined; the context neither guarantees he does nor guarantees he does not earn respect.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1745
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Canaan is a skilled tradesperson, then if he improves the infrastructure of his community, he earns the respect of his peers.",
+      "question": "Does the context entail the conclusion 'Canaan does not earn the respect of his peers.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Canaan is dedicated to his craft and does not serve his community, so by the retained rule he must be a skilled tradesperson. The newly-added conditional says only that if he improves infrastructure then he earns respect; it gives no information when he does not improve infrastructure, and we have no fact telling us whether he improves infrastructure or not. Therefore we cannot determine whether he earns respect.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2019
+    }
+  ]
+}

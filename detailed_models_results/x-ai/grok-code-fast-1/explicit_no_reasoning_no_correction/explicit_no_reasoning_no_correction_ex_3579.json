@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "x-ai/grok-code-fast-1",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 180,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jack does not seek support.\nJack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both).\nIf someone is emotionally resilient, then they will thrive in life.\nIf Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Jack does not seek support.\n\nAdded rules:\n- If Jack is resourceful, then he overcomes adversity.\n- If Jack seeks support, then he is mentally tough.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The modified context removes the fact that Jack does not seek support, and adds two new rules: 'If Jack is resourceful, then he overcomes adversity' and 'If Jack seeks support, then he is mentally tough'. The rest of the original context remains. Given that Jack is resourceful (R), the new rule implies he overcomes adversity (O). From the rule 'If Jack overcomes adversity, then he either has a positive attitude (P) or is resourceful (R), but not both', and since R is true, it must be that !P (not positive attitude). Jack either has P or seeks support (S), but not both (P \u22bb S). Since !P, it must be that S. Then, the added rule 'If Jack seeks support, then he is mentally tough' implies M (mentally tough). Jack is either athletically abled (A) or mentally tough (M), but not both (A \u22bb M). Since M, it must be !A (not athletically abled). Then, 'Either Jack is athletically abled or he is physically disabled, but not both' (A \u22bb D), so since !A, it must be D (physically disabled). Jack does not thrive in life (!T), and there's a rule that if emotionally resilient (E), then T, so Visio we don't have contradictions forcing !D. The derivation leads to D being entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 226
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Jack overcomes adversity.\n- Jack does not have a positive attitude.\n- Jack seeks support.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Building on the cumulative modifications: the context starts from the original, removes 'Jack does not seek support', adds the rules 'If Jack is resourceful, then he overcomes adversity' and 'If Jack seeks support, then he is mentally tough', and now adds the facts 'Jack overcomes adversity' (O), 'Jack does not have a positive attitude' (!P), and 'Jack seeks support' (S). Given that Jack is resourceful (from original), the rule implies O (which matches the added fact). From 'Jack either has a positive attitude or seeks support, but not both' (P \u22bb S) and added !P, it entails S (which matches). The added rule 'If Jack seeks support, then he is mentally tough' entails M. From 'Jack is either athletically abled or mentally tough, but not both' (A \u22bb M) and M, entails !A. From 'Either Jack is athletically abled or he is physically disabled, but not both' (A \u22bb D) and !A, entails D. No contradictions with other rules like thriving in life or emotional resilience, as they aren't forced to conflict.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 613
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Jack overcomes adversity, then he has a positive attitude if and only if he is not resourceful.\n\nAdded rules:\n- If Jack overcomes adversity, then if he has a positive attitude, he is not resourceful.\n- If Jack overcomes adversity, then if he is not resourceful, he has a positive attitude.\n- If Jack does not overcome adversity, then he is not resourceful.\n\nAdded facts:\n- Jack is not emotionally resilient.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Continuing from the previous cumulative context, which includes the original facts minus 'Jack does not seek support', plus rules 'If Jack is resourceful, then he overcomes adversity' and 'If Jack seeks support, then he is mentally tough', plus added facts 'Jack overcomes adversity' (O), 'Jack does not have a positive attitude' (!P), and 'Jack seeks support' (S). Now, the rule 'If Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both)' is removed. New rules added: 'If Jack overcomes adversity, then if he has a positive attitude, he is not resourceful', 'If Jack overcomes adversity, then if he is not resourceful, he has a positive attitude', and 'If Jack does not overcome adversity, then he is not resourceful'. A new fact: 'Jack is not emotionally resilient' (!E). The first two new rules are equivalent to the removed rule (if O then P \u2261 \u00acR). With O, !P, and S, it entails R (since !P implies \u00ac\u00acR implies R). S entails M (from if S then M). M entails !A (from A \u22bb M). !A entails D (from A \u22bb D). !E adds that Jack is not emotionally resilient, but this doesn't affect the above entailment chain, as no rule forces a contradiction with D.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 926
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Jack is not mentally tough, then he does not seek support.\n- If Jack is emotionally resilient, then he thrives in life.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Building on the prior cumulative context, with all previous modifications and additions. The new rules added are 'If Jack is not mentally tough, then he does not seek support' (\u00acM \u2192 \u00acS) and 'If Jack is emotionally resilient, then he thrives in life' (E \u2192 T), the latter of which is already identical to an original rule ('If someone is emotionally resilient, then they will thrive in life'). Given the established facts including S (Jack seeks support), the new rule \u00acM \u2192 \u00acS entails that \u00ac\u00acM holds (i.e., M is true, via contraposition: \u00acS \u2192 M since if S then \u00ac\u00acM). The entailment chain remains: S \u2192 M (from earlier rule 'If Jack seeks support, then he is mentally tough'), M \u2192 \u00acA (from A \u22bb M), \u00acA \u2192 D (from A \u22bb D). The addition of \u00acM \u2192 \u00acS is consistent but does not change the derivation of D. No contradictions introduced, as !E does not force T despite E \u2192 T, and !T is independent.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1363
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\n\nAdded rules:\n- If Jack is mentally tough and not emotionally resilient, then he overcomes adversity.\n- If Jack is not mentally tough and is emotionally resilient, then he overcomes adversity.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Continuing with the cumulative context. The rule 'If Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity' is removed, which stated if M \u22bb E then O. The added rules 'If Jack is mentally tough and not emotionally resilient, then he overcomes adversity' and 'If Jack is not mentally tough and is emotionally resilient, then he overcomes adversity' are equivalent to the removed rule, as they imply O iff (M \u2227 \u00acE) \u2228 (\u00acM \u2227 E), i.e., M \u22bb E. Thus, this change is effectively a rephrasing with no net difference in logical entailment. The derivation of D remains: S (fact) \u2192 M (from 'If Jack seeks support, then he is mentally tough') \u2192 \u00acA (from A \u22bb M) \u2192 D (from A \u22bb D). Facts like O, !P, S, !E continue to support this without contradiction.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1666
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Jack overcomes adversity, then he does not have a positive attitude if and only if he is resourceful.\n- Jack is mentally tough if and only if he is physically disabled.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Incorporating the cumulative context. The added rules are: 'If Jack overcomes adversity, then he does not have a positive attitude if and only if he is resourceful' (if O then \u00acP \u21d4 R), which is equivalent to the existing rule 'If Jack overcomes adversity, then he has a positive attitude iff he is not resourceful' (if O then P \u21d4 \u00acR), as \u00acP \u21d4 R is just P \u21d4 \u00acR. The second added rule 'Jack is mentally tough iff he is physically disabled' (M \u21d4 D) is already entailed by the original rules: M \u21d4 \u00acA (from M \u22bb A) and A \u21d4 \u00acD (from A \u22bb D), so M \u21d4 \u00acA \u21d4 \u00ac\u00acD \u21d4 D. No new logical implications or contradictions arise. The entailment of D persists through: S (fact) \u2192 M (from if S then M, and now confirmed M \u21d2 D directly, but already held).",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1977
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Jack seeks support, then he is mentally tough.\n\nAdded rules:\n- If Jack seeks support, then he is not mentally tough.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With the cumulative context, the rule 'If Jack seeks support, then he is mentally tough' (S \u2192 M) is removed. The new rule 'If Jack seeks support, then he is not mentally tough' (S \u2192 \u00acM) is added. Given the fact that Jack seeks support (S), the new rule entails \u00acM. From the original 'Jack is either athletically abled or mentally tough, but not both' (A \u22bb M), since \u00acM, it entails A. From 'Either Jack is athletically abled or he is physically disabled, but not both' (A \u22bb D), since A, it entails \u00acD (Jack is not physically disabled). This means D cannot be entailed; in fact, \u00acD is entailed. No other rules or facts contradict this, and the change directly opposes the previous entailment of D.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2275
+    }
+  ]
+}

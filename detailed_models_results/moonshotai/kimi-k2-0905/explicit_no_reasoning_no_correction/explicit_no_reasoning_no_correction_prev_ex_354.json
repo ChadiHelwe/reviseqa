@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 365,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Hayley does not read books.\nHayley does not appreciate life.\nHayley does not enjoy nature.\nHayley has a routine.\nHayley is methodical.\nHayley is disciplined.\nHayley does not care deeply.\nHayley does not feel happy.\nIf Hayley either lives a simple life or reads books (but not both), then she appreciates life.\nIf Hayley either enjoys nature or is content (but not both), then she lives a simple life.\nIf Hayley has a routine, then she is either organized or methodical, but not both.\nIf Hayley manages her time well, then she is either organized or disciplined, but not both.\nAll responsible people care deeply and manage their time well.\nIf Hayley keeps pets, then she is responsible.\nIf Hayley either owns chickens or keeps pets (but not both), then she feels happy.\nIf Hayley either owns chickens or loves animals (but not both), then she is content.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Hayley does not live a simple life.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "We already know Hayley does not live a simple life. Re-examining conditional 2: \"If Hayley either enjoys nature OR is content (but not both), then she lives a simple life.\" Its contrapositive is: If she does NOT live a simple life, then she does NOT have (enjoys-nature XOR content). Since she fails that XOR, the two sides have the same truth value. Context also states she does not enjoy nature, so she must likewise not be content. From conditional 8: \"If Hayley either owns chickens OR loves animals (but not both), then she is content.\" Because she is not content, this entire conditional\u2019s antecedent must be false; i.e. she does not have (owns-chickens XOR loves-animals). Now observe conditional 7: \"If Hayley either owns chickens OR keeps pets (but not both), then she feels happy.\" But Hayley does not feel happy, so again the antecedent is false; thus she does not have (owns-chickens XOR keeps-pets). Coupled with the earlier falsity of (owns-chickens XOR loves-animals), the only consistent truth-values are owns-chickens = FALSE and loves-animals = TRUE (and also keeps-pets = TRUE). Therefore the statement \"Hayley loves animals\" is entailed.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 298
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Hayley is responsible, then she cares deeply.\n- If Hayley keeps pets, then she cares deeply.\n\nAdded facts:\n- Hayley is not responsible.\n- Hayley is not content.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We still know from earlier steps: Hayley does not live a simple life, does not enjoy nature, and does not feel happy. From conditional 8 (own-chickens XOR love-animals \u2192 content) and the added fact she is not content, we get that (own-chickens XOR love-animals) is false, so own-chickens and love-animals have the same truth value. From conditional 7 (own-chickens XOR keep-pets \u2192 happy) and she is not happy, we also get that (own-chickens XOR keep-pets) is false, so own-chickens and keep-pets have the same truth value. The two XOR-failures together force: love-animals = keep-pets = own-chickens (all three share the same truth value). We now add the new rule: keep-pets \u2192 care-deeply. But the context (and the added fact) tells us Hayley does NOT care deeply; therefore she cannot keep pets (modus tollens). Hence keep-pets = FALSE, and by the equalities above love-animals = FALSE as well. So she does not love animals; the statement is false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 629
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Hayley keeps pets, then she is responsible.\n- If Hayley keeps pets, then she cares deeply.\n\nAdded rules:\n- If Hayley does not care deeply, then she keeps pets.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We retain that Hayley: does not live a simply life, does not enjoy nature, is not happy, is not content, and does not care deeply. From the new rule \u00accare-deeply \u2192 keep-pets we obtain (by modus ponens) that she keeps pets. As before, the contrapositive of conditional 7 gives \u00achappy \u2192 \u00ac(own-chickens XOR keep-pets); since keep-pets is now true, own-chickens must also be true to make their XOR false. Conditional 8 contrapositive gives \u00accontent \u2192 \u00ac(own-chickens XOR love-animals); with own-chickens true, love-animals must also be true to keep the XOR false. Hence love-animals is true.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 958
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Hayley does not care deeply, then she keeps pets.\n\nAdded rules:\n- If Hayley does not care deeply, then she does not keep pets.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Hayley does not care deeply (given). Under the newly added rule \"If Hayley does not care deeply, then she does not keep pets,\" we infer she does not keep pets. From conditional 7 contrapositive: \u00achappy \u21d2 \u00ac(owns-chickens XOR keep-pets). Since she is not happy and keep-pets is false, owns-chickens must be false as well. From conditional 8 contrapositive: \u00accontent \u21d2 \u00ac(owns-chickens XOR love-animals). With owns-chickens false, love-animals must be false to keep the XOR false. Hence Hayley does not love animals, making the statement false,",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1197
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Hayley loves animals, then she is content.\n- If Hayley owns chickens, then she feels happy.\n- If Hayley is responsible, then she manages her time well.\n- If Hayley keeps pets, then she cares deeply.\n\nAdded facts:\n- Hayley does not keep pets.\n- Hayley does not own chickens.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From conditional 8 (own-chickens XOR love-animals \u2192 content) and the fact Hayley is not content, we have \u00ac(own-chickens XOR love-animals); i.e., own-chickens and love-animals have the same truth value. Added facts say she does not keep pets and does not own chickens. From conditional 7 (own-chickens XOR keep-pets \u2192 happy) and Hayley not happy, \u00ac(own-chickens XOR keep-pets) also holds. Since keep-pets is false, own-chickens being false already satisfies this, so nothing new is forced on love-animals. The equality from conditional 8 (own-chickens \u2194 love-animals) and own-chickens = false gives love-animals = false. Thus Hayley does not love animals, so the claim is false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1410
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Hayley has a routine, then she is not organized.\n- If Hayley manages her time well, then she is not organized.\n\nAdded facts:\n- Hayley does not love animals.\n- Hayley is not organized.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The newly stated fact is simply \"Hayley does not love animals.\" That directly contradicts the conclusion \"Hayley loves animals.\" Since the context now explicitly asserts the negation of the statement in question, the statement is necessarily false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1698
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Hayley does not love animals.\n- Hayley is not content.\n\nAdded rules:\n- If Hayley does not own chickens, then she loves animals.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Earlier we derived (from the XOR being false) that own-chickens \u2194 love-animals. The same XOR still holds (via contraposing rules 7 and 8), so this biconditional still applies. The new rule is \u00acown-chickens \u2192 love-animals; the contrapositive is \u00aclove-animals \u2192 own-chickens. Together with the biconditional, these still require love-animals = true, because if love-animals were false then own-chickens would be true, contradicting the implication. Hence Hayley must love animals; the context now entails it.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1835
+    }
+  ]
+}

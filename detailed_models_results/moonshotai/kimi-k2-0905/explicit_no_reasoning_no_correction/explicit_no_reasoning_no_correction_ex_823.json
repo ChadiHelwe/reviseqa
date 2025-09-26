@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 317,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Frank has resources.\nFrank can make a discovery.\nFrank does not continue his research.\nFrank faces adversity.\nFrank remains resilient.\nFrank thinks creatively.\nIf Frank has resources or receives funding, then he can make a discovery.\nAnyone who receives funding or is successful can continue their research.\nIf Frank faces adversity, then he either remains resilient or pursues his passion (but not both).\nFrank pursues his passion or works tirelessly.\nAnyone who works tirelessly and thinks creatively can achieve a breakthrough.\nIf Frank makes progress, then he is successful.\nFrank is either dedicated or makes progress.\nIf Frank is dedicated, then he can either achieve a breakthrough or inspire others, but not both.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x receives funding or x is successful, then x continues their research.\n- For all x, if x works tirelessly and x thinks creatively, then x achieves a breakthrough.\n\nAdded rules:\n- For all x, if x receives funding or x is successful, then x does not continue their research.\n- For all x, if x works tirelessly and x thinks creatively, then x does not achieve a breakthrough.\n- For all x, if x works tirelessly, then x is dedicated.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "With the key rules reversed, we can no longer force Frank to be successful: Frank may be dedicated, and if he is dedicated we must pick exactly one of (achieve breakthrough, inspire others); but because \u2018works tirelessly \u2227 thinks creatively \u2192 \u00acachieves breakthrough\u2019 is now the rule, Frank\u2019s creative tireless work blocks a breakthrough. So a dedicated Frank can take the \u2018inspire others\u2019 branch. To be dedicated Frank merely has to work tirelessly (new rule). Frank already thinks creatively, so nothing stops him from choosing to work tirelessly, becoming dedicated, and because he can\u2019t get a breakthrough he takes the only remaining dedicated option: inspire others.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 237
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x works tirelessly and x thinks creatively, then x does not achieve a breakthrough.\n\nAdded rules:\n- If Frank works tirelessly, then he achieves a breakthrough.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Frank may be dedicated. The only disjunction attached to dedication is: if dedicated then (achieve breakthrough XOR inspire others). A separate new conditional now guarantees that if Frank works tirelessly he will achieve a breakthrough. Combining these: if Frank is dedicated he may work tirelessly, obtain the breakthrough, and therefore must forgo inspiring others. Nothing in the remaining rules forces him to be dedicated in the first place, and even if he is, nothing compels him to work tirelessly\u2014he could still take the breakthrough branch. Because in every consistent scenario either Frank is not dedicated at all, or he chooses the breakthrough option, the statement 'Frank inspires others' is never forced true by the context; it is at best contingent, so the entailment fails.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 514
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, if x continues his research, then x does not receive funding and x is not successful.\n- If Frank is dedicated, then he either achieves a breakthrough or inspires others, but they do not both happen.\n\nAdded facts:\n- Frank does not pursue his passion.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From earlier chains we still have: Frank is successful \u2192 he can continue his research, and continuing now implies \u00acfunding \u2227 \u00acsuccessful, contradicting success. Hence Frank cannot be successful. From that we derive \u00acprogress (since progress \u2192 successful), so by the disjunction \u2018Frank is dedicated or makes progress\u2019 Frank must be dedicated. The dedication axiom now says dedicated \u21d2 exactly one of (achieve breakthrough, inspire others). Nothing in the remaining rules or facts chooses between those two mutually-exclusive outcomes; they remain logically consistent with either. Therefore the context does not entail that Frank must inspire others.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 743
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Frank is dedicated, then he either achieves a breakthrough or inspires others, but not both.\n- If Frank works tirelessly, then he is dedicated and he achieves a breakthrough.\n- If Frank does not pursue his passion, then he works tirelessly.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Frank does not pursue his passion (given). From the new rule, this implies Frank works tirelessly. If Frank works tirelessly, then he is dedicated and he achieves a breakthrough. Once Frank is dedicated and achieves a breakthrough, the remaining rule requires that he cannot also inspire others (it is an XOR). Therefore, Frank cannot inspire others.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 963
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Frank works tirelessly, then he achieves a breakthrough.\n- If Frank works tirelessly, then he is dedicated and he achieves a breakthrough.\n\nAdded rules:\n- If Frank works tirelessly, then he does not achieve a breakthrough.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Frank does not pursue his passion (fact), so from \u2018\u00acpursue passion \u2192 work tirelessly\u2019 he works tirelessly. He already thinks creatively (given). But the new rule \u2018work tirelessly \u2192 \u00acachieve breakthrough\u2019 blocks his breakthrough. We earlier inferred Frank is dedicated (he must be, to avoid the falsity of \u2018makes progress \u2192 successful\u2019). For a dedicated agent the rule is: dedicated \u21d2 (achieve breakthrough XOR inspire others). With breakthrough ruled out, the only consistent branch is \u2018inspire others.\u2019 Hence the conclusion is forced.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1122
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Frank works tirelessly.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Working tirelessly is given, but no rule links it to achieving a breakthrough or to being dedicated in this context, and \u2018Frank is dedicated\u2019 is not forced. Without establishing dedication, the XOR requirement (dedicated \u21d2 breakthrough XOR inspire) never applies, so nothing compels Frank to inspire others.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1321
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Frank is dedicated, then he either achieves a breakthrough or inspires others, but they do not both happen.\n\nAdded facts:\n- If Frank is dedicated and Frank does not achieve a breakthrough, then Frank inspires others.",
+      "question": "Does the context entail the conclusion 'Frank inspires others.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Frank\u2019s dedication and whether he achieves a breakthrough are both undetermined. No rule now forces him to be dedicated, so the antecedent of the new conditional is not guaranteed; hence the consequent \u2018Frank inspires others\u2019 is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1428
+    }
+  ]
+}

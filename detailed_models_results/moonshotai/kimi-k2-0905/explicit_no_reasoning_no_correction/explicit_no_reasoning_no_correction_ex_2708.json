@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 141,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.14285714285714285
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Corbin does not gain recognition.\nCorbin has expertise.\nCorbin masters a traditional skill.\nCorbin seeks improvement.\nCorbin honors his ancestors.\nCorbin does not embrace heritage.\nIf Corbin shares his knowledge, then he will gain recognition.\nIf Corbin has expertise, then he creates masterpieces and teaches apprentices.\nIf Corbin collaborates with others, then he shares his knowledge.\nCorbin either teaches apprentices or innovates designs, but not both.\nIf Corbin masters a traditional skill, then he either respects customs or innovates designs (or both).\nIf someone values innovation, then they seek improvement and collaborate with others.\nIf Corbin preserves craftsmanship, then he either honors his ancestors or respects customs (but not both).\nIf Corbin either rejects tradition or embraces heritage (but not both), then he preserves craftsmanship.\nCorbin either appreciates tradition or values innovation.",
+      "question": "Does the context entail the conclusion 'Corbin either appreciates tradition or rejects tradition, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Corbin rejects tradition, then he preserves craftsmanship.\n- If Corbin preserves craftsmanship, then he does not respect customs.",
+      "question": "Does the context entail the conclusion 'Corbin either appreciates tradition or rejects tradition, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "The prior reasoning showed that Corbin cannot appreciate and reject tradition at the same time without forcing a contradiction (he would simultaneously have to respect customs and not respect them).  The two new implications only reinforce that contradiction and do not introduce any new escape hatch that would allow both attitudes to coexist; therefore the disjunction must still be exclusive.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 289
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Corbin rejects tradition, then he preserves craftsmanship.\n\nAdded facts:\n- Corbin appreciates tradition.\n- Corbin does not reject tradition.",
+      "question": "Does the context entail the conclusion 'Corbin either appreciates tradition or rejects tradition, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The new facts state Corbin appreciates tradition and does not reject tradition, so he affirms the first disjunct and denies the second.  The exclusive disjunction 'appreciates OR rejects (but not both)' is therefore satisfied, because exactly one side is true.  Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 435
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- If Corbin does not value innovation, then he appreciates tradition.\n\nAdded facts:\n- Corbin creates masterpieces and teaches apprentices.\n- Corbin does not innovate designs.\n- Corbin respects customs.\n- Corbin does not preserve craftsmanship.",
+      "question": "Does the context entail the conclusion 'Corbin either appreciates tradition or rejects tradition, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the original rules, we know: if Corbin has expertise then he both creates masterpieces and teaches apprentices. The new facts give us that Corbin does both, so he has expertise. From the original branching rule for someone who masters a traditional skill, Corbin must either respect customs or innovate designs (or both). He respects customs, so this branch is satisfied regardless of whether he innovates.\n\nWe are told he does NOT innovate designs. The rule added in the previous step, \u2018If Corbin does not value innovation, then he appreciates tradition,\u2019 together with the earlier rule \u2018Corbin either appreciates tradition or values innovation,\u2019 now forces Corbin to appreciate tradition (because if he valued innovation he would innovate designs, and he doesn\u2019t). Thus he appreciates tradition.\n\nThe only remaining issue is whether he might also reject tradition, which would violate the exclusivity. Suppose for contradiction that he does reject tradition. The removed rule of the prior step means we no longer automatically get preservation of craftsmanship from rejecting tradition, so we must check independently. A necessary condition for \u2018preserves craftsmanship\u2019 is \u2018honors ancestors OR respects customs (but not both)\u2019. He does respect customs; therefore if he preserved craftsmanship he would have to NOT honor ancestors. However, we are explicitly told he does NOT preserve craftsmanship at all, so nothing forces him to abandon honoring ancestors, and no contradiction arises inside the preservation branch.\n\nLikewise, there is no other rule that links rejecting tradition to a contradiction in this configuration. Consequently rejecting tradition remains logically compatible with all given facts; we simply lack sufficient information to rule it out. Hence we cannot establish that the disjunction is exclusive: he might appreciate tradition and simultaneously reject it, or he might not\u2014we simply don\u2019t know. Therefore the exclusive disjunction is not entailed.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 581
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Corbin appreciates tradition.\n- Corbin does not reject tradition.\n\nAdded rules:\n- If Corbin does not gain recognition, then he does not value innovation.\n- If Corbin does not embrace heritage and Corbin does not preserve craftsmanship, then he does not reject tradition.",
+      "question": "Does the context entail the conclusion 'Corbin either appreciates tradition or rejects tradition, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the fixed context we know: Corbin does not gain recognition \u2192 by the newly added rule he does not value innovation.  Because \u2018appreciates tradition or values innovation\u2019 is still in force, Corbin must therefore appreciate tradition.  So the first side of the exclusive disjunction is true.  To satisfy exclusivity we must ensure he does NOT also reject tradition.  The other new rule says: if he neither embraces heritage nor preserves craftsmanship, then he does NOT reject tradition.  We already know he does not embrace heritage.  The remaining premise, \u2018does not preserve craftsmanship,\u2019 is not determined by the facts: the context allows both possibilities (he might or might not preserve craftsmanship).  Therefore the antecedent of that new rule can fail, so the rule does not guarantee he refrains from rejecting tradition.  Hence rejecting tradition remains possible; he could in principle both appreciate and reject tradition.  Since exclusivity is not forced, the statement is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1055
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Corbin either rejects tradition or embraces heritage, but not both, then he preserves craftsmanship.\n\nAdded facts:\n- Corbin does not share his knowledge.\n- Corbin does not collaborate with others.",
+      "question": "Does the context entail the conclusion 'Corbin either appreciates tradition or rejects tradition, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Given facts: Corbin does not share knowledge and does not collaborate.  From the original rules, \u2018If collaborates then shares knowledge\u2019 is vacuously satisfied, and the recognition-conditional \u2018If shares knowledge then gains recognition\u2019 is irrelevant because he doesn\u2019t share.  We still have the disjunction \u2018appreciates tradition or values innovation.\u2019  Suppose he values innovation; the rule \u2018If values innovation then seeks improvement and collaborates\u2019 would force him to collaborate, contradicting the new fact.  Hence he cannot value innovation, so he must appreciate tradition.  Thus appreciating tradition is entailed.  The conclusion demanded is the EXCLUSIVE disjunction \u2018appreciates OR rejects (but not both).\u2019  To establish exclusivity we need to be sure he does NOT reject tradition.  Nothing in the remaining rules forces or forbids rejecting tradition; with the craftsmanship\u2013heritage rule now removed, no contradiction arises if we assume he both appreciates and rejects tradition.  Therefore rejecting tradition remains possible, and exclusivity is not guaranteed.  Hence the statement is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1364
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Corbin does not appreciate tradition, then he values innovation.",
+      "question": "Does the context entail the conclusion 'Corbin either appreciates tradition or rejects tradition, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The original rules still require: appreciates tradition or values innovation.  The new rule is the converse: if one fails to appreciate tradition, then one must value innovation.  Together these form a biconditional: \u2018appreciates tradition \u2194 does not value innovation\u2019.  From the previous step we already established that he cannot value innovation (because valuing innovation forces collaboration, which contradicts the fact he does not collaborate).  Thus he must appreciate tradition.  To satisfy the exclusive disjunction we must guarantee he does NOT reject tradition.  The earlier reasoning showed there is no rule left that forces or forbids rejecting tradition (the removed heritage/craftsmanship rule was the only potential source of contradiction, and it is gone).  Hence rejecting tradition remains logically possible, so he could both appreciate and reject tradition.  Because exclusivity is not ensured, the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1679
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Corbin does not value innovation, then he appreciates tradition.\n- If Corbin does not gain recognition, then he does not value innovation.\n\nAdded rules:\n- If Corbin values innovation, then he appreciates tradition.\n- If Corbin gains recognition, then he does not value innovation.",
+      "question": "Does the context entail the conclusion 'Corbin either appreciates tradition or rejects tradition, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We already know Corbin does not gain recognition (fixed context), so the new rule \u2018If gains recognition then does not value innovation\u2019 gives no information.  The other new rule, \u2018If values innovation then appreciates tradition,\u2019 is irrelevant because we already established he cannot value innovation (that would force collaboration, contradicting the fact he does not collaborate).  Therefore he must still appreciate tradition (via the surviving original disjunction \u2018appreciates tradition or values innovation\u2019).  To satisfy the claimed exclusive disjunction we must ensure he does NOT reject tradition.  There is still no rule left that forbids rejecting tradition; hence he could both appreciate and reject tradition.  Thus exclusivity is not guaranteed and the statement is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1926
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 384,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Shepherd does not provide cover for his team.\nShepherd does not destroy enemy positions.\nShepherd does not save lives.\nShepherd receives an award.\nShepherd does not earn respect.\nAny military person who uses a weapon either provides cover for their team or destroys enemy positions.\nShepherd either makes tactics or saves lives.\nFor Shepherd, either he uses a weapon or commands a unit, but not both at the same time.\nIf Shepherd commands a unit, then he either makes tactics or leads troops, but not both.\nIf a military person wins battles and receives an award, then they earn respect.\nIf Shepherd either leads troops or is strategic (but not both), then he wins battles.\nEvery military personnel is either brave or strategic (or both).",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x wins battles and receives an award, then x earns respect.\n\nAdded rules:\n- If Shepherd commands a unit, then he is not brave.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "With the added rule \u2018If Shepherd commands a unit, then he is not brave\u2019 we can derive the conclusion directly once we establish that Shepherd does command a unit. From earlier we already know Shepherd cannot use a weapon (because if he did he would have to provide cover or destroy positions, both denied). Since he must do exactly one of {use weapon, command unit}, he must command a unit. The new rule then immediately gives \u2018Shepherd is not brave.\u2019",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 255
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- Either Shepherd uses a weapon or Shepherd commands a unit, but not both.\n\nAdded rules:\n- If Shepherd receives an award, then he is brave.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added rule is a one-way conditional: receiving an award implies bravery.  It does not tell us what happens if he does not receive an award, nor does it say that only award-receivers are brave.  The context explicitly states that Shepherd receives an award.  By modus ponens on the added rule, Shepherd is brave.  Therefore the conclusion \u2018Shepherd is not brave\u2019 is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 429
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- If Shepherd receives an award and commands a unit, then he is brave.\n- If either Shepherd leads troops or is strategic, but not both, then he wins battles.\n\nAdded facts:\n- Either Shepherd is brave or Shepherd commands a unit.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We are told that either Shepherd is brave or he commands a unit; we have no information that rules either disjunct out. The added conditional \u2018If (award \u2227 commands unit) \u2192 brave\u2019 is irrelevant because we do not know whether he commands a unit. Since the disjunction \u2018brave \u2228 commands unit\u2019 leaves open the possibility that he is brave, the statement \u2018Shepherd is not brave\u2019 is not forced by the context; it could still be false.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 592
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Shepherd receives an award, then he is brave.\n\nAdded rules:\n- If Shepherd receives an award, then he is not brave.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added rule directly states that receiving an award implies Shepherd is not brave. Since the context already asserts that Shepherd receives an award, modus ponens applies, yielding that Shepherd is not brave. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 782
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Shepherd either makes tactics or saves lives.\n- For all x, either x is brave or x is strategic (or both).\n- If Shepherd commands a unit, then he is not brave.\n- Either Shepherd is brave or Shepherd commands a unit.\n- If Shepherd receives an award and commands a unit, then he is brave.\n\nAdded rules:\n- If Shepherd does not make tactics, then he saves lives.\n- For all x, if x is not strategic, then x is brave.\n- If Shepherd is brave, then he does not command a unit.\n- If Shepherd is not brave, then he commands a unit.\n- If Shepherd receives an award and commands a unit, then he makes tactics.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Shepherd receives an award (given). The new biconditional pair (\u2018If brave \u2192 not command\u2019 and \u2018If not brave \u2192 command\u2019) ensures Shepherd commands a unit iff he is not brave. With the award fact and the new rule \u2018If award \u2227 command \u2192 make tactics\u2019, we get that Shepherd makes tactics. Now consider the two exhaustive cases: (1) Assume Shepherd is brave; then he does not command a unit (first biconditional clause), so the antecedent of the award-and-command rule fails and gives no constraint, but \u2018not command\u2019 with the biconditional\u2019s converse implies he is brave\u2014consistent so far. (2) Assume Shepherd is not brave; then he commands a unit (second biconditional clause), so the award-and-command rule fires and again we get that he makes tactics\u2014also internally consistent. Thus both bravery and non-bravery remain logically possible; the context does not force either disjunct. Therefore \u2018Shepherd is not brave\u2019 is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 900
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Shepherd receives an award, then he is not brave.\n\nAdded facts:\n- Shepherd is not strategic.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The only universal rule still in force about bravery is the tacit domain assumption that every military person is either brave or strategic (or both).  Since the new fact says Shepherd is not strategic, the only way to satisfy that disjunction is for him to be brave.  Hence the context actually forces Shepherd to be brave, contradicting the conclusion that he is not brave.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1297
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x is not brave, then x is strategic.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The added rule is the contrapositive of the standing domain axiom \u201cevery military person is brave or strategic,\u201d so it adds no new force.  Nothing in the context determines whether Shepherd is brave; earlier biconditionals about commanding vs. bravery were removed, and no current fact fixes his bravery status.  Hence both possibilities remain open.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1438
+    }
+  ]
+}

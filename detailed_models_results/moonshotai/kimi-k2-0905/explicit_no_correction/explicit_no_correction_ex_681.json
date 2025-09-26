@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_correction",
+    "chain_index": 302,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Chana develops strategic thinking.\nChana does not pursue excellence.\nChana drives innovation.\nChana sets goals.\nChana does not stay motivated.\nChana does not overcome adversity.\nChana either develops strategic thinking or fosters collaboration, but not both.\nIf Chana mentors her peers, then she either pursues excellence or fosters collaboration (but not both).\nIf Chana either mentors her peers or drives innovation (but not both), then she leads by example.\nIf Chana either sets goals or pursues her passion (but not both), then she stays motivated.\nChana either inspires others or leads by example, but not both.\nEveryone who pursues their passion is either determined or overcomes adversity (or both).\nIf Chana is determined, then she can either achieve recognition or inspire others, but not both.",
+      "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Chana develops strategic thinking.. Chana either develops strategic thinking or fosters collaboration, but not both.. Therefore, Chana does not foster collaboration.. Chana does not pursue excellence. Chana does not foster collaboration.. If Chana mentors her peers, then she either pursues excellence or fosters collaboration (but not both).. Therefore, Chana does not mentor her peers.. Chana does not mentor her peers. Chana drives innovation.. If Chana either mentors her peers or drives innovation (but not both), then she leads by example.. Therefore, Chana leads by example.. Chana sets goals. Chana does not stay motivated.. If Chana either sets goals or pursues her passion (but not both), then she stays motivated.. Therefore, Chana pursues her passion.. Chana leads by example.. Chana either inspires others or leads by example, but not both.. Therefore, Chana does not inspire others.. Chana pursues her passion. Chana does not overcome adversity.. Everyone who pursues their passion is either determined or overcomes adversity (or both).. Therefore, Chana is determined.. Chana is determined. Chana does not inspire others.. If Chana is determined, then she can either achieve recognition or inspire others, but not both.. Therefore, Chana achieves recognition..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Chana pursues her passion, then she is either determined or overcomes adversity, or both.\n- Either Chana is not determined, or she either achieves recognition or inspires others, but not both.\n\nAdded facts:\n- Chana does not foster collaboration.",
+      "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From new fact: Chana does not foster collaboration.\nStatement \"If Chana either develops strategic thinking or fosters collaboration, but not both\" + Chana develops strategic thinking \u2192 Chana does not foster collaboration (consistent).\nChana does not pursue excellence.\nIf Chana mentors her peers \u2192 (pursue excellence XOR foster collaboration). Since neither holds, antecedent false \u2192 no info on mentoring.\nChana drives innovation.\nRule \"If (mentors XOR drives innovation) then leads by example\" \u2192 Chana leads by example.\nRule \"Chana either inspires others or leads by example, but not both\" \u2192 Chana does not inspire others.\nChana sets goals. Chana does not stay motivated.\nRule \"If (sets goals XOR pursues passion) then stays motivated\" \u2192 Since Chana stays motivated is False, then she must pursue her passion (not the other disjunct), so Chana pursues her passion.\nRule (new): \"If pursues passion then (determined OR overcomes adversity)\" \u2192 Chana is determined or overcomes adversity (or both).\nChana does not overcome adversity \u2192 So Chana must be determined.\nRule (new): \"Either not determined OR (achieves recognition XOR inspires others)\" \u2192 Since Chana is determined, the second part must be true: achieves recognition XOR inspires others.\nChana does not inspire others \u2192 Therefore she must achieve recognition.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 536
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Chana pursues her passion.",
+      "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Given: Chana pursues her passion. From global rules, 'Everyone who pursues their passion is either determined or overcomes adversity (or both).' So Chana is determined or overcomes adversity (or both). Another global rule: 'If Chana is determined, then she can either achieve recognition or inspire others, but not both.' Yet we have no knowledge whether Chana is determined (only that she is determined OR overcomes adversity; overcoming adversity is not ruled out, so determination is not guaranteed). Also, no info yet on inspiring others or fostering collaboration. Thus we cannot determine whether she achieves recognition; the truth value of 'Chana achieves recognition' cannot be inferred from the given context.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 933
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Chana mentors her peers, then she either pursues excellence or fosters collaboration (but not both).\n\nAdded rules:\n- Chana either mentors her peers or drives innovation if and only if she leads by example.\n\nAdded facts:\n- Chana mentors her peers.",
+      "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Added fact: Chana mentors her peers. New biconditional rule: Chana leads by example \u2194 (Chana mentors her peers XOR Chana drives innovation). Chana mentors her peers, so the right-hand side is true if and only if she does not drive innovation. From the original context we have Chana drives innovation, so mentoring XOR driving is false (both are true). Hence the biconditional tells us Chana does not lead by example. We also know from the original context: 1. Chana pursues her passion (given). 2. Everyone who pursues their passion is either determined or overcomes adversity (or both). 3. Chana does not stay motivated; original rule says if sets goals XOR pursues passion then stays motivated; since she is not motivated, she cannot have set goals, but that makes no difference now. 4. From any set of facts we have nothing that forces her to be determined (she could overcome adversity but not be determined), nor any information about inspiring others without leading by example. The earlier chain that required \"leading by example\" and \"determined\" to conclude \"recognition\" now fails, because she does NOT lead by example. No remaining rules connecting mentoring, passion, or motivation to achieving recognition. Hence we cannot determine whether she achieves recognition.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1127
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- Everyone who pursues their passion is either determined or overcomes adversity (or both).\n- If Chana pursues her passion, then she is either determined or overcomes adversity, or both.\n\nAdded rules:\n- If Chana pursues her passion then she is determined.\n\nAdded facts:\n- Chana leads by example.",
+      "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Added fact: Chana leads by example. Original context states Chana sets goals and Chana does not stay motivated. The rule 'If Chana either sets goals or pursues her passion (but not both), then she stays motivated' implies that since she is not motivated, she must pursue her passion (given that she sets goals). So Chana pursues her passion. New rule: 'If Chana pursues her passion then she is determined' \u2192 therefore Chana is determined. Original rule: 'If Chana is determined, then she can either achieve recognition or inspire others, but not both.' We still need to exclude 'inspire others' to force 'achieve recognition.' The only relevant rule is 'Chana either inspires others or leads by example, but not both.' Since Chana leads by example, she does not inspire others. Thus determination + not inspiring \u2192 must achieve recognition.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1497
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Chana leads by example.",
+      "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We retain: Chana pursues her passion, Chana sets goals, Chana does not stay motivated. Rule \"If (sets goals XOR pursues passion) then stays motivated\" \u2192 since she is not motivated, the antecedent must be false, forcing her to pursue her passion (already accepted). New rule: \"If pursues passion then determined\" \u2192 gives Chana is determined. Remaining rule: \"If determined then (achieves recognition XOR inspires others)\" \u2192 so exactly one of recognition or inspiring is true. But with \"leads by example\" fact removed, we no longer know whether she inspires others or not; nothing else fixes this disjunction. Hence we cannot decide which side of the XOR holds.",
+      "correct": false,
+      "tags": [
+        "removed_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1789
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- Either it is not the case that Chana either mentors her peers or drives innovation (but not both), or she leads by example.\n- Either it is not the case that Chana either sets goals or pursues her passion (but not both), or she stays motivated.\n- If Chana is not determined, then she does not pursue her passion.\n\nAdded facts:\n- It is not the case that Chana either sets goals or pursues her passion (but not both).\n- It is not the case that Chana either mentors her peers or drives innovation (but not both).",
+      "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Added facts: 1) It is NOT the case that Chana either sets goals or pursues her passion (but not both) \u2192 the exclusive disjunction is false, so either both are true or both are false. 2) It is NOT the case that Chana either mentors her peers or drives innovation (but not both) \u2192 the exclusive disjunction is false, so either both are true or both are false.\nRule: Either (\u00ac(sets XOR passion)) OR stays motivated \u2192 because the first disjunct is true, this rule gives no information; stays motivated could be true or false.\nRule: Either (\u00ac(mentors XOR drives)) OR leads by example \u2192 again the first disjunct is true, so leads by example could be true or false; nothing forces it.\nOriginal context still says Chana sets goals and Chana does not stay motivated; so \"sets goals\" is true. From fact (1) above, since sets-goals is true, the XOR being false forces \"pursues passion\" also to be true. So Chana pursues her passion.\nRule: If Chana is NOT determined, then she does NOT pursue her passion. Contrapositive: if she pursues passion, then she IS determined. So Chana is determined.\nOriginal rule: If determined then (achieves recognition XOR inspires others). So exactly one of recognition or inspiring others is true.\nWe have no remaining facts or rules that fix whether she inspires others; inspiring others could be true or false, so recognition could be true or false. Hence we cannot determine.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1986
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Chana mentors her peers.\n- It is not the case that Chana either mentors her peers or drives innovation (but not both).\n\nAdded facts:\n- Chana does not mentor her peers.",
+      "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From previous steps we still have: Chana sets goals, Chana does not stay motivated, Chana pursues her passion, and Chana is determined. The rule \u2018If determined then (achieves recognition XOR inspires others)\u2019 gives that exactly one of recognition or inspiring others holds. Nothing in the current context tells us whether Chana inspires others or not; that disjunction remains unsettled. Hence we cannot conclude she achieves recognition.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2476
+    }
+  ]
+}

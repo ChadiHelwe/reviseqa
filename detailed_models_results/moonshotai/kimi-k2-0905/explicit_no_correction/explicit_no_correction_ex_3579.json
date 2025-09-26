@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "moonshotai/kimi-k2-0905",
+    "task_path": "explicit_no_correction",
+    "chain_index": 180,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.14285714285714285
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jack does not seek support.\nJack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both).\nIf someone is emotionally resilient, then they will thrive in life.\nIf Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Jack does not seek support.. Jack either has a positive attitude or seeks support, but not both.. Therefore, Jack has a positive attitude.. Jack has a positive attitude. Jack is resourceful.. If Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both).. Therefore, Jack is not able to overcome adversity.. Jack does not thrive in life.. If someone is emotionally resilient, then they will thrive in life.. Therefore, Jack is not emotionally resilient.. Jack is not emotionally resilient. Jack is not able to overcome adversity.. If Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.. Therefore, Jack is not mentally tough.. Jack is not mentally tough.. Jack is either athletically abled or mentally tough, but not both.. Therefore, Jack is athletically abled.. Jack is athletically abled.. Either Jack is athletically abled or he is physically disabled, but not both.. Therefore, Jack is physically disabled..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Jack does not seek support.\n\nAdded rules:\n- If Jack is resourceful, then he overcomes adversity.\n- If Jack seeks support, then he is mentally tough.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We no longer know whether Jack seeks support.\nJack is resourceful (still stated), and the new rule is: If Jack is resourceful, then he overcomes adversity. So Jack overcomes adversity.\nIf Jack overcomes adversity and the rule is: If Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both), we still satisfy that since he is resourceful (and we can choose resourceful as the single disjunct).\nNow, by the new rule: If Jack seeks support, then he is mentally tough. But we don\u2019t know whether he seeks support; he might or might not.\nIf he does seek support, then he is mentally tough. If he is mentally tough, the old rule: If Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity \u2014 and we already have that he overcomes adversity, so this is consistent either way.\nJack is either athletically abled or mentally tough, but not both. So exactly one of the two holds.\nJack is either athletically abled or physically disabled, but not both. \nWe have no way to determine which of mentally tough / athletically abled holds, because Jack\u2019s support-seeking status is unknown, so we can\u2019t force him to be mentally tough. Hence, both possibilities (mentally tough or not) remain open. Therefore, we don\u2019t know whether he is athletically abled, and thus we don\u2019t know whether he is physically disabled.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 434
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Jack overcomes adversity.\n- Jack does not have a positive attitude.\n- Jack seeks support.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given: Jack overcomes adversity, does not have a positive attitude, and seeks support. From the rule 'If Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both)', since he overcomes adversity and does NOT have a positive attitude, the disjunction forces him to be resourceful (and not have a positive attitude, which matches). So Jack is resourceful. From 'If Jack seeks support, then he is mentally tough' (added rule), since he seeks support, he is mentally tough. From 'Jack is either athletically abled or mentally tough, but not both', since he is mentally tough, he is NOT athletically abled. From 'Either Jack is athletically abled or he is physically disabled, but not both', since he is not athletically abled, he must be physically disabled. All premises are satisfied.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 831
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Jack overcomes adversity, then he has a positive attitude if and only if he is not resourceful.\n\nAdded rules:\n- If Jack overcomes adversity, then if he has a positive attitude, he is not resourceful.\n- If Jack overcomes adversity, then if he is not resourceful, he has a positive attitude.\n- If Jack does not overcome adversity, then he is not resourceful.\n\nAdded facts:\n- Jack is not emotionally resilient.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We do not know whether Jack overcomes adversity. Without that, we cannot use the new or old adversity-dependent rules to fix any attribute about attitude, resourcefulness, or mental toughness. We are told Jack is not emotionally resilient, but the rule \u2018If Jack is either mentally tough or emotionally resilient, then he overcomes adversity\u2019 only gives an implication; its contrapositive is not usable to infer anything when adversity status is unknown. Jack\u2019s athletic versus disabled status ultimately depends on whether he is mentally tough (because he is either mentally tough or athletically abled but not both, and either athletically abled or physically disabled but not both). Since we have no premise that determines mental toughness, all combinations remain possible. Hence we cannot determine physical disability.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1078
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Jack is not mentally tough, then he does not seek support.\n- If Jack is emotionally resilient, then he thrives in life.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We still do not know whether Jack overcomes adversity, whether he seeks support, or whether he is mentally tough or emotionally resilient. The new rule \u2018If Jack is not mentally tough, then he does not seek support\u2019 gives only a conditional; without knowing his support-seeking status or his mental toughness, we cannot fix either. Likewise, the rule \u2018If Jack is emotionally resilient, then he thrives in life\u2019 is a one-way implication and cannot force emotional-resilience status (and we already know Jack does not thrive, so if he were emotionally resilient he would thrive\u2014hence he is not emotionally resilient\u2014but that was already implicit from the original context). Thus mental toughness remains unknown, so we cannot determine whether he is athletically abled or physically disabled.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1369
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\n\nAdded rules:\n- If Jack is mentally tough and not emotionally resilient, then he overcomes adversity.\n- If Jack is not mentally tough and is emotionally resilient, then he overcomes adversity.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The original rule \u2018If Jack is either mentally tough or emotionally resilient (but not both), then he overcomes adversity\u2019 is replaced by two rules that jointly cover the same two exclusive cases (mentally tough & not resilient, or not tough & resilient) and still imply overcoming adversity. Thus the logical force is unchanged: if exactly one of mentally tough / emotionally resilient holds, Jack overcomes adversity; if both or neither, nothing is implied about adversity. All other rules and facts remain, so we still lack information to determine mental toughness or adversity status. Consequently, we cannot determine whether Jack is athletically abled or physically disabled.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1597
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Jack overcomes adversity, then he does not have a positive attitude if and only if he is resourceful.\n- Jack is mentally tough if and only if he is physically disabled.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We still do not know whether Jack overcomes adversity, whether he has a positive attitude, whether he is resourceful, or therefore whether he is mentally tough. The new biconditional \u2018Jack is mentally tough if and only if he is physically disabled\u2019 links the two, but without a fix on mental toughness (or on disability) we can determine neither. Since every route to fixing mental toughness depends on presently unknown facts (adversity status, attitude, resourcefulness, support-seeking), both \u2018mentally tough\u2019 and \u2018physically disabled\u2019 remain equally undetermined.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1830
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Jack seeks support, then he is mentally tough.\n\nAdded rules:\n- If Jack seeks support, then he is not mentally tough.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The new rule \u2018If Jack seeks support, then he is not mentally tough\u2019 is the opposite of the removed one, but we still do not know whether Jack seeks support, whether he overcomes adversity, or whether he is mentally tough. All other information remains unchanged. Because his support-seeking status and adversity status are both unknown, we cannot determine mental toughness, and hence we cannot determine whether he is physically disabled.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2028
+    }
+  ]
+}
