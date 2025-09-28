@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-nano",
+    "task_path": "implicit_no_reasoning_no_correction",
+    "chain_index": 83,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Ahmir appreciates having personal space.\nAhmir does not prefer solitude.\nAhmir faces challenges.\nAhmir builds resilience.\nAhmir seeks professional help.\nAhmir either appreciates having personal space or values freedom, but not both.\nIf Ahmir either enjoys the outdoors or prefers solitude (but not both), then he values freedom.\nAhmir either has claustrophobia or enjoys the outdoors.\nIf Ahmir faces challenges, then he either builds resilience or manages his phobia (but not both).\nIf Ahmir either finds alternative pursuits or seeks professional help (but not both), then he is able to manage his phobia.\nIf Ahmir has claustrophobia, then he either avoids social events or finds alternative pursuits, but not both.",
+      "question": "Does the context entail the conclusion 'Ahmir does not avoid social events.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Ahmir appreciates having personal space.\nAhmir does not prefer solitude.\nAhmir faces challenges.\nAhmir builds resilience.\nAhmir seeks professional help.\nAhmir either appreciates having personal space or values freedom, but not both.\nIf Ahmir either enjoys the outdoors or prefers solitude (but not both), then he values freedom.\nAhmir either has claustrophobia or enjoys the outdoors.\nIf Ahmir faces challenges, then he either builds resilience or manages his phobia (but not both).\nIt is not the case that Ahmir finds alternative pursuits.\nIf Ahmir has claustrophobia, then he either avoids social events or finds alternative pursuits, but not both.",
+      "question": "Does the context entail the conclusion 'Ahmir does not avoid social events.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From 'Ahmir appreciates having personal space' and the XOR rule with freedom, Fre must be False. The rule 'If Ahmir enjoys the outdoors or solitude (but not both) then he values freedom' gives (O XOR Sol) -> Fre; with Fre = False this forces O XOR Sol to be False, so O and Sol share the same truth value. 'It is not the case that Ahmir finds alternative pursuits' makes Alt = False. The clause 'If Ahmir has claustrophobia, then he either avoids social events or finds alternative pursuits, but not both' becomes Cl -> (Avoid XOR Alt) which, with Alt = False, simplifies to Cl -> Avoid. Together with 'Ahmir either has claustrophobia or enjoys the outdoors' (Cl OR O), we get two possibilities: (1) O = False \u2192 Cl = True \u2192 Avoid Social = True; (2) O = True \u2192 Cl can be False \u2192 Avoid Social unconstrained. Hence there are models where avoidance is true and models where avoidance is false. Therefore the context does not entail the conclusion 'Ahmir does not avoid social events.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 257
+    },
+    {
+      "step": 2,
+      "context": "Ahmir appreciates having personal space.\nAhmir does not prefer solitude.\nAhmir faces challenges.\nAhmir builds resilience.\nAhmir seeks professional help.\nAhmir either appreciates having personal space or values freedom, but not both.\nIf Ahmir either enjoys the outdoors or prefers solitude (but not both), then he values freedom.\nAhmir either has claustrophobia or enjoys the outdoors.\nIf Ahmir faces challenges, then he either builds resilience or manages his phobia (but not both).\nIt is not the case that Ahmir finds alternative pursuits.\nIf Ahmir has claustrophobia, then he either avoids social events or finds alternative pursuits.\nIf Ahmir has claustrophobia, then it is not the case that he both avoids social events and finds alternative pursuits.",
+      "question": "Does the context entail the conclusion 'Ahmir does not avoid social events.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts: P (true) and Sol (false) with the XOR constraint P XOR Fre implies Fre must be false. The rule 'If outdoors or solitude (but not both) then Fre' becomes O -> Fre, and since Fre is false, O must be false. With 'Cl or O' and O false, Cl is true. The rule 'If Cl then Avoid (since Alt is false)' gives Avoid true. Therefore the context entails that Ahmir does avoid social events. The conclusion 'Ahmir does not avoid social events' would require Avoid false, which is not entailed (in fact the opposite is entailed). Hence the answer is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 678
+    },
+    {
+      "step": 3,
+      "context": "Ahmir appreciates having personal space.\nAhmir does not prefer solitude.\nAhmir faces challenges.\nAhmir builds resilience.\nAhmir seeks professional help.\nAhmir either appreciates having personal space or values freedom, but not both.\nIf Ahmir either enjoys the outdoors or prefers solitude (but not both), then he values freedom.\nAhmir either has claustrophobia or enjoys the outdoors.\nIf Ahmir faces challenges, then he either builds resilience or manages his phobia (but not both).\nIt is not the case that Ahmir finds alternative pursuits.\nEither Ahmir does not have claustrophobia, or he avoids social events, or he finds alternative pursuits.\nEither Ahmir does not have claustrophobia, or he does not avoid social events, or he does not find alternative pursuits.\nIt is not the case that Ahmir values freedom.\nIt is not the case that Ahmir enjoys the outdoors.\nAhmir has claustrophobia.\nIt is not the case that Ahmir manages his phobia.",
+      "question": "Does the context entail the conclusion 'Ahmir does not avoid social events.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts: P is true and Fre is constrained by P XOR Fre, so Fre must be false. We have \u00acO and Alt given as false; Sol is thus also false due to the outdoors/solitude XOR rule with Fre false. Cl is true. Using the two clauses: (\u00acCl \u2228 Avoid \u2228 Alt) and (\u00acCl \u2228 \u00acAvoid \u2228 \u00acAlt) with Cl true and Alt false, the first clause reduces to Avoid \u2228 false, i.e., Avoid must be true. Hence Ahmir avoids social events. Therefore the context entails Avoid = true, which means the conclusion 'Ahmir does not avoid social events' is not entailed; in fact its negation is entailed. Answer: False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1023
+    },
+    {
+      "step": 4,
+      "context": "Ahmir appreciates having personal space.\nAhmir does not prefer solitude.\nAhmir faces challenges.\nAhmir builds resilience.\nAhmir seeks professional help.\nAhmir either appreciates having personal space or values freedom, but not both.\nIf Ahmir either enjoys the outdoors or prefers solitude (but not both), then he values freedom.\nAhmir either has claustrophobia or enjoys the outdoors.\nIf Ahmir faces challenges, then he either builds resilience or manages his phobia (but not both).\nIt is not the case that Ahmir finds alternative pursuits.\nEither Ahmir does not have claustrophobia, or he avoids social events, or he finds alternative pursuits.\nIf Ahmir has claustrophobia, then either he does not avoid social events or he does not find alternative pursuits.\nIt is not the case that Ahmir values freedom.\nIt is not the case that Ahmir enjoys the outdoors.\nAhmir has claustrophobia.\nIt is not the case that Ahmir manages his phobia.\nIf Ahmir has claustrophobia and it is not the case that he finds alternative pursuits, then he avoids social events.",
+      "question": "Does the context entail the conclusion 'Ahmir does not avoid social events.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts: Cl = true, Alt = false. The rule 'If Ahmir has claustrophobia and it is not the case that he finds alternative pursuits, then he avoids social events' becomes: Cl \u2227 \u00acAlt \u2192 Avoid. Since Cl is true and \u00acAlt is true, Avoid must be true. Also the alternative-only rule 'Either Ahmir does not have claustrophobia, or he avoids social events, or he finds alternative pursuits' is (\u00acCl \u2228 Avoid \u2228 Alt); with \u00acCl false and Alt false, Avoid must be true as well. Therefore Ahmir avoids social events (Avoid = true). Consequently, the conclusion 'Ahmir does not avoid social events' is not entailed; in fact its negation is entailed. Answer: False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1433
+    },
+    {
+      "step": 5,
+      "context": "Ahmir appreciates having personal space.\nAhmir does not prefer solitude.\nAhmir faces challenges.\nAhmir builds resilience.\nAhmir seeks professional help.\nAhmir either appreciates having personal space or values freedom, but not both.\nIf Ahmir either enjoys the outdoors or prefers solitude (but not both), then he values freedom.\nAhmir either has claustrophobia or enjoys the outdoors.\nIf Ahmir faces challenges, then he either builds resilience or manages his phobia (but not both).\nIt is not the case that Ahmir finds alternative pursuits.\nEither Ahmir does not have claustrophobia, or he avoids social events, or he finds alternative pursuits.\nIf Ahmir has claustrophobia, then it is not the case that he both avoids social events and finds alternative pursuits.\nIt is not the case that Ahmir values freedom.\nIt is not the case that Ahmir enjoys the outdoors.\nAhmir has claustrophobia.\nIt is not the case that Ahmir manages his phobia.\nIf Ahmir has claustrophobia and it is not the case that he finds alternative pursuits, then he avoids social events.\nAhmir has claustrophobia and it is not the case that he finds alternative pursuits.\nIf Ahmir has claustrophobia, then he either avoids social events or finds alternative pursuits.",
+      "question": "Does the context entail the conclusion 'Ahmir does not avoid social events.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts, Cl = true and Alt = false (clause 18). Clause 19 states Cl -> (Avoid \u2228 Alt). Since Cl is true and Alt is false, Avoid must be true. Clause 11 also supports this: (\u00acCl \u2228 Avoid \u2228 Alt) with Cl true and Alt false implies Avoid true. Therefore Ahmir avoids social events. The conclusion 'Ahmir does not avoid social events' is not entailed; its negation is entailed. Answer: False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1876
+    },
+    {
+      "step": 6,
+      "context": "Ahmir appreciates having personal space.\nAhmir does not prefer solitude.\nAhmir faces challenges.\nAhmir builds resilience.\nAhmir seeks professional help.\nAhmir either appreciates having personal space or values freedom, but not both.\nIf Ahmir either enjoys the outdoors or prefers solitude (but not both), then he values freedom.\nAhmir either has claustrophobia or enjoys the outdoors.\nIf Ahmir faces challenges, then he either builds resilience or manages his phobia (but not both).\nIt is not the case that Ahmir finds alternative pursuits.\nIf Ahmir has claustrophobia, then it is not the case that he both avoids social events and finds alternative pursuits.\nIt is not the case that Ahmir values freedom.\nIt is not the case that Ahmir enjoys the outdoors.\nAhmir has claustrophobia.\nIt is not the case that Ahmir manages his phobia.\nAhmir has claustrophobia and it is not the case that he finds alternative pursuits.\nIf Ahmir has claustrophobia and it is not the case that he finds alternative pursuits, then he does not avoid social events.",
+      "question": "Does the context entail the conclusion 'Ahmir does not avoid social events.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From the facts: Cl = true and Alt = false (Ahmir has claustrophobia and it is not the case that he finds alternative pursuits). The rule 'If Ahmir has claustrophobia, then it is not the case that he both avoids social events and finds alternative pursuits' is weaker and does not force Avoid. The key rule is 'If Ahmir has claustrophobia, then he either avoids social events or finds alternative pursuits' which yields Avoid \u2228 Alt. Since Alt is false, Avoid must be true. Therefore Ahmir avoids social events. Hence the conclusion 'Ahmir does not avoid social events' is not entailed; its negation is entailed. Answer: False.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2300
+    },
+    {
+      "step": 7,
+      "context": "Ahmir appreciates having personal space.\nAhmir does not prefer solitude.\nAhmir faces challenges.\nAhmir builds resilience.\nAhmir seeks professional help.\nAhmir either appreciates having personal space or values freedom, but not both.\nIf Ahmir either enjoys the outdoors or prefers solitude (but not both), then he values freedom.\nAhmir either has claustrophobia or enjoys the outdoors.\nIf Ahmir faces challenges, then he either builds resilience or manages his phobia (but not both).\nIt is not the case that Ahmir finds alternative pursuits.\nIf Ahmir has claustrophobia, then it is not the case that he both avoids social events and finds alternative pursuits.\nIt is not the case that Ahmir values freedom.\nIt is not the case that Ahmir enjoys the outdoors.\nAhmir has claustrophobia.\nIt is not the case that Ahmir manages his phobia.\nAhmir avoids social events.",
+      "question": "Does the context entail the conclusion 'Ahmir does not avoid social events.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context includes the explicit fact 'Ahmir avoids social events.' Since the question asks whether the context entails 'Ahmir does not avoid social events.', the conclusion is not entailed; in fact, the opposite is entailed. Therefore the answer is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2725
+    }
+  ]
+}

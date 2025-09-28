@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 126,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Addison is curious.\nAddison has clear goals.\nAddison does not take initiative.\nAddison seeks guidance.\nAddison values feedback.\nAddison is goal-driven.\nAddison does not make a positive impact.\nAll curious individuals are open-minded and embracing of change.\nIf Addison has clear goals, then she is either self-motivated or takes initiative, but not both.\nIf Addison is self-motivated, then she either works independently or seeks guidance, but not both.\nAddison is either passionate or works independently, but not both.\nAll open-minded individuals are collaborative and value feedback.\nEveryone who is goal-driven is either results-oriented or makes a positive impact (or both).\nIf Addison is passionate, then she is both dedicated and results-oriented.\nAddison is either collaborative or innovative, but not both.\nIf Addison is either dedicated or brilliant (but not both), then she is innovative.",
+      "question": "Does the context entail the conclusion 'Addison is not brilliant.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Addison is passionate, then she is dedicated and she is results-oriented.\n\nAdded rules:\n- If Addison is passionate, then she is not dedicated and she is results-oriented.",
+      "question": "Does the context entail the conclusion 'Addison is not brilliant.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From 'Addison has clear goals' and 'Addison does not take initiative', the XOR rule forces Addison to be self-motivated. Self-motivated plus the XOR with 'seeks guidance' (which is a fact) forces Addison to not work independently. The XOR 'Addison is either passionate or works independently' then forces Addison to be passionate. The modified rule for passionate gives Addison is not dedicated and is results-oriented. From curious -> open-minded and open-minded -> collaborative, Addison is collaborative. The XOR 'collaborative or innovative' then forces Addison to be not innovative. The rule '(dedicated XOR brilliant) -> innovative' together with innovative being false means the antecedent must be false, so (dedicated XOR brilliant) is false. Since we already have dedicated = false, the only way the XOR is false is brilliant = false. Therefore Addison is not brilliant. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 285
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Addison seeks guidance.\n\nAdded facts:\n- Addison is dedicated.",
+      "question": "Does the context entail the conclusion 'Addison is not brilliant.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From Addison being curious we get open-minded, and open-minded implies collaborative, so Addison is collaborative. The XOR \"collaborative or innovative\" with collaborative true yields innovative = false. From \"has clear goals\" and \"does not take initiative\" we get self-motivated. Self-motivated implies (works_independent XOR seeks_guidance). The rule \"passionate or works independently\" plus the added fact dedicated = true makes passionate impossible (because passionate implies not dedicated), so works_independent must hold; then seeks_guidance is false. Goal-driven combined with \"does not make a positive impact\" gives results-oriented = true. Now, with dedicated = true, if brilliant were false then (dedicated XOR brilliant) would be true and by the rule would force innovative = true, contradicting innovative = false. Therefore brilliant cannot be false in any model of the knowledge base; brilliant must be true. Hence the context does not entail \"Addison is not brilliant.\"",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 554
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Addison is curious.\n\nAdded rules:\n- If Addison works independently, then she is not brilliant.",
+      "question": "Does the context entail the conclusion 'Addison is not brilliant.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "With 'has clear goals' and 'does not take initiative', the XOR forces self-motivated. Self-motivated implies XOR(works_independent, seeks_guidance). The choice of seeks_guidance is blocked because if Addison were passionate (the alternative to works_independent by XOR(passionate, works_independent)) that would imply not dedicated, contradicting the fact 'Addison is dedicated'. Therefore works_independent must hold. The added rule 'works independently -> not brilliant' then yields that Addison is not brilliant. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 809
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Addison is dedicated.\n\nAdded rules:\n- If Addison is results-oriented, then she is brilliant.",
+      "question": "Does the context entail the conclusion 'Addison is not brilliant.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From curious -> open-minded and open-minded -> collaborative, Addison is collaborative. XOR(collaborative,innovative) with collaborative true yields innovative = false. From clear goals and does not take initiative, XOR(self-motivated,takes_initiative) gives self-motivated = true. Self-motivated -> XOR(works_independent,seeks_guidance) and the fact seeks_guidance = true imply works_independent = false. XOR(passionate,works_independent) then gives passionate = true. Passionate -> dedicated and results-oriented yields results-oriented = true (dedicated is also derived even though the dedicated fact was removed). The added rule results-oriented -> brilliant then gives brilliant = true. Therefore the knowledge base entails that Addison is brilliant, so it does not entail 'Addison is not brilliant.'",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 986
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Addison is not brilliant, then she is not results-oriented.\n\nAdded facts:\n- Addison is results-oriented.",
+      "question": "Does the context entail the conclusion 'Addison is not brilliant.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From curious -> open-minded and open-minded -> collaborative, Addison is collaborative, so innovative = false (XOR(collaborative,innovative)). Clear goals + not take initiative => self-motivated; self-motivated with seeks_guidance (fact) gives works_independent = false, so XOR(passionate,works_independent) yields passionate = true. Passionate -> dedicated and results-oriented, so dedicated = true (and results-oriented = true, matching the added fact). If brilliant were false then (dedicated XOR brilliant) would be true and by that rule innovative would be true, contradicting innovative = false. Hence brilliant must be true in every model, so 'Addison is not brilliant' is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1216
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Addison is results-oriented, then she is brilliant.\n- If Addison is not brilliant, then she is not results-oriented.\n\nAdded facts:\n- Addison does not seek guidance.",
+      "question": "Does the context entail the conclusion 'Addison is not brilliant.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "With \u2018Addison does not seek guidance\u2019 the self-motivated branch (from clear goals + not taking initiative) forces works_independent = true (since seeks_guidance = false). XOR(passionate, works_independent) then gives passionate = false. From curious -> open-minded -> collaborative we get collaborative = true, so by XOR(collaborative,innovative) we have innovative = false. Goal-driven combined with \u2018does not make a positive impact\u2019 yields results-oriented = true. The rule (XOR(dedicated, brilliant) -> innovative) together with innovative = false means the antecedent XOR(dedicated, brilliant) must be false, i.e. dedicated and brilliant must be either both true or both false. There is no remaining rule that fixes dedicated or brilliant uniquely, so both assignments (brilliant true or brilliant false) are consistent with the context. Therefore the statement \u201cAddison is not brilliant.\u201d is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1432
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Addison is brilliant, then she does not work independently.\n\nAdded facts:\n- Addison is self-motivated.",
+      "question": "Does the context entail the conclusion 'Addison is not brilliant.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the added fact Addison is self-motivated and the rule self-motivated -> XOR(works_independent, seeks_guidance), together with the fact Addison does not seek guidance, we get works_independent = true. The XOR(passionate, works_independent) then yields passionate = false. From curious -> open-minded and open-minded -> collaborative we get collaborative = true, so by XOR(collaborative, innovative) we have innovative = false. The rule XOR(dedicated, brilliant) -> innovative with innovative = false forces XOR(dedicated, brilliant) to be false, i.e. dedicated and brilliant must have the same truth value. The newly added rule brilliant -> not works_independent contradicts works_independent = true if brilliant were true, so brilliant cannot be true in any consistent model; hence brilliant = false (and dedicated = false). Therefore the context entails that Addison is not brilliant.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1708
+    }
+  ]
+}

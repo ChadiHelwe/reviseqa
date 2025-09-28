@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 297,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Chick does not fluff her plumage.\nChick flaps her wings.\nChick feels threatened.\nChick protects her nest.\nChick does not avoid confrontation.\nChick is challenged.\nEvery chicken either fluffs its plumage or puffs out its feathers.\nFor Chick, either she puffs out her feathers or she lets out a loud squawk, but not both.\nIf Chick either flaps her wings or lets out a loud squawk (but not both), then she sounds an alarm.\nIf Chick feels threatened, then she either attacks predators or sounds an alarm (but not both).\nIf Chick either protects her nest or defends her flock (but not both), then she attacks predators.\nChick either stands her ground or avoids confrontation, but not both.\nIf Chick is challenged, then she is either timid or stands her ground, but not both.\nIf Chick defends her flock, then she is fearless.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Chick does not avoid confrontation.\n\nAdded rules:\n- If Chick is challenged, then she avoids confrontation.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From 'Chick does not fluff her plumage' and 'every chicken either fluffs or puffs' -> Chick puffs. By 'For Chick, either puff or squawk, but not both' -> squawk is false. 'Chick flaps her wings' and XOR(flaps, squawk) -> Chick sounds an alarm. 'Chick feels threatened' and XOR(attacks, alarm) -> attacks is false. 'Chick is challenged' and the added rule -> Chick avoids confrontation. With 'stands or avoids, but not both', Chick does not stand her ground. 'If challenged then either timid or stands ground (but not both)' gives timid true. Now, Chick protects her nest. The rule 'If protects xor defends then attacks' would force attacks true if defends were false, contradicting attacks false; therefore to keep consistency defends must be true. From 'defends -> fearless' we get fearless true. So both timid and fearless are true, hence the statement 'either fearless or timid, but not both' (exclusive) is false. Thus the context does not entail that exclusive disjunction.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 296
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Chick protects her nest.\n\nAdded rules:\n- If Chick is fearless, then she defends her flock.\n\nAdded facts:\n- Chick does not protect her nest.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From \u2018Chick does not fluff\u2019 and \u2018every chicken either fluffs or puffs\u2019 => Chick puffs. \u2018For Chick, either puff or squawk, but not both\u2019 => squawk false. Chick flaps and squawk false -> XOR(flaps,squawk) holds -> Chick sounds an alarm. Feels threatened -> XOR(attacks,alarm) so attacks is false (since alarm true). Added rule: challenged -> avoids confrontation and Chick is challenged -> avoids true. XOR(stand,avoid) gives stand false. challenged -> XOR(timid,stand) gives timid true. The two rules defends -> fearless (original) and fearless -> defends (added) make defends \u2194 fearless. Also Chick does not protect her nest (protects false). The rule XOR(protects,defends) -> attacks with protects false means if defends were true it would force attacks true, contradicting attacks false; so defends must be false and hence fearless false. Thus timid true and fearless false, so the exclusive disjunction \u2018either fearless or timid, but not both\u2019 holds. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 596
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Chick is challenged, then she avoids confrontation.\n\nAdded facts:\n- Chick avoids confrontation.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From 'does not fluff' and 'either fluff or puff (exclusive)' => Chick puffs. From 'puff XOR squawk' => squawk false. 'Flaps' and not squawk => XOR(flaps,squawk) holds, so Chick sounds an alarm. 'Feels threatened' and 'attacks XOR alarm' => since alarm true, attacks false. 'Avoids confrontation' fact and 'stands XOR avoids' => stands false. 'Challenged' and 'if challenged then timid XOR stands' => with stands false, timid true. 'Does not protect her nest' and 'XOR(protects,defends) -> attacks' with protects false: if defends were true it would force attacks true, contradicting attacks false, so defends must be false. With defends \u2194 fearless (both directions present), fearless is false. Thus timid true and fearless false, so the exclusive disjunction 'either fearless or timid, but not both' is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 905
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Chick either protects her nest or defends her flock (but not both), then she attacks predators.\n\nAdded rules:\n- It is not the case that Chick either stands her ground or avoids confrontation, but not both.\n\nAdded facts:\n- Chick defends her flock.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From not fluff and the \u2018fluff or puff\u2019 rule Chick puffs. The XOR(puff,squawk) rule gives squawk false. With flaps true and squawk false the XOR(flaps,squawk) rule yields alarm true. From feels threatened and XOR(attacks,alarm) we get attacks false. Chick defends her flock (given) and the rule Defends -> Fearless gives fearless true. We also have avoids confrontation as a fact; with the original XOR(stand,avoid) this makes stand false. Challenged and the rule challenged -> XOR(timid,stand) then yields timid true. Thus both fearless and timid are true, so the exclusive disjunction \u201ceither fearless or timid, but not both\u201d is false (both hold).",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1174
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- It is not the case that Chick either stands her ground or avoids confrontation, but not both.\n\nAdded facts:\n- Chick either stands her ground or avoids confrontation, but not both.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "ERROR",
+      "correct_answer": "False",
+      "reasoning": "ERROR",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1453
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Chick avoids confrontation.\n\nAdded facts:\n- Chick does not avoid confrontation.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "ERROR",
+      "correct_answer": "True",
+      "reasoning": "ERROR",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1570
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Chick defends her flock.\n\nAdded rules:\n- If Chick defends her flock, then she is not fearless.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "ERROR",
+      "correct_answer": "False",
+      "reasoning": "ERROR",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1665
+    }
+  ]
+}

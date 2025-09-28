@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "google/gemma-3-12b-it",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 384,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Shepherd does not provide cover for his team.\nShepherd does not destroy enemy positions.\nShepherd does not save lives.\nShepherd receives an award.\nShepherd does not earn respect.\nAny military person who uses a weapon either provides cover for their team or destroys enemy positions.\nShepherd either makes tactics or saves lives.\nFor Shepherd, either he uses a weapon or commands a unit, but not both at the same time.\nIf Shepherd commands a unit, then he either makes tactics or leads troops, but not both.\nIf a military person wins battles and receives an award, then they earn respect.\nIf Shepherd either leads troops or is strategic (but not both), then he wins battles.\nEvery military personnel is either brave or strategic (or both).",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x wins battles and receives an award, then x earns respect.\n\nAdded rules:\n- If Shepherd commands a unit, then he is not brave.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added rule states directly that if Shepherd commands a unit, then he is not brave. The context does not provide information to contradict this statement. Therefore, the conclusion 'Shepherd is not brave' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 255
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- Either Shepherd uses a weapon or Shepherd commands a unit, but not both.\n\nAdded rules:\n- If Shepherd receives an award, then he is brave.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added rule states: 'If Shepherd receives an award, then he is brave.' The context explicitly states 'Shepherd receives an award.' Therefore, based on the provided information, Shepherd *is* brave. Thus, the conclusion that he is *not* brave is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 385
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- If Shepherd receives an award and commands a unit, then he is brave.\n- If either Shepherd leads troops or is strategic, but not both, then he wins battles.\n\nAdded facts:\n- Either Shepherd is brave or Shepherd commands a unit.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Let's analyze. We know: (1) Either Shepherd is brave or Shepherd commands a unit. (2) If Shepherd receives an award and commands a unit, then he is brave. We want to determine if 'Shepherd is not brave' is entailed.\n\nIf Shepherd commands a unit, then by (1), he is either brave or commands a unit. If he *only* commands a unit, then he is not brave. However, if he commands a unit *and* receives an award, then he is brave (by rule 2). We don't know if Shepherd receives an award or not, so it's uncertain if he is brave or not in this case.\n\nIf Shepherd is brave, then (1) is satisfied. If in accordance with the second rule, it must be assumed someone strategically leads, therefore he wins battles.\n\nTherefore, it's uncertain, we do not know definitively if Shepherd is not brave.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 524
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Shepherd receives an award, then he is brave.\n\nAdded rules:\n- If Shepherd receives an award, then he is not brave.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context now states: 'If Shepherd receives an award, then he is not brave.' The context also states: 'Shepherd receives an award.' Therefore, the conclusion that Shepherd is not brave is directly entailed by the rules.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 816
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Shepherd either makes tactics or saves lives.\n- For all x, either x is brave or x is strategic (or both).\n- If Shepherd commands a unit, then he is not brave.\n- Either Shepherd is brave or Shepherd commands a unit.\n- If Shepherd receives an award and commands a unit, then he is brave.\n\nAdded rules:\n- If Shepherd does not make tactics, then he saves lives.\n- For all x, if x is not strategic, then x is brave.\n- If Shepherd is brave, then he does not command a unit.\n- If Shepherd is not brave, then he commands a unit.\n- If Shepherd receives an award and commands a unit, then he makes tactics.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Let's break this down. We have a series of intertwined rules.\n\n1. **Either Shepherd is brave or Shepherd commands a unit.**\n2. **If Shepherd is brave, then he does not command a unit.**\n3. **If Shepherd is not brave, then he commands a unit.**  (This, combined with 1, means we can't determine bravery directly from those two.)\n4. **If Shepherd receives an award and commands a unit, then he makes tactics.**\n5. **If Shepherd does not make tactics, then he saves lives.**\n\nLet's assume Shepherd *is* brave. Then, by rule 2, he does *not* command a unit. This doesn't create a contradiction.\n\nLet's assume Shepherd is *not* brave. Then, by rule 3, he *does* command a unit. If he commands a unit and receives an award, he makes tactics (rule 4). However, the presence of an award is not stated.\n\nIf he doesn't receive an award, and does command a unit, there's no inherent contradiction. The rule stating 'For all x, if x is not strategic, then x is brave' is irrelevant to our core question as Shepherd could be any combination of brave/strategic.\n\nSince the premises do not *force* Shepherd to be not brave,  we have no definitive way of knowing.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 943
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Shepherd receives an award, then he is not brave.\n\nAdded facts:\n- Shepherd is not strategic.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context states 'Shepherd is not strategic'. We also have the rule 'For all x, if x is not strategic, then x is brave.' This rule directly implies that if Shepherd is not strategic, then Shepherd is brave. Therefore, the conclusion 'Shepherd is not brave' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1419
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x is not brave, then x is strategic.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We have the rule 'For all x, if x is not brave, then x is strategic.' To determine if 'Shepherd is not brave' is entailed, we need to see if we can logically derive that conclusion from the provided rule alone.\n\nLet's assume Shepherd *is* brave. This situation doesn't contradict the rule.\nLet's assume Shepherd is *not* brave. According to the rule, if he's not brave, then he *is* strategic.\n\nSince there's no rule that necessitates Shepherd to be *not* brave, the conclusion is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1554
+    }
+  ]
+}

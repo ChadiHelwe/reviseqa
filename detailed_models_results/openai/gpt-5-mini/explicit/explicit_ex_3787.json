@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 220,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Amara does not know ingredients.\nAmara pursues perfection.\nAmara does not listen to feedback.\nAmara does not create unique dishes.\nAmara appreciates her heritage.\nAmara is not successful.\nAmara either experiments with spices or knows ingredients.\nIf Amara pursues perfection, then she either listens to feedback or prioritizes customer satisfaction (or both).\nAmara either values quality or prioritizes customer satisfaction, but not both.\nIf Amara either experiments with spices or understands flavors (but not both), then she creates unique dishes.\nIf someone creates authentic recipes, then they value quality and understand flavors.\nIf someone appreciates their heritage and respects their culture, then they can create authentic recipes.\nAnyone who follows tradition respects their culture.\nIf Amara either follows tradition or is innovative (but not both), then she is successful.",
+      "question": "Does the context entail the conclusion 'Amara is innovative.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Amara does not know ingredients.. Amara either experiments with spices or knows ingredients.. Therefore, Amara experiments with spices.. Amara pursues perfection. Amara does not listen to feedback.. If Amara pursues perfection, then she either listens to feedback or prioritizes customer satisfaction (or both).. Therefore, Amara prioritizes customer satisfaction.. Amara prioritizes customer satisfaction.. Amara either values quality or prioritizes customer satisfaction, but not both.. Therefore, Amara does not value quality.. Amara experiments with spices. Amara does not create unique dishes.. If Amara either experiments with spices or understands flavors (but not both), then she creates unique dishes.. Therefore, Amara understands flavors.. Amara does not value quality. Amara understands flavors.. If someone creates authentic recipes, then they value quality and understand flavors.. Therefore, Amara does not create authentic recipes.. Amara appreciates her heritage. Amara does not create authentic recipes.. If someone appreciates their heritage and respects their culture, then they can create authentic recipes.. Therefore, Amara does not respect her culture.. Amara does not respect her culture.. Anyone who follows tradition respects their culture.. Therefore, Amara does not follow tradition.. Amara does not follow tradition. Amara is not successful.. If Amara either follows tradition or is innovative (but not both), then she is successful.. Therefore, Amara is innovative..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Amara appreciates her heritage.\n\nAdded facts:\n- Amara follows tradition.\n- Amara understands flavors.",
+      "question": "Does the context entail the conclusion 'Amara is innovative.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From Amara either experiments with spices or knows ingredients and Amara does not know ingredients, infer Amara experiments with spices. From Amara pursues perfection and Amara does not listen to feedback and the rule, infer Amara prioritizes customer satisfaction. From the exclusive either (values quality xor prioritizes customer satisfaction) and that she prioritizes customer satisfaction, infer she does not value quality. Given Amara follows tradition (new fact) and anyone who follows tradition respects their culture, infer she respects her culture. The key rule is: (follows tradition xor innovative) -> successful. We are given Amara is not successful, so by modus tollens infer not(follows tradition xor innovative). Since follows tradition is true, the exclusive-or can only be false if innovative is also true. Therefore Amara is innovative is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 558
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Amara either follows tradition or is innovative (but not both), then she is successful.\n\nAdded rules:\n- For all x, if x follows tradition and x respects their culture, then x is not innovative.",
+      "question": "Does the context entail the conclusion 'Amara is innovative.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From Amara either experiments with spices or knows ingredients and Amara does not know ingredients, infer Amara experiments with spices. Amara understands flavors is given, so both experiments and understands are true; the rule (experiments xor understands) -> creates unique dishes does not apply (antecedent false), and we also have the fact Amara does not create unique dishes. From Amara pursues perfection and Amara does not listen to feedback and the rule pursues -> (listens_feedback or prioritizes_customer_satisfaction), infer Amara prioritizes customer satisfaction. From the exclusive xor (values_quality xor prioritizes_customer_satisfaction) and that she prioritizes customer satisfaction, infer she does not value quality. Anyone who follows tradition respects their culture; Amara follows tradition, so she respects her culture. The added rule (follows tradition and respects culture) -> not innovative therefore entails Amara is not innovative. Thus the conclusion 'Amara is innovative.' is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 794
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x follows tradition and x respects their culture, then x is not innovative.\n\nAdded rules:\n- For all x, if x does not appreciate their heritage, then x is innovative.",
+      "question": "Does the context entail the conclusion 'Amara is innovative.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Amara does not know ingredients and (experiments or knows ingredients) => Amara experiments with spices. From pursues perfection and not listens to feedback and (pursues -> (listens or prioritizes)) => Amara prioritizes customer satisfaction. From exclusive (values_quality xor prioritizes_customer_satisfaction) and that she prioritizes customer satisfaction => she does not value quality. If creates_authentic -> (values_quality and understands_flavors); since she does not value quality, infer she does not create authentic recipes (contrapositive). Anyone who follows tradition respects their culture and Amara follows tradition, so she respects her culture. From (appreciates_heritage and respects -> can_create_authentic) and not can_create_authentic plus respects => not appreciates_heritage (contrapositive & elimination). The added rule (if not appreciate heritage then innovative) plus not appreciates_heritage => Amara is innovative. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1081
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x does not appreciate their heritage, then x is innovative.\n\nAdded rules:\n- For all x, x appreciates their heritage or x is innovative.\n\nAdded facts:\n- Amara experiments with spices.\n- Amara prioritizes customer satisfaction.\n- Amara does not value quality.",
+      "question": "Does the context entail the conclusion 'Amara is innovative.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Current facts include Amara experiments with spices, Amara prioritizes customer satisfaction, Amara does not value quality, and (from earlier) Amara follows tradition and Amara understands flavors. The only rule bearing on innovation now is the added universal disjunction: for any x, x appreciates their heritage or x is innovative. Amara appreciating her heritage was removed earlier and there is no fact or rule in the current context that asserts \u00ac(Amara appreciates her heritage), so the disjunction does not allow deriving Amara is innovative. No other remaining rule or fact derives (or contradicts) Amara being innovative. Therefore the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1363
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Amara follows tradition.\n\nAdded rules:\n- If Amara prioritizes customer satisfaction, then Amara appreciates her heritage.\n- If Amara appreciates her heritage, then Amara is not innovative.",
+      "question": "Does the context entail the conclusion 'Amara is innovative.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the context we have Amara prioritizes customer satisfaction. The added rule gives: prioritizes_customer_satisfaction -> appreciates_heritage, so Amara appreciates her heritage. The other added rule gives: appreciates_heritage -> not_innovative, so Amara is not innovative is entailed. There is no remaining rule that entails Amara is innovative, and the universal disjunction (appreciates or innovative) is satisfied by appreciates, not forcing innovative. Therefore the context entails \u00acinnovative, so it does not entail innovative.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1604
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Amara pursues perfection, then she either listens to feedback or prioritizes customer satisfaction (or both).\n- Amara either values quality or prioritizes customer satisfaction, but not both.\n\nAdded rules:\n- Either Amara does not pursue perfection, or she listens to feedback, or she prioritizes customer satisfaction.\n- Amara values quality or Amara prioritizes customer satisfaction.\n- It is not the case that Amara values quality and Amara prioritizes customer satisfaction.\n\nAdded facts:\n- Amara appreciates her heritage.\n- Amara is not innovative.",
+      "question": "Does the context entail the conclusion 'Amara is innovative.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context explicitly includes the fact that Amara is not innovative. Therefore the sentence 'Amara is innovative.' is contradicted by the context and is not entailed. (No remaining rule forces Amara to be innovative; the disjunction \"appreciates or innovative\" is satisfied by appreciates, so it doesn't yield innovation.)",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1821
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Amara is not innovative.\n\nRemoved rules:\n- If Amara appreciates her heritage, then Amara is not innovative.\n\nAdded facts:\n- Amara appreciates her heritage and Amara is innovative.",
+      "question": "Does the context entail the conclusion 'Amara is innovative.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly includes the fact 'Amara is innovative.' Since the conclusion is exactly this fact, it is entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2065
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-nano",
+    "task_path": "explicit",
+    "chain_index": 140,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Sylvia has strong curiosity.\nSylvia does not make new discoveries.\nSylvia sets high standards.\nSylvia does not plan carefully.\nSylvia does not read old charts.\nSylvia cannot identify new land.\nSylvia has spatial awareness.\nIf someone has strong curiosity and is thorough, then they can make new discoveries.\nIf Sylvia either sets high standards or plans carefully (but not both), then she is a perfectionist.\nIf Sylvia is a perfectionist, then she is either thorough or meticulous (but not both).\nAnyone who is meticulous has attention to detail.\nIf Sylvia knows cartography or reads old charts, then she can identify new land.\nIf Sylvia creates accurate maps, then she either has attention to detail or has spatial awareness (but not both).\nSylvia knows cartography or understands geography.\nFor anyone who understands geography and is skilled at navigation, they can create accurate maps.\nSylvia is skilled at navigation or passionate about exploration (or both).",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Sylvia has strong curiosity. Sylvia does not make new discoveries.. If someone has strong curiosity and is thorough, then they can make new discoveries.. Therefore, Sylvia is not thorough.. Sylvia sets high standards. Sylvia does not plan carefully.. If Sylvia either sets high standards or plans carefully (but not both), then she is a perfectionist.. Therefore, Sylvia is a perfectionist.. Sylvia is a perfectionist. Sylvia is not thorough.. If Sylvia is a perfectionist, then she is either thorough or meticulous (but not both).. Therefore, Sylvia is meticulous.. Sylvia is meticulous.. Anyone who is meticulous has attention to detail.. Therefore, Sylvia has attention to detail.. Sylvia does not read old charts. Sylvia cannot identify new land.. If Sylvia knows cartography or reads old charts, then she can identify new land.. Therefore, Sylvia does not know cartography.. Sylvia has attention to detail. Sylvia has spatial awareness.. If Sylvia creates accurate maps, then she either has attention to detail or has spatial awareness (but not both).. Therefore, Sylvia cannot create accurate maps.. Sylvia does not know cartography.. Sylvia knows cartography or understands geography.. Therefore, Sylvia understands geography.. Sylvia understands geography. Sylvia cannot create accurate maps.. For anyone who understands geography and is skilled at navigation, they can create accurate maps.. Therefore, Sylvia is not skilled at navigation.. Sylvia is not skilled at navigation.. Sylvia is skilled at navigation or passionate about exploration (or both).. Therefore, Sylvia is passionate about exploration..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Sylvia has attention to detail, then she is skilled at navigation.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "With the added rule, Sylvia attention to detail -> navigation. However, from the rules we only derive attention to detail if we can establish meticulous (from the perfectionist XOR either thorough or meticulous). Since we have an exclusive-or between thorough and meticulous, we cannot determine which one holds from the given information, so we cannot conclude attention to detail and thus cannot conclude navigation. The given fact states that at least one of navigation or passionate about exploration is true, but it does not force passionate about exploration to be true (navigation could be the other disjunct). There is no rule deriving not passionate about exploration. Therefore, whether Sylvia is passionate about exploration remains uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 604
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x has strong curiosity and x is thorough, then x can make new discoveries.\n\nAdded rules:\n- For all x, if x has strong curiosity then x is thorough.\n- For all x, if x is not meticulous then x does not have attention to detail.\n- For all x, if x does not have attention to detail, then x is not skilled at navigation.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the added rule, strong curiosity implies thorough, so Sylvia is thorough. The existing facts give sets high standards and not planning carefully, which with the XOR rule makes Sylvia a perfectionist. Perfectionist implies either thorough or meticulous but not both; since Sylvia is thorough, she cannot be meticulous. Not meticulous implies not attention to detail, which in turn implies not skilled at navigation. The given fact states 'Sylvia is skilled at navigation or passionate about exploration (or both)'; with not skilled at navigation, the disjunction requires passionate about exploration to be true. Therefore Sylvia is passionate about exploration.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 806
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x has strong curiosity then x is thorough.\n\nAdded facts:\n- Sylvia is not thorough.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the given context, Sylvia sets high standards and not planning carefully, which with the exclusive-or rule yields that Sylvia is a perfectionist. A perfectionist implies either thorough or meticulous (but not both); since Sylvia is not thorough, she must be meticulous. Meticulous implies attention to detail, and attention to detail implies Sylvia is skilled at navigation (new rule). Therefore, Sylvia is skilled at navigation. We also have the fact that Sylvia is skilled at navigation or passionate about exploration (or both), which is satisfied by navigation but does not by itself entail that Sylvia is passionate about exploration. There is no rule that derives passion from navigation or from other derived properties, so the conclusion 'Sylvia is passionate about exploration' is not entailed. It remains uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1080
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Sylvia is not thorough.\n\nAdded facts:\n- Sylvia is thorough.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts and rules: (1) strong curiosity -> thorough, so Sylvia is thorough. (2) sets high standards XOR plans carefully; given sets high standards and not plan carefully, Sylvia is a perfectionist. (3) perfectionist -> either thorough or meticulous (but not both); since Sylvia is thorough, she is not meticulous. (4) not meticulous -> not attention to detail. (5) not attention to detail -> not skilled at navigation. (6) We have the fact: Sylvia is skilled at navigation or passionate about exploration (or both); with not navigation, the disjunction forces Sylvia to be passionate about exploration. Therefore, the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1331
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Sylvia is thorough.\n\nAdded facts:\n- Sylvia is not thorough.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the context, Sylvia has strong curiosity. The rule 'strong curiosity -> thorough' makes Sylvia thorough. With sets-high-standards and not-planning-carefully, the XOR rule yields Sylvia as a perfectionist. A perfectionist implies either thorough or meticulous (but not both); since Sylvia is thorough, we infer not meticulous. Not meticulous implies not attention to detail, which implies not skilled at navigation. We also have the fact 'Sylvia is skilled at navigation or passionate about exploration (or both)'. Given not skilled at navigation, the disjunction forces Sylvia to be passionate about exploration. Therefore, the conclusion is entailed (True). Note that there is also a conflicting fact 'Sylvia is not thorough', but it does not prevent the entailment of passion in this derivation.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1553
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Sylvia is not thorough.\n\nAdded facts:\n- Sylvia is thorough.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The current context only asserts that Sylvia is thorough. The only statement connecting to passion is the disjunction: Sylvia is skilled at navigation or passionate about exploration (or both). There is no rule in effect here that derives passionate about exploration from being thorough or from navigation, and there is no rule deriving not passionate. Therefore, we cannot entail that Sylvia is passionate about exploration, nor can we conclude its negation. The conclusion remains uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1799
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Sylvia is thorough.\n\nAdded facts:\n- Sylvia is not thorough.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "With only the fact 'Sylvia is not thorough' and the remaining rules/facts, there is no derivation that Sylvia is passionate about exploration nor its negation. The disjunctive statement 'Sylvia is skilled at navigation or passionate about exploration (or both)' does not by itself force passion, and there is no rule deriving passion from not thorough. Therefore, the conclusion is not entailed and not contradicted -> Uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1972
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 201,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Parker does not make audiences laugh.\nParker is not a confident orator.\nParker listens actively.\nParker does not speak from the heart.\nParker cannot inspire others.\nParker does not give motivational talks.\nParker does not move audiences to tears.\nIf Parker either makes audiences laugh or receives standing ovations (but not both), then he is a confident orator.\nParker either listens actively or connects with people, but not both.\nAnyone who is charismatic or speaks from the heart can connect with people.\nAnyone who has global recognition or is charismatic can inspire others.\nIf Parker writes best sellers, then he either gives motivational talks or has global recognition (or both).\nParker is either an inspiring speaker or a writer of best sellers, but not both.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Anyone who has global recognition or is charismatic can inspire others.\n\nAdded rules:\n- If Parker listens actively, then he has global recognition.\n- If Parker either gives motivational talks or has global recognition, then he writes best sellers.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From Listen(P) and the added rule Listen->GlobalRec we get GlobalRec(P). From the added rule (MotivationalTalks OR GlobalRec)->BestSeller and GlobalRec(P) we get BestSeller(P). The XOR clause (Inspiring XOR BestSeller) then yields \u00acInspiring(P). Since the knowledge base entails \u00acInspiring(P), any implication with Inspiring(P) as antecedent is vacuously true. Therefore Inspiring(P) -> (MovesToTears(P) OR StandingOvations(P)) is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 277
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Parker either gives motivational talks or has global recognition, then he writes best sellers.\n\nAdded facts:\n- Parker does not write best sellers.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From Parker is either an inspiring speaker or a writer of best sellers, but not both, together with the added fact \u00acBestSeller(P), we get Inspiring(P). From the context we have \u00acMovesToTears(P). Also the rule (Laugh XOR Standing) -> ConfOrator, plus \u00acConfOrator(P) and \u00acLaugh(P), yields \u00acStandingOvations(P). Thus Inspiring(P) holds while both MovesToTears(P) and StandingOvations(P) are false, so the implication Inspiring(P) -> (MovesToTears(P) OR StandingOvations(P)) is false in the knowledge base. Therefore the context does not entail the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 496
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, if x does not connect with people, then x is not charismatic and x does not speak from the heart.\n- If Parker does not give motivational talks and Parker does not have global recognition, then Parker does not write best sellers.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From Listen(P) and Listen XOR Connect we get \u00acConnect(P). The added rule \u00acConnect -> (\u00acCharismatic \u2227 \u00acSpeakFromHeart) yields \u00acCharismatic(P) and \u00acSpeakFromHeart(P). The original rule (GlobalRec \u2228 Charismatic) -> InspireOthers together with the fact \u00acInspireOthers(P) yields \u00acGlobalRec(P) and \u00acCharismatic(P) (consistent). With \u00acGivesMotivationalTalks(P) and \u00acGlobalRec(P), the added rule \u00acGivesMotivational \u2227 \u00acGlobalRec -> \u00acBestSeller gives \u00acBestSeller(P). From the XOR InspiringSpeaker XOR BestSeller and \u00acBestSeller(P) we obtain InspiringSpeaker(P). Meanwhile \u00acMoveToTears(P) is a fact, and from \u00acConfOrator(P) and \u00acLaugh(P) together with (Laugh XOR Standing) -> ConfOrator we get \u00acStandingOvations(P). Thus both disjuncts in the conclusion are false while the antecedent InspiringSpeaker(P) is entailed, so the implication is not entailed. Therefore the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 727
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Parker does not make audiences laugh.\n\nAdded rules:\n- If Parker is an inspiring speaker, then he makes audiences laugh.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Listen(P) and the XOR Listen\u2228Connect give \u00acConnect(P). From \u00acConnect and \u00acConnect\u2192(\u00acCharismatic \u2227 \u00acSpeakFromHeart) we get \u00acCharismatic(P) and \u00acSpeakFromHeart(P). Listen\u2192GlobalRec gives GlobalRec(P). The XOR Inspiring\u2228Writes and the fact \u00acWrites(P) yield Inspiring(P). The new rule Inspiring\u2192Laugh gives Laugh(P). From (Laugh XOR Standing)\u2192ConfOrator and the fact \u00acConfOrator(P) we get the contrapositive \u00ac(Laugh XOR Standing); with Laugh(P) true this forces Standing(P). Thus MoveToTears(P)\u2228Standing(P) holds, so Inspiring(P)\u2192(MoveToTears(P)\u2228Standing(P)) is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1068
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Parker is an inspiring speaker.\n- Parker receives standing ovations.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes the facts Inspiring(P) and StandingOvations(P). Because StandingOvations(P) is entailed by the KB, the consequent (MovesToTears(P) \u2228 StandingOvations(P)) is entailed, so any implication with antecedent Inspiring(P) is entailed as well. Therefore the conditional holds.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1316
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Parker receives standing ovations.\n\nRemoved rules:\n- If Parker is an inspiring speaker, then he makes audiences laugh.\n\nAdded rules:\n- If Parker is an inspiring speaker, then he does not make audiences laugh.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The KB entails Inspiring(P) as a fact. The new rule Inspiring -> \u00acLaugh plus Inspiring(P) give \u00acLaugh(P). From \u00acConfOrator(P) and (Laugh XOR Standing) -> ConfOrator we get \u00ac(Laugh XOR Standing), i.e. Laugh \u2194 Standing. With \u00acLaugh(P) this yields \u00acStandingOvations(P). The KB also includes \u00acMoveToTears(P) as a fact. Thus both disjuncts in the consequent are false while the antecedent is true, so the implication Inspiring(P) -> (MoveToTears(P) \u2228 StandingOvations(P)) is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1465
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Parker is an inspiring speaker, then he does not make audiences laugh.\n\nAdded facts:\n- Parker makes audiences laugh.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From Listen XOR Connect and Listen(P) we get \u00acConnect(P). From \u00acConnect -> (\u00acCharismatic \u2227 \u00acSpeakFromHeart) we get \u00acCharismatic(P). From Listen -> GlobalRec and Listen(P) we get GlobalRec(P). The fact \u00acBestSeller(P) with the XOR (Inspiring XOR BestSeller) yields Inspiring(P). The added fact Laugh(P) together with the rule (Laugh XOR Standing) -> ConfOrator and the fact \u00acConfOrator(P) force \u00ac(Laugh XOR Standing); since Laugh(P) holds this yields StandingOvations(P). Thus when Inspiring(P) holds the disjunction MoveToTears(P) \u2228 StandingOvations(P) holds (by StandingOvations), so the implication Inspiring(P) -> (MoveToTears(P) \u2228 StandingOvations(P)) is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1707
+    }
+  ]
+}

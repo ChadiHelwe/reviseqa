@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 246,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Anaya does not practice mindfulness.\nAnaya does not connect with nature.\nAnaya cultivates plants.\nAnaya values creativity.\nAnaya has a green thumb.\nAnaya does not share her knowledge.\nAnaya does not make groundbreaking discoveries.\nIf Anaya either practices mindfulness or finds serenity (but not both), then she connects with nature.\nEveryone who cultivates plants either enjoys beauty or finds serenity (or both).\nAnyone who values creativity and enjoys beauty appreciates art.\nIf Anaya has a green thumb, then she either appreciates art or loves nature, but not both.\nIf someone is a dedicated botanist, then they love nature.\nIf Anaya shares her knowledge, then she inspires others in her field.",
+      "question": "Does the context entail the conclusion 'If Anaya is a dedicated botanist, then she either makes groundbreaking discoveries or inspires others in the field (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x is a dedicated botanist, then x loves nature.\n\nAdded rules:\n- For all x, if x does not share her knowledge, then x does not inspire others in her field.\n\nAdded facts:\n- Anaya is a dedicated botanist.",
+      "question": "Does the context entail the conclusion 'If Anaya is a dedicated botanist, then she either makes groundbreaking discoveries or inspires others in the field (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Anaya being a dedicated botanist is given, so the implication \"If Anaya is a dedicated botanist then D\u2228I\" is equivalent here to D\u2228I. The KB also contains \u00acD (Anaya does not make groundbreaking discoveries) and \u00acS (Anaya does not share her knowledge), and the added rule \u00acS\u2192\u00acI yields \u00acI. Hence both D and I are false in the KB, so D\u2228I is false and the implication fails. Therefore the context does not entail the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 272
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- For all x, if x inspires others in her field, then x shares her knowledge.",
+      "question": "Does the context entail the conclusion 'If Anaya is a dedicated botanist, then she either makes groundbreaking discoveries or inspires others in the field (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With Dedicated(Anaya) given, the conditional reduces to Groundbreaking(Anaya) \u2228 Inspire(Anaya). The KB contains \u00acGroundbreaking(Anaya) and \u00acShare(Anaya). The rules include Share\u2192Inspire, \u00acShare\u2192\u00acInspire, and Inspire\u2192Share, so Inspire\u21d4Share, and from \u00acShare we get \u00acInspire. Thus both disjuncts are false, so the implication fails and is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 505
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Anaya does not share her knowledge.\n\nAdded rules:\n- If Anaya appreciates art, then she shares her knowledge.",
+      "question": "Does the context entail the conclusion 'If Anaya is a dedicated botanist, then she either makes groundbreaking discoveries or inspires others in the field (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "With Dedicated(Anaya) in the KB the implication requires D\u2228I. \u00acD is given. From Cultivates(Anaya) and Cultivate\u2192(Beauty\u2228Serenity), plus \u00acMindfulness(Anaya) and (Mindfulness xor Serenity)\u2192Connects, Serenity would imply Connects, but \u00acConnects is given so Serenity is impossible; hence Beauty holds. Creativity\u2227Beauty\u2192AppreciatesArt gives AppreciatesArt. AppreciatesArt\u2192Share and Share\u2194Inspire yield Inspire. Thus I holds, so D\u2228I holds and the implication is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 689
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all x, if x values creativity and enjoys beauty, then x inspires others in her field.\n- For all x, if x does not enjoy beauty, then if x cultivates plants, then x finds serenity.\n\nAdded facts:\n- If Anaya appreciates art, then she inspires others in her field.",
+      "question": "Does the context entail the conclusion 'If Anaya is a dedicated botanist, then she either makes groundbreaking discoveries or inspires others in the field (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "With Dedicated(Anaya) given the conditional reduces to Groundbreaking(Anaya) \u2228 Inspire(Anaya). Groundbreaking is false by fact. From Cultivates(Anaya) and Cultivates\u2192(Beauty\u2228Serenity), and from \u00acMindfulness plus (Mindfulness xor Serenity)\u2192Connects (which yields Serenity\u2192Connects) and \u00acConnects, we get \u00acSerenity and thus EnjoysBeauty. Given ValuesCreativity and EnjoysBeauty and the added rule ValuesCreativity\u2227EnjoysBeauty\u2192Inspire (and/or AppreciateArt\u2192Inspire via the appreciate-art chain), we infer Inspire(Anaya). Therefore Groundbreaking\u2228Inspire holds, so the implication is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 914
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- For all x, if x does not enjoy beauty, then if x cultivates plants, then x finds serenity.\n\nAdded rules:\n- For all x, if x does not enjoy beauty and x cultivates plants, then x finds serenity.\n- If Anaya appreciates art, then she shares her knowledge and she inspires others in her field.",
+      "question": "Does the context entail the conclusion 'If Anaya is a dedicated botanist, then she either makes groundbreaking discoveries or inspires others in the field (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Dedicated(Anaya) is in the KB, so the implication reduces to Groundbreaking(Anaya) \u2228 Inspire(Anaya). \u00acGroundbreaking(Anaya) is given. From Cultivates(Anaya) and Cultivates\u2192(EnjoysBeauty\u2228Serenity), plus \u00acMindfulness(Anaya) and (Mindfulness xor Serenity)\u2192Connects together with \u00acConnects(Anaya), Serenity would force Connects and thus is impossible, so EnjoysBeauty(Anaya) holds. With ValuesCreativity(Anaya) and EnjoysBeauty(Anaya), the added rule ValuesCreativity\u2227EnjoysBeauty\u2192Inspire (and/or the chain ValuesCreativity\u2227EnjoysBeauty\u2192AppreciatesArt and AppreciatesArt\u2192Inspire) yields Inspire(Anaya). Therefore Groundbreaking\u2228Inspire is true, so the conditional is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1203
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Anaya enjoys beauty.",
+      "question": "Does the context entail the conclusion 'If Anaya is a dedicated botanist, then she either makes groundbreaking discoveries or inspires others in the field (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Dedicated(Anaya) is a fact, so the conditional reduces to Groundbreaking(Anaya) \u2228 Inspire(Anaya). \u00acGroundbreaking(Anaya) is given, but we also have ValuesCreativity(Anaya) and EnjoysBeauty(Anaya) (just added), and the rule ValuesCreativity \u2227 EnjoysBeauty \u2192 Inspire, so Inspire(Anaya) is entailed. Hence Groundbreaking \u2228 Inspire holds, and therefore the implication is entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1537
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Anaya has a green thumb, then she either appreciates art or loves nature.\n- If Anaya has a green thumb, then it is not the case that she both appreciates art and loves nature.\n\nAdded facts:\n- Anaya appreciates art.\n- For all x, x shares her knowledge if and only if x inspires others in her field.",
+      "question": "Does the context entail the conclusion 'If Anaya is a dedicated botanist, then she either makes groundbreaking discoveries or inspires others in the field (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "With Dedicated(Anaya) in the KB the conditional reduces to Groundbreaking(Anaya) \u2228 Inspire(Anaya). \u00acGroundbreaking(Anaya) is given. Anaya appreciates art (given), and there is a rule that AppreciatesArt(Anaya) implies she inspires others (and there is also Share\u2194Inspire so AppreciatesArt\u2192Share\u2192Inspire). Thus Inspire(Anaya) is entailed, so Groundbreaking\u2228Inspire holds, and the implication is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1717
+    }
+  ]
+}

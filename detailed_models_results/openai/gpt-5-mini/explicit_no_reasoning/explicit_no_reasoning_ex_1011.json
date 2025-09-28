@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 2,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Nylah has visionary ideas.\nNylah is experimental.\nNylah embraces chaos.\nNylah acts on instinct.\nNylah does not produce quality work.\nIf Nylah has visionary ideas, then she is either experimental or creates unique art (but not both).\nIf Nylah embraces chaos and thinks outside the box, then she creates unique art.\nNylah thinks outside the box or follows tradition.\nAnyone who acts on instinct is spontaneous.\nIf someone is methodical, then they will produce quality work.\nIf someone is innovative, they do not follow tradition, and if someone follows tradition, they are not necessarily innovative.\nIf Nylah is either unpredictable or spontaneous (but not both), then she is innovative.\nIf Nylah is either methodical or unpredictable (but not both), then she is creative.",
+      "question": "Does the context entail the conclusion 'Nylah is not creative.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Nylah is experimental.\n\nAdded rules:\n- If Nylah is spontaneous, then she is not unpredictable.\n- If Nylah is methodical if and only if she is unpredictable, then she is not creative.",
+      "question": "Does the context entail the conclusion 'Nylah is not creative.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: V (visionary), C (embraces chaos), I (acts on instinct), ~Q (does not produce quality work), and T v F (thinks outside box or follows tradition). Removed E (experimental). Rules: V -> XOR(E,U) where U = unique art; C & T -> U; I -> S; M -> Q; Nn -> ~F (innovative implies not following tradition); XOR(P,S) -> Nn where P = unpredictable; XOR(M,P) -> Cr; added: S -> ~P; and (M iff P) -> ~Cr.\nDerivation: From I and I -> S get S. From S -> ~P get ~P. XOR(P,S) holds (S true, P false) so Nn (innovative). From Nn -> ~F get ~F, hence from T v F deduce T. From C & T -> U get U. From V and V -> XOR(E,U) with U true deduce E false. From M -> Q and ~Q deduce ~M. Now M iff P is true because both M and P are false; by added rule (M iff P) -> ~Cr we get ~Cr. Thus the context entails that Nylah is not creative.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 274
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Nylah does not produce quality work.\n\nAdded facts:\n- Nylah is methodical.",
+      "question": "Does the context entail the conclusion 'Nylah is not creative.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: V, C, I, M, and T or F. Rules include I->S, S->~P, XOR(M,P)->Cr, and (M iff P)->~Cr, among others. From I and I->S we get S. From S->~P we get ~P. With M true and P false, XOR(M,P) holds, so XOR(M,P)->Cr yields Cr. The rule (M iff P)->~Cr does not apply because M iff P is false (M true, P false). Therefore Cr is entailed, so ~Cr is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 631
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Nylah is spontaneous, then she is not unpredictable.\n\nAdded rules:\n- If Nylah is unpredictable, then she is not spontaneous.\n\nAdded facts:\n- Nylah is spontaneous.\n- Nylah is creative.",
+      "question": "Does the context entail the conclusion 'Nylah is not creative.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Current facts include M (methodical), S (spontaneous) and Cr (creative). Rules include P -> \u00acS (equivalently S -> \u00acP), (M iff P) -> \u00acCr, and XOR(M,P) -> Cr. From S and P -> \u00acS (contrapositive) we get \u00acP, so P is false. With M true and P false, (M iff P) is false (they differ), so the rule (M iff P) -> \u00acCr does not apply. No other rule derives \u00acCr, and Cr is given as a fact. Therefore the context does not entail that Nylah is not creative.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 823
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Nylah is methodical if and only if she is unpredictable, then she is not creative.\n\nAdded rules:\n- If Nylah is creative, then it is not the case that Nylah is methodical if and only if she is unpredictable.\n\nAdded facts:\n- Either Nylah is methodical or Nylah is unpredictable, but not both.",
+      "question": "Does the context entail the conclusion 'Nylah is not creative.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context explicitly includes the fact Cr (Nylah is creative). The only rule that could have derived \u00acCr, namely (M iff P) -> \u00acCr, was removed. The new rule Cr -> \u00ac(M iff P) only prevents (M iff P) when Cr holds; it does not derive \u00acCr. The added fact XOR(M,P) (M xor P) is consistent with Cr and with Cr -> \u00ac(M iff P). No remaining rule yields \u00acCr. Therefore \u00acCr is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1051
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Nylah is creative.\n- Nylah is spontaneous.\n- Either Nylah is methodical or Nylah is unpredictable, but not both.\n\nRemoved rules:\n- For all x, if x acts on instinct, then x is spontaneous.\n\nAdded facts:\n- Nylah is methodical if and only if she is unpredictable.",
+      "question": "Does the context entail the conclusion 'Nylah is not creative.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Starting from the cumulative context: M is true and M iff P is given, so P is true. From P and the rule P -> \u00acS we get \u00acS. XOR(P,S) then holds, so XOR(P,S) -> Innovative yields Innovative (Nn), and Nn -> \u00ac(follows tradition) gives \u00acTrad. V and E=false (experimental was removed) with V -> XOR(E,Unique) yield Unique as well. The rule that previously allowed deriving \u00acCr, namely (M iff P) -> \u00acCr, was removed earlier; no remaining rule derives \u00acCr (the only related rule is Cr -> \u00ac(M iff P), which does not produce \u00acCr). XOR(M,P) -> Cr does not apply because M and P are both true (XOR false). Therefore \u00acCr is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1279
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Nylah is methodical, then she is not unpredictable.",
+      "question": "Does the context entail the conclusion 'Nylah is not creative.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Current facts: M is true and M iff P holds, so P is true. Added rule M -> \u00acP gives \u00acP, yielding a contradiction P and \u00acP. From P and P -> \u00acS we get \u00acS, hence XOR(P,S) holds and yields Innovative (Nn), and Nn -> \u00acF gives \u00acF. Crucially, the rule (M iff P) -> \u00acCr that would directly give \u00acCr was removed earlier; the only related rule left is Cr -> \u00ac(M iff P), which does not derive \u00acCr. No remaining rule entails \u00acCr, and the presence of a contradiction is not being used here to infer arbitrary conclusions. Therefore the context does not entail that Nylah is not creative.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1564
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Nylah is methodical, then she is not unpredictable.\n\nAdded rules:\n- If Nylah is methodical, then she is unpredictable.",
+      "question": "Does the context entail the conclusion 'Nylah is not creative.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts include M and M iff P, so (M iff P) holds and P follows. The rule Cr -> \u00ac(M iff P) is present; since (M iff P) is known true, assuming Cr would yield \u00ac(M iff P), a contradiction. Therefore Cr must be false, i.e. \u00acCr is entailed. XOR(M,P)->Cr does not apply (M and P are both true), so it does not prevent deriving \u00acCr.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1793
+    }
+  ]
+}

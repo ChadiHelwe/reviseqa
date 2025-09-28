@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 179,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Makenzie enjoys spending time outdoors.\nMakenzie respects the environment.\nMakenzie has passion.\nMakenzie does not make new discoveries.\nIf Makenzie enjoys spending time outdoors, then she loves gardening.\nAnyone who loves gardening will care for plants.\nAll people who respect the environment value conservation and care for plants.\nEveryone who has passion is either curious or makes new discoveries (or both).\nIf Makenzie is curious, then she either values conservation or appreciates nature (but not both).\nMakenzie either appreciates nature or pursues scientific knowledge (or both).",
+      "question": "Does the context entail the conclusion 'Makenzie pursues scientific knowledge.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Makenzie enjoys spending time outdoors.. If Makenzie enjoys spending time outdoors, then she loves gardening.. Therefore, Makenzie loves gardening.. Makenzie loves gardening.. Anyone who loves gardening will care for plants.. Therefore, Makenzie cares for plants.. Makenzie respects the environment. Makenzie cares for plants.. All people who respect the environment value conservation and care for plants.. Therefore, Makenzie values conservation.. Makenzie has passion. Makenzie does not make new discoveries.. Everyone who has passion is either curious or makes new discoveries (or both).. Therefore, Makenzie is curious.. Makenzie is curious. Makenzie values conservation.. If Makenzie is curious, then she either values conservation or appreciates nature (but not both).. Therefore, Makenzie does not appreciate nature.. Makenzie does not appreciate nature.. Makenzie either appreciates nature or pursues scientific knowledge (or both).. Therefore, Makenzie pursues scientific knowledge..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Everyone who respects the environment values conservation and cares for plants.\n\nAdded facts:\n- If Makenzie appreciates nature, then she does not pursue scientific knowledge.",
+      "question": "Does the context entail the conclusion 'Makenzie pursues scientific knowledge.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From Makenzie enjoys spending time outdoors and the rule about outdoors -> loves gardening, Makenzie loves gardening and thus cares for plants (via gardeners -> care for plants). From Makenzie has passion and Makenzie does not make new discoveries, and the rule that passion -> curious or makes new discoveries, we conclude Makenzie is curious. From curious and the exclusive rule, Makenzie is either values conservation (and not appreciates nature) OR appreciates nature (and not values conservation). Also we have the disjunction (appreciates nature) or (pursues scientific knowledge). With the added rule (appreciates nature -> not pursues scientific knowledge), there are two consistent cases: (A) Makenzie values conservation (so not appreciate nature), then the disjunction forces pursues scientific knowledge to be true; (B) Makenzie appreciates nature (so not value conservation), then the added rule makes pursues scientific knowledge false. Since both a model where Makenzie pursues scientific knowledge and a model where she does not exist, the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 428
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x respects the environment then x does not value conservation and x cares for plants.\n\nAdded rules:\n- Everyone who respects the environment values conservation and cares for plants.",
+      "question": "Does the context entail the conclusion 'Makenzie pursues scientific knowledge.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Makenzie enjoys outdoors -> loves gardening -> cares for plants. From everyone who respects the environment values conservation and cares for plants, and Makenzie respects the environment, we get Makenzie values conservation. Makenzie has passion and does not make new discoveries, and (passion -> curious or makes new discoveries) yields Makenzie is curious. The curiosity rule gives an exclusive choice: values conservation xor appreciates nature. Since she values conservation, she does not appreciate nature. The disjunction (appreciates nature or pursues scientific knowledge) with appreciate=false forces Makenzie to pursue scientific knowledge. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 734
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- Makenzie either appreciates nature or pursues scientific knowledge, but not both.\n- If Makenzie is curious, then she values conservation or appreciates nature (or both).\n- If Makenzie is curious, then it is not the case that she both values conservation and appreciates nature.",
+      "question": "Does the context entail the conclusion 'Makenzie pursues scientific knowledge.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Makenzie enjoys the outdoors \u21d2 loves gardening \u21d2 cares for plants. Makenzie respects the environment \u21d2 values conservation. Makenzie has passion and does not make new discoveries; since (passion \u21d2 curious or makes new discoveries), she must be curious. The curious rules together give an exclusive choice: curious \u21d2 (values conservation xor appreciates nature). Since she already values conservation, she cannot appreciate nature. The added rule says (appreciates nature xor pursues scientific knowledge). With appreciates=false, pursues scientific knowledge must be true. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 967
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Makenzie is curious and values conservation, then she does not appreciate nature.\n- If Makenzie is curious and appreciates nature, then she does not value conservation.",
+      "question": "Does the context entail the conclusion 'Makenzie pursues scientific knowledge.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Makenzie enjoys outdoors \u21d2 loves gardening \u21d2 cares for plants. Makenzie respects the environment \u21d2 values conservation. Makenzie has passion and does not make new discoveries, and (passion \u21d2 curious \u2228 makes new discoveries) yields Makenzie is curious. From curious \u2227 values conservation and the added rule (curious \u2227 values conservation \u21d2 not appreciate nature) we get that Makenzie does not appreciate nature. The disjunction (appreciate nature \u2228 pursue scientific knowledge) with appreciate=false forces Makenzie to pursue scientific knowledge. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1210
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Makenzie has passion and does not make new discoveries, then she is curious.\n- If Makenzie is curious and respects the environment, then she does not appreciate nature.\n\nAdded facts:\n- Makenzie loves gardening.\n- Makenzie cares for plants.",
+      "question": "Does the context entail the conclusion 'Makenzie pursues scientific knowledge.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Makenzie has passion and does not make new discoveries, and the added rule gives: passion \u2227 \u00acmakes_new_discoveries \u21d2 curious, so Makenzie is curious. Makenzie respects the environment \u21d2 values conservation. The added rule curious \u2227 respects_environment \u21d2 \u00acappreciate_nature yields \u00acappreciate_nature. The context also includes the disjunction appreciate_nature \u2228 pursues_scientific_knowledge (inclusive). With appreciate_nature false, pursues_scientific_knowledge must be true. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1429
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Makenzie has passion and does not make new discoveries and respects the environment, then she pursues scientific knowledge.\n- If Makenzie pursues scientific knowledge, then she does not appreciate nature.\n- If Makenzie does not pursue scientific knowledge, then she appreciates nature.",
+      "question": "Does the context entail the conclusion 'Makenzie pursues scientific knowledge.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given: Makenzie has passion, Makenzie does not make new discoveries, and Makenzie respects the environment. The added rule states: if Makenzie has passion \u2227 \u00acmakes_new_discoveries \u2227 respects_environment, then she pursues scientific knowledge. Those antecedents hold, so we can conclude Makenzie pursues scientific knowledge. The other added rules merely specify consequences (pursues \u21d2 \u00acappreciate; \u00acpursues \u21d2 appreciate) and do not prevent deriving pursues in this context. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1663
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Makenzie is curious and makes new discoveries, then she does not pursue scientific knowledge.",
+      "question": "Does the context entail the conclusion 'Makenzie pursues scientific knowledge.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Makenzie has passion and does not make new discoveries, and (everyone with passion is curious or makes new discoveries) implies Makenzie is curious. From Makenzie respects the environment and the rule that respect \u21d2 values conservation (and cares for plants) we get she values conservation. The curious rule gives an exclusive choice (values conservation xor appreciates nature); since she values conservation she does not appreciate nature. The disjunction (appreciates nature or pursues scientific knowledge) therefore forces Makenzie to pursue scientific knowledge. The added rule (curious \u2227 makes new discoveries \u21d2 \u00acpursues) is irrelevant because Makenzie does not make new discoveries, so it does not block the conclusion.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1900
+    }
+  ]
+}

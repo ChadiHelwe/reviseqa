@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "google/gemini-2.5-pro",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 40,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Analia needs training.\nAnalia does not require mentorship.\nAnalia has a vision.\nAnalia is not charismatic.\nAnalia does not motivate others.\nAnalia does not inspire others.\nAnalia faces challenges.\nEveryone who either lacks experience or needs training is required to have mentorship.\nIf someone lacks experience, then they seek guidance.\nIf Analia has a vision, then she either values her community or is charismatic, but not both.\nIf Analia either values her community or has compassion (but not both), then she motivates others.\nAnalia either overcomes obstacles on her own or seeks guidance from others, but not both.\nIf someone is spiritually guided and has compassion, then they inspire others.\nIf someone faces challenges and is mentally tough, then they can overcome obstacles.\nIf Analia is emotionally resilient, then she is either mentally tough or spiritually guided (but not both).\nAnalia is physically strong or emotionally resilient (or both).",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Everyone who either lacks experience or needs training is required to have mentorship.\n\nAdded rules:\n- For all x, if x does not require mentorship, then x lacks experience if and only if x needs training.\n\nAdded facts:\n- Analia lacks experience.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. From 'Analia lacks experience' (LE) and 'If someone lacks experience, then they seek guidance' (LE -> SG), we can deduce that Analia seeks guidance (SG is true).\n2. From 'Analia seeks guidance' (SG is true) and 'Analia either overcomes obstacles on her own or seeks guidance from others, but not both' (OOO XOR SG), we deduce that Analia does not overcome obstacles on her own (~OOO is true).\n3. From 'Analia does not overcome obstacles on her own' (~OOO is true), 'Analia faces challenges' (FC is true), and 'If someone faces challenges and is mentally tough, then they can overcome obstacles' (FC & MT -> OOO), we can deduce by modus tollens that 'Analia is not mentally tough' (~MT is true).\n4. From 'Analia has a vision' (V is true), 'Analia is not charismatic' (~C is true), and 'If Analia has a vision, then she either values her community or is charismatic, but not both' (V -> (VC XOR C)), we can deduce 'Analia values her community' (VC is true).\n5. From 'Analia does not motivate others' (~MO is true), 'Analia values her community' (VC is true), and 'If Analia either values her community or has compassion (but not both), then she motivates others' ((VC XOR CO) -> MO), we can deduce by modus tollens that 'Analia has compassion' (CO is true).\n6. From 'Analia does not inspire others' (~I is true), 'Analia has compassion' (CO is true), and 'If someone is spiritually guided and has compassion, then they inspire others' (SPG & CO -> I), we can deduce by modus tollens that 'Analia is not spiritually guided' (~SPG is true).\n7. We have now deduced that Analia is not mentally tough (~MT) and not spiritually guided (~SPG). The rule 'If Analia is emotionally resilient, then she is either mentally tough or spiritually guided (but not both)' (ER -> (MT XOR SPG)) becomes ER -> (False XOR False), which simplifies to ER -> False. Therefore, 'Analia is not emotionally resilient' (~ER is true).\n8. From 'Analia is not emotionally resilient' (~ER is true) and 'Analia is physically strong or emotionally resilient (or both)' (PS OR ER), we must conclude that 'Analia is physically strong' (PS is true).\n9. The question asks if the context entails 'Analia is not physically strong' (~PS). Since we have proven PS is true, the conclusion ~PS is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 297
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If someone is spiritually guided and has compassion, then they inspire others.\n- If someone faces challenges and is mentally tough, then they can overcome obstacles.\n\nAdded rules:\n- For all x, if x does not inspire others, then either x is not spiritually guided or x does not have compassion.\n- For all x, if x does not overcome obstacles on their own, then either x does not face challenges or x is not mentally tough.\n\nAdded facts:\n- Analia seeks guidance.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. We are given that Analia seeks guidance (SG is true).\n2. From the rule 'Analia either overcomes obstacles on her own or seeks guidance from others, but not both' (OOO XOR SG), and knowing SG is true, we can deduce that 'Analia does not overcome obstacles on her own' (~OOO is true).\n3. From the rule 'For all x, if x does not overcome obstacles on their own, then either x does not face challenges or x is not mentally tough' (~OOO -> (~FC or ~MT)), we know the premise ~OOO is true. Therefore, the conclusion (~FC or ~MT) must be true.\n4. We are given that 'Analia faces challenges' (FC is true), which means ~FC is false. For (~FC or ~MT) to be true, ~MT must be true. So, 'Analia is not mentally tough' (~MT is true).\n5. We are given that 'Analia has a vision' (V is true) and 'Analia is not charismatic' (~C is true). From the rule 'If Analia has a vision, then she either values her community or is charismatic, but not both' (V -> (VC XOR C)), we can deduce that (VC XOR C) is true. Since C is false, VC must be true for the XOR to hold. So, 'Analia values her community' (VC is true).\n6. We are given that 'Analia does not motivate others' (~MO is true). From the rule 'If Analia either values her community or has compassion (but not both), then she motivates others' ((VC XOR CO) -> MO), we can use modus tollens. Since MO is false, the premise ~(VC XOR CO) must be true. This is equivalent to (VC <-> CO). Since we know VC is true, CO must also be true. So, 'Analia has compassion' (CO is true).\n7. We are given that 'Analia does not inspire others' (~I is true). From the rule 'For all x, if x does not inspire others, then either x is not spiritually guided or x does not have compassion' (~I -> (~SPG or ~CO)), we know the premise ~I is true. Thus, the conclusion (~SPG or ~CO) must be true. We just deduced that CO is true, so ~CO is false. For (~SPG or ~CO) to be true, ~SPG must be true. So, 'Analia is not spiritually guided' (~SPG is true).\n8. We know from steps 4 and 7 that Analia is not mentally tough (~MT) and not spiritually guided (~SPG). The rule 'If Analia is emotionally resilient, then she is either mentally tough or spiritually guided (but not both)' (ER -> (MT XOR SPG)) becomes ER -> (False XOR False), which simplifies to ER -> False. By modus tollens, we conclude 'Analia is not emotionally resilient' (~ER is true).\n9. We are given the rule 'Analia is physically strong or emotionally resilient (or both)' (PS or ER). Since we have proved that ER is false, for this statement to be true, PS must be true. So, 'Analia is physically strong' is a necessary conclusion.\n10. The question asks if the context entails 'Analia is not physically strong.' Since we have proven that Analia *is* physically strong, the conclusion 'Analia is not physically strong' is definitively false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1000
+    },
+    {
+      "step": 3,
+      "context": "Added facts:\n- Analia values her community.\n- Analia has compassion.\n- Analia does not overcome obstacles on her own.\n- Analia is not spiritually guided.\n- Analia is not mentally tough.\n- Analia is not emotionally resilient.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context provides two crucial pieces of information for this question. First, the rule 'Analia is physically strong or emotionally resilient (or both)', which can be represented logically as (PS or ER). Second, the newly added fact states 'Analia is not emotionally resilient' (~ER). In a disjunction (an 'or' statement), if the statement as a whole is true and one of its parts is false, the other part must be true. Given that (PS or ER) is true and ER is false, PS must be true. Therefore, the context entails that 'Analia is physically strong'. The question asks if the conclusion 'Analia is not physically strong' is entailed, which is the direct opposite of what we have proven. Thus, the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1914
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Analia is not emotionally resilient.\n\nRemoved rules:\n- If Analia is emotionally resilient, then either Analia is mentally tough or Analia is spiritually guided, but not both.\n\nAdded rules:\n- If Analia is emotionally resilient, then Analia is mentally tough if and only if Analia is spiritually guided.\n- If Analia has compassion, then Analia is not physically strong.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context provides two key statements for resolving the question. First, the added fact: 'Analia has compassion'. Second, the added rule: 'If Analia has compassion, then Analia is not physically strong'. This rule can be written as a logical implication: (Analia has compassion) -> (Analia is not physically strong). Since the premise of this implication, 'Analia has compassion', is given as a fact, the conclusion 'Analia is not physically strong' must follow by the rule of modus ponens. Therefore, the context directly entails the conclusion 'Analia is not physically strong'.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2178
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Analia is emotionally resilient, then Analia is mentally tough if and only if Analia is spiritually guided.\n\nAdded rules:\n- If Analia is emotionally resilient, then if Analia is mentally tough then Analia is spiritually guided, and if Analia is spiritually guided then Analia is mentally tough.\n\nAdded facts:\n- Analia is emotionally resilient.\n- Either Analia is not spiritually guided or Analia does not have compassion.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. From the facts 'Analia has a vision' (V) and 'Analia is not charismatic' (~C), and the rule 'If Analia has a vision, then she either values her community or is charismatic, but not both' (V -> (VC XOR C)), we can deduce that 'Analia values her community' (VC) is true.\n2. From the fact 'Analia does not motivate others' (~MO) and the rule 'If Analia either values her community or has compassion (but not both), then she motivates others' ((VC XOR CO) -> MO), we can use modus tollens to conclude that the premise is false. The negation of (VC XOR CO) is (VC <-> CO).\n3. Since we know from step 1 that 'Analia values her community' (VC) is true, and we know (VC <-> CO) is true, it must be that 'Analia has compassion' (CO) is also true.\n4. The context includes the rule 'If Analia has compassion, then Analia is not physically strong' (CO -> ~PS).\n5. Since we have established that 'Analia has compassion' (CO) is true, we can apply modus ponens to this rule to conclude that 'Analia is not physically strong' (~PS) must be true.\n6. Therefore, the context entails the conclusion 'Analia is not physically strong'.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2439
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Analia has compassion, then Analia is not physically strong.\n\nAdded facts:\n- Analia has compassion and Analia is physically strong.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The set of facts has been updated to include a new compound statement: 'Analia has compassion and Analia is physically strong'. This statement can be broken down into two separate facts that are now part of the context: 1) 'Analia has compassion' is true, and 2) 'Analia is physically strong' is true. The question asks if the context entails the conclusion 'Analia is not physically strong'. Since the context now explicitly states as a fact that 'Analia is physically strong', the proposed conclusion is a direct contradiction of a known fact. Therefore, the conclusion 'Analia is not physically strong' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2889
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Analia has compassion and Analia is physically strong.\n\nAdded facts:\n- Analia has compassion.\n- Analia is physically strong.\n- Analia lacks experience if and only if Analia needs training.",
+      "question": "Does the context entail the conclusion 'Analia is not physically strong.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context has been updated to include a new fact: 'Analia is physically strong'. The question asks if the context entails the conclusion 'Analia is not physically strong'. Since the context now explicitly states as a fact that Analia *is* physically strong, the proposed conclusion is a direct contradiction of this fact. Therefore, the conclusion 'Analia is not physically strong' must be false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 3106
+    }
+  ]
+}

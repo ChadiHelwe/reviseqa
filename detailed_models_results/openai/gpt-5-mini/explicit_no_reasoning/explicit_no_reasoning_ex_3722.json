@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 207,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Misael does not value feedback.\nMisael cannot resolve conflicts.\nMisael does not build strong relationships.\nMisael holds public office.\nMisael does not volunteer freely.\nMisael does not command admiration.\nMisael earns respect.\nIf someone values feedback, then they listen actively and communicate effectively.\nAnyone who makes informed decisions or listens actively can resolve conflicts.\nEveryone who acts with transparency either makes informed decisions or builds strong relationships (or both).\nIf Misael holds public office, then he either has integrity or acts with transparency, but not both.\nIf Misael either serves others or volunteers freely (but not both), then he commands admiration.\nIf Misael either serves others or is dedicated to his community (but not both), then he earns respect.\nFor all humans, if they are dedicated to their community or have integrity, then they gain public trust.",
+      "question": "Does the context entail the conclusion 'Misael gains public trust.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x makes informed decisions or x listens actively, then x can resolve conflicts.\n\nAdded rules:\n- For all x, if x holds public office, then x acts with transparency.\n- For all x, if x does not serve others, then x is not dedicated to their community.\n- For all x, if x is not dedicated to their community and x does not have integrity, then x does not gain public trust.",
+      "question": "Does the context entail the conclusion 'Misael gains public trust.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1) From the added rule HPO -> ActsWithTransparency and the fact Misael holds public office, deduce Transparency(Misael). 2) The original XOR rule (HoldsPublicOffice -> exactly one of Integrity or Transparency) together with Transparency(Misael) yields \u00acIntegrity(Misael). 3) From Transparency -> (MakesInformedDecision or BuildsStrongRelationships) and the fact Misael does not build strong relationships, deduce MakesInformedDecision(Misael) (though this fact is not needed further). 4) The rule XOR(Serves, VolunteersFreely) -> CommandsAdmiration plus the fact Misael does not command admiration and the contrapositive give \u00acXOR(Serves, VolunteersFreely). With VolunteersFreely false, this yields \u00acServes. 5) The added rule \u00acServes -> \u00acDedicated gives \u00acDedicated(Misael). 6) From steps 2 and 5 we have \u00acIntegrity(Misael) and \u00acDedicated(Misael); the added rule \u00acDedicated \u2227 \u00acIntegrity -> \u00acPublicTrust yields \u00acPublicTrust(Misael). 7) Therefore the context entails that Misael does not gain public trust, so the claim \u201cMisael gains public trust.\u201d is not entailed. Answer: False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 275
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x holds public office, then x acts with transparency.\n\nAdded facts:\n- Misael does not act with transparency.",
+      "question": "Does the context entail the conclusion 'Misael gains public trust.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1) From the XOR rule (HoldsPublicOffice -> exactly one of Integrity or Transparency) and the fact Misael holds public office plus the added fact Misael does not act with transparency, infer Integrity(Misael). 2) The universal rule 'dedicated or integrity -> gains public trust' therefore yields PublicTrust(Misael). 3) The negative rule (\u00acDedicated \u2227 \u00acIntegrity -> \u00acPublicTrust) cannot apply because Integrity(Misael) holds. Hence the context entails that Misael gains public trust.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 684
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Misael does not act with transparency.\n\nAdded facts:\n- Misael acts with transparency.",
+      "question": "Does the context entail the conclusion 'Misael gains public trust.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1) Misael holds public office and the exclusive rule (holds public office -> integrity xor transparency) plus the fact Misael acts with transparency imply \u00acIntegrity(Misael). 2) The rule (serves xor volunteers_freely -> commands admiration) and the fact \u00acCommandsAdmiration(Misael) give \u00ac(serves xor volunteers_freely). With the fact \u00acVolunteersFreely(Misael), this yields \u00acServes(Misael). 3) The added rule \u00acServes -> \u00acDedicated gives \u00acDedicated(Misael). 4) The added rule (\u00acDedicated \u2227 \u00acIntegrity) -> \u00acPublicTrust together with steps 1 and 3 yields \u00acPublicTrust(Misael). 5) The original rule (Dedicated \u2228 Integrity -> PublicTrust) cannot fire because both Dedicated and Integrity are false. Therefore the context entails that Misael does not gain public trust; the claim \"Misael gains public trust.\" is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 867
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all x, if x gains public trust, then either x is dedicated to their community or x has integrity.",
+      "question": "Does the context entail the conclusion 'Misael gains public trust.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From earlier facts Misael acts with transparency and holds public office. The exclusive rule for office implies \u00acIntegrity(Misael). Transparency plus the rule about transparency -> (informed or builds strong relationships) and the fact \u00acBuildsStrongRelationships gives MakesInformedDecision(Misael) (irrelevant). From \u00acCommandsAdmiration and \u00acVolunteersFreely, the XOR rule for serves/volunteers yields \u00acServes(Misael); with \u00acServes -> \u00acDedicated we get \u00acDedicated(Misael). With \u00acDedicated and \u00acIntegrity, the rule \u00acDedicated \u2227 \u00acIntegrity -> \u00acPublicTrust yields \u00acPublicTrust(Misael). The newly added converse rule (PublicTrust -> Dedicated \u2228 Integrity) does not enable deriving PublicTrust. Therefore the context does not entail that Misael gains public trust.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1138
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, x gains public trust if and only if x is dedicated to their community or x has integrity.\n- For all x, if x is dedicated to their community, then x serves others.\n\nAdded facts:\n- Misael makes informed decisions.",
+      "question": "Does the context entail the conclusion 'Misael gains public trust.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "HoldsPublicOffice(Misael) together with the exclusive-office rule and the fact Transparency(Misael) imply \u00acIntegrity(Misael). The added rules Dedicated -> Serves and \u00acServes -> \u00acDedicated make Dedicated(Misael) equivalent to Serves(Misael), but there is no fact or rule that yields Serves(Misael) (nor \u00acServes(Misael)) in the final context. PublicTrust(Misael) is equivalent to Dedicated(Misael) \u2228 Integrity(Misael). Since Integrity(Misael) is false and Dedicated(Misael) is undetermined, neither PublicTrust(Misael) nor its negation can be derived. Therefore the entailment is Uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1383
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Misael holds public office, then either Misael has integrity and does not act with transparency, or Misael does not have integrity and acts with transparency.\n- If either Misael serves others and does not volunteer freely, or Misael does not serve others and volunteers freely, then Misael commands admiration.\n- If either Misael serves others and is not dedicated to his community, or Misael does not serve others and is dedicated to his community, then Misael earns respect.",
+      "question": "Does the context entail the conclusion 'Misael gains public trust.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1) From the added rule for public office ( (Integrity \u2227 \u00acTransparency) \u2228 (\u00acIntegrity \u2227 Transparency) ) and the fact Misael acts with transparency and holds public office, we get \u00acIntegrity(Misael). 2) The commands-admiration rule is (Serves \u2227 \u00acVolunteers) \u2228 (\u00acServes \u2227 Volunteers) -> CommandsAdmiration. With \u00acVolunteers(Misael) and the fact \u00acCommandsAdmiration(Misael), the only way to avoid deriving CommandsAdmiration is to have \u00acServes(Misael). 3) Earlier added rules give \u00acServes -> \u00acDedicated (and later Dedicated -> Serves), so \u00acServes yields \u00acDedicated(Misael). 4) Public trust is equivalent to Dedicated \u2228 Integrity (from earlier additions). With both Dedicated and Integrity false, Dedicated \u2228 Integrity is false, so \u00acPublicTrust(Misael) holds. Therefore the context entails that Misael does not gain public trust; the claim that he gains public trust is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1631
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Misael acts with transparency.\n\nAdded facts:\n- Misael does not act with transparency.",
+      "question": "Does the context entail the conclusion 'Misael gains public trust.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1) From HoldsPublicOffice(Misael) and the office rule (HoldsPublicOffice -> (Integrity \u2227 \u00acTransparency) \u2228 (\u00acIntegrity \u2227 Transparency)) together with the fact \u00acTransparency(Misael), we obtain Integrity(Misael). 2) The rule PublicTrust \u21d4 (Dedicated \u2228 Integrity) therefore yields PublicTrust(Misael) because Integrity(Misael) holds. 3) No remaining rule or fact forces \u00acIntegrity or otherwise prevents deriving PublicTrust. Thus the context entails that Misael gains public trust.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2016
+    }
+  ]
+}

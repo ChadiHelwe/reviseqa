@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 324,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Blaire enjoys flying.\nBlaire does not form lasting bonds.\nBlaire does not have vibrant plumage.\nBlaire does not stand out.\nBlaire has a large wingspan.\nBlaire is a good parent.\nBlaire has a unique gift.\nBlaire does not live in a flock.\nIf Blaire is a social bird and enjoys flying, then she forms lasting bonds.\nIf Blaire is a social bird, then she either has vibrant plumage or a distinct call (but not both).\nAny bird that builds complex nests or has a distinct call will stand out.\nIf Blaire has a large wingspan, then she either finds food easily or is a good parent, but not both.\nIf Blaire has a unique gift, then she either lives in a flock or migrates seasonally, but not both.\nBlaire either builds complex nests or has keen vision, but not both.\nBlaire either has strong wings or keen vision, but not both.\nIf Blaire is valuable to others and migrates seasonally, then she can find food easily.\nIf Blaire has either strong wings or agile flight (but not both), then she is valuable to others.",
+      "question": "Does the context entail the conclusion 'Blaire has agile flight.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Blaire enjoys flying. Blaire does not form lasting bonds.. If Blaire is a social bird and enjoys flying, then she forms lasting bonds.. Therefore, Blaire is not a social bird.. Blaire is not a social bird. Blaire does not have vibrant plumage.. If Blaire is a social bird, then she either has vibrant plumage or a distinct call (but not both).. Therefore, . Blaire does not stand out.. Any bird that builds complex nests or has a distinct call will stand out.. Therefore, Blaire does not build complex nests.. Blaire has a large wingspan. Blaire is a good parent.. If Blaire has a large wingspan, then she either finds food easily or is a good parent, but not both.. Therefore, Blaire cannot find food easily.. Blaire has a unique gift. Blaire does not live in a flock.. If Blaire has a unique gift, then she either lives in a flock or migrates seasonally, but not both.. Therefore, Blaire migrates seasonally.. Blaire does not build complex nests.. Blaire either builds complex nests or has keen vision, but not both.. Therefore, Blaire has keen vision.. Blaire has keen vision.. Blaire either has strong wings or keen vision, but not both.. Therefore, Blaire does not have strong wings.. Blaire migrates seasonally. Blaire cannot find food easily.. If Blaire is valuable to others and migrates seasonally, then she can find food easily.. Therefore, Blaire is not valuable to others.. Blaire does not have strong wings. Blaire is not valuable to others.. If Blaire has either strong wings or agile flight (but not both), then she is valuable to others.. Therefore, Blaire has agile flight..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Blaire does not stand out.\n\nRemoved rules:\n- If Blaire has a large wingspan, then she either is a good parent or finds food easily, but not both.\n- If Blaire has either strong wings or agile flight (but not both), then she is valuable to others.\n\nAdded rules:\n- If Blaire has a distinct call, then she does not build complex nests.\n- If Blaire migrates seasonally, then she is valuable to others.\n- Blaire is valuable to others if and only if she has either strong wings or agile flight, but not both.\n\nAdded facts:\n- Blaire stands out.\n- Blaire is a social bird.",
+      "question": "Does the context entail the conclusion 'Blaire has agile flight.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: enjoys flying, not lasting bonds, not vibrant plumage, unique gift, not lives in a flock, social, stands out, plus XOR constraints: (buildsComplex XOR keenVision) and (strongWings XOR keenVision). From social and not vibrant plumage and rule (social -> vibrant XOR distinctCall) we get distinct call. From distinct call -> not build complex nests, and from (buildsComplex XOR keenVision) this yields keen vision. From (strongWings XOR keenVision) with keen vision true we get \u00acstrong wings. From unique gift and \u00aclives in a flock and rule (uniqueGift -> (livesInFlock XOR migrates)) we get migrates. From migrates -> valuable we get valuable. From valuable \u21d4 (strongWings XOR agileFlight) and \u00acstrong wings we conclude agile flight. Therefore the context entails that Blaire has agile flight.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 718
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Blaire is a social bird and enjoys flying, then she forms lasting bonds.\n- If Blaire has a distinct call, then she does not build complex nests.\n\nAdded facts:\n- Blaire builds complex nests.",
+      "question": "Does the context entail the conclusion 'Blaire has agile flight.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From facts: social, \u00acvibrant plumage, builds complex nests, unique gift, \u00aclives in a flock. Rule (social -> vibrant XOR distinct) + \u00acvibrant implies distinct call. buildsComplex XOR keenVision with buildsComplex true gives \u00ackeenVision. strongWings XOR keenVision with \u00ackeenVision gives strongWings. uniqueGift and \u00aclivesInFlock imply migrates; migrates -> valuable, so valuable true. The biconditional valuable \u21d4 (strongWings XOR agileFlight) together with strongWings true forces agileFlight false (since XOR must hold). Thus the context entails \u00acagileFlight, so it does not entail that Blaire has agile flight.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1087
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Blaire is valuable to others if and only if she has either strong wings or agile flight, but not both.\n\nAdded rules:\n- If Blaire migrates seasonally, then she has either strong wings or agile flight, but not both.",
+      "question": "Does the context entail the conclusion 'Blaire has agile flight.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts include: Blaire builds complex nests (so by buildsComplex XOR keenVision, \u00ackeenVision). From strongWings XOR keenVision and \u00ackeenVision we get strongWings. From uniqueGift and \u00aclivesInFlock we get migrates. The added rule gives migrates -> (strongWings XOR agileFlight). With strongWings true that XOR forces \u00acagileFlight. Therefore the context entails that Blaire does not have agile flight, so it does not entail that she has agile flight.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1326
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Blaire migrates seasonally, then she has either strong wings or agile flight, but not both.",
+      "question": "Does the context entail the conclusion 'Blaire has agile flight.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From social and \u00acvibrant and the rule social -> (vibrant XOR distinctCall) we get distinctCall. buildsComplex (fact) and buildsComplex XOR keenVision yield \u00ackeenVision. strongWings XOR keenVision with \u00ackeenVision yields strongWings. uniqueGift and \u00aclivesInFlock give migrates, and migrates -> valuable gives valuable. No rule remaining connects agile flight to these facts (the earlier rules relating agile flight were removed), so agile flight is neither provable nor disprovable from the context.",
+      "correct": false,
+      "tags": [
+        "removed_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1529
+    },
+    {
+      "step": 5,
+      "context": "",
+      "question": "Does the context entail the conclusion 'Blaire has agile flight.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "No new context or facts/rules were provided for the 'next problem'. Without any additional premises connecting Blaire to agile flight (or its negation), the entailment cannot be determined from unspecified information.",
+      "correct": false,
+      "tags": [
+        "no_change"
+      ],
+      "is_demonstration": false,
+      "token_count": 1710
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- Blaire is valuable to others if and only if either she has strong wings and does not have agile flight, or she does not have strong wings and has agile flight.\n- If Blaire migrates seasonally, then either she has strong wings and does not have agile flight, or she does not have strong wings and has agile flight.\n\nAdded rules:\n- Blaire is valuable to others if and only if she has either strong wings or agile flight, but not both.\n- If Blaire migrates seasonally, then she has either strong wings or agile flight, but not both.\n\nAdded facts:\n- If Blaire is not valuable to others, then she does not migrate seasonally.",
+      "question": "Does the context entail the conclusion 'Blaire has agile flight.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From facts: social, \u00acvibrantPlumage, buildsComplex, uniqueGift, \u00aclivesInFlock. social -> (vibrant XOR distinct) and \u00acvibrantPlumage give distinctCall. buildsComplex XOR keenVision with buildsComplex true gives \u00ackeenVision. strongWings XOR keenVision with \u00ackeenVision gives strongWings. uniqueGift -> (livesInFlock XOR migrates) and \u00aclivesInFlock give migrates. migrates -> (strongWings XOR agileFlight) with strongWings true forces agileFlight false. Thus the context entails that Blaire does not have agile flight, so it does not entail that she has agile flight.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1811
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Blaire builds complex nests.\n\nAdded rules:\n- If Blaire has a distinct call, then she does not build complex nests.",
+      "question": "Does the context entail the conclusion 'Blaire has agile flight.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From facts: Blaire is social and not vibrant plumage. From social -> (vibrant XOR distinctCall) and \u00acvibrant we infer distinctCall. The added rule distinctCall -> \u00acbuildsComplex gives \u00acbuildsComplex. The XOR buildsComplex XOR keenVision then yields keenVision. The XOR strongWings XOR keenVision with keenVision true yields \u00acstrongWings. From uniqueGift and \u00aclivesInFlock we get migrates, and migrates -> valuable gives valuable. The biconditional valuable \u21d4 (strongWings XOR agileFlight) with \u00acstrongWings and valuable true forces agileFlight. Therefore the context entails that Blaire has agile flight.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2161
+    }
+  ]
+}

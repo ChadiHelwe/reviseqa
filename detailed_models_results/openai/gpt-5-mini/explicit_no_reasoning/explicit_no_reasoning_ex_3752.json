@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 212,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kyro hides in vegetation.\nKyro climbs rocks.\nKyro does not feed on plankton.\nFor Kyro, either he hides in vegetation or burrows sand, but not both.\nIf Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.\nEvery mudskipper that explores the mudflats either walks on mud or feeds on plankton (or both).\nKyro either swims efficiently or walks on mud, but not both.\nKyro either breathes air or swims efficiently, but not both.\nAll mudskippers that can breathe air can survive out of water.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x explores the mudflats, then x either walks on mud or feeds on plankton.\n\nAdded rules:\n- For all x, if x explores the mudflats, then x does not walk on mud.\n- For all x, if x does not breathe air, then x cannot survive out of water.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From facts: Kyro climbs rocks and (by XOR with hiding) does not burrow sand, so (climbs XOR burrows) holds and Kyro explores the mudflats. Added rule: explores -> not walk_on_mud, so Kyro does not walk on mud. Given the XOR (swims_eff XOR walks_on_mud), not walking implies Kyro swims efficiently. Given the XOR (breathes_air XOR swims_eff), swimming implies Kyro does not breathe air. Added rule: not breathe_air -> cannot survive out_of_water. Therefore Kyro cannot survive out of water is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 232
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Kyro hides in vegetation.\n\nAdded facts:\n- Kyro burrows sand.\n- Kyro walks on mud.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Current facts: Kyro climbs rocks (original), burrows sand (added), walks on mud (added), does not feed on plankton; hides in vegetation was removed, and the XOR (hides XOR burrows) is satisfied with burrows true and hides false. Because climbs and burrows are both true, the antecedent of (climbs XOR burrows) -> explores is false, so we cannot infer explores. Given walks_on_mud is explicitly true, the XOR (swims_eff XOR walks_on_mud) implies swims_eff is false. Then the XOR (breathes_air XOR swims_eff) with swims_eff false forces breathes_air true. From breathes_air -> survive_out_of_water we get Kyro can survive out of water. Therefore the statement 'Kyro cannot survive out of water' is not entailed (in fact its negation is entailed).",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 473
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, x breathes air if and only if x can survive out of water.\n- For all x, if x walks on mud, then x does not explore the mudflats.\n\nAdded facts:\n- Kyro breathes air.\n- Kyro does not swim efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: Kyro breathes air (added), walks on mud (added), burrows sand (added), climbs rocks (original), and does not swim efficiently (added). From walks_on_mud -> not explore (added) we get Kyro does not explore the mudflats. The XOR (swims XOR walks) with walks true gives swims false; the XOR (breathes XOR swims) with swims false and the fact breathes true is consistent. The added biconditional breathes iff can_survive_out_of_water yields can_survive_out_of_water from Kyro breathing. No rule implies cannot_survive_out_of_water for Kyro (the rule if not breathe -> cannot survive is irrelevant since Kyro does breathe). Therefore the context does not entail 'Kyro cannot survive out of water.'",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 726
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Kyro walks on mud.\n- Kyro does not swim efficiently.\n- Kyro breathes air.\n\nAdded facts:\n- Kyro does not walk on mud.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Current facts: Kyro climbs rocks (original), Kyro burrows sand (added earlier), and Kyro does not walk on mud (just added). Relevant rules still present: (swims XOR walks), (breathes XOR swims), and the biconditional (breathes iff can_survive_out_of_water) plus the rule (not breathe -> cannot_survive_out_of_water). From not walk_on_mud and (swims XOR walks) we infer Kyro swims efficiently. From (breathes XOR swims) with swims true we infer Kyro does not breathe air. From the biconditional breathes <-> can_survive_out_of_water (or from not breathe -> cannot_survive) we therefore infer Kyro cannot survive out of water. Thus the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1001
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, if x can survive out of water, then x breathes air.\n- For all x, it is not the case that x walks on mud and x explores the mudflats.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Current facts: Kyro climbs rocks, Kyro burrows sand, Kyro does not walk on mud, Kyro does not feed on plankton. From (swims XOR walks) and not walks we infer Kyro swims efficiently. From (breathes XOR swims) with swims true we infer Kyro does not breathe air. The rule (not breathe -> cannot survive out of water) yields Kyro cannot survive out of water. The added biconditional (breathes iff can survive) also gives cannot survive when breathes is false. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1249
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Kyro either swims efficiently or walks on mud, but not both.\n\nAdded facts:\n- Kyro does not swim efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We have the XOR (breathes XOR swims) still in force and the fact Kyro does not swim efficiently, so Kyro must breathe air. The added biconditional (breathes iff can survive out of water) then gives that Kyro can survive out of water. Therefore \u2018Kyro cannot survive out of water\u2019 is not entailed (indeed its negation is entailed).",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1457
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Kyro does not swim efficiently.\n\nAdded facts:\n- Kyro swims efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Final facts include: Kyro swims efficiently (added), Kyro burrows sand and Kyro does not walk on mud; climbs rocks is also true. The exclusive rule (breathes XOR swims) is still present, so with swims true we infer Kyro does not breathe air. The biconditional (breathes iff can survive out of water) (and the rule not breathe -> cannot survive) then yield that Kyro cannot survive out of water. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1613
+    }
+  ]
+}

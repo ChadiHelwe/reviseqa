@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "google/gemma-3-12b-it",
+    "task_path": "explicit",
+    "chain_index": 376,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Cali does not play a sport.\nCali uses ice.\nCali seeks treatment.\nCali needs rehabilitation.\nCali is either an athlete or plays a sport.\nIf Cali is an athlete, then she either sees a doctor or uses ice, but not both.\nIf Cali experiences pain or has swelling, then she will see a doctor.\nIf Cali either experiences pain or has an injury (but not both), then she seeks treatment.\nIf Cali has an injury or needs rehabilitation, then she takes etodolac.\nIf Cali takes etodolac, then she manages her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Cali does not play a sport.. Cali is either an athlete or plays a sport.. Therefore, Cali is an athlete.. Cali is an athlete. Cali uses ice.. If Cali is an athlete, then she either sees a doctor or uses ice, but not both.. Therefore, Cali does not see a doctor.. Cali does not see a doctor.. If Cali experiences pain or has swelling, then she will see a doctor.. Therefore, Cali does not experience pain.. Cali does not experience pain. Cali seeks treatment.. If Cali either experiences pain or has an injury (but not both), then she seeks treatment.. Therefore, . Cali needs rehabilitation.. If Cali has an injury or needs rehabilitation, then she takes etodolac.. Therefore, Cali takes etodolac.. Cali takes etodolac.. If Cali takes etodolac, then she manages her pain.. Therefore, Cali does not manage her pain..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Cali takes etodolac, then she manages her pain.\n\nAdded rules:\n- If Cali takes etodolac, then she does not manage her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Cali does not play a sport. Cali uses ice. Cali seeks treatment. Cali needs rehabilitation. Cali is either an athlete or plays a sport. If Cali is an athlete, then she either sees a doctor or uses ice, but not both. If Cali experiences pain or has swelling, then she will see a doctor. If Cali either experiences pain or has an injury (but not both), then she seeks treatment. If Cali has an injury or needs rehabilitation, then she takes etodolac. If Cali takes etodolac, then she does not manage her pain. Cali needs rehabilitation, so she takes etodolac. Since Cali takes etodolac, she does not manage her pain.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 433
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Cali experiences pain or has swelling, then she will see a doctor.\n- If Cali has an injury or needs rehabilitation, then she takes etodolac.\n- If Cali takes etodolac, then she does not manage her pain.\n\nAdded rules:\n- Either Cali does not experience pain and does not have swelling, or she sees a doctor.\n- Either Cali does not have an injury and does not need rehabilitation, or she takes etodolac.\n- Either Cali does not take etodolac, or she does not manage her pain.\n- If Cali manages her pain, then she does not take etodolac.\n\nAdded facts:\n- Either Cali needs rehabilitation, or she does not need rehabilitation.\n- Either Cali needs rehabilitation, or she has an injury.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's analyze the given context. We know that either Cali needs rehabilitation or she does not need rehabilitation, and either she needs rehabilitation or she has an injury. Let's consider two cases:\n\nCase 1: Cali needs rehabilitation. \n- Either Cali does not have an injury and does not need rehabilitation, or she takes etodolac. Since Cali needs rehabilitation, she must take etodolac. \n- Either Cali does not take etodolac, or she does not manage her pain. Since she takes etodolac, she does not manage her pain.\n\nCase 2: Cali has an injury. \n- Either Cali does not have an injury and does not need rehabilitation, or she takes etodolac. Since Cali has an injury, she must take etodolac.\n- Either Cali does not take etodolac, or she does not manage her pain. Since she takes etodolac, she does not manage her pain.\n\nFurthermore, if she manages her pain, she does not take etodolac. We know that she takes etodolac in both cases, so she cannot manage her pain.\n\nTherefore, the context entails the conclusion 'Cali does not manage her pain'.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 679
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Either Cali does not have an injury and does not need rehabilitation, or she takes etodolac.\n\nAdded rules:\n- Either Cali manages her pain, or she is not an athlete.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Let's break down the context.\n\nWe have the following rules:\n1. Cali does not play a sport.\n2. Cali uses ice.\n3. Cali seeks treatment.\n4. Cali needs rehabilitation.\n5. Cali is either an athlete or plays a sport. (Since Cali doesn't play a sport, she MUST be an athlete.)\n6. If Cali is an athlete, then she either sees a doctor or uses ice, but not both.\n7. If Cali either experiences pain or has swelling, then she will see a doctor.\n8. If Cali either experiences pain or has an injury (but not both), then she seeks treatment.\n9. Either Cali manages her pain, or she is not an athlete.\n\nSince Cali is an athlete (from 5, and Cali does not play a sport), Rule 6 tells us she either sees a doctor or uses ice, but not both. She uses ice (Rule 2), so she does *not* see a doctor.\n\nFrom Rule 8, Cali seeks treatment. She either experiences pain or has an injury, but not both. If she experienced pain, she'd see a doctor (Rule 7), but we know she does not, so she must have an injury.\n\nWe don't have a rule establishing a direct link between injury and taking etodolac, or managing pain.  The rule \"Either Cali manages her pain, or she is not an athlete\" tells us if Cali *does* manage her pain, then she *is* an athlete, which we already know. It doesn't give us information for concluding she *doesn't* manage her pain.\n\nTherefore, there's no way to definitively conclude that Cali does not manage her pain. It's possible she manages her pain, and it's possible she doesn't. ",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1173
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Cali is an athlete, then she manages her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's re-evaluate with the new rule: 'If Cali is an athlete, then she manages her pain.'\n\nWe know:\n1. Cali does not play a sport.\n2. Cali uses ice.\n3. Cali seeks treatment.\n4. Cali needs rehabilitation.\n5. Cali is either an athlete or plays a sport. (Since she doesn't play a sport, she is an athlete.)\n6. If Cali is an athlete, then she either sees a doctor or uses ice, but not both.\n7. If Cali either experiences pain or has swelling, then she will see a doctor.\n8. If Cali either experiences pain or has an injury (but not both), then she seeks treatment.\n9. If Cali is an athlete, then she manages her pain. (NEW RULE)\n\nFrom (5), Cali is an athlete. From (9), if Cali is an athlete, then Cali manages her pain. Therefore, Cali manages her pain.\n\nThe question asks if the context entails 'Cali does not manage her pain.' Since we've established that she *does* manage her pain, the context does *not* entail that she does not manage her pain.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1669
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Cali does not manage her pain, then she is not an athlete.\n- Either Cali manages her pain, or she manages her pain.\n- Either Cali manages her pain, or she does not manage her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's analyze the provided context:\n\nRules:\n1. Cali does not play a sport.\n2. Cali uses ice.\n3. Cali seeks treatment.\n4. Cali needs rehabilitation.\n5. Cali is either an athlete or plays a sport. (Implies Cali is an athlete).\n6. If Cali is an athlete, then she either sees a doctor or uses ice, but not both.\n7. If Cali either experiences pain or has swelling, then she will see a doctor.\n8. If Cali either experiences pain or has an injury (but not both), then she seeks treatment.\n9. If Cali does not manage her pain, then she is not an athlete.\n10. Either Cali manages her pain, or she manages her pain. (Tautology - always true).\n11. Either Cali manages her pain, or she does not manage her pain. (Tautology - always true).\n\nFrom rule 5, Cali is an athlete.  Rule 9 states: If Cali does not manage her pain, then she is not an athlete.  This is logically equivalent to: if Cali *is* an athlete, then she manages her pain.  Therefore, Cali manages her pain.\n\nThe question is: Does the context entail 'Cali does not manage her pain.'? Since we've deduced that Cali manages her pain because she's an athlete, the context *does not* entail this conclusion.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2020
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Cali does not manage her pain, then she is not an athlete.\n- Either Cali manages her pain, or she manages her pain.\n\nAdded rules:\n- If Cali is an athlete, then she does not manage her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's analyze the context:\n\n1. Cali does not play a sport.\n2. Cali uses ice.\n3. Cali seeks treatment.\n4. Cali needs rehabilitation.\n5. Cali is either an athlete or plays a sport. (Therefore Cali is an athlete).\n6. If Cali is an athlete, then she either sees a doctor or uses ice, but not both.\n7. If Cali either experiences pain or has swelling, then she will see a doctor.\n8. If Cali either experiences pain or has an injury (but not both), then she seeks treatment.\n9. If Cali is an athlete, then she does not manage her pain.\n\nSince Cali is an athlete (from 5), and Rule 9 states 'If Cali is an athlete, then she does not manage her pain', we can directly conclude that Cali does not manage her pain.\n\nTherefore, the context does entail the conclusion 'Cali does not manage her pain.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2457
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Either Cali manages her pain, or she is not an athlete.\n\nAdded rules:\n- Either Cali manages her pain, or she is an athlete.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Let's analyze the context:\n\n1. Cali does not play a sport.\n2. Cali uses ice.\n3. Cali seeks treatment.\n4. Cali needs rehabilitation.\n5. Cali is either an athlete or plays a sport. (Therefore Cali is an athlete).\n6. If Cali is an athlete, then she either sees a doctor or uses ice, but not both.\n7. If Cali either experiences pain or has swelling, then she will see a doctor.\n8. If Cali either experiences pain or has an injury (but not both), then she seeks treatment.\n9. Either Cali manages her pain, or she is an athlete.\n\nSince Cali is an athlete (from 5), Rule 9 states 'Either Cali manages her pain, or she is an athlete'. Since we know Cali is an athlete, the disjunction is true regardless of whether or not she manages her pain. Therefore, it's *possible* that she manages pain, and it's *possible* that she doesn't. We don't have enough information to conclude whether she manages her pain or not.\n\nTherefore, the context does not entail the conclusion 'Cali does not manage her pain.'",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2795
+    }
+  ]
+}

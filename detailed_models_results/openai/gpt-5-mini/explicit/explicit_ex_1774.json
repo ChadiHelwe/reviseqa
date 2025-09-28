@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 45,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "McCoy is not sarcastic.\nMcCoy makes others laugh.\nMcCoy values friendships.\nMcCoy is outgoing.\nMcCoy is sarcastic or tells jokes.\nIf someone has good humor, then they tell jokes and make others laugh.\nAnyone who values friendships is a social person.\nIf McCoy is outgoing and has good humor, then he loves parties.\nIf McCoy is social, then he either loves parties or enjoys solitude, but not both.\nMcCoy either plays peekaboo or enjoys solitude, but not both.\nFor all humans, if they play peekaboo, then they bring joy to others.",
+      "question": "Does the context entail the conclusion 'McCoy does not bring joy to others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "McCoy is not sarcastic.. McCoy is sarcastic or tells jokes.. Therefore, McCoy tells jokes.. McCoy tells jokes. McCoy makes others laugh.. If someone has good humor, then they tell jokes and make others laugh.. Therefore, . McCoy values friendships.. Anyone who values friendships is a social person.. Therefore, McCoy is social.. McCoy is outgoing.. If McCoy is outgoing and has good humor, then he loves parties.. Therefore, McCoy loves parties.. McCoy is social. McCoy loves parties.. If McCoy is social, then he either loves parties or enjoys solitude, but not both.. Therefore, McCoy does not enjoy solitude.. McCoy does not enjoy solitude.. McCoy either plays peekaboo or enjoys solitude, but not both.. Therefore, McCoy plays peekaboo.. McCoy plays peekaboo.. For all humans, if they play peekaboo, then they bring joy to others.. Therefore, McCoy does not bring joy to others..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If McCoy has good humor, then McCoy tells jokes and McCoy makes others laugh.\n- If McCoy plays peekaboo, then McCoy brings joy to others.",
+      "question": "Does the context entail the conclusion 'McCoy does not bring joy to others.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From \u201csarcastic or tells jokes\u201d and \u201cMcCoy is not sarcastic\u201d we get McCoy tells jokes; McCoy also makes others laugh. The rule \u201cgood_humor -> tells_jokes \u2227 makes_others_laugh\u201d is one-way, so McCoy having good_humor is not entailed. McCoy values friendships -> McCoy is social, and social -> (loves_parties XOR enjoys_solitude) so either loves_parties or enjoys_solitude, unknown which. Also McCoy either plays peekaboo or enjoys solitude (XOR). If McCoy plays peekaboo then by the rule he brings joy; if he instead enjoys solitude then he does not play peekaboo and no rule yields that he brings joy. Both possibilities are consistent with the context, so \u201cMcCoy does not bring joy to others\u201d is not entailed.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 414
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- McCoy is outgoing.\n\nAdded rules:\n- For all x, if x brings joy to others, then x plays peekaboo.\n\nAdded facts:\n- McCoy does not love parties.",
+      "question": "Does the context entail the conclusion 'McCoy does not bring joy to others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: McCoy is not sarcastic; McCoy makes others laugh; McCoy values friendships; McCoy is not outgoing (removed); McCoy is sarcastic or tells jokes; McCoy does not love parties. Rules: GoodHumor -> (tells_jokes \u2227 makes_others_laugh); ValuesFriend -> Social; Social -> (LovesParties XOR EnjoysSolitude); Peekaboo XOR EnjoysSolitude (McCoy either plays peekaboo or enjoys solitude); Peekaboo -> BringsJoy; BringsJoy -> Peekaboo (new). From \u00acsarcastic and (sarcastic \u2228 tells_jokes) infer tells_jokes (and we already have makes others laugh). From ValuesFriend infer Social. From Social and \u00acLovesParties infer EnjoysSolitude (since XOR forces exactly one, and loves_parties is false). From EnjoysSolitude and (Peekaboo XOR EnjoysSolitude) infer \u00acPeekaboo. From Peekaboo \u2194 BringsJoy infer \u00acBringsJoy. Therefore the context entails that McCoy does not bring joy to others.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 664
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Either McCoy plays peekaboo and McCoy does not enjoy solitude, or McCoy does not play peekaboo and McCoy enjoys solitude.\n\nAdded rules:\n- If McCoy brings joy to others, then McCoy plays peekaboo.\n- Either McCoy plays peekaboo or McCoy enjoys solitude, but not both.\n\nAdded facts:\n- McCoy tells jokes.",
+      "question": "Does the context entail the conclusion 'McCoy does not bring joy to others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: \u00acsarcastic(McCoy), makes_others_laugh(McCoy), values_friendships(McCoy), \u00acloves_parties(McCoy), tells_jokes(McCoy). From values_friendships -> social we get social(McCoy). From social -> (loves_parties XOR enjoys_solitude) and \u00acloves_parties we infer enjoys_solitude(McCoy). From (plays_peekaboo XOR enjoys_solitude) and enjoys_solitude(McCoy) we infer \u00acplays_peekaboo(McCoy). The rules plays_peekaboo -> brings_joy and brings_joy -> plays_peekaboo yield an equivalence, so \u00acplays_peekaboo(McCoy) implies \u00acbrings_joy(McCoy). Thus the context entails that McCoy does not bring joy to others.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 997
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- McCoy does not love parties.\n\nAdded facts:\n- McCoy loves parties.",
+      "question": "Does the context entail the conclusion 'McCoy does not bring joy to others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From McCoy values friendships we get McCoy is social. Social -> (loves_parties XOR enjoys_solitude) and the fact McCoy loves parties imply McCoy does not enjoy solitude. From (plays_peekaboo XOR enjoys_solitude) and \u00acenjoys_solitude we infer McCoy plays peekaboo. From plays_peekaboo -> brings_joy we infer McCoy brings joy to others. Therefore the context entails that McCoy brings joy, so the conclusion 'McCoy does not bring joy to others.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1317
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- McCoy loves parties.\n\nAdded rules:\n- If McCoy tells jokes, then McCoy does not love parties.",
+      "question": "Does the context entail the conclusion 'McCoy does not bring joy to others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: \u00acsarcastic, makes_others_laugh, values_friendships, tells_jokes. Rules: values_friendships -> social; social -> (loves_parties XOR enjoys_solitude); (plays_peekaboo <-> brings_joy) (both directions present); (plays_peekaboo XOR enjoys_solitude); tells_jokes -> \u00acloves_parties. From tells_jokes -> \u00acloves_parties infer \u00acloves_parties. From values_friendships -> social infer social. From social and \u00acloves_parties (with exclusive-or) infer enjoys_solitude. From (plays_peekaboo XOR enjoys_solitude) and enjoys_solitude infer \u00acplays_peekaboo. From plays_peekaboo <-> brings_joy infer \u00acbrings_joy. Thus the context entails that McCoy does not bring joy to others.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1504
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Either McCoy plays peekaboo or McCoy enjoys solitude, but not both.\n\nAdded rules:\n- McCoy plays peekaboo or McCoy enjoys solitude.\n\nAdded facts:\n- It is not the case that McCoy plays peekaboo and McCoy enjoys solitude.",
+      "question": "Does the context entail the conclusion 'McCoy does not bring joy to others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: \u00acsarcastic, makes_others_laugh, values_friendships, tells_jokes. Rules: values_friendships -> social; social -> (loves_parties XOR enjoys_solitude); tells_jokes -> \u00acloves_parties; plays_peekaboo -> brings_joy and brings_joy -> plays_peekaboo (equivalence); rule: plays_peekaboo or enjoys_solitude; fact: not(plays_peekaboo and enjoys_solitude). From values_friendships infer social. From tells_jokes infer \u00acloves_parties. From social and \u00acloves_parties (with XOR) infer enjoys_solitude. From enjoys_solitude and the disjunction+not(both) infer \u00acplays_peekaboo. From \u00acplays_peekaboo and the equivalence infer \u00acbrings_joy. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1767
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If McCoy tells jokes, then McCoy does not love parties.\n\nAdded rules:\n- If McCoy tells jokes, then McCoy loves parties.",
+      "question": "Does the context entail the conclusion 'McCoy does not bring joy to others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From values_friendships(McCoy) and values_friendships->social we get social(McCoy). The fact tells_jokes(McCoy) together with the added rule tells_jokes->loves_parties yields loves_parties(McCoy). From social->(loves_parties XOR enjoys_solitude) and loves_parties(McCoy) we infer \u00acenjoys_solitude(McCoy). The context also contains (plays_peekaboo \u2228 enjoys_solitude) and \u00ac(plays_peekaboo \u2227 enjoys_solitude), so with \u00acenjoys_solitude(McCoy) we conclude plays_peekaboo(McCoy). Since plays_peekaboo and the rules linking plays_peekaboo and brings_joy are present (both directions were added earlier), we conclude brings_joy(McCoy). Therefore the conclusion \u201cMcCoy does not bring joy to others.\u201d is not entailed (it is contradicted).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2063
+    }
+  ]
+}

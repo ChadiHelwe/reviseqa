@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 283,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Coleson does not collect data.\nColeson has a green thumb.\nColeson pursues practical applications.\nColeson does not solve complex problems.\nColeson collaborates with others.\nColeson collects data or presents findings.\nIf Coleson has a green thumb, then he will study colocasia.\nColeson either drives innovation or pursues practical applications, but not both.\nIf Coleson either thinks critically or solves complex problems (but not both), then he drives innovation.\nIf Coleson advances knowledge, then he collaborates with others and thinks critically.\nIf Coleson either presents findings or publishes research (but not both), then he advances knowledge.\nAnyone who publishes research contributes to the scientific community.\nEveryone who makes medical breakthroughs contributes to the scientific community, and everyone who contributes to the scientific community does not necessarily make medical breakthroughs.\nIf Coleson studies colocasia, then he can either make medical breakthroughs or gain international recognition, but not both.",
+      "question": "Does the context entail the conclusion 'Coleson gains international recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x publishes research, then x contributes to the scientific community.\n- If Coleson either thinks critically or solves complex problems (but not both), then he drives innovation.\n\nAdded rules:\n- For all x, x publishes research if and only if x contributes to the scientific community.\n\nAdded facts:\n- Coleson does not publish research.",
+      "question": "Does the context entail the conclusion 'Coleson gains international recognition.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From 'not collect data' and 'collects data or presents findings' conclude Coleson presents findings. He does not publish research (added), so the XOR 'presents findings or publishes research (but not both)' holds, hence Coleson advances knowledge. From that he thinks critically (and already collaborates). From 'green thumb' he studies colocasia. The added biconditional 'publishes iff contributes' plus 'not publish' gives 'not contribute'. But 'making medical breakthroughs -> contributes', so Coleson cannot make medical breakthroughs. From studying colocasia he must either make medical breakthroughs or gain international recognition (but not both); since medical breakthroughs are impossible, he must gain international recognition. Therefore the conclusion is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 308
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Coleson either presents findings or publishes research (but not both), then he advances knowledge.\n- For all x, x makes medical breakthroughs or x contributes to the scientific community, but not both.\n\nAdded rules:\n- If Coleson either presents findings or publishes research (but not both), then he advances knowledge.\n- For all x, either x makes medical breakthroughs or x contributes to the scientific community, but not both.\n\nAdded facts:\n- Coleson presents findings.\n- Coleson studies colocasia.",
+      "question": "Does the context entail the conclusion 'Coleson gains international recognition.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "Coleson studies colocasia (given) and the rule for that case says Coleson must have either make medical breakthroughs (MB) or gain international recognition (IR), but not both. The theory also contains the universal exclusive disjunction: for every x, either MB(x) or Contrib(x), but not both, together with the original implication MB(x) -> Contrib(x). These two together make MB(x) impossible (MB would force Contrib, contradicting the exclusive-or), so for every individual Contrib is true and MB is false. Thus for Coleson MB is false, and since studies colocasia requires MB xor IR, IR must be true. Therefore the conclusion is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 583
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Coleson does not publish research.\n\nAdded facts:\n- Coleson publishes research.",
+      "question": "Does the context entail the conclusion 'Coleson gains international recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Current facts: Coleson presents findings, publishes research, and studies colocasia. Rules include: (a) (presents XOR publishes) -> advances knowledge; (b) publishes iff contributes; (c) for all x, MB(x) XOR Contrib(x) (exclusive); (d) MB(x) -> Contrib(x). From (d) together with the exclusive MB XOR Contrib, MB(x) is impossible and Contrib(x) must hold for every individual, so Coleson does not make medical breakthroughs and does contribute. Given publishes iff contributes this is consistent with Coleson publishing. The antecedent of (a) is false because both presents and publishes are true, so we do not get advances knowledge (and thus no derivation of thinks critically or other consequences). From studies colocasia we have MB XOR IR for Coleson; since MB is impossible, IR must hold. Therefore the context entails that Coleson gains international recognition.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 895
+    },
+    {
+      "step": 4,
+      "context": "Added facts:\n- Coleson contributes to the scientific community.\n- Coleson does not make medical breakthroughs.",
+      "question": "Does the context entail the conclusion 'Coleson gains international recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the rule that studying colocasia yields (medical_breakthroughs XOR international_recognition) and the fact Coleson studies colocasia, we have MB XOR IR. The added fact states Coleson does not make medical breakthroughs (MB false), so the exclusive-or forces IR to be true. Hence Coleson gains international recognition is entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1170
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Coleson studies colocasia, then he can either make medical breakthroughs or gain international recognition, but not both.\n\nAdded rules:\n- If Coleson studies colocasia, then he can either make medical breakthroughs or he does not gain international recognition, but not both.",
+      "question": "Does the context entail the conclusion 'Coleson gains international recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Coleson studies colocasia (from prior facts). The new rule gives: studies -> (MB XOR \u00acIR), which is equivalent to MB \u2194 IR (they must have the same truth value). You also have the fact Coleson does not make medical breakthroughs (MB false). From MB \u2194 IR, IR must therefore be false. Thus the context entails that Coleson does not gain international recognition, so the claim that he does is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1326
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- Either it is not the case that Coleson either presents findings or publishes research (but not both), or he advances knowledge.\n- If Coleson studies colocasia, then he can either make medical breakthroughs or he does not gain international recognition, but not both.\n\nAdded rules:\n- If Coleson studies colocasia, then he makes medical breakthroughs if and only if he gains international recognition.\n- Either Coleson presents findings if and only if he publishes research, or he advances knowledge.\n\nAdded facts:\n- Coleson does not drive innovation.",
+      "question": "Does the context entail the conclusion 'Coleson gains international recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We have the rule Studies -> (MB \u2194 IR) and the fact Coleson studies colocasia. We also have the fact Coleson does not make medical breakthroughs (MB false). From MB \u2194 IR it follows that IR has the same truth value as MB, so IR is false. Therefore the context entails that Coleson does not gain international recognition, so the statement 'Coleson gains international recognition.' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1539
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Coleson does not make medical breakthroughs.\n- Coleson publishes research.\n- Coleson contributes to the scientific community.\n\nAdded facts:\n- Coleson does not publish research.",
+      "question": "Does the context entail the conclusion 'Coleson gains international recognition.'?",
+      "prediction": "ERROR",
+      "correct_answer": "True",
+      "reasoning": "ERROR",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1805
+    }
+  ]
+}

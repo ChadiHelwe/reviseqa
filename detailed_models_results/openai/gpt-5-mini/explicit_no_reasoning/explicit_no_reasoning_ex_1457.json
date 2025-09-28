@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 20,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Cutie is not gentle.\nCutie does not respond well to training.\nCutie has endurance.\nCutie does not excel at galloping.\nCutie either has a good temperament or is gentle, but it's not necessarily both.\nIf Cutie has a good temperament, then she either responds well to training or is spirited (or both).\nIf Cutie is spirited, then she either has endurance or agility (but not both).\nEvery horse that has strength excels at galloping.\nIf Cutie loves running, then she either has strength or agility (but not both).\nCutie either loves running or enjoys flowers (or both).",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Cutie has a good temperament.\n- Cutie is spirited.\n- Cutie does not have agility.\n- Cutie does not have strength.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From added facts Strength = false and Agility = false, the rule \u201cIf Cutie loves running, then she either has strength or agility (but not both)\u201d makes LovesRunning impossible (LovesRunning would require exactly one of Strength/Agility). Therefore \u00acLovesRunning. Given the axiom LovesRunning \u2228 EnjoysFlowers, with \u00acLovesRunning we must have EnjoysFlowers. Thus the context entails that Cutie enjoys flowers, so it cannot entail that she does not enjoy flowers (\u00acEnjoysFlowers).",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 235
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Cutie either loves running or enjoys flowers, or both.\n\nAdded facts:\n- Cutie does not love running and Cutie does not enjoy flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added facts explicitly assert 'Cutie does not enjoy flowers.' Therefore the conclusion is directly entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 422
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Cutie does not love running and Cutie does not enjoy flowers.\n\nAdded rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acGentle and (GoodTemperament \u2228 Gentle) we get GoodTemperament. From GoodTemperament and (RespondsWell \u2228 Spirited) together with \u00acRespondsWell we get Spirited. Given Endurance and the new rule (Spirited \u2227 Endurance \u2192 EnjoysFlowers) we derive EnjoysFlowers. Also from Strength \u2192 ExcelsGalloping and \u00acExcelsGalloping we get \u00acStrength, and Spirited \u2192 (Endurance XOR Agility) with Endurance true gives \u00acAgility. Thus EnjoysFlowers is entailed, so the context does not entail \u00acEnjoysFlowers.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 525
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers.\n\nAdded rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie does not enjoy flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From \u00acGentle and (GoodTemperament \u2228 Gentle) we get GoodTemperament. GoodTemperament and \u00acRespondsWell yield Spirited. Endurance is given. The new rule (Spirited \u2227 Endurance \u2192 \u00acEnjoysFlowers) therefore gives \u00acEnjoysFlowers. (For completeness: Spirited and Endurance and Spirited\u2192(Endurance XOR Agility) give \u00acAgility; \u00acExcelsGalloping and Strength\u2192ExcelsGalloping give \u00acStrength; then LovesRunning\u2192(Strength XOR Agility) together with \u00acStrength\u2227\u00acAgility give \u00acLovesRunning, and with LovesRunning \u2228 EnjoysFlowers that yields EnjoysFlowers. Thus the knowledge base is inconsistent and entails both EnjoysFlowers and \u00acEnjoysFlowers, but in particular \u00acEnjoysFlowers is derivable.)",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 749
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie does not enjoy flowers.\n\nAdded rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acGentle and (GoodTemperament \u2228 Gentle) we get GoodTemperament. GoodTemperament together with \u00acRespondsWell and the rule GoodTemperament \u2192 (RespondsWell \u2228 Spirited) gives Spirited. Endurance is given, and the rule (Spirited \u2227 Endurance) \u2192 EnjoysFlowers then yields EnjoysFlowers. There is no rule or fact deriving \u00acEnjoysFlowers in the current context. Hence the knowledge base entails EnjoysFlowers, so it does not entail \u00acEnjoysFlowers.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1023
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers.\n\nAdded rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie does not enjoy flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The KB contains the rule (Spirited \u2227 Endurance) \u2192 \u00acEnjoysFlowers and the facts Spirited and Endurance. Therefore \u00acEnjoysFlowers is derivable. There is no current rule or fact deriving EnjoysFlowers (the original LovesRunning\u2228EnjoysFlowers was removed), so the context entails that Cutie does not enjoy flowers.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1233
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie does not enjoy flowers.\n\nAdded rules:\n- If Cutie does not love running, then she enjoys flowers.\n\nAdded facts:\n- Cutie does not love running.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acGentle and (GoodTemperament \u2228 Gentle) we get GoodTemperament. GoodTemperament and \u00acRespondsWell give Spirited. Endurance is a fact, so Spirited \u2227 Endurance holds. The new fact \u00acLovesRunning and the added rule (\u00acLovesRunning \u2192 EnjoysFlowers) yield EnjoysFlowers. Also LovesRunning \u2228 EnjoysFlowers with \u00acLovesRunning yields EnjoysFlowers. There is no rule or fact deriving \u00acEnjoysFlowers in the current context, so \u00acEnjoysFlowers is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1399
+    }
+  ]
+}

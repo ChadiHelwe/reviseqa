@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "google/gemini-2.5-pro",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 115,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Brandon studies wildlife.\nBrandon does not advocate for protection.\nBrandon does not lead projects.\nBrandon does not support eco-causes.\nIf Brandon studies wildlife, then he either advocates for protection or is a dedicated researcher (or both).\nIf Brandon leads projects, then he will publish papers.\nIf Brandon is a dedicated researcher, then he protects habitats and publishes papers.\nIf Brandon either protects habitats or is a wildlife advocate (but not both), then he supports eco-causes.\nBrandon is either a wildlife advocate or an environmentalist, but not both.\nBrandon is either a conservationist or an environmentalist, but not both.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Brandon does not publish papers, then he does not lead projects.\n\nAdded facts:\n- Brandon is a dedicated researcher.\n- Brandon publishes papers.\n- Brandon protects habitats.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. The context includes the rule: \"If Brandon either protects habitats or is a wildlife advocate (but not both), then he supports eco-causes.\" This translates to `(protects_habitats XOR wildlife_advocate) -> supports_eco_causes`.\n2. The original context states \"Brandon does not support eco-causes\", so `supports_eco_causes` is False.\n3. Applying modus tollens to the rule in step 1, since the conclusion (`supports_eco_causes`) is False, the premise (`protects_habitats XOR wildlife_advocate`) must also be False.\n4. An XOR statement is False only if both parts have the same truth value (i.e., they are equivalent).\n5. The new context adds the fact that \"Brandon protects habitats\", so `protects_habitats` is True.\n6. Because `protects_habitats` is True and it must be equivalent to `wildlife_advocate` (from step 4), we can deduce that `wildlife_advocate` is also True.\n7. The context includes the rule: \"Brandon is either a wildlife advocate or an environmentalist, but not both.\" This translates to `wildlife_advocate XOR environmentalist`.\n8. We deduced `wildlife_advocate` is True. For the XOR statement `True XOR environmentalist` to be True, `environmentalist` must be False.\n9. The context includes the rule: \"Brandon is either a conservationist or an environmentalist, but not both.\" This translates to `conservationist XOR environmentalist`.\n10. We deduced `environmentalist` is False. For the XOR statement `conservationist XOR False` to be True, `conservationist` must be True.\n11. Therefore, the conclusion 'Brandon is a conservationist' is entailed by the context.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 227
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Brandon leads projects, then he will publish papers.\n\nAdded rules:\n- If Brandon studies wildlife, then he is a dedicated researcher.\n- Either Brandon does not lead projects, or he publishes papers.\n\nAdded facts:\n- Brandon is not an environmentalist.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. The context includes the rule: \"Brandon is either a conservationist or an environmentalist, but not both.\" This can be represented as the logical statement `conservationist XOR environmentalist` which must be True.\n2. The context adds the fact: \"Brandon is not an environmentalist.\" This means `environmentalist` is False.\n3. Substituting this fact into the rule from step 1, we get: `conservationist XOR False`.\n4. For this XOR (exclusive OR) statement to be True, one operand must be True and the other must be False.\n5. Since we know `environmentalist` is False, `conservationist` must be True for the entire statement to hold.\n6. Therefore, the context directly entails the conclusion 'Brandon is a conservationist.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 711
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Brandon is not an environmentalist.\n\nRemoved rules:\n- If Brandon either protects habitats or is a wildlife advocate (but not both), then he supports eco-causes.\n\nAdded facts:\n- Brandon is an environmentalist.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. The context includes the rule: \"Brandon is either a conservationist or an environmentalist, but not both.\" This can be represented as the logical statement `conservationist XOR environmentalist`, which must be True.\n2. A new fact was added to the context: \"Brandon is an environmentalist.\" This means the `environmentalist` part of the XOR statement is True.\n3. Substituting the fact into the rule, we get the expression `conservationist XOR True`.\n4. For an Exclusive OR (XOR) statement to be true, its two operands must have different truth values (one must be True, the other False).\n5. Since the `environmentalist` operand is True, the `conservationist` operand must be False for the entire XOR statement to hold true.\n6. Therefore, the context entails that Brandon is *not* a conservationist. The conclusion 'Brandon is a conservationist.' is the opposite of what the context entails.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 990
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Brandon is an environmentalist.\n\nAdded rules:\n- If Brandon protects habitats, then he is a wildlife advocate.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. The context includes the fact that \"Brandon studies wildlife\" and the rule \"If Brandon studies wildlife, then he is a dedicated researcher.\" From these, we can deduce that Brandon is a dedicated researcher.\n2. The context includes the rule: \"If Brandon is a dedicated researcher, then he protects habitats and publishes papers.\" Since we know he is a dedicated researcher, we can deduce that Brandon protects habitats.\n3. A new rule was added: \"If Brandon protects habitats, then he is a wildlife advocate.\" Since we know he protects habitats, we can deduce that Brandon is a wildlife advocate.\n4. The context includes the rule: \"Brandon is either a wildlife advocate or an environmentalist, but not both.\" This is a logical XOR. Since we have deduced that Brandon is a wildlife advocate (True), for the XOR statement to be true, Brandon must not be an environmentalist (False).\n5. The context includes the rule: \"Brandon is either a conservationist or an environmentalist, but not both.\" This is another logical XOR. Since we have deduced that Brandon is not an environmentalist (False), for this XOR statement to be true, Brandon must be a conservationist (True).\n6. Therefore, the context entails the conclusion 'Brandon is a conservationist.'",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1294
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Brandon protects habitats.\n\nRemoved rules:\n- If Brandon is a dedicated researcher, then he protects habitats and publishes papers.\n- If Brandon protects habitats, then he is a wildlife advocate.\n\nAdded rules:\n- If Brandon does not protect habitats, then he is not a wildlife advocate.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "1. The conclusion 'Brandon is a conservationist' depends on the rule: \"Brandon is either a conservationist or an environmentalist, but not both\" (`conservationist XOR environmentalist`). To determine if Brandon is a conservationist, we must first determine if he is an environmentalist.\n2. The status of 'environmentalist' depends on the rule: \"Brandon is either a wildlife advocate or an environmentalist, but not both\" (`wildlife_advocate XOR environmentalist`). To determine his status as an environmentalist, we first need to know if he is a wildlife advocate.\n3. The primary rule to determine if he is a wildlife advocate is the newly added rule: \"If Brandon does not protect habitats, then he is not a wildlife advocate\" (`NOT protects_habitats -> NOT wildlife_advocate`). The contrapositive of this is `wildlife_advocate -> protects_habitats`.\n4. However, the rule that previously allowed us to conclude `protects_habitats` (from being a `dedicated_researcher`) has been removed. There are no remaining facts or rules in the context that force `protects_habitats` to be either True or False.\n5. Because we cannot determine the status of `protects_habitats`, we cannot definitively determine the status of `wildlife_advocate`, which in turn means we cannot determine the status of `environmentalist`, and therefore we cannot determine the status of `conservationist`.\n6. We can show two possible consistent scenarios:\n   - **Scenario A (Conclusion is True):** Assume `wildlife_advocate` is True. This would imply `protects_habitats` is True (by the contrapositive rule). This would also imply `environmentalist` is False (from the XOR rule). This would imply `conservationist` is True (from the other XOR rule). This scenario is consistent with all known facts and rules.\n   - **Scenario B (Conclusion is False):** Assume `wildlife_advocate` is False. This is consistent with the rule `NOT protects_habitats -> NOT wildlife_advocate` whether `protects_habitats` is True or False. If `wildlife_advocate` is False, then `environmentalist` must be True. If `environmentalist` is True, then `conservationist` must be False. This scenario is also consistent with all known facts and rules.\n7. Since we can construct consistent scenarios where the conclusion is both True and False, the context does not entail the conclusion.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1642
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Brandon does not publish papers, then he does not lead projects.\n\nAdded facts:\n- Brandon does not protect habitats.\n- Brandon is an environmentalist.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. The context includes the rule: \"Brandon is either a conservationist or an environmentalist, but not both.\" This can be represented as the logical statement `conservationist XOR environmentalist`, which must be True.\n2. A new fact was added to the context: \"Brandon is an environmentalist.\" This means the `environmentalist` part of the XOR statement is True.\n3. Substituting the fact into the rule, we get the expression `conservationist XOR True`.\n4. For an Exclusive OR (XOR) statement to be true, its two operands must have different truth values (one must be True, the other False).\n5. Since the `environmentalist` operand is True, the `conservationist` operand must be False for the entire XOR statement to hold true.\n6. Therefore, the context entails that Brandon is not a conservationist.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2287
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Brandon does not protect habitats.\n- Brandon is an environmentalist.\n\nAdded facts:\n- Brandon is a wildlife advocate.",
+      "question": "Does the context entail the conclusion 'Brandon is a conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. The context is updated with the new fact: \"Brandon is a wildlife advocate.\" This means the statement `wildlife_advocate` is True.\n2. The context includes the rule: \"Brandon is either a wildlife advocate or an environmentalist, but not both.\" This can be represented as `wildlife_advocate XOR environmentalist`.\n3. Since we now know `wildlife_advocate` is True, for the XOR statement (`True XOR environmentalist`) to be true, the statement `environmentalist` must be False.\n4. The context also includes the rule: \"Brandon is either a conservationist or an environmentalist, but not both.\" This can be represented as `conservationist XOR environmentalist`.\n5. Since we deduced in the previous step that `environmentalist` is False, for this XOR statement (`conservationist XOR False`) to be true, the statement `conservationist` must be True.\n6. Therefore, the context entails the conclusion 'Brandon is a conservationist.'",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2577
+    }
+  ]
+}

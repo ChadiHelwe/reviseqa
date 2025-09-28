@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 61,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Fisher faces challenges.\nFisher does not gain recognition.\nFisher does not think creatively.\nFisher leads innovative projects.\nFisher has a passion for science.\nFisher receives accolades.\nIf Fisher achieves success and faces challenges, then he gains recognition.\nIf Fisher has strong intuition or thinks creatively, then he can achieve success.\nAnyone who leads innovative projects has expertise.\nFisher is either dedicated to his work or has strong intuition, but not both, in order to achieve success.\nFisher either has a passion for science or advances medical knowledge, but not both.\nFisher either publishes research or receives accolades, but not both.\nIf Fisher collaborates with others, then he has expertise and publishes research.\nIf Fisher either collaborates with others or makes breakthroughs (but not both), then he advances medical knowledge.\nIf Fisher has either a brilliant mind or is dedicated to his work (but not both), then he makes breakthroughs.",
+      "question": "Does the context entail the conclusion 'Fisher has a brilliant mind.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If either Fisher has a brilliant mind or Fisher is dedicated to his work, but not both, then he makes breakthroughs.\n\nAdded facts:\n- Either Fisher has a brilliant mind or Fisher is dedicated to his work, but not both.",
+      "question": "Does the context entail the conclusion 'Fisher has a brilliant mind.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "There is a model satisfying all facts/rules with Fisher not having a brilliant mind. For example: brilliantMind = false, dedicated = true (satisfies the added exclusive-or), strongIntuition = false (consistent with dedicated xor strongIntuition), thinksCreatively = false, achievesSuccess = false, facesChallenges = true, gainRecognition = false, receivesAccolades = true, publishesResearch = false (XOR with accolades), leadsInnov = true, expertise = true, collaborates = false, makesBreakthroughs = false (cannot be true because that would force advancesMedicalKnowledge true, contradicting passionForScience xor advancesMedicalKnowledge with passion true), passionScience = true, advancesMedicalKnowledge = false. All rules/XORs are satisfied and no contradiction arises, so the conclusion 'Fisher has a brilliant mind.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 295
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Fisher does not gain recognition, then either Fisher does not achieve success or Fisher does not face challenges.\n- If Fisher does not achieve success, then Fisher does not have strong intuition and Fisher does not think creatively.",
+      "question": "Does the context entail the conclusion 'Fisher has a brilliant mind.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts: Fisher does not gain recognition and Fisher faces challenges. The new rule (if not gainRecognition then not achievesSuccess or not facesChallenges) together with facesChallenges = true forces not achievesSuccess. The second new rule (if not achievesSuccess then not strongIntuition and not thinksCreatively) yields not strongIntuition (thinksCreatively was already false). The XOR 'dedicated xor strongIntuition' with strongIntuition = false thus gives dedicated = true. The added XOR 'brilliantMind xor dedicated' with dedicated = true therefore yields brilliantMind = false. Hence the context entails that Fisher does NOT have a brilliant mind, so it does not entail 'Fisher has a brilliant mind.'",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 564
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Fisher does not achieve success, then Fisher does not have strong intuition and Fisher does not think creatively.\n\nAdded rules:\n- If Fisher has expertise, then Fisher has strong intuition.",
+      "question": "Does the context entail the conclusion 'Fisher has a brilliant mind.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Leads innovative projects \u21d2 expertise (fact). New rule expertise \u21d2 strong intuition, so strongIntuition = true. The exclusive-or (dedicated xor strongIntuition) then forces dedicated = false. The exclusive-or (brilliant xor dedicated) therefore forces brilliant = true. (Note: strongIntuition \u21d2 achievesSuccess and with facesChallenges = true this yields gainRecognition, contradicting the given \u00acgainRecognition, so the theory is inconsistent; under classical logic an inconsistent theory entails every formula.)",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 802
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Fisher collaborates with others, then Fisher has expertise.\n- If Fisher collaborates with others, then Fisher publishes research.\n\nAdded facts:\n- Either Fisher does not have strong intuition or Fisher achieves success.\n- Either Fisher is dedicated to his work or Fisher has strong intuition.\n- Either Fisher is not dedicated to his work or Fisher does not have strong intuition.\n- Either Fisher has a brilliant mind or Fisher is dedicated to his work.\n- Either Fisher does not have a brilliant mind or Fisher is not dedicated to his work.\n- Either Fisher has a passion for science or Fisher advances medical knowledge.\n- Either Fisher does not have a passion for science or Fisher does not advance medical knowledge.\n- Either Fisher publishes research or Fisher receives accolades.\n- Either Fisher does not publish research or Fisher does not receive accolades.",
+      "question": "Does the context entail the conclusion 'Fisher has a brilliant mind.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From leads innovative projects (given) we get expertise (rule). From expertise and the added rule we get strong intuition. The exclusive-or between dedicated and strong intuition forces dedicated = false. The exclusive-or between brilliant mind and dedicated then forces brilliant mind = true. Thus the context entails that Fisher has a brilliant mind. (There is also a resulting contradiction with the recognition facts, but the brilliant-mind conclusion follows regardless.)",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 986
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Either Fisher does not have strong intuition or Fisher achieves success.\n\nAdded facts:\n- Fisher does not achieve success.\n- Fisher has a brilliant mind if and only if Fisher has strong intuition.",
+      "question": "Does the context entail the conclusion 'Fisher has a brilliant mind.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From leads innovative projects we get expertise (original rule). The added rule expertise \u21d2 strongIntuition gives strongIntuition. The new biconditional (brilliantMind \u21d4 strongIntuition) then yields brilliantMind. (There is also a contradiction since strongIntuition \u21d2 achievesSuccess by an original rule while the context asserts \u00acachievesSuccess, but the brilliant-mind conclusion follows directly from the chain expertise \u21d2 strongIntuition \u21d4 brilliantMind.)",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1280
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Fisher has expertise, then Fisher has strong intuition.\n\nAdded rules:\n- If Fisher has expertise, then Fisher does not have strong intuition.",
+      "question": "Does the context entail the conclusion 'Fisher has a brilliant mind.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From leads innovative projects \u21d2 expertise, and the added rule expertise \u21d2 \u00acstrongIntuition, we get strongIntuition = false. The xor dedicated xor strongIntuition (given) then yields dedicated = true. From publishesResearch xor receivesAccolades with receivesAccolades true we get publishesResearch = false; hence collaborates \u21d2 publishesResearch forces collaborates = false. The xor (collaborates xor makesBreakthroughs) must be false because its consequence (advances medical knowledge) is false (passion for science is true, so advancesMedicalKnowledge = false), so with collaborates = false we get makesBreakthroughs = false. But (brilliant xor dedicated) \u21d2 makesBreakthroughs and dedicated = true would force makesBreakthroughs true if brilliant were false, contradicting makesBreakthroughs = false. Therefore brilliant must be true. Thus the context entails that Fisher has a brilliant mind.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1457
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Fisher has expertise, then Fisher does not have strong intuition.\n\nAdded rules:\n- If Fisher has expertise, then Fisher is not dedicated to his work.",
+      "question": "Does the context entail the conclusion 'Fisher has a brilliant mind.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From leads innovative projects we get expertise. The added rule expertise \u21d2 \u00acdedicated therefore gives \u00acdedicated. The context contains both (brilliant \u2228 dedicated) and (\u00acbrilliant \u2228 \u00acdedicated) (i.e. brilliant xor dedicated), so with dedicated false the first clause forces brilliant true. Hence the context entails that Fisher has a brilliant mind.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1717
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-nano",
+    "task_path": "explicit_no_correction",
+    "chain_index": 20,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Cutie is not gentle.\nCutie does not respond well to training.\nCutie has endurance.\nCutie does not excel at galloping.\nCutie either has a good temperament or is gentle, but it's not necessarily both.\nIf Cutie has a good temperament, then she either responds well to training or is spirited (or both).\nIf Cutie is spirited, then she either has endurance or agility (but not both).\nEvery horse that has strength excels at galloping.\nIf Cutie loves running, then she either has strength or agility (but not both).\nCutie either loves running or enjoys flowers (or both).",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Cutie is not gentle.. Cutie either has a good temperament or is gentle, but it's not necessarily both.. Therefore, Cutie has a good temperament.. Cutie has a good temperament. Cutie does not respond well to training.. If Cutie has a good temperament, then she either responds well to training or is spirited (or both).. Therefore, Cutie is spirited.. Cutie is spirited. Cutie has endurance.. If Cutie is spirited, then she either has endurance or agility (but not both).. Therefore, Cutie does not have agility.. Cutie does not excel at galloping.. Every horse that has strength excels at galloping.. Therefore, Cutie does not have strength.. Cutie does not have strength. Cutie does not have agility.. If Cutie loves running, then she either has strength or agility (but not both).. Therefore, Cutie does not love running.. Cutie does not love running.. Cutie either loves running or enjoys flowers (or both).. Therefore, Cutie does not enjoy flowers..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Cutie has a good temperament.\n- Cutie is spirited.\n- Cutie does not have agility.\n- Cutie does not have strength.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the added facts we have GT (good temperament), S (spirited), not A (not agility), not Str (not strength). From S, the rule S -> End XOR Agil implies End or Agil, but since not Agil holds and End is known from the original context, End is true and Agil is false. The rule Str -> Gallop means contrapositive of not Gallop (given in base) yields not Str, consistent with not Str. With Str false and Agil false, the statement Str XOR Agil is false; by the contrapositive of LoveRun -> (Str XOR Agil), not (Str XOR Agil) implies not LoveRun, so LoveRun is false. The disjunction LoveRun \u2228 EnjoyFlowers then yields EnjoyFlowers must be true. Therefore, the conclusion \u2018Cutie does not enjoy flowers\u2019 is not entailed; in fact, Cutie enjoys flowers. So the correct answer is False.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 450
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Cutie either loves running or enjoys flowers, or both.\n\nAdded facts:\n- Cutie does not love running and Cutie does not enjoy flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added facts include Cutie does not enjoy flowers. Therefore the conclusion 'Cutie does not enjoy flowers' is directly entailed. There is no remaining rule that would force enjoyment of flowers, since the disjunction that allowed either loves running or enjoys flowers was removed. Thus the statement is true.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 730
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Cutie does not love running and Cutie does not enjoy flowers.\n\nAdded rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The context only states that the previously asserted facts 'Cutie does not love running' and 'Cutie does not enjoy flowers' were removed, and it adds a rule: If Cutie is spirited and has endurance, then Cutie enjoys flowers. There is no information given that Cutie is spirited or has endurance, nor any rule that would derive 'not enjoy flowers' from other facts. Therefore, the conclusion 'Cutie does not enjoy flowers' is not entailed, and it is not contradicted either based on the provided context. Hence the status is Uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 873
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers.\n\nAdded rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie does not enjoy flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The added rule requires Cutie to be spirited and have endurance to derive not enjoy flowers. The context provides no facts about Cutie being spirited or having endurance, so the rule does not trigger. There is no other rule in the context deriving either not enjoy flowers or enjoy flowers. Therefore, the conclusion is not entailed and not contradicted: Uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1078
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie does not enjoy flowers.\n\nAdded rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The only relevant rule now is: if Cutie is spirited and has endurance, then Cutie enjoys flowers. Since there are no facts about Cutie being spirited or enduring, we cannot derive either 'enjoys flowers' or 'not enjoy flowers'. Therefore, the conclusion 'Cutie does not enjoy flowers' is not entailed (and not contradicted).",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1244
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers.\n\nAdded rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie does not enjoy flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The context includes only a rule that would derive not enjoy flowers if Cutie is spirited and has endurance. There are no facts asserting Cutie is spirited or has endurance, and no other rules deriving either enjoys flowers or not enjoys flowers. Therefore, the conclusion is not entailed and not contradicted: Uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1412
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie does not enjoy flowers.\n\nAdded rules:\n- If Cutie does not love running, then she enjoys flowers.\n\nAdded facts:\n- Cutie does not love running.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From added fact Cutie does not love running and the rule 'If Cutie does not love running, then she enjoys flowers', we derive Cutie enjoys flowers. The only rule that could yield not enjoys flowers requires Cutie to be spirited and have endurance, which are not given. Therefore 'Cutie does not enjoy flowers' is not entailed; in fact its negation (enjoys flowers) is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1569
+    }
+  ]
+}

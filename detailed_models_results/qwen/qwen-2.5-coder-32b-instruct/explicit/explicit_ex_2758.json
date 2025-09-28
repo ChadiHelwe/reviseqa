@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+    "task_path": "explicit",
+    "chain_index": 150,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Lilian has financial expertise.\nLilian does not achieve economic success.\nLilian speaks multiple languages.\nLilian does not work cross-culturally.\nLilian faces significant challenges.\nIf Lilian makes informed decisions and has financial expertise, then she can achieve economic success.\nLilian makes informed decisions or has strategic vision.\nIf Lilian speaks multiple languages, then she either works cross-culturally or is globally minded (or both).\nIf Lilian has strategic vision, then she will either succeed professionally or face significant challenges (but not both).\nIf Lilian thinks broadly, then she will succeed professionally.\nLilian is either narrowly focused or thinks broadly.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Lilian has financial expertise. Lilian does not achieve economic success.. If Lilian makes informed decisions and has financial expertise, then she can achieve economic success.. Therefore, Lilian does not make informed decisions.. Lilian does not make informed decisions.. Lilian makes informed decisions or has strategic vision.. Therefore, Lilian has strategic vision.. Lilian speaks multiple languages. Lilian does not work cross-culturally.. If Lilian speaks multiple languages, then she either works cross-culturally or is globally minded (or both).. Therefore, Lilian is globally minded.. Lilian has strategic vision. Lilian faces significant challenges.. If Lilian has strategic vision, then she will either succeed professionally or face significant challenges (but not both).. Therefore, Lilian does not succeed professionally.. Lilian does not succeed professionally.. If Lilian thinks broadly, then she will succeed professionally.. Therefore, Lilian does not think broadly.. Lilian does not think broadly.. Lilian is either narrowly focused or thinks broadly.. Therefore, Lilian is narrowly focused.. Lilian is globally minded. Lilian is narrowly focused.. . Therefore, Lilian is either globally minded or narrowly focused, but not both..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Lilian does not work cross-culturally.\n\nAdded rules:\n- If Lilian works cross-culturally, then she is not globally minded.\n\nAdded facts:\n- Lilian works cross-culturally.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "A",
+      "correct_answer": "True",
+      "reasoning": "Lilian works cross-culturally. The added rule states: If Lilian works cross-culturally, then she is not globally minded. Thus, she is not globally minded (\u00acG). From the original context, Lilian is narrowly focused (N) because she fails to think broadly (as shown by \u00acsuccess \u2192 \u00acthink broadly). The conclusion is 'G XOR N'. Since G is false and N is true, G XOR N is true. Therefore, the conclusion is valid.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 483
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Lilian has strategic vision, then she is narrowly focused.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "A",
+      "correct_answer": "False",
+      "reasoning": "Lilian works cross-culturally (C) \u2192 \u00acG (added rule). Previously, her strategic vision (SV) was deduced (since she did not make informed decisions and the disjunction 'I or SV' requires SV). New rule: SV \u2192 N. Since SV is true, N is true. Conclusion 'G XOR N' is satisfied as \u00acG and N hold. Therefore, the conclusion is TRUE.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1542
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Lilian does not achieve economic success.\n\nAdded rules:\n- If Lilian achieves economic success, then she is globally minded.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "C",
+      "correct_answer": "True",
+      "reasoning": "The added rule 'If Lilian achieves economic success (E), then she is globally minded (G)' (E \u2192 G) introduces two possibilities: (1) If Lilian achieves E, then G is true. (2) If she does not achieve E, G could be true or false (since E \u2192 G is a one-way implication). \n\nFrom earlier context: \n- Lilian makes informed decisions (I) or has strategic vision (SV). \n- If I \u2227 F \u2192 E (F = financial expertise, which she has). \n- From prior deductions, N is necessarily true (since she faces challenges and SV \u2192 \u00acprofessional success, leading to \u00acthink broadly \u2192 N). \n\nThus:\n- If I is true \u2192 E is true \u2192 G is true. G XOR N = G \u2227 N \u2192 both true \u2192 XOR **false**.\n- If I is false (SV true): E is not determined (could be true or false). \n   - If E is true \u2192 G is true \u2192 G XOR N is false (both true).\n   - If E is false \u2192 G is **not** entailed; G could still be true (e.g., independently of E). If G is false \u2192 G XOR N is true. Since G's status is **uncertain** here, the conclusion is **not guaranteed**.\n\nTherefore, the context **does not entail** the conclusion because there exists a valid scenario (I false, E false, G false) where G XOR N is true, and others (I true, E true) where it is false. The correct answer is **Uncertain**.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2610
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Lilian has strategic vision, then she does not succeed professionally.\n- If Lilian does not succeed professionally, then she does not think broadly.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "A",
+      "correct_answer": "True",
+      "reasoning": "1. **Lilian works cross-culturally (C)** is a given fact from prior context, leading to **\u00acG** (C \u2192 \u00acG). 2. **I \u2228 SV** (Lilian makes informed decisions or has strategic vision). If **I is true**, then **E** (from I \u2227 F \u2192 E), which implies **G** (E \u2192 G). This contradicts **\u00acG** from C. Thus, **I must be false**, and **SV is true**. 3. **SV \u2192 \u00acP** (new rule), so \u00acP is true. 4. **\u00acP \u2192 \u00acT** (new rule), so T is false. 5. From **T \u2228 N** (core disjunction), T is false \u2192 **N is true**. 6. Since **G is false** (from C) and **N is true**, the conclusion **G XOR N** (G nor N) is **True**.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 5729
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Lilian has strategic vision, then she does not think broadly.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "A",
+      "correct_answer": "True",
+      "reasoning": "1. **Lilian works cross-culturally (C)** from prior context, so **\u00acG** (C \u2192 \u00acG). 2. **I \u2228 SV** is true. If I is true, E \u2192 G (from prior rule), but **G is false** due to C, creating a contradiction. Thus, **I is false** \u2192 **SV is true**. 3. New rule: SV \u2192 \u00acT, so **T is false**. 4. Core disjunction: T \u2228 N \u2192 **N is true** (since T is false). 5. Conclusion: G XOR N = (\u00acG \u2227 N) \u2192 **True**.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 7545
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Lilian makes informed decisions and has financial expertise, then she can achieve economic success.\n\nAdded rules:\n- Lilian thinks broadly if and only if she succeeds professionally.\n\nAdded facts:\n- Lilian does not make informed decisions.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "A",
+      "correct_answer": "True",
+      "reasoning": "1. **\u00acI** (given). 2. **I \u2228 SV** (disjunction) \u2192 **SV is true**. 3. **SV \u2192 \u00acT** (prior rule) \u2192 **T is false**. 4. **T \u2194 P** (new rule) \u2192 **P is false**. 5. **T \u2228 N** \u2192 **N is true** (since T is false). 6. **C \u2192 \u00acG** (prior rule) \u2192 **G is false**. 7. Conclusion 'G XOR N' = (\u00acG \u2227 N) = (**True**) since G is false and N is true.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 8328
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Lilian works cross-culturally.\n\nAdded facts:\n- Lilian does not work cross-culturally.",
+      "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
+      "prediction": "C",
+      "correct_answer": "False",
+      "reasoning": "1. **\u00acI** (given). 2. **I \u2228 SV** \u2192 **SV is true**. 3. **SV \u2192 \u00acT** \u2192 **T is false**. 4. **T \u2194 P** \u2192 **P is false**. 5. **T \u2228 N** \u2192 **N is true** (since T is false). 6. **C \u2192 \u00acG** is irrelevant now that **\u00acC** is true. G has no determined status (could be true or false). 7. Conclusion: 'G XOR N' depends on G. Since G is **undetermined**, the conclusion is **uncertain**.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 9734
+    }
+  ]
+}

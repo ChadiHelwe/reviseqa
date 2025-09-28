@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 188,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Eugene explores new things.\nEugene is imaginative.\nEugene builds models.\nEugene does not develop practical skills.\nEugene is resourceful.\nAnyone who explores new things is curious.\nIf Eugene is curious, then he is either imaginative or develops new ideas, but not both.\nAnyone who is innovative or thinks creatively can develop new ideas.\nIf Eugene either builds models or enjoys experimenting (but not both), then he is innovative.\nAll people who enjoy experimenting value creativity and think outside the box.\nIf Eugene thinks outside the box, then he can either create innovative solutions or develop practical skills, but not both.\nIf Eugene is resourceful, then he can either create innovative solutions or earn community recognition, but not both.",
+      "question": "Does the context entail the conclusion 'Eugene does not earn community recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Eugene explores new things.. Anyone who explores new things is curious.. Therefore, Eugene is curious.. Eugene is curious. Eugene is imaginative.. If Eugene is curious, then he is either imaginative or develops new ideas, but not both.. Therefore, Eugene cannot develop new ideas.. Eugene cannot develop new ideas.. Anyone who is innovative or thinks creatively can develop new ideas.. Therefore, Eugene is not innovative.. Eugene builds models. Eugene is not innovative.. If Eugene either builds models or enjoys experimenting (but not both), then he is innovative.. Therefore, Eugene enjoys experimenting.. Eugene enjoys experimenting.. All people who enjoy experimenting value creativity and think outside the box.. Therefore, Eugene thinks outside the box.. Eugene thinks outside the box. Eugene does not develop practical skills.. If Eugene thinks outside the box, then he can either create innovative solutions or develop practical skills, but not both.. Therefore, Eugene creates innovative solutions.. Eugene is resourceful. Eugene creates innovative solutions.. If Eugene is resourceful, then he can either create innovative solutions or earn community recognition, but not both.. Therefore, Eugene does not earn community recognition..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Eugene is not innovative, then either Eugene builds models and enjoys experimenting, or Eugene does not build models and does not enjoy experimenting.\n- If either Eugene develops practical skills and creates innovative solutions, or Eugene does not develop practical skills and does not create innovative solutions, then Eugene does not think outside the box.\n- If either Eugene creates innovative solutions and earns community recognition, or Eugene does not create innovative solutions and does not earn community recognition, then Eugene is not resourceful.",
+      "question": "Does the context entail the conclusion 'Eugene does not earn community recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From 'Eugene explores new things' and the rule, Eugene is curious. The curiosity rule gives an exclusive-or between imaginative and develops_new_ideas; since Eugene is given imaginative, he cannot develop new ideas (\u00acdevelops_new_ideas). The rule (innovative \u2228 thinks_creatively) -> develops_new_ideas and the fact that develops_new_ideas is false entail \u00acinnovative and \u00acthinks_creatively. The added rule for \u00acinnovative combined with the fact that Eugene builds models yields that Eugene enjoys experimenting. From enjoys_experimenting we get thinks_outside_box. That rule gives an exclusive-or between creates_innovative_solutions and develops_practical_skills; since Eugene does not develop practical skills, he must create innovative solutions. From resourceful and the resourceful-rule (exclusive-or between creating innovative solutions and earning community recognition), and given he creates innovative solutions, it follows he does not earn community recognition. None of the added rules force a contradiction to this chain, so \u00ac(Eugene earns community recognition) is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 478
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Eugene is curious, then he is either imaginative or develops new ideas, but not both.\n- If Eugene either builds models or enjoys experimenting (but not both), then he is innovative.\n- All people who enjoy experimenting value creativity and think outside the box.\n- If Eugene thinks outside the box, then he can either create innovative solutions or develop practical skills, but not both.\n\nAdded rules:\n- For all x, if x thinks outside the box, then x either develops practical skills or creates innovative solutions, but not both.\n- For all x, if x does not think outside the box, then if x does not develop practical skills then x does not create innovative solutions.\n- If Eugene is curious, then he is either imaginative or develops new ideas.\n- If Eugene either builds models or enjoys experimenting, then he is innovative.\n- Everyone who enjoys experimenting values creativity.\n\nAdded facts:\n- Eugene does not enjoy experimenting.\n- Eugene does not think outside the box.",
+      "question": "Does the context entail the conclusion 'Eugene does not earn community recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From 'Eugene explores new things' and explores->curious we get curious. The rule curious->(imaginative \u2228 develops_new_ideas) is satisfied (Eugene is imaginative) but does not prevent developing new ideas. From (builds_models \u2228 enjoys_experimenting)->innovative and Eugene builds models, infer innovative. From (innovative \u2228 thinks_creatively)->develops_new_ideas infer Eugene develops new ideas. The added rule \u00acthinks_outside_box \u2227 \u00acdevelops_practical_skills -> \u00accreates_innovative_solutions applies (both hold), so infer \u00accreates_innovative_solutions. From resourceful -> xor(creates_innovative_solutions, earns_community_recognition) and \u00accreates_innovative_solutions we must have earns_community_recognition. Thus the context entails that Eugene does earn community recognition, so the conclusion 'Eugene does not earn community recognition.' is not entailed (it is false).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 841
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Eugene is not innovative, then either Eugene builds models and enjoys experimenting, or Eugene does not build models and does not enjoy experimenting.\n- If either Eugene develops practical skills and creates innovative solutions, or Eugene does not develop practical skills and does not create innovative solutions, then Eugene does not think outside the box.\n- If either Eugene creates innovative solutions and earns community recognition, or Eugene does not create innovative solutions and does not earn community recognition, then Eugene is not resourceful.\n- For all x, if x does not think outside the box, then if x does not develop practical skills then x does not create innovative solutions.\n\nAdded rules:\n- For all x, if x is not curious, then x does not explore new things.",
+      "question": "Does the context entail the conclusion 'Eugene does not earn community recognition.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From explores_new_things -> curious and Eugene explores new things, infer curious. The rule curious -> (imaginative \u2228 develops_new_ideas) is non-exclusive and Eugene is already imaginative, so it's satisfied (develops_new_ideas not excluded). From (builds_models \u2228 enjoys_experimenting) -> innovative and Eugene builds models, infer innovative. From (innovative \u2228 thinks_creatively) -> develops_new_ideas and innovative, infer develops_new_ideas. We have facts Eugene does not enjoy experimenting and Eugene does not think outside the box, so rules that require thinks_outside_box or enjoys_experimenting do not apply. From resourceful -> XOR(create_innovative_solutions, earn_community_recognition) and Eugene resourceful, exactly one of create_innovative_solutions or earn_community_recognition holds. No remaining rule or fact determines which of these two alternatives is true, so we cannot entail that Eugene does not earn community recognition.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1284
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x does not think outside the box, then if x creates innovative solutions then x develops practical skills.\n- If Eugene is curious, then he is either imaginative or develops new ideas.\n- If Eugene either builds models or enjoys experimenting, then he is innovative.\n\nAdded rules:\n- For all x, if x does not think outside the box and x creates innovative solutions, then x develops practical skills.\n- Either Eugene is not curious, or he is imaginative, or he develops new ideas.\n- Either Eugene does not build models and Eugene does not enjoy experimenting, or Eugene is innovative.\n\nAdded facts:\n- Eugene is curious.",
+      "question": "Does the context entail the conclusion 'Eugene does not earn community recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: Eugene is curious, imaginative, builds models, does not enjoy experimenting, does not develop practical skills, is resourceful, and does not think outside the box. From (\u00acbuilds_models \u2227 \u00acenjoys_experimenting) \u2228 innovative and the facts (builds_models) and (\u00acenjoys_experimenting) the left disjunct is false, so infer innovative. From (innovative \u2228 thinks_creatively) -> develops_new_ideas infer develops_new_ideas. From (\u00acthinks_outside_box \u2227 creates_innovative_solutions) -> develops_practical_skills and the fact \u00acdevelops_practical_skills (together with \u00acthinks_outside_box) we get \u00accreates_innovative_solutions (contrapositive). From resourceful -> exclusive-or(creates_innovative_solutions, earns_community_recognition) and \u00accreates_innovative_solutions we conclude earns_community_recognition. Therefore 'Eugene does not earn community recognition.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1676
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- For all x, if x does not think outside the box and x creates innovative solutions, then x develops practical skills.\n\nAdded rules:\n- For all x, if x earns community recognition then x develops practical skills.",
+      "question": "Does the context entail the conclusion 'Eugene does not earn community recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have the fact \u00acdevelops_practical_skills(E). The added rule is (earns_community_recognition(E) -> develops_practical_skills(E)). By contrapositive, from \u00acdevelops_practical_skills(E) we infer \u00acearns_community_recognition(E). Thus the context entails that Eugene does not earn community recognition.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2080
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- Either Eugene does not build models and Eugene does not enjoy experimenting, or Eugene is innovative.\n\nAdded facts:\n- Eugene is innovative.\n- Eugene is either imaginative or develops new ideas.\n- Eugene either creates innovative solutions or earns community recognition, but not both.",
+      "question": "Does the context entail the conclusion 'Eugene does not earn community recognition.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We have the added fact that exactly one of {creates_innovative_solutions, earns_community_recognition} holds (exclusive-or). Eugene is asserted innovative and other original facts (e.g. resourceful, does_not_develop_practical_skills) remain, but there is no remaining rule that forces which disjunct (creates_innovative_solutions vs. earns_community_recognition) is true. Since we cannot derive creates_innovative_solutions, we also cannot derive \u00acearns_community_recognition; likewise we cannot derive earns_community_recognition to refute \u00acearns_community_recognition. Therefore the conclusion 'Eugene does not earn community recognition.' is not entailed (undetermined).",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2256
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if x earns community recognition then x develops practical skills.\n\nAdded rules:\n- If Eugene develops new ideas then he does not create innovative solutions.",
+      "question": "Does the context entail the conclusion 'Eugene does not earn community recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: Eugene is resourceful and Eugene is innovative. From (innovative \u2228 thinks_creatively) -> develops_new_ideas and innovative we get develops_new_ideas. The added rule gives develops_new_ideas -> \u00accreates_innovative_solutions, so \u00accreates_innovative_solutions holds. The resourceful rule is an exclusive-or between creates_innovative_solutions and earns_community_recognition, so with \u00accreates_innovative_solutions we must have earns_community_recognition. Thus the context entails that Eugene does earn community recognition, so it does not entail 'Eugene does not earn community recognition.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2516
+    }
+  ]
+}

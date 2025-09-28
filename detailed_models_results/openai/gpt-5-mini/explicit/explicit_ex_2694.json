@@ -1,0 +1,136 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 137,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Henry does not practice regularly.\nHenry does not have good rhythm.\nHenry does not experiment with sound.\nHenry does not develop a unique style.\nHenry is not sound sensitive.\nIf Henry reads sheet music, then he practices regularly and has good rhythm.\nAnyone who composes music or experiments with sound develops a unique style.\nHenry reads sheet music or plays by ear.\nIf Henry either plays by ear or composes music (but not both), then he has perfect pitch.\nHenry is either sound sensitive or has hearing loss, but not both.\nIf Henry has hearing loss, then he is either tone deaf or has perfect pitch, but not both.\nHenry is either musically talented or tone deaf, but not both.",
+      "question": "Does the context entail the conclusion 'Henry is not musically talented.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Henry does not practice regularly. Henry does not have good rhythm.. If Henry reads sheet music, then he practices regularly and has good rhythm.. Therefore, Henry does not read sheet music.. Henry does not experiment with sound. Henry does not develop a unique style.. Anyone who composes music or experiments with sound develops a unique style.. Therefore, Henry does not compose music.. Henry does not read sheet music.. Henry reads sheet music or plays by ear.. Therefore, Henry plays by ear.. Henry plays by ear. Henry does not compose music.. If Henry either plays by ear or composes music (but not both), then he has perfect pitch.. Therefore, Henry has perfect pitch.. Henry is not sound sensitive.. Henry is either sound sensitive or has hearing loss, but not both.. Therefore, Henry has hearing loss.. Henry has hearing loss. Henry has perfect pitch.. If Henry has hearing loss, then he is either tone deaf or has perfect pitch, but not both.. Therefore, Henry is not tone deaf.. Henry is not tone deaf.. Henry is either musically talented or tone deaf, but not both.. Therefore, Henry is not musically talented..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Henry is not sound sensitive.\n\nAdded rules:\n- If Henry plays by ear, then he is tone deaf.\n\nAdded facts:\n- Henry is sound sensitive.",
+      "question": "Does the context entail the conclusion 'Henry is not musically talented.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1) If Henry read sheet music he'd practice regularly and have good rhythm, but both are given as false, so he does not read sheet music. 2) Since (reads sheet music) or (plays by ear) holds, Henry plays by ear. 3) Added rule: plays by ear => tone deaf, so Henry is tone deaf. 4) From 'Henry is either musically talented or tone deaf, but not both', being tone deaf entails Henry is not musically talented. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 478
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Henry does not practice regularly.\n- Henry does not have good rhythm.\n\nAdded rules:\n- If Henry is sound sensitive, then he is not tone deaf.\n\nAdded facts:\n- Henry practices regularly.\n- Henry has good rhythm.\n- Henry reads sheet music.\n- Henry does not play by ear.",
+      "question": "Does the context entail the conclusion 'Henry is not musically talented.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From added facts: Henry reads sheet music, practices regularly, has good rhythm, and does not play by ear. The rule (reads sheet music -> practices & good rhythm) is consistent. From original facts Henry does not experiment with sound and does not develop a unique style, and the rule (composes or experiments -> unique style) implies Henry does not compose music. The disjunction (plays by ear or composes) is false (both false), so the rule (exclusive or of plays by ear or composes -> perfect pitch) does not fire, so perfect pitch is not derived that way. Original exclusivity: Henry is either sound sensitive or has hearing loss, but not both; since Henry is not sound sensitive (original fact remains), he must have hearing loss. From hearing loss -> (tone deaf or perfect pitch, but not both), Henry must be either tone deaf or have perfect pitch. Also original: Henry is either musically talented or tone deaf, but not both. Thus if Henry is tone deaf then he is not musically talented; if instead he has perfect pitch (and thus not tone deaf) then he must be musically talented. The information does not force which of tone deaf vs perfect pitch holds, so whether Henry is not musically talented is undetermined. Therefore the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 664
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Henry reads sheet music or plays by ear.\n- If Henry plays by ear, then he is tone deaf.\n- If Henry is sound sensitive, then he is not tone deaf.\n\nAdded rules:\n- If Henry does not develop a unique style, then he does not compose music and he does not experiment with sound.\n\nAdded facts:\n- Henry practices regularly and has good rhythm.\n- Henry is sound sensitive and does not have hearing loss.",
+      "question": "Does the context entail the conclusion 'Henry is not musically talented.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From added fact Henry does not develop a unique style and the added rule, infer Henry does not compose and does not experiment. So compose=false. Removed the disjunction (reads or plays) so we have no info about playing by ear or reading. We have Henry practices regularly and has good rhythm (given). Henry is sound sensitive and does not have hearing loss (given) and the exclusivity (sound sensitive xor hearing loss) is satisfied. The rule linking sound sensitivity to not tone-deaf was removed, and the rule linking playing-by-ear to tone-deaf was removed, and Henry does not have hearing loss (so the hearing-loss -> (tone-deaf xor perfect) rule does not apply). Thus whether Henry is tone deaf is undetermined. Since Henry is either musically talented or tone deaf (but not both), musically talented is also undetermined. Therefore the context does not entail 'Henry is not musically talented.'",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1038
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- Either Henry does not play by ear, or he is tone deaf.\n- Either Henry is not sound sensitive, or he is not tone deaf.\n\nAdded rules:\n- If Henry plays by ear, then he is tone deaf.\n- If Henry is sound sensitive, then he is not tone deaf.\n\nAdded facts:\n- Henry does not compose music.",
+      "question": "Does the context entail the conclusion 'Henry is not musically talented.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the context: Henry is sound sensitive (given). The added rule 'If Henry is sound sensitive, then he is not tone deaf' yields \u00actone_deaf. The original exclusive rule 'Henry is either musically talented or tone deaf, but not both' therefore forces musically_talented to be true (since tone_deaf is false). Thus \u00acmusically_talented is false and is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1380
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Henry is sound sensitive, then he is not tone deaf.\n\nAdded rules:\n- If Henry is sound sensitive, then he is tone deaf.",
+      "question": "Does the context entail the conclusion 'Henry is not musically talented.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From prior context Henry is sound sensitive. The added rule (If Henry is sound sensitive, then he is tone deaf) therefore yields that Henry is tone deaf. The original exclusive rule 'Henry is either musically talented or tone deaf, but not both' forces Henry to be not musically talented when he is tone deaf. Thus the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1599
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- Anyone who composes music or experiments with sound develops a unique style.\n- If Henry either plays by ear or composes music (but not both), then he has perfect pitch.\n- If Henry has hearing loss, then he is either tone deaf or has perfect pitch, but not both.\n\nAdded rules:\n- For all x, either x does not compose music and x does not experiment with sound, or x develops a unique style.\n- Either it is not the case that Henry either plays by ear or composes music (but not both), or he has perfect pitch.\n- Either Henry does not have hearing loss, or he is either tone deaf or has perfect pitch, but not both.\n\nAdded facts:\n- Henry does not compose music.\n- Either Henry is musically talented or he is not musically talented.",
+      "question": "Does the context entail the conclusion 'Henry is not musically talented.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Henry is sound sensitive (given). The added rule implies sound_sensitive -> tone_deaf, so Henry is tone deaf. The original exclusive rule states Henry is either musically talented or tone deaf, but not both; since he is tone deaf, he cannot be musically talented. Therefore 'Henry is not musically talented' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1764
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- Anyone who composes music or experiments with sound develops a unique style.\n\nAdded facts:\n- Either Henry is tone deaf or he is not tone deaf.\n- Henry is tone deaf.",
+      "question": "Does the context entail the conclusion 'Henry is not musically talented.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context asserts Henry is tone deaf, and the (unchanged) exclusive rule states Henry is either musically talented or tone deaf, but not both. Since Henry is tone deaf, he cannot be musically talented. Thus 'Henry is not musically talented' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2061
+    }
+  ]
+}

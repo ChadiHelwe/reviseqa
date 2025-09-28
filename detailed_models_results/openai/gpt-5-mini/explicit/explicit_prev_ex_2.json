@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 346,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Ibrahim does not see beauty.\nIbrahim has reflection.\nIbrahim loves trails.\nIbrahim likes camping.\nIbrahim gains perspective.\nIbrahim reaches the summit.\nIbrahim does not appreciate the land.\nIbrahim does not navigate terrain.\nAny hiker who sees beauty or has reflection can feel connected.\nIf Ibrahim loves trails, then he either likes camping or enjoys the outdoors, but not both.\nIf a hiker finds serenity, then they feel connected and gain perspective.\nIf Ibrahim reaches the summit, then he finds serenity and builds a cairn.\nAny hiker who enjoys the outdoors or respects nature will appreciate the land.\nIf Ibrahim either navigates terrain or explores the wild (but not both), then he respects nature.\nIbrahim either marks the trail or explores the wild.\nIf Ibrahim builds a cairn and marks the trail, then he leaves a legacy.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Ibrahim does not see beauty. Ibrahim has reflection.. Any hiker who sees beauty or has reflection can feel connected.. Therefore, Ibrahim feels connected.. Ibrahim loves trails. Ibrahim likes camping.. If Ibrahim loves trails, then he either likes camping or enjoys the outdoors, but not both.. Therefore, Ibrahim does not enjoy the outdoors.. Ibrahim feels connected. Ibrahim gains perspective.. If a hiker finds serenity, then they feel connected and gain perspective.. Therefore, . Ibrahim reaches the summit.. If Ibrahim reaches the summit, then he finds serenity and builds a cairn.. Therefore, Ibrahim builds a cairn.. Ibrahim does not enjoy the outdoors. Ibrahim does not appreciate the land.. Any hiker who enjoys the outdoors or respects nature will appreciate the land.. Therefore, Ibrahim does not respect nature.. Ibrahim does not navigate terrain. Ibrahim does not respect nature.. If Ibrahim either navigates terrain or explores the wild (but not both), then he respects nature.. Therefore, Ibrahim does not explore the wild.. Ibrahim does not explore the wild.. Ibrahim either marks the trail or explores the wild.. Therefore, Ibrahim marks the trail.. Ibrahim builds a cairn. Ibrahim marks the trail.. If Ibrahim builds a cairn and marks the trail, then he leaves a legacy.. Therefore, Ibrahim leaves a legacy..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Ibrahim explores the wild, then he respects nature.\n- If Ibrahim builds a cairn, then if he marks the trail, then he leaves a legacy.\n\nAdded facts:\n- Ibrahim does not enjoy the outdoors.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From facts: reflection => feel_connected (R1). reaches_summit => serenity and builds_cairn (R4). serenity => feel_connected and gains_perspective (R3). So builds_cairn is true. Given ~appreciate_land and (enjoys_outdoors OR respects_nature) => appreciate_land (R5), contrapositive gives ~respects_nature and ~enjoys_outdoors (the latter also given). From ~respects_nature and (explores_wild => respects_nature) (R9) contrapositive gives ~explores_wild. The disjunction marks_trail OR explores_wild (R7) with ~explores_wild yields marks_trail. With builds_cairn and marks_trail, leaves_legacy follows (R8/R10). Therefore Ibrahim leaves a legacy is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 545
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- Any hiker who enjoys the outdoors or respects nature will appreciate the land.\n\nAdded rules:\n- For any x, if x does not appreciate the land, then it is not the case that x enjoys the outdoors or respects nature.\n\nAdded facts:\n- Ibrahim marks the trail.\n- Ibrahim does not explore the wild.\n- Ibrahim feels connected.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From facts: Ibrahim reaches the summit, and the rule 'If Ibrahim reaches the summit, then he finds serenity and builds a cairn' yields that Ibrahim builds a cairn. The context also includes the fact 'Ibrahim marks the trail.' Given the rule 'If Ibrahim builds a cairn and marks the trail, then he leaves a legacy' (and the equivalent added conditional), both prerequisites hold, so Ibrahim leaves a legacy is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 812
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Ibrahim reaches the summit, then he finds serenity and builds a cairn.\n- If Ibrahim either navigates terrain or explores the wild (but not both), then he respects nature.\n\nAdded rules:\n- If Ibrahim reaches the summit, then he finds serenity and does not build a cairn.\n- If Ibrahim either navigates terrain or explores the wild (but not both), then he does not respect nature.\n- If Ibrahim does not build a cairn, then he does not leave a legacy.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: reaches_the_summit and marks_the_trail are given. New rule: reaches_the_summit \u2192 (finds_serenity \u2227 \u00acbuilds_cairn) yields \u00acbuilds_cairn. New rule: \u00acbuilds_cairn \u2192 \u00acleaves_legacy yields \u00acleaves_legacy. Although there is a rule builds_cairn \u2227 marks_trail \u2192 leaves_legacy, builds_cairn is refuted, so that rule cannot fire. Therefore 'Ibrahim leaves a legacy.' is not entailed; its negation is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1019
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For any x, if x does not appreciate the land, then x does not enjoy the outdoors and x does not respect nature.\n- If Ibrahim leaves a legacy, then he builds a cairn.\n\nAdded facts:\n- Ibrahim does not build a cairn.\n- Ibrahim finds serenity.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given facts include \u00acbuilds_cairn. The context contains the rule \u00acbuilds_cairn \u2192 \u00acleaves_legacy, so \u00acleaves_legacy is derivable. The other rules that could infer leaves_legacy require builds_cairn (e.g. builds_cairn \u2227 marks_trail \u2192 leaves_legacy), but builds_cairn is negated, so those cannot fire. Therefore 'Ibrahim leaves a legacy.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1302
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Ibrahim does not respect nature.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context contains the fact \u00acbuilds_cairn and the rule (\u00acbuilds_cairn \u2192 \u00acleaves_legacy), so \u00acleaves_legacy is derivable. Rules that could infer leaves_legacy (e.g. builds_cairn \u2227 marks_trail \u2192 leaves_legacy) require builds_cairn, which is contradicted, so they cannot fire. Therefore 'Ibrahim leaves a legacy.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1529
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, if x feels connected then x feels connected.\n- For all x, either x builds a cairn or x does not build a cairn.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context contains the fact \u00acbuilds_cairn and the rule (\u00acbuilds_cairn \u2192 \u00acleaves_legacy), so \u00acleaves_legacy is derivable. All rules that could derive leaves_legacy (e.g. builds_cairn \u2227 marks_trail \u2192 leaves_legacy or the nested implication) require builds_cairn, which is contradicted. The added tautology and excluded-middle for builds_cairn do not make builds_cairn true. Therefore 'Ibrahim leaves a legacy.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1667
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Ibrahim does not build a cairn.\n\nRemoved rules:\n- If Ibrahim reaches the summit, then he finds serenity and does not build a cairn.\n\nAdded facts:\n- Ibrahim builds a cairn.",
+      "question": "Does the context entail the conclusion 'Ibrahim leaves a legacy.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context contains the facts Ibrahim builds a cairn and Ibrahim marks the trail. There is a rule (builds_cairn \u2227 marks_trail) \u2192 leaves_legacy (and an equivalent nested implication). Therefore leaves_legacy is derivable. The contrary rule (\u00acbuilds_cairn \u2192 \u00acleaves_legacy) is in the context but its antecedent is false, so it does not prevent the derivation.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1871
+    }
+  ]
+}

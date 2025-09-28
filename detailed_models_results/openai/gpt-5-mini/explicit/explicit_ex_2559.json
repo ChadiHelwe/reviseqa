@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 120,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Marcus does not achieve recognition.\nMarcus makes breakthroughs.\nMarcus receives awards.\nMarcus has practical skills.\nMarcus asks questions.\nMarcus teaches others.\nIf Marcus is dedicated, then he will achieve recognition.\nIf Marcus makes breakthroughs, then he publishes papers and receives awards.\nEither Marcus seeks knowledge or he has practical skills, but not both.\nIf Marcus either asks questions or has curiosity (but not both), then he seeks knowledge.\nIf Marcus conducts research, then he either publishes papers or teaches others, but not both.\nIf someone has curiosity, then they value discovery and are persistent.\nMarcus conducts research or has expertise.\nIf Marcus has expertise, then he is either persistent or successful (but not both).\nIf Marcus is either dedicated or adventurous (but not both), then he is successful.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Marcus does not achieve recognition.. If Marcus is dedicated, then he will achieve recognition.. Therefore, Marcus is not dedicated.. Marcus makes breakthroughs. Marcus receives awards.. If Marcus makes breakthroughs, then he publishes papers and receives awards.. Therefore, Marcus publishes papers.. Marcus has practical skills.. Either Marcus seeks knowledge or he has practical skills, but not both.. Therefore, Marcus does not seek knowledge.. Marcus asks questions. Marcus does not seek knowledge.. If Marcus either asks questions or has curiosity (but not both), then he seeks knowledge.. Therefore, Marcus has curiosity.. Marcus publishes papers. Marcus teaches others.. If Marcus conducts research, then he either publishes papers or teaches others, but not both.. Therefore, Marcus does not conduct research.. Marcus has curiosity.. If someone has curiosity, then they value discovery and are persistent.. Therefore, Marcus is persistent.. Marcus does not conduct research.. Marcus conducts research or has expertise.. Therefore, Marcus has expertise.. Marcus has expertise. Marcus is persistent.. If Marcus has expertise, then he is either persistent or successful (but not both).. Therefore, Marcus is not successful.. Marcus is not dedicated. Marcus is not successful.. If Marcus is either dedicated or adventurous (but not both), then he is successful.. Therefore, Marcus is not adventurous..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Marcus has expertise, then he is either persistent or successful, but not both.\n- If Marcus is either dedicated or adventurous (but not both), then he is successful.\n\nAdded rules:\n- If Marcus has expertise, then he is not successful.\n- If Marcus is adventurous, then he is successful.\n\nAdded facts:\n- Marcus publishes papers.\n- Marcus does not seek knowledge.\n- Marcus does not conduct research.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: Marcus does not achieve recognition, makes breakthroughs, receives awards, has practical skills, asks questions, teaches others, publishes papers, does not seek knowledge, does not conduct research. From makes breakthroughs -> publishes papers & receives awards (consistent). XOR: seeks knowledge xor practical skills; since Marcus does not seek knowledge and has practical skills, XOR satisfied. Rule: (asks xor curiosity) -> seeks knowledge. Asks is true but seeks knowledge is false, so antecedent must be false, hence curiosity is true. Curiosity -> persistent, so Marcus is persistent. From conducts research or expertise and Marcus does not conduct research, infer Marcus has expertise. Added rule: expertise -> not successful, so Marcus is not successful. From Ded -> recognition and Marcus does not achieve recognition, infer Marcus is not dedicated. Added rule: adventurous -> successful. Since Marcus is not successful, he cannot be adventurous (otherwise successful would hold). Therefore Marcus is not adventurous is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 516
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Marcus does not conduct research.\n\nRemoved rules:\n- If Marcus conducts research, then he either publishes papers or teaches others, but not both.\n\nAdded rules:\n- If Marcus conducts research, then he is adventurous.\n- If Marcus has practical skills, then he is successful.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Construct a model of the premises where Adventurous is true: set Conduct = true and Expertise = false. Facts: Breakthroughs, Publishes, Awards, Practical, Asks, Teaches, \u00acSeeks, \u00acRecognition hold. From (Asks xor Curiosity) -> Seeks and Asks true but Seeks false infer Curiosity true; Curiosity -> Persistent gives Persistent. Practical -> Successful yields Successful. Conduct -> Adventurous yields Adventurous true. Expertise -> \u00acSuccessful does not apply because Expertise is false. All rules and facts are satisfied in this model and Adventurous is true, so the premises do not entail \u00acAdventurous.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 848
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Marcus does not seek knowledge.\n- Marcus has practical skills.\n\nAdded facts:\n- Marcus does not conduct research.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have \u00acconducts (fact) and the disjunction (conducts \u2228 expertise), so expertise must hold. From expertise \u2192 \u00acsuccessful we get \u00acsuccessful. From adventurous \u2192 successful, any model with adventurous true would force successful true, contradicting \u00acsuccessful. The rule conducts \u2192 adventurous cannot apply because conducts is false. Hence every model satisfying the premises has \u00acadventurous, so \u00acadventurous is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1081
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Marcus does not conduct research.\n\nAdded facts:\n- Marcus does not have expertise.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the disjunction (Marcus conducts research or has expertise) and the added fact \u00acExpertise, we infer Marcus conducts research. The rule conducts \u2192 adventurous then yields Adventurous. Therefore \u00acAdventurous is not entailed (Adventurous is in fact entailed).",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1234
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Marcus is not adventurous, then he does not conduct research.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the premise Conducts \u2228 Expertise and the fact \u00acExpertise, we infer Conducts. From Conducts \u2192 Adventurous we infer Adventurous. The added rule \u00acAdventurous \u2192 \u00acConduct is just the converse and does not make \u00acAdventurous true; together the two rules yield Conducts \u2194 Adventurous, so Conducts entails Adventurous. Thus \u00acAdventurous is not entailed (Adventurous is entailed).",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1350
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Marcus does not have expertise.\n\nAdded rules:\n- If Marcus conducts research, then he is dedicated.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the rules we have Conducts -> Adventurous and \u00acAdventurous -> \u00acConducts, so Conducts iff Adventurous. Also Conducts -> Dedicated (added) and Dedicated -> Recognition (original). But \u00acRecognition is a fact, so Conducts would force Recognition and thus contradict \u00acRecognition; therefore Conducts must be false in every model satisfying the premises. By the iff, Adventurous is also false in every model. Hence \u00acAdventurous is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1500
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Marcus conducts research, then he is dedicated.\n\nAdded rules:\n- If Marcus either publishes papers or teaches others, then he conducts research.",
+      "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From Marcus makes breakthroughs -> publishes papers, and Marcus teaches others (fact), we have publishes and teaches both true. The added rule (publishes \u2228 teaches) -> conducts research then gives conducts research. But the existing rule conducts research -> (publishes xor teaches) requires exactly one of publishes or teaches, contradicting that both are true. The premises are therefore inconsistent; in classical logic an inconsistency entails any formula. Hence Marcus is not adventurous is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1661
+    }
+  ]
+}

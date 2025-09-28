@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 146,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Dr. Linda conducts experiments.\nLinda does not identify patterns.\nLinda does not draw conclusions.\nLinda will make a lasting impact.\nLinda is passionate about nature.\nDr. Linda does not publish her work widely.\nDr. Linda is not internationally recognized.\nEvery scientist who conducts experiments either interprets results or identifies patterns (or both).\nIf a scientist analyzes findings and interprets results, then they can draw conclusions.\nIf Dr. Linda develops new theories, then she will make a lasting impact.\nIf Dr. Linda is passionate about nature, then she develops new theories and collects data.\nEvery scientist who collects data either conducts field research or analyzes their findings (or both).\nIf Dr. Linda either studies in the Arctic or conducts field research (but not both), then she publishes her work widely.\nIf Dr. Linda either specializes in lemmings or studies in the Arctic (but not both), then she is internationally recognized.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Dr. Linda conducts experiments. Linda does not identify patterns.. Every scientist who conducts experiments either interprets results or identifies patterns (or both).. Therefore, Linda interprets results.. Linda interprets results. Linda does not draw conclusions.. If a scientist analyzes findings and interprets results, then they can draw conclusions.. Therefore, Dr. Linda does not analyze her findings.. Linda will make a lasting impact.. If Dr. Linda develops new theories, then she will make a lasting impact.. Therefore, . Linda is passionate about nature.. If Dr. Linda is passionate about nature, then she develops new theories and collects data.. Therefore, Dr. Linda collects data.. Dr. Linda collects data. Dr. Linda does not analyze her findings.. Every scientist who collects data either conducts field research or analyzes their findings (or both).. Therefore, Dr. Linda conducts field research.. Dr. Linda conducts field research. Dr. Linda does not publish her work widely.. If Dr. Linda either studies in the Arctic or conducts field research (but not both), then she publishes her work widely.. Therefore, Dr. Linda studies in the Arctic.. Dr. Linda studies in the Arctic. Dr. Linda is not internationally recognized.. If Dr. Linda either specializes in lemmings or studies in the Arctic (but not both), then she is internationally recognized.. Therefore, Dr. Linda specializes in lemmings..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Dr. Linda conducts experiments, then she interprets results.\n- If Linda does not draw conclusions, then she does not analyze findings or she does not interpret results.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From added rule CE -> interprets and fact CE, Dr. Linda interprets results. Fact \u00acdraw conclusions plus rule \u00acDC -> (\u00acanalyze \u2228 \u00acinterpret); since she does interpret, we get \u00acanalyze. From PN (passionate) we get collects data; collect -> (field \u2228 analyze); with \u00acanalyze we get field research. Given \u00acpublish and rule (Arctic XOR field) -> publish: field is true so the XOR antecedent must be false to avoid publishing, hence Arctic is true as well. Given \u00acinternationally recognized and rule (lemmings XOR Arctic) -> internationally recognized: Arctic is true so the XOR antecedent must be false to avoid recognition, hence specializes in lemmings is true. Thus the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 571
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- Every scientist who collects data either conducts field research or analyzes their findings (or both).\n\nAdded facts:\n- Dr. Linda collects data and she does not conduct field research.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From added CE -> interprets and fact CE, Dr. Linda interprets. From \u00acdraw conclusions and rule \u00acDC -> (\u00acanalyze \u2228 \u00acinterpret), since she does interpret we get \u00acanalyze. From PN we get develops and collects (and develop -> impact matches the fact). The original rule collects -> (field \u2228 analyze) has been removed, and the user now gives collects and \u00acfield as facts. Thus we have \u00acanalyze and \u00acfield. The XOR rules (Arctic XOR field -> publish) and (lemmings XOR Arctic -> internationally recognized) cannot be used to derive that she specializes in lemmings: with \u00acfield the first XOR antecedent reduces to Arctic (so publish would follow from Arctic), but \u00acpublish is given and does not allow inferring \u00acArctic in classical logic; likewise \u00acinternationally recognized does not allow inferring Lemming. There is no rule deriving \"specializes in lemmings\" and no fact \u00aclemmings, so the statement is not entailed (nor refuted) by the context.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 812
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Dr. Linda is passionate about nature, then she develops new theories and collects data.\n- If Linda does not draw conclusions, then she does not analyze findings or she does not interpret results.\n\nAdded rules:\n- If Dr. Linda is passionate about nature, then she develops new theories.\n- If Dr. Linda is passionate about nature, then she collects data.\n- If Linda does not draw conclusions, then it is not the case that she analyzes findings and interprets results.\n\nAdded facts:\n- Dr. Linda interprets results.\n- Dr. Linda develops new theories.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: Dr. Linda conducts experiments (CE), interprets results, does not draw conclusions (\u00acdraw), collects data, does not conduct field research (\u00acfield), does not publish (\u00acpublish), and is not internationally recognized (\u00acintl). Rules include CE->interprets, \u00acdraw -> \u00ac(analyze \u2227 interpret), (Arctic XOR field) -> publish, and (lemmings XOR Arctic) -> internationally recognized. From \u00acdraw and interprets plus \u00ac(analyze \u2227 interpret) infer \u00acanalyze. From (Arctic XOR field)->publish and \u00acpublish infer \u00ac(Arctic XOR field). Given \u00acfield this yields \u00acArctic. From (lemmings XOR Arctic)->intl and \u00acintl infer \u00ac(lemmings XOR Arctic). With \u00acArctic this gives \u00aclemmings. Therefore \u201cDr. Linda specializes in lemmings.\u201d is false (not entailed).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1112
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Dr. Linda either studies in the Arctic or conducts field research (but not both), then she publishes her work widely.\n- If Dr. Linda either specializes in lemmings or studies in the Arctic (but not both), then she is internationally recognized.\n\nAdded rules:\n- If Dr. Linda either studies in the Arctic or conducts field research, but not both, then she publishes her work widely.\n- If Dr. Linda either specializes in lemmings or studies in the Arctic, but not both, then she is internationally recognized.\n\nAdded facts:\n- Linda does not analyze findings.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: interprets, \u00acdraw, collects, \u00acfield, \u00acpublish, \u00acintl, develops, CE, \u00acanalyze. From \u00acdraw and the rule \u00acdraw -> \u00ac(analyze \u2227 interpret) and interprets we get \u00acanalyze (consistent with the fact). From (Arctic XOR field) -> publish and \u00acpublish we get \u00ac(Arctic XOR field). With \u00acfield this yields \u00acArctic. From (lemmings XOR Arctic) -> internationally recognized and \u00acinternationally recognized we get \u00ac(lemmings XOR Arctic). Given \u00acArctic this implies \u00aclemmings. Thus the context entails that Dr. Linda does NOT specialize in lemmings, so the conclusion 'Dr. Linda specializes in lemmings.' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1477
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For every scientist, if they do not collect data, then they are not passionate about nature.\n- For every scientist, if they do not develop new theories, then they are not passionate about nature.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acpublish and the rule (Arctic XOR field) -> publish, contrapositive gives \u00ac(Arctic XOR field). Given \u00acfield, that implies \u00acArctic. From \u00acinternationally recognized and the rule (lemmings XOR Arctic) -> internationally recognized, contrapositive gives \u00ac(lemmings XOR Arctic). With \u00acArctic this yields \u00aclemmings. Hence the statement that Dr. Linda specializes in lemmings is refuted by the context.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1815
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For every scientist, if they are passionate about nature, then they collect data.\n- For every scientist, if they are passionate about nature, then they develop new theories.\n- If Dr. Linda studies in the Arctic and does not conduct field research, or she does not study in the Arctic and conducts field research, then she publishes her work widely.\n- If Dr. Linda specializes in lemmings and does not study in the Arctic, or she does not specialize in lemmings and studies in the Arctic, then she is internationally recognized.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acpublish and the rule (Arctic \u2227 \u00acfield) \u2228 (\u00acArctic \u2227 field) -> publish, contrapositive gives \u00ac((Arctic \u2227 \u00acfield) \u2228 (\u00acArctic \u2227 field)). Given \u00acfield, this yields \u00acArctic. From \u00acinternationally recognized and the rule (lemmings \u2227 \u00acArctic) \u2228 (\u00aclemmings \u2227 Arctic) -> internationally recognized, contrapositive gives \u00ac((lemmings \u2227 \u00acArctic) \u2228 (\u00aclemmings \u2227 Arctic)). With \u00acArctic this yields \u00aclemmings. Therefore the context entails that Dr. Linda does not specialize in lemmings, so the claim that she does is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2018
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If it is not the case that Dr. Linda specializes in lemmings if and only if she studies in the Arctic, then she is internationally recognized.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the added rule (\u00ac(L \u2194 A)) -> internationally recognized and the fact \u00acinternationally recognized, by contrapositive we get \u00ac\u00ac(L \u2194 A), hence L \u2194 A (Linda specializes in lemmings iff she studies in the Arctic). From the context we have \u00acpublish and the rule (Arctic XOR field) -> publish together with the fact \u00acfield, so by contrapositive we infer \u00acArctic. Combining \u00acArctic with L \u2194 A yields \u00acL (she does not specialize in lemmings). Thus the claim that she specializes in lemmings is refuted by the context.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2340
+    }
+  ]
+}

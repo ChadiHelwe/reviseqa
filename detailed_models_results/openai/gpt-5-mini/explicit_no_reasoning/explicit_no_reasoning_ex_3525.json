@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 170,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kora avoids social contacts.\nKora hides from others.\nKora has a weak immune system.\nKora does not need medical attention.\nKora does not suffer from parasites.\nKora has an injury.\nKora loses her fur.\nIf Kora either avoids social contacts or hides from others (but not both), then she becomes isolated.\nFor all foxes, if they have a weak immune system and require care, then they need medical attention.\nAny fox that is disabled or suffers from parasites requires care.\nIf Kora has an injury, then she is either disabled or regains strength, but not both.\nFor Kora, either she experiences pain or she regains strength, but not both at the same time.\nIf Kora shows symptoms of illness, then she becomes isolated and experiences pain.\nIf Kora either shows symptoms of illness or loses her fur (but not both), then she receives proper treatment.\nFor all foxes, if they receive proper treatment, then they recover from mange.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Kora either shows symptoms of illness or loses her fur (but not both), then she receives proper treatment.\n\nAdded rules:\n- For all foxes, if they do not receive proper treatment, then they do not recover from mange.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The rule that linked losing fur (or symptoms) to receiving proper treatment was removed, and no remaining rule infers that Kora receives proper treatment. The added rule only makes treatment necessary for recovery (and its contrapositive), so without a derivation of \"receives proper treatment\" we cannot derive \"recovers from mange.\" Therefore the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 307
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Kora either shows symptoms of illness or loses her fur (but not both), then she does not receive proper treatment.\n\nAdded rules:\n- If Kora either shows symptoms of illness or loses her fur (but not both), then she receives proper treatment.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Kora loses her fur (given) and there is no fact that she shows symptoms, so the exclusive disjunction \u201cshows symptoms or loses her fur (but not both)\u201d is satisfied. The added rule therefore yields that Kora receives proper treatment. By the universal rule \u201cif they receive proper treatment, then they recover from mange,\u201d Kora recovers from mange. The additional rule \u201cif they do not receive proper treatment then they do not recover\u201d is irrelevant because we have derived that she does receive proper treatment. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 475
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Kora has an injury.\n\nAdded rules:\n- If Kora shows symptoms of illness, then she does not receive proper treatment.\n\nAdded facts:\n- Kora does not have an injury.\n- Kora shows symptoms of illness.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Kora now both shows symptoms and loses her fur, so the exclusive rule \u201cshows symptoms or loses her fur (but not both) => receives proper treatment\u201d does not apply. The new rule \u201cshows symptoms => does not receive proper treatment\u201d together with the earlier universal rule \u201cif they do not receive proper treatment then they do not recover from mange\u201d yields that Kora does not recover. Therefore the context does not entail that Kora recovers from mange.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 684
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all foxes, if they do not recover from mange, then they do not receive proper treatment.\n- If Kora receives proper treatment, then she does not show symptoms of illness.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Kora both shows symptoms and loses her fur, so the exclusive rule (symptoms XOR loses fur => receives proper treatment) does not fire. The rule shows symptoms => does not receive proper treatment gives \u00acreceives. The universal rule \u00acreceives => \u00acrecovers then yields \u00acrecovers. The new rules (\u00acrecovers => \u00acreceives and receives => \u00acsymptoms) do not enable deriving receives or recovers. Therefore the context does not entail that Kora recovers from mange.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 869
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Kora shows symptoms of illness, then she does not receive proper treatment.\n- If Kora receives proper treatment, then she does not show symptoms of illness.\n\nAdded rules:\n- If Kora shows symptoms of illness, then she receives proper treatment.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Kora is stated to show symptoms. The added rule 'If Kora shows symptoms of illness, then she receives proper treatment' yields that she receives proper treatment. There is a universal rule that receiving proper treatment implies recovering from mange, so Kora recovers. Other rules (exclusive-treatment from XOR) do not block this derivation, and the \u00acreceive/\u00acrecover rules are irrelevant once receive is derived.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1054
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- Any fox that is disabled or suffers from parasites requires care.\n\nAdded rules:\n- For all foxes, if they do not require care, then they are neither disabled nor suffer from parasites.\n\nAdded facts:\n- Kora becomes isolated.\n- Kora experiences pain.\n- Kora does not regain strength.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Kora is stated to show symptoms. The context includes the rule \u2018If Kora shows symptoms of illness, then she receives proper treatment.\u2019 There is a universal rule that any fox that receives proper treatment recovers from mange. Therefore from shows symptoms \u2192 receives, and receives \u2192 recovers, we can derive that Kora recovers from mange. The removed/added care/disabled rules and the added facts about isolation, pain, and not regaining strength do not block this derivation.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1234
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Kora shows symptoms of illness, then she receives proper treatment.\n\nAdded rules:\n- If Kora shows symptoms of illness, then she does not receive proper treatment.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Both \u2018Kora shows symptoms\u2019 and \u2018Kora loses her fur\u2019 are facts, so the exclusive rule (symptoms XOR loses fur \u2192 receives treatment) does not apply. The current rule \u2018symptoms \u2192 does not receive proper treatment\u2019 therefore yields that Kora does not receive treatment, and the rule \u2018if not receive proper treatment then not recover from mange\u2019 gives that Kora does not recover. Thus the context does not entail that Kora recovers from mange.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1438
+    }
+  ]
+}

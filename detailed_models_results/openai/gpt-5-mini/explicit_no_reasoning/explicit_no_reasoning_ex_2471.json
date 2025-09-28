@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 105,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Edward has a green thumb.\nEdward does not enjoy gardening.\nEdward remains humble.\nEdward does not achieve fame.\nEdward does not inspire future generations.\nEdward values conservation.\nEdward does not share his knowledge.\nAnyone who has a green thumb either appreciates natural beauty or enjoys gardening (or both).\nEdward either gains recognition or remains humble, but not both.\nIf Edward leaves a lasting legacy, then he either achieves fame or gains recognition (but not both).\nEveryone who mentors others either leaves a lasting legacy or inspires future generations (or both).\nIf someone appreciates natural beauty and values conservation, then they can explore nature.\nAnyone who contributes to science either shares their knowledge or mentors others (or both).\nIf Edward explores nature, then he either studies botany or contributes to science (or both).\nIf Edward studies botany, then he discovers new species.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Edward does not enjoy gardening.\n\nAdded rules:\n- If Edward remains humble and it is not the case that Edward gains recognition, then Edward does not discover new species.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Edward remains humble (fact). The rule \u201cEdward either gains recognition or remains humble, but not both\u201d together with his humility entails \u00ac(Edward gains recognition). The added rule says: if Edward remains humble and \u00ac(Edward gains recognition) then \u00ac(Edward discovers new species). Both antecedents hold in all models of the context, so \u00ac(Edward discovers new species) is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 275
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Edward remains humble.\n\nAdded facts:\n- Edward gains recognition.\n- Edward does not enjoy gardening.\n- Edward does not leave a lasting legacy.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Edward has a green thumb and \u00ac(enjoys gardening) imply he appreciates natural beauty. With values conservation this yields explores nature. From explores nature he must either study botany or contribute to science. If he contributed to science then, since \u00ac(shares his knowledge), he would have to mentor; mentoring plus \u00ac(inspires future generations) would force leaving a lasting legacy, contradicting the fact \u00ac(leaves a lasting legacy). Thus the contribute-to-science branch is impossible, so he must study botany. From studying botany he discovers new species. Therefore the premises entail that Edward discovers new species, so they do not entail that he does not discover new species.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 437
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Edward gains recognition.\n\nRemoved rules:\n- Everyone who mentors others either leaves a lasting legacy or inspires future generations (or both).\n- If Edward explores nature, then he either studies botany or contributes to science (or both).\n\nAdded rules:\n- For all x, if x is not Edward, then if x mentors others, then x either leaves a lasting legacy or inspires future generations (or both).\n\nAdded facts:\n- It is not the case that Edward gains recognition.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have the fact \u00ac(Edward gains recognition). The exclusive-or rule \u201cEdward either gains recognition or remains humble, but not both\u201d together with \u00ac(gains recognition) entails Edward remains humble. The added rule \u201cif Edward remains humble and \u00ac(Edward gains recognition) then \u00ac(Edward discovers new species)\u201d therefore applies, so \u00ac(Edward discovers new species) is entailed. The rule that could have led to discovering new species (explore\u2192study botany/contribute) was removed, so there is no derivation of Edward discovering new species to contradict this. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 653
+    },
+    {
+      "step": 4,
+      "context": "Added facts:\n- Edward remains humble.\n- Edward appreciates natural beauty.\n- Edward explores nature.\n- Edward contributes to science.\n- Edward mentors others.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The only rule that yields \u2018Edward discovers new species\u2019 is (studies botany \u2192 discovers new species). From explores nature we get (studies botany OR contributes to science). Since contributes to science is given, that disjunction is satisfied without entailing studies botany, so discovering new species is not derived. There is also no rule deriving \u00ac(discovers new species). (Mentoring forces a lasting legacy and then recognition conflicting with humility, but that contradiction does not produce \u00ac(discovers new species)). Hence neither the positive nor the negated conclusion is entailed.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 918
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Edward remains humble and it is not the case that Edward gains recognition, then he does not discover new species.\n\nAdded rules:\n- If Edward mentors others, then he studies botany.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Edward mentors others (fact) and the new rule gives: if Edward mentors others then he studies botany, so Edward studies botany. From the rule (studies botany \u2192 discovers new species) Edward discovers new species is entailed. The earlier rule that would have yielded \u00ac(discover new species) was removed, so \u00ac(Edward discovers new species) is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1113
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Edward studies botany, then he discovers new species.\n\nAdded rules:\n- If Edward studies botany, then he does not discover new species.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Edward mentors others (fact). The added rule gives: mentors -> studies botany, so Edward studies botany. The current rule for studies botany yields that he does not discover new species, so \u00ac(Edward discovers new species) is entailed. There is no remaining rule deriving that he does discover new species to contradict this.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1296
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x contributes to science and does not share his knowledge, then x mentors others.\n- For all x, if x has a green thumb and does not enjoy gardening, then x appreciates natural beauty.",
+      "question": "Does the context entail the conclusion 'Edward does not discover new species.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Edward mentors others (fact). The rule \u201cIf Edward mentors others, then he studies botany\u201d yields studies_botany(Edward). The rule \u201cIf Edward studies botany, then he does not discover new species\u201d yields \u00acdiscovers_new_species(Edward). There is no remaining rule deriving that he does discover new species, so \u00ac(Edward discovers new species) is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1460
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 54,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Julie faces challenges.\nJulie questions her values.\nJulie does not have good health.\nJulie does not enjoy leisure time.\nJulie does not make significant changes.\nJulie values autonomy.\nJulie is building meaningful relationships.\nIf someone faces challenges and questions their values, then they will reassess their life.\nEveryone who feels content either has good health or enjoys leisure time (or both).\nAnyone who reassesses their life either takes risks or makes significant changes (or both).\nIf Julie values autonomy, then she takes risks and pursues her passion.\nIf someone finds fulfillment, then they will feel content.\nIf Julie pursues her passion, then she is either building meaningful relationships or increasing her happiness (but not both).\nAnyone who lives simply or reduces stress can increase their happiness.\nIf Julie prioritizes happiness, then she can either live a simple life or find fulfillment, but not both.",
+      "question": "Does the context entail the conclusion 'Julie prioritizes happiness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- It is not the case that Julie has good health.\n\nAdded rules:\n- For all x, if it is not the case that x lives a simple life, then x finds fulfillment.\n- For all x, if x has good health, then x prioritizes happiness.",
+      "question": "Does the context entail the conclusion 'Julie prioritizes happiness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From facts: Julie faces challenges and questions her values, so by R1 she reassesses her life. R3 then yields (takes risks or makes significant changes); given the fact Julie does not make significant changes, she must take risks. R4 plus Julie values autonomy gives she takes risks and pursues her passion. R6 with the fact Julie is building meaningful relationships (and the XOR) yields \u00ac(increase happiness). R7 is (lives simply \u2228 reduces stress) \u2192 increase happiness; contrapositive gives \u00ac(increase happiness) \u2192 (\u00aclives simply \u2227 \u00acreduces stress), so \u00aclives simply. The added rule \u00aclives simple \u2192 finds fulfillment gives Julie finds fulfillment. R5 then gives she feels content. R2 (content \u2192 (good health \u2228 enjoys leisure)) together with the fact Julie does not enjoy leisure forces Julie to have good health. The added rule (good health \u2192 prioritizes happiness) yields that Julie prioritizes happiness. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 284
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Julie pursues her passion, then Julie is either building meaningful relationships or increasing her happiness, but not both.\n\nAdded rules:\n- For all x, if x takes risks, then it is not the case that x prioritizes happiness.",
+      "question": "Does the context entail the conclusion 'Julie prioritizes happiness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From facts: Julie faces challenges and questions her values, so she reassesses her life. Reassessing and the fact that Julie does not make significant changes imply she takes risks (reassess \u2192 (takesRisks \u2228 makesSignificantChanges)). Julie also values autonomy, which yields takesRisks \u2227 pursuesPassion, so takesRisks is entailed. The added rule (takesRisks \u2192 \u00acprioritizesHappiness) therefore entails \u00ac(Julie prioritizes happiness). There is no available derivation of Julie prioritizing happiness: the only rule that could yield it is (goodHealth \u2192 prioritizesHappiness), but good health is not derivable (content \u2192 (goodHealth \u2228 enjoysLeisure) cannot force goodHealth because we cannot derive content \u2014 the earlier chain that produced content depended on the removed rule linking pursuesPassion to \u00acincreaseHappiness/\u00aclivesSimply). Thus the knowledge base entails \u00acprioritizesHappiness, so it does not entail that Julie prioritizes happiness.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 589
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if it is not the case that x lives a simple life, then x finds fulfillment.\n- For all x, if x takes risks, then it is not the case that x prioritizes happiness.\n\nAdded rules:\n- For all x, x lives a simple life or x finds fulfillment.\n- For all x, either x does not take risks or x does not prioritize happiness.\n\nAdded facts:\n- Julie is reassessing her life.",
+      "question": "Does the context entail the conclusion 'Julie prioritizes happiness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From facts and rules: Julie values autonomy, so by that rule she takes risks. The added universal clause (not takeRisks OR not prioritize) means for Julie (since she takes risks) she cannot prioritize happiness, i.e. \u00acprioritizesHappiness is entailed. There is no independent derivation of prioritizesHappiness (goodHealth \u2192 prioritizesHappiness exists but goodHealth is not derivable: content \u2192 (goodHealth \u2228 enjoysLeisure) and findsFulfillment \u2192 content cannot force goodHealth because the universal (livesSimple \u2228 findsFulfillment) only gives a disjunction, not a specific disjunct). Therefore the knowledge base entails that Julie does not prioritize happiness, so it does not entail that she prioritizes happiness.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 890
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all x, if x takes risks, then it is not the case that x prioritizes happiness.\n- If Julie prioritizes happiness, then it is not the case that Julie lives a simple life and Julie finds fulfillment.\n\nAdded facts:\n- Julie takes risks.\n- Julie pursues her passion.\n- Julie either lives a simple life or finds fulfillment.",
+      "question": "Does the context entail the conclusion 'Julie prioritizes happiness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the context we have the fact Julie takes risks and the rule (takesRisks \u2192 \u00acprioritizesHappiness), so \u00ac(Julie prioritizes happiness) is derivable. There is no available rule/fact that forces Julie to prioritize happiness (goodHealth \u2192 prioritizesHappiness exists but goodHealth is not derivable: content \u2192 (goodHealth \u2228 enjoysLeisure) and findsFulfillment \u2192 content require findsFulfillment, which is not provable from the disjunction (livesSimple \u2228 findsFulfillment)). Thus the knowledge base entails that Julie does not prioritize happiness, so it does not entail that she does.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1186
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- For all x, either x does not take risks or x does not prioritize happiness.\n- For all x, if x takes risks, then it is not the case that x prioritizes happiness.\n\nAdded rules:\n- If Julie is building meaningful relationships, then Julie finds fulfillment.",
+      "question": "Does the context entail the conclusion 'Julie prioritizes happiness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the premises: Julie is building meaningful relationships (original fact) and the new rule buildingRelationships \u2192 findsFulfillment yield findsFulfillment. findsFulfillment \u2192 content gives content. content \u2192 (goodHealth \u2228 enjoysLeisure) together with the original fact \u00acenjoysLeisure forces goodHealth. The previously added rule goodHealth \u2192 prioritizesHappiness therefore yields that Julie prioritizes happiness. No remaining rule prevents this. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1435
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Julie prioritizes happiness, then Julie either lives a simple life or finds fulfillment.\n\nAdded facts:\n- Julie finds fulfillment.\n- Julie feels content.",
+      "question": "Does the context entail the conclusion 'Julie prioritizes happiness.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The KB contains no rule that positively derives \"Julie prioritizes happiness.\" The added rule is only of the form (prioritizesHappiness \u2192 (livesSimple \u2228 findsFulfillment)), which goes in the wrong direction. The facts \"Julie finds fulfillment\" and \"Julie feels content\" do not imply prioritizing happiness; at best they trigger content \u2192 (goodHealth \u2228 enjoysLeisure), which conflicts with the existing facts \u00acgoodHealth and \u00acenjoysLeisure and makes the theory inconsistent. Without adopting explosion (from inconsistency deriving any formula), there is no derivation of \"Julie prioritizes happiness.\" Therefore entailment is not established.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1633
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if x feels content, then x has good health or x enjoys leisure time.\n\nAdded rules:\n- For all x, either x does not feel content or x has good health or x enjoys leisure time.\n- If Julie feels content, then Julie has good health.\n- For all x, if x prioritizes happiness and x finds fulfillment, then it is not the case that x lives a simple life.\n\nAdded facts:\n- Julie feels content.",
+      "question": "Does the context entail the conclusion 'Julie prioritizes happiness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Julie feels content (fact). The added rule \"If Julie feels content, then Julie has good health\" yields that Julie has good health. The KB already contains the rule \"if x has good health then x prioritizes happiness\", so from Julie having good health we derive that Julie prioritizes happiness. No remaining rule prevents this derivation, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1845
+    }
+  ]
+}

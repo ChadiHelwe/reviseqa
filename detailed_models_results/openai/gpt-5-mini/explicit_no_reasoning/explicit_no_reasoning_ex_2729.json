@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 146,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Dr. Linda conducts experiments.\nLinda does not identify patterns.\nLinda does not draw conclusions.\nLinda will make a lasting impact.\nLinda is passionate about nature.\nDr. Linda does not publish her work widely.\nDr. Linda is not internationally recognized.\nEvery scientist who conducts experiments either interprets results or identifies patterns (or both).\nIf a scientist analyzes findings and interprets results, then they can draw conclusions.\nIf Dr. Linda develops new theories, then she will make a lasting impact.\nIf Dr. Linda is passionate about nature, then she develops new theories and collects data.\nEvery scientist who collects data either conducts field research or analyzes their findings (or both).\nIf Dr. Linda either studies in the Arctic or conducts field research (but not both), then she publishes her work widely.\nIf Dr. Linda either specializes in lemmings or studies in the Arctic (but not both), then she is internationally recognized.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Dr. Linda conducts experiments, then she interprets results.\n- If Linda does not draw conclusions, then she does not analyze findings or she does not interpret results.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let C = conducts experiments, I = interprets results, P = identifies patterns, AF = analyzes findings, D = draws conclusions, N = passionate about nature, T = develops new theories, CD = collects data, FR = field research, Ar = studies in the Arctic, W = publishes widely, R = internationally recognized, S = specializes in lemmings.\n\nFacts: C, ~P, ~D, L, N, ~W, ~R. Rules include C=>I (added), ~D=> (~AF or ~I) (added), N=> (T and CD), CD=> (FR or AF), (Ar xor FR)=>W, (S xor Ar)=>R.\n\n1) From C and C=>I we get I.\n2) From ~D and ~D=> (~AF or ~I), since I holds, we get ~AF.\n3) From N we get CD; from CD and CD=> (FR or AF), with ~AF we get FR.\n4) FR is true and ~W holds, so the antecedent (Ar xor FR) of (Ar xor FR)=>W must be false; since FR is true this forces Ar true.\n5) Ar is true and ~R holds, so the antecedent (S xor Ar) of (S xor Ar)=>R must be false; since Ar is true this forces S true.\n\nHence Dr. Linda specializes in lemmings is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 294
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- Every scientist who collects data either conducts field research or analyzes their findings (or both).\n\nAdded facts:\n- Dr. Linda collects data and she does not conduct field research.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: C (conducts experiments), ~P (does not identify patterns), ~D (does not draw conclusions), N (passionate), ~W (does not publish widely), ~R (not internationally recognized), CD (collects data), ~FR (does not do field research). Rules retained/added: C=> (I or P) (original), C=>I (added), ~D=> (~AF or ~I) (added), N=> (T and CD), (Ar xor FR)=>W, (S xor Ar)=>R. Note the collection-rule CD=>(FR or AF) was removed.\n\n1) From C and C=>I (or from C=>(I or P) with ~P) infer I. 2) From ~D and ~D=> (~AF or ~I), given I, infer ~AF. 3) From N infer T and CD (CD also given). 4) Given ~FR and (Ar xor FR)=>W plus ~W, Ar cannot be true (if Ar were true then W would follow, contradicting ~W), so infer ~Ar. 5) From (S xor Ar)=>R and ~R, with ~Ar we have (S xor false)=>R, so if S were true R would hold, contradicting ~R; hence S must be false. \n\nTherefore the context entails that Dr. Linda does NOT specialize in lemmings, so the statement 'Dr. Linda specializes in lemmings.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 684
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Dr. Linda is passionate about nature, then she develops new theories and collects data.\n- If Linda does not draw conclusions, then she does not analyze findings or she does not interpret results.\n\nAdded rules:\n- If Dr. Linda is passionate about nature, then she develops new theories.\n- If Dr. Linda is passionate about nature, then she collects data.\n- If Linda does not draw conclusions, then it is not the case that she analyzes findings and interprets results.\n\nAdded facts:\n- Dr. Linda interprets results.\n- Dr. Linda develops new theories.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts: C, I (given), ~P, ~D, N, T (given), CD, ~FR, ~W, ~R. From ~D and the rule ~D => not(AF and I), together with I we infer ~AF. With ~FR and (Ar xor FR) => W plus ~W, Ar must be false (if Ar were true W would follow). With ~Ar and (S xor Ar) => R plus ~R, S cannot be true (if S were true R would follow). Therefore S is false, so the statement 'Dr. Linda specializes in lemmings.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1082
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Dr. Linda either studies in the Arctic or conducts field research (but not both), then she publishes her work widely.\n- If Dr. Linda either specializes in lemmings or studies in the Arctic (but not both), then she is internationally recognized.\n\nAdded rules:\n- If Dr. Linda either studies in the Arctic or conducts field research, but not both, then she publishes her work widely.\n- If Dr. Linda either specializes in lemmings or studies in the Arctic, but not both, then she is internationally recognized.\n\nAdded facts:\n- Linda does not analyze findings.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From C (conducts experiments) and the rule C=>I we get I (interprets results). From ~D and the rule ~D=>\u00ac(AF\u2227I), together with I, we infer \u00acAF (does not analyze findings) which also is given as a fact. N (passionate) yields T and CD (but CD no longer implies FR or AF). We have ~FR as a fact. The rule XOR(Ar,FR)=>W and the fact ~W force Ar to be false (if Ar were true W would follow, contradicting ~W). With Ar false, the rule XOR(S,Ar)=>R together with ~R forces S to be false (if S were true R would follow). Thus S (specializes in lemmings) is refuted by the context, so the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1379
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For every scientist, if they do not collect data, then they are not passionate about nature.\n- For every scientist, if they do not develop new theories, then they are not passionate about nature.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We have ~FR and ~W, and the rule (Ar xor FR) => W. Since FR is false, Ar being true would make the XOR true and hence W true, contradicting ~W; therefore Ar must be false. Given Ar is false and the rule (S xor Ar) => R plus the fact ~R, if S were true the XOR would be true and R would follow, contradicting ~R; therefore S must be false. Hence the context entails that Dr. Linda does not specialize in lemmings, so the statement is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1719
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For every scientist, if they are passionate about nature, then they collect data.\n- For every scientist, if they are passionate about nature, then they develop new theories.\n- If Dr. Linda studies in the Arctic and does not conduct field research, or she does not study in the Arctic and conducts field research, then she publishes her work widely.\n- If Dr. Linda specializes in lemmings and does not study in the Arctic, or she does not specialize in lemmings and studies in the Arctic, then she is internationally recognized.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: C, I, ~P, ~D, N, T, CD, ~FR, ~AF, ~W, ~R. From N we have CD and T (given). The rule (Ar xor FR) => W with FR false reduces to Ar => W; since ~W holds, Ar must be false. The rule (S xor Ar) => R with Ar false reduces to S => R; since ~R holds, S must be false. Therefore the context entails that Dr. Linda does not specialize in lemmings, so the statement 'Dr. Linda specializes in lemmings.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1924
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If it is not the case that Dr. Linda specializes in lemmings if and only if she studies in the Arctic, then she is internationally recognized.",
+      "question": "Does the context entail the conclusion 'Dr. Linda specializes in lemmings.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Current facts include: Dr. Linda conducts experiments (C), does not identify patterns (~P), does not draw conclusions (~D), is passionate about nature (N), does not publish widely (~W), is not internationally recognized (~R), collects data (CD), does not do field research (~FR), interprets results (I), develops new theories (T), and does not analyze findings (~AF). Rules include C=>I, ~D=>\u00ac(AF\u2227I), N=>T and N=>CD, (Ar xor FR)=>W, (S xor Ar)=>R, and the new rule \u00ac(S\u2194Ar)=>R (which is equivalent to S xor Ar => R).\n\nSince FR is false and ~W holds, Ar cannot be true (if Ar were true the XOR antecedent Ar xor FR would hold and W would follow, contradicting ~W). Thus Ar is false. With Ar false, the rule (S xor Ar)=>R reduces to S=>R (and likewise \u00ac(S\u2194Ar)=>R reduces to S=>R). But ~R is given, so S must be false (if S were true R would follow, contradicting ~R). Therefore the context entails that Dr. Linda does not specialize in lemmings; the statement 'Dr. Linda specializes in lemmings.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2212
+    }
+  ]
+}

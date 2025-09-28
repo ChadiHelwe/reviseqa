@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 92,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Aspen hosts cooking classes.\nAspen does not achieve culinary recognition.\nAspen shares family traditions.\nAspen cultivates a passion.\nAspen does not excel in culinary arts.\nIf Aspen either pursues her culinary dreams or hosts cooking classes, then she will achieve culinary recognition.\nIf Aspen pursues her culinary dreams, then she will own a bakery.\nAspen either develops a secret recipe or shares family traditions, but not both.\nIf Aspen cultivates a passion, then she either develops a secret recipe or creates specialty treats (or both).\nIf Aspen either becomes a pastry chef or creates specialty treats (but not both), then she excels in culinary arts.\nIf Aspen grows up in an orchard, then she can either become a pastry chef or own a bakery, but not both.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Aspen either pursues her culinary dreams or hosts cooking classes, then she will achieve culinary recognition.\n\nAdded rules:\n- If Aspen becomes a pastry chef and Aspen does not own a bakery, then Aspen grows up in an orchard.\n\nAdded facts:\n- Aspen does not pursue her culinary dreams.\n- Aspen does not own a bakery.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From 'Aspen shares family traditions' and the exclusive-or with 'develops a secret recipe', SecretRecipe is false. From 'Aspen cultivates a passion' and the rule Passion -> (SecretRecipe or Specialty), Specialty must be true. The rule (PastryChef XOR Specialty) -> Excel combined with the fact 'Aspen does not excel in culinary arts' forces PastryChef to be true (otherwise Excel would follow, contradicting the fact). Given PastryChef true and the added fact 'Aspen does not own a bakery', the added rule (PastryChef AND not OwnBakery) -> Orchard yields that Aspen grows up in an orchard. Thus the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 266
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Aspen grows up in an orchard, then she can either become a pastry chef or own a bakery, but not both.\n\nAdded rules:\n- If Aspen does not grow up in an orchard, then either Aspen does not become a pastry chef or Aspen owns a bakery.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Shares family traditions => SecretRecipe is false (exclusive-or). Passion => (SecretRecipe or Specialty); since SecretRecipe false, Specialty true. Rule (Pastry XOR Specialty) => Excel combined with fact ~Excel forces PastryChef to be true (otherwise Excel would follow). Given PastryChef true and fact ~OwnBakery, the added rule (PastryChef AND ~OwnBakery) => Orchard yields that Aspen grows up in an orchard. The removed/original orchard->(pastry XOR bakery) rule is irrelevant; the new ~Orchard -> (~Pastry OR OwnBakery) is just the contrapositive and consistent with the added rule.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 529
+    },
+    {
+      "step": 3,
+      "context": "Added facts:\n- Aspen becomes a pastry chef.\n- Aspen creates specialty treats.\n- Aspen does not develop a secret recipe.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the facts: Aspen is a pastry chef, creates specialty treats, and does not develop a secret recipe. With the original rules: (Pastry XOR Specialty) -> Excel requires exclusive-or; here both Pastry and Specialty are true, so the antecedent is false and Excel is not implied. No original rule derives 'Aspen grows up in an orchard.' (the original orchard rule only goes Orchard -> (Pastry XOR OwnBakery)). There is no rule that infers Orchard from Pastry or Specialty in the current context, and nothing implies ~Orchard either. Therefore 'Aspen grows up in an orchard.' is not entailed by the context.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 776
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Aspen becomes a pastry chef and Aspen does not own a bakery, then Aspen grows up in an orchard.\n- If Aspen does not grow up in an orchard, then either Aspen does not become a pastry chef or Aspen owns a bakery.\n\nAdded rules:\n- If Aspen creates specialty treats, then she does not grow up in an orchard.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added rule says CreatesSpecialty -> not Orchard, and the context includes the fact that Aspen creates specialty treats. Therefore not Orchard is entailed, so Orchard is contradicted and cannot be entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 990
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Aspen does not grow up in an orchard.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context explicitly includes the fact 'Aspen does not grow up in an orchard.' and there are no remaining rules that derive 'Aspen grows up in an orchard.' Therefore the conclusion is contradicted by the facts and is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1172
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Aspen grows up in an orchard, then she either becomes a pastry chef or owns a bakery, and it is not the case that she both becomes a pastry chef and owns a bakery.\n\nAdded rules:\n- If Aspen grows up in an orchard, then she either becomes a pastry chef or owns a bakery, but not both.\n\nAdded facts:\n- Aspen either becomes a pastry chef or owns a bakery, but not both.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context already entails \u00acOrchard: a previously added rule (CreatesSpecialty -> \u00acOrchard) and the fact that Aspen creates specialty treats (and an explicit fact \u00acOrchard were added earlier). Therefore 'Aspen grows up in an orchard.' is contradicted and not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1299
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Aspen does not grow up in an orchard.\n\nRemoved rules:\n- If Aspen creates specialty treats, then she does not grow up in an orchard.\n\nAdded rules:\n- If Aspen either becomes a pastry chef or owns a bakery, but not both, then Aspen grows up in an orchard.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The KB currently contains the rule (Pastry XOR OwnBakery) -> Orchard and the facts Pastry is true and OwnBakery is false (so the antecedent Pastry XOR OwnBakery holds). Therefore Orchard is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1515
+    }
+  ]
+}

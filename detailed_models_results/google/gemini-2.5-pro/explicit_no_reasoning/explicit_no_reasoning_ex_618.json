@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "model_name": "google/gemini-2.5-pro",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 287,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jordan speaks openly.\nJordan does not get encouragement.\nJordan builds connections.\nJordan does not gain resilience.\nJordan meets obstacles.\nJordan's relationships are not strengthened.\nIf someone shares their struggles and speaks openly, then they can get encouragement.\nAnyone who builds connections or shares struggles can find support.\nAnyone who overcomes adversity will gain resilience.\nIf Jordan either meets obstacles or overcomes adversity (but not both), then she faces challenges.\nIf Jordan faces challenges, then she either finds support or receives compassion (but not both).\nIf Jordan either contracts an illness or receives compassion (but not both), then her relationships are strengthened.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Jordan either contracts an illness or receives compassion (but not both), then her relationships are strengthened.\n\nAdded rules:\n- If Jordan's relationships are not strengthened, then she either contracts an illness or receives compassion (but not both).",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. We are given 'Jordan's relationships are not strengthened' (~RS). The rule 'If Jordan's relationships are not strengthened, then she either contracts an illness or receives compassion (but not both)' means that `~RS -> (CI XOR RC)`. Since the premise ~RS is true, the conclusion `CI XOR RC` must be true. This means exactly one of 'Jordan contracts an illness' (CI) or 'Jordan receives compassion' (RC) is true.\n2. We are given 'Jordan does not gain resilience' (~GR). The rule 'Anyone who overcomes adversity will gain resilience' (`OA -> GR`) implies by modus tollens that Jordan does not overcome adversity (~OA).\n3. We are given 'Jordan meets obstacles' (MO). With the deduction of ~OA, the rule 'If Jordan either meets obstacles or overcomes adversity (but not both), then she faces challenges' (`MO XOR OA -> FC`) becomes `True XOR False -> FC`. This is `True -> FC`, so we can deduce that Jordan faces challenges (FC).\n4. From step 3, we know FC is true. The rule 'If Jordan faces challenges, then she either finds support or receives compassion (but not both)' (`FC -> (FS XOR RC)`) means `FS XOR RC` must be true.\n5. We are given 'Jordan builds connections' (BC). The rule 'Anyone who builds connections or shares struggles can find support' (`BC v SS -> FS`) means that since BC is true, the premise `BC v SS` is true, and therefore Jordan finds support (FS).\n6. Combining steps 4 and 5: We know `FS XOR RC` is true and we know FS is true. For `True XOR RC` to be true, RC must be false. So, Jordan does not receive compassion (~RC).\n7. Returning to step 1: We established that `CI XOR RC` is true. Since we just deduced that RC is false, the statement becomes `CI XOR False` is true. For this to be true, CI must be true.\n8. Therefore, the context entails that Jordan contracts an illness.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 226
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Jordan meets obstacles and does not overcome adversity, then she faces challenges.\n- If Jordan does not meet obstacles and overcomes adversity, then she faces challenges.\n- If Jordan faces challenges and finds support, then she does not receive compassion.\n- If Jordan faces challenges and receives compassion, then she does not find support.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. We are given that 'Jordan's relationships are not strengthened' (~RS). The rule 'If Jordan's relationships are not strengthened, then she either contracts an illness or receives compassion (but not both)' is ~RS -> (CI XOR RC). Since the premise ~RS is true, we can deduce that 'CI XOR RC' is true, meaning exactly one of Jordan contracting an illness (CI) or receiving compassion (RC) is true.\n2. We are given that 'Jordan does not gain resilience' (~GR). The rule 'Anyone who overcomes adversity will gain resilience' (OA -> GR) lets us deduce by modus tollens that Jordan does not overcome adversity (~OA).\n3. We are given 'Jordan meets obstacles' (MO). We use the rule 'If Jordan meets obstacles and does not overcome adversity, then she faces challenges' (MO & ~OA -> FC). From our given facts and step 2, the premise 'MO & ~OA' is true. Therefore, Jordan faces challenges (FC).\n4. We are given 'Jordan builds connections' (BC). The rule 'Anyone who builds connections or shares struggles can find support' (BC v SS -> FS) means that since BC is true, Jordan finds support (FS).\n5. Now we use the rule 'If Jordan faces challenges and finds support, then she does not receive compassion' (FC & FS -> ~RC). From step 3, we know FC is true, and from step 4, we know FS is true. Thus, the premise 'FC & FS' is true, and we can conclude that Jordan does not receive compassion (~RC).\n6. Finally, we return to our deduction from step 1: 'CI XOR RC' is true. From step 5, we know that RC is false. For the exclusive or 'CI XOR False' to be true, CI must be true.\n7. Therefore, the context entails the conclusion 'Jordan contracts an illness'.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 783
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x builds connections or x shares their struggles, then x can find support.\n\nAdded facts:\n- Jordan does not find support.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "1. We are given 'Jordan's relationships are not strengthened' (~RS). The rule 'If Jordan's relationships are not strengthened, then she either contracts an illness or receives compassion (but not both)' is `~RS -> (CI XOR RC)`. Since the premise ~RS is true, we can deduce that `CI XOR RC` is true. This means exactly one of 'Jordan contracts an illness' (CI) or 'Jordan receives compassion' (RC) is true.\n2. We are given 'Jordan does not gain resilience' (~GR). The rule 'Anyone who overcomes adversity will gain resilience' (`OA -> GR`) allows us to deduce by modus tollens that Jordan does not overcome adversity (~OA).\n3. We are given 'Jordan meets obstacles' (MO). We use the rule 'If Jordan meets obstacles and does not overcome adversity, then she faces challenges' (`MO & ~OA -> FC`). We know MO is true (given) and ~OA is true (from step 2). Therefore, the premise `MO & ~OA` is true, and we can conclude that Jordan faces challenges (FC).\n4. We are now given the fact 'Jordan does not find support' (~FS).\n5. Let's examine the rules that involve receiving compassion (RC) to see if we can determine its truth value. We have two relevant rules: `FC & FS -> ~RC` and `FC & RC -> ~FS`.\n6. For the first rule, `FC & FS -> ~RC`, the premise is `FC & FS`. We know FC is true (from step 3) but FS is false (from step 4). So the premise `True & False` is False. When the premise of an implication is false, the rule is satisfied regardless of the conclusion. Thus, this rule tells us nothing about the truth value of RC.\n7. For the second rule, `FC & RC -> ~FS`, we know the conclusion `~FS` is true (from step 4). An implication with a true conclusion is always true, regardless of the premise (`True & RC`). So, RC could be true or false. This rule also tells us nothing definitive about RC.\n8. Since we cannot determine whether Jordan receives compassion (RC) is true or false, we cannot resolve the `CI XOR RC` statement from step 1. If RC is true, then CI must be false. If RC is false, then CI must be true. As both possibilities are consistent with the context, we cannot definitively conclude that 'Jordan contracts an illness'.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1314
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Jordan does not gain resilience, then she does not overcome adversity.\n- If Jordan faces challenges and does not find support, then she receives compassion.\n- If Jordan's relationships are not strengthened and she receives compassion, then she does not contract an illness.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. We are given the fact 'Jordan does not gain resilience' (~GR) and the new rule 'If Jordan does not gain resilience, then she does not overcome adversity' (~GR -> ~OA). Since the premise ~GR is true, we can deduce that Jordan does not overcome adversity (~OA).\n2. We are given 'Jordan meets obstacles' (MO). Using the rule 'If Jordan meets obstacles and does not overcome adversity, then she faces challenges' (MO & ~OA -> FC) with the known facts MO and ~OA (from step 1), we deduce that Jordan faces challenges (FC).\n3. We are given 'Jordan does not find support' (~FS). Using the new rule 'If Jordan faces challenges and does not find support, then she receives compassion' (FC & ~FS -> RC) with the known facts FC (from step 2) and ~FS, we deduce that Jordan receives compassion (RC).\n4. We are given 'Jordan's relationships are not strengthened' (~RS). Now we use the final new rule: 'If Jordan's relationships are not strengthened and she receives compassion, then she does not contract an illness' (~RS & RC -> ~CI).\n5. The premise of this rule is '~RS & RC'. We know ~RS is a given fact, and we deduced RC in step 3. Therefore, the premise is true.\n6. Because the premise is true, the conclusion of the rule must also be true. Thus, we conclude 'Jordan does not contract an illness' (~CI).\n7. The question asks if the context entails the conclusion 'Jordan contracts an illness' (CI). Since we have proven the negation of this statement (~CI), the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1940
+    },
+    {
+      "step": 5,
+      "context": "",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. The context for this question is identical to the previous one. Let's re-evaluate the logical chain. \n2. We are given the fact 'Jordan does not gain resilience' (~GR) and the rule 'If Jordan does not gain resilience, then she does not overcome adversity' (~GR -> ~OA). By Modus Ponens, we deduce that Jordan does not overcome adversity (~OA).\n3. We are given the fact 'Jordan meets obstacles' (MO). Using the deduction from step 2 (~OA) and the rule 'If Jordan meets obstacles and does not overcome adversity, then she faces challenges' (MO & ~OA -> FC), the premise is true. Thus, we deduce that Jordan faces challenges (FC).\n4. We are given the fact 'Jordan does not find support' (~FS). Using the deduction from step 3 (FC) and the rule 'If Jordan faces challenges and does not find support, then she receives compassion' (FC & ~FS -> RC), the premise is true. Thus, we deduce that Jordan receives compassion (RC).\n5. We are given the fact 'Jordan's relationships are not strengthened' (~RS). Using the deduction from step 4 (RC) and the rule 'If Jordan's relationships are not strengthened and she receives compassion, then she does not contract an illness' (~RS & RC -> ~CI), the premise is true. Thus, we deduce that Jordan does not contract an illness (~CI).\n6. The question asks if the conclusion 'Jordan contracts an illness' (CI) is entailed. Since our logical deduction proves the negation of the conclusion (~CI), the original conclusion is false.",
+      "correct": true,
+      "tags": [
+        "no_change"
+      ],
+      "is_demonstration": false,
+      "token_count": 2428
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Jordan meets obstacles and does not overcome adversity, then she faces challenges.\n\nAdded rules:\n- Either it is not the case that Jordan meets obstacles and does not overcome adversity, or she faces challenges.\n- If Jordan does not gain resilience, then she does not overcome adversity.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. We are given the fact 'Jordan does not gain resilience' (~GR) and the rule 'If Jordan does not gain resilience, then she does not overcome adversity' (~GR -> ~OA). By modus ponens, we can deduce that Jordan does not overcome adversity (~OA).\n2. We are given the fact 'Jordan meets obstacles' (MO) and the rule 'Either it is not the case that Jordan meets obstacles and does not overcome adversity, or she faces challenges'. This rule can be written as `~(MO & ~OA) v FC`. We know MO is true (given) and ~OA is true (from step 1), so the expression `MO & ~OA` is true. This makes `~(MO & ~OA)` false. For the disjunction `False v FC` to be true, FC (Jordan faces challenges) must be true.\n3. We are given 'Jordan does not find support' (~FS). We use the rule 'If Jordan faces challenges and does not find support, then she receives compassion' (FC & ~FS -> RC). From step 2, FC is true, and we are given ~FS is true. The premise `FC & ~FS` is therefore true. By modus ponens, we deduce that Jordan receives compassion (RC).\n4. We are given 'Jordan's relationships are not strengthened' (~RS). We use the rule 'If Jordan's relationships are not strengthened and she receives compassion, then she does not contract an illness' (~RS & RC -> ~CI). We know ~RS is true (given) and we deduced RC is true in step 3. The premise `~RS & RC` is therefore true. By modus ponens, we deduce that Jordan does not contract an illness (~CI).\n5. The question asks if the context entails the conclusion 'Jordan contracts an illness' (CI). Since our deduction proves the negation of this statement (~CI), the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2846
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Jordan faces challenges, then she receives compassion.\n- If Jordan receives compassion, then she does not contract an illness.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. We are given the fact 'Jordan does not gain resilience' (~GR) and the rule 'If Jordan does not gain resilience, then she does not overcome adversity' (~GR -> ~OA). By modus ponens, we deduce that Jordan does not overcome adversity (~OA).\n2. We are given 'Jordan meets obstacles' (MO) and the rule 'Either it is not the case that Jordan meets obstacles and does not overcome adversity, or she faces challenges'. This is equivalent to an implication: `(MO & ~OA) -> FC`. Since MO is a given fact and we deduced ~OA in the previous step, the premise of this implication is true. Therefore, we can conclude that Jordan faces challenges (FC).\n3. Now we use the newly added rule: 'If Jordan faces challenges, then she receives compassion' (FC -> RC). Since we deduced that Jordan faces challenges (FC) in step 2, we can apply modus ponens to conclude that Jordan receives compassion (RC).\n4. Next, we use the second newly added rule: 'If Jordan receives compassion, then she does not contract an illness' (RC -> ~CI). Since we deduced that Jordan receives compassion (RC) in step 3, we can again apply modus ponens to conclude that Jordan does not contract an illness (~CI).\n5. The question asks if the context entails the conclusion 'Jordan contracts an illness' (CI). Our deduction has proven the negation of this statement (~CI). Therefore, the conclusion itself must be false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3389
+    }
+  ]
+}

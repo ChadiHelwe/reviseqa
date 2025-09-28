@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-nano",
+    "task_path": "implicit_no_reasoning_no_correction",
+    "chain_index": 276,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Angie supports local businesses.\nAngie works independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nIf someone donates to charity, then they help others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie perfects a bread recipe, then she attracts customers.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nFor all x, if x donates to charity, then x helps others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the XOR statement (B XOR PI) and the fact not PI, Angie builds a community (B). The bread-rule pair is Pbread -> Aev and Aev -> Pbread (perfects bread iff attracts customers). To entailed not Pbread, we would need not Aev, but Aev requires both shares passion and B; shares passion itself would require loves cooking and helps others, which depends on further facts (donating to charity leading to helps others, etc.). Since donating to charity is not forced (she could volunteer) and the chain to establish shares passion is not guaranteed, we cannot derive either Aev or not Aev from the given information. Therefore the conclusion 'Angie did not perfect a bread recipe' is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 258
+    },
+    {
+      "step": 2,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie pursues her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nFor all x, if x donates to charity, then x helps others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The rules form an equivalence between 'attracts customers' and 'perfects a bread recipe' (attracts -> perfects and perfects -> attracts). To entail 'not perfects bread', we would need to derive not attracts or not perfects. The context states Angie pursues personal interests and, by the exclusive-or rule with building a bakery community, does not build a bakery community. Since one rule requires both 'shares passion' and 'builds a community' to yield attracts, and 'builds a community' is negated, we cannot derive attracts, hence cannot derive perfects. There is also no rule yielding not perfects. Therefore the conclusion 'Angie did not perfect a bread recipe' is not entailed (uncertain).",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 663
+    },
+    {
+      "step": 3,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nFor all x, if x donates to charity, then x helps others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From 'Angie does not pursue her personal interests' and the XOR rule 'builds a community or pursues personal interests, but not both', Angie builds a community (B true). 'Angie either loves cooking or works independently' with 'does not work independently' yields loves cooking (L true). She supports local businesses, so the condition for the local-events rule is satisfied, hence Angie participates in local events (E true). The XOR between E and volunteering implies volunteering is false, so at least one of volunteering or donating must be true; since volunteering is false, donating (D) must be true, which yields helps others (H). With L and H, Angie shares her passion (S). S and B then imply Angie attracts customers (A). A implies perfects a bread recipe (P), and P implies A, so P is true. Therefore the context entails Angie did perfect a bread recipe, not the negation. The conclusion 'Angie did not perfect a bread recipe' is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1066
+    },
+    {
+      "step": 4,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nAngie donates to charity and Angie does not help others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the facts: Angie supports local businesses implies she participates in local events via the rule. Since she participates, the exclusive-or with volunteering makes volunteering false. The disjunction of volunteering or donating then forces donating to be true. The explicit statement also says she does not help others, so 'helps others' is false. The exclusive-or between building a community and pursuing personal interests, with not pursuing personal interests, yields that she builds a community. The exclusive-or between loves cooking and works independently, with not working independently, yields that she loves cooking. However, there is no rule deriving that Angie attracts customers or that she does not attract customers from these facts, and the statements about sharing passion or attracting customers do not force either the positive or negative of perfecting a bread recipe. Since perfecting a bread recipe is equivalent to attracting customers, we cannot entail either 'perfects' or 'not perfects' from the given information. Therefore the conclusion 'Angie did not perfect a bread recipe' is not entailed nor contradicted (uncertain).",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1521
+    },
+    {
+      "step": 5,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nEither Angie does not donate to charity, or Angie helps others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the given facts: Angie does not pursue personal interests, and the exclusive-or with building a bakery community implies Angie builds a community. Angie does not work independently, so she loves cooking. However, there is no rule deriving that Angie attracts customers, nor a rule deriving not attract customers, from these facts alone. The bread rule chain is P <-> A (perfects bread iff attracts customers). Since we cannot derive either P or not P from the available rules and facts (the necessary conditions to trigger attraction or its negation are not established), the conclusion 'Angie did not perfect a bread recipe' is not entailed. Given the inconsistencies in some related statements, they do not force the negation or the assertion of perfecting bread either. Therefore, the status is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1982
+    },
+    {
+      "step": 6,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie pursues her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nEither Angie does not donate to charity, or Angie helps others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the context: Angie pursues her personal interests and, due to the exclusive-or with building a bakery community, she does not build a community. She does not work independently, so she loves cooking. She supports local businesses, so she participates in local events; then the 'participates vs volunteers' XOR implies she does not volunteer, leaving the 'donates to charity' option as true to satisfy the 'volunteers or donates' clause. Therefore donates to charity is true, and hence helps others is true. From loves cooking and helps others, we get shares passion. However, to derive attracts customers (and thus perfects a bread recipe) we need both shares passion and builds a community, but she does not build a community (B is false). There is no rule that yields either perfecting a bread recipe or its negation from the given facts. Therefore, the conclusion 'Angie did not perfect a bread recipe' is not entailed nor contradicted (uncertain).",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2387
+    },
+    {
+      "step": 7,
+      "context": "Angie supports local businesses.\nAngie does not work independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nEither Angie does not donate to charity, or Angie helps others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie loves cooking and helps others, then she shares her passion.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie shares her passion and builds a community, then she attracts customers.\nIf Angie perfects a bread recipe, then she attracts customers.\nIf Angie attracts customers, then she perfects a bread recipe.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Angie supports local businesses \u2192 via the rule she participates in local events. With the XOR between participating and volunteering, she does not volunteer. The disjunction 'Either Angie does not donate to charity, or Angie helps others' then implies Angie helps others. Since she does not work independently, the XOR with building a bakery community implies she builds a community. From 'Angie loves cooking or works independently' and 'not works independently', we get Angie loves cooking. From loves cooking and helps others, we get Angie shares her passion. Sharing passion and building a community then implies Angie attracts customers, and attracting customers implies Angie perfects a bread recipe. Therefore Angie does perfect a bread recipe, so the conclusion 'Angie did not perfect a bread recipe' is not entailed; it is contradicted. The correct choice is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2837
+    }
+  ]
+}

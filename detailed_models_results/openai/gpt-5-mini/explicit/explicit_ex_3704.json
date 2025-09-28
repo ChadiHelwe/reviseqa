@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 202,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Clyde does not play other sports.\nClyde cannot motivate others.\nClyde is competitive.\nClyde achieves success.\nClyde tracks fly balls.\nClyde does not make game-saving plays.\nClyde either plays other sports or coaches teams, but not both.\nAnyone who leads by example or sets high standards can motivate others.\nIf Clyde either plays baseball or coaches teams (but not both), then he leads by example.\nIf Clyde is competitive, then he either achieves success or inspires others, but not both.\nAnyone who plays baseball and dominates the defense inspires others.\nIf Clyde either tracks fly balls or is an exceptional fielder (but not both), then he dominates the defense.\nFor all humans, if someone is an exceptional fielder, then they either have quick reflexes or make game-saving plays (or both).",
+      "question": "Does the context entail the conclusion 'Clyde has quick reflexes.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Clyde does not play other sports.. Clyde either plays other sports or coaches teams, but not both.. Therefore, Clyde coaches teams.. Clyde cannot motivate others.. Anyone who leads by example or sets high standards can motivate others.. Therefore, Clyde does not lead by example.. Clyde coaches teams. Clyde does not lead by example.. If Clyde either plays baseball or coaches teams (but not both), then he leads by example.. Therefore, Clyde plays baseball.. Clyde is competitive. Clyde achieves success.. If Clyde is competitive, then he either achieves success or inspires others, but not both.. Therefore, Clyde does not inspire others.. Clyde plays baseball. Clyde does not inspire others.. Anyone who plays baseball and dominates the defense inspires others.. Therefore, Clyde does not dominate the defense.. Clyde tracks fly balls. Clyde does not dominate the defense.. If Clyde either tracks fly balls or is an exceptional fielder (but not both), then he dominates the defense.. Therefore, Clyde is an exceptional fielder.. Clyde is an exceptional fielder. Clyde does not make game-saving plays.. For all humans, if someone is an exceptional fielder, then they either have quick reflexes or make game-saving plays (or both).. Therefore, Clyde has quick reflexes..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Clyde does not make game-saving plays.\n\nAdded rules:\n- For all x, if x makes game-saving plays, then x does not have quick reflexes.\n\nAdded facts:\n- Clyde makes game-saving plays.",
+      "question": "Does the context entail the conclusion 'Clyde has quick reflexes.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From not plays other sports and (plays other sports xor coaches teams) we get coaches_teams. If exceptional_fielder were false then (tracks_fly_balls xor exceptional_fielder) would give dominates_defense, and since (plays_baseball and dominates_defense) -> inspires_others and competitive with achieves_success rules out inspires_others, that would force not plays_baseball, which with coaches_teams would make (plays_baseball xor coaches_teams) true and so lead to leads_by_example and hence can_motivate \u2014 contradicting not can_motivate. Thus exceptional_fielder must be true. Exceptional_fielder -> (quick_reflexes or makes_game_saving_plays). But Clyde makes_game_saving_plays (given), and makes_game_saving_plays -> not quick_reflexes (added). So Clyde does not have quick reflexes. Therefore the statement \"Clyde has quick reflexes.\" is not entailed (indeed its negation is entailed).",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 526
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x makes game-saving plays, then x does not have quick reflexes.\n\nAdded rules:\n- For all x, if x makes game-saving plays and x tracks fly balls, then x has quick reflexes.",
+      "question": "Does the context entail the conclusion 'Clyde has quick reflexes.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Clyde tracks fly balls and (from the modified facts) Clyde makes game-saving plays. The added universal rule says: if someone makes game-saving plays and tracks fly balls, then they have quick reflexes. Therefore Clyde has quick reflexes. No rule in the current context contradicts this, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 816
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x makes game-saving plays and x tracks fly balls, then x has quick reflexes.\n\nAdded rules:\n- For all x, if x makes game-saving plays, then if x is an exceptional fielder, then x does not have quick reflexes.",
+      "question": "Does the context entail the conclusion 'Clyde has quick reflexes.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Clyde does not play other sports and (plays_other_sports xor coaches_teams) gives coaches_teams. can_motivate is false and (leads_by_example or sets_high_standards) -> can_motivate, so leads_by_example must be false. The rule (plays_baseball xor coaches_teams) -> leads_by_example then forces plays_baseball to be true (since coaches_teams is true) so the antecedent is false. From plays_baseball and (plays_baseball and dominates_defense -> inspires_others) and inspires_others being false, we get not dominates_defense. The rule (tracks_fly_balls xor exceptional_fielder) -> dominates_defense with tracks_fly_balls true then forces exceptional_fielder to be true (to make the xor false and thus not imply dominates). So exceptional_fielder is true. We also have the fact Clyde makes_game_saving_plays. The added rule makes_game_saving_plays \u2227 exceptional_fielder -> not quick_reflexes therefore yields not quick_reflexes. Thus the context entails that Clyde does not have quick reflexes, so it does not entail that he has quick reflexes.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 977
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Clyde cannot motivate others.\n\nRemoved rules:\n- For all x, if x makes game-saving plays, then if x is an exceptional fielder, then x does not have quick reflexes.\n\nAdded rules:\n- For all x, if x is an exceptional fielder, then x has quick reflexes.\n\nAdded facts:\n- Clyde is an exceptional fielder.",
+      "question": "Does the context entail the conclusion 'Clyde has quick reflexes.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Clyde is an exceptional fielder (given). The context includes the universal rule that any exceptional fielder has quick reflexes. Therefore Clyde has quick reflexes, and nothing in the current context contradicts this.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1316
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- For all x, if x is an exceptional fielder, then x has quick reflexes.\n\nAdded rules:\n- For all x, if x makes game-saving plays, then x does not have quick reflexes.",
+      "question": "Does the context entail the conclusion 'Clyde has quick reflexes.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Clyde makes game-saving plays (given). The added universal rule says: if someone makes game-saving plays, then they do not have quick reflexes. Therefore Clyde does not have quick reflexes. The remaining rule that exceptional fielders have either quick reflexes or make game-saving plays is satisfied by Clyde's making game-saving plays and does not entail he has quick reflexes. No rule in the current context entails Clyde has quick reflexes, and in fact his quick reflexes are negated, so the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1479
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- For all x, if x makes game-saving plays, then x does not have quick reflexes.\n\nAdded rules:\n- If Clyde makes game-saving plays, then Clyde has quick reflexes.",
+      "question": "Does the context entail the conclusion 'Clyde has quick reflexes.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context currently includes the fact Clyde makes game-saving plays (added earlier) and the new rule: if Clyde makes game-saving plays then Clyde has quick reflexes. Applying that rule to the fact yields that Clyde has quick reflexes. No remaining rule asserts the negation of quick reflexes, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1678
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Clyde makes game-saving plays, then Clyde has quick reflexes.\n- For all x, if x is an exceptional fielder, then x either has quick reflexes or makes game-saving plays (or both).\n\nAdded rules:\n- If Clyde makes game-saving plays, then Clyde inspires others.\n- If Clyde has quick reflexes, then Clyde makes game-saving plays.",
+      "question": "Does the context entail the conclusion 'Clyde has quick reflexes.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Current facts include Clyde makes game-saving plays and Clyde is an exceptional fielder. The new rules give: makes_game_saving_plays -> inspires_others, and quick_reflexes -> makes_game_saving_plays. From Clyde being competitive and achieving success, the exclusive-or rule (achieves_success xor inspires_others) forces inspires_others to be false, while makes_game_saving_plays yields inspires_others true, so the theory is inconsistent on inspires_others. However, there is no rule that derives quick_reflexes (all rules that previously produced quick_reflexes were removed); the only rule involving quick_reflexes is quick_reflexes -> makes_game_saving_plays (the opposite direction). Thus neither quick_reflexes nor its negation is derivable from the current context, so the conclusion 'Clyde has quick reflexes.' is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1829
+    }
+  ]
+}

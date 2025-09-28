@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 276,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Angie supports local businesses.\nAngie works independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nIf someone donates to charity, then they help others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie perfects a bread recipe, then she attracts customers.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Angie works independently.\n\nAdded rules:\n- If Angie loves cooking and helps others, then she shares her passion.\n- If Angie shares her passion and builds a community, then she attracts customers.\n- If Angie attracts customers, then she perfects a bread recipe.\n\nAdded facts:\n- Angie does not work independently.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Angie supports local businesses, so she participates in local events (fact 3). Since she participates in events, she cannot volunteer (fact 4), forcing her to donate to charity (fact 5). Donating implies she helps others (rule 6). She does not work independently (added fact), so from fact 7, she loves cooking. With loving cooking and helping others, rule A gives her sharing passion. Fact 8 (she builds community) and rule B lead to attracting customers. Rule C then forces her to perfect the recipe by modus ponens. Therefore, the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 258
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Angie does not pursue her personal interests.\n\nAdded facts:\n- Angie pursues her personal interests.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Angie pursues her personal interests, so from fact 8, she does not build a community. Supporting local businesses (fact 1) forces participation in local events (rule 3), blocking volunteering (fact 4), so she donates to charity and helps others (rule 6). However, since she works independently (original fact, unmodified), fact 7 denies her love for cooking. Rule A (requiring both love for cooking and helping others) cannot activate, so she does not share her passion. This breaks the chain to attracting customers (rule B) and, consequently, perfecting the bread recipe (rule C). The conclusion 'Angie did not perfect a bread recipe' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2614
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Angie pursues her personal interests.\n\nAdded facts:\n- Angie does not pursue her personal interests.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Angie does not work independently (previous addition), so from fact 7, she loves cooking. She does not pursue personal interests (current addition), so from fact 8, she builds a community. Supporting local businesses (original fact) triggers local event participation (rule 3), blocking volunteering (fact 4), forcing her to donate (fact 5) and help others (rule 6). With cooking and helping others, rule A grants sharing her passion. Building a community and sharing passion activates rule B to attract customers, leading to rule C to perfect a bread recipe. Thus, the conclusion 'Angie did not perfect a bread recipe' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 5665
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x donates to charity, then x helps others.\n\nAdded facts:\n- Angie donates to charity and Angie does not help others.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Angie donates to charity (added fact) but does not help others (explicit fact), breaking the prior link between donation and helping others. This invalidates the premise for rule A (loves cooking and helps others \u2192 shares passion). Since she lacks sharing passion, rule B (shares passion and builds community \u2192 attracts customers) cannot activate, blocking rule C (attracts customers \u2192 perfects a bread recipe). The conclusion 'Angie did not perfect a bread recipe' is supported by the broken causal chain.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 6368
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Angie donates to charity and Angie does not help others.\n\nAdded rules:\n- Either Angie does not donate to charity, or Angie helps others.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added rule 'Either Angie does not donate to charity, or Angie helps others' effectively restores the prior rule 'If Angie donates to charity, then she helps others.' Supporting local businesses triggers participation in local events (rule 3), blocking volunteer work (fact 4), so she donates to charity (fact 5). With donations now implying helping others, she helps others. Combining that with her love for cooking (from not working independently and fact 7), rule A activates (shares passion). Since she builds a community (from not pursuing personal interests, fact 8), rule B leads to attracting customers, and rule C finally ensures she perfects a bread recipe. The conclusion 'Angie did not perfect a bread recipe' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 7186
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Angie does not pursue her personal interests.\n\nAdded facts:\n- Angie pursues her personal interests.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Angie pursues her personal interests, which via fact 8 negates 'builds a community through her bakery'. Supporting local businesses (original) leads to event participation (rule 3), blocking volunteering (fact 4), so she donates (fact 5). The rule 'either not donate or help' ensures she helps others. With love for cooking (from not working independently) and helping others, rule A applies to share her passion. However, since she does not build a community (fact 8), rule B (requires both) fails, preventing customer attraction and rule C. The chain to perfecting the bread recipe breaks here. The conclusion is true.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 8071
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Angie pursues her personal interests.\n\nAdded facts:\n- Angie does not pursue her personal interests.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Angie does not pursue her personal interests, so from fact 8, she builds a community. Supporting local businesses (original fact) triggers participation in local events (rule 3), blocking volunteering (fact 4), so she donates to charity (fact 5) and helps others (via the prior rule). Loving cooking (from not working independently, fact 7) and helping others activate rule A to share her passion. With community built and passion shared, rule B attracts customers, leading to ruling C to perfect a bread recipe. The conclusion 'Angie did not perfect a bread recipe' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 8855
+    }
+  ]
+}

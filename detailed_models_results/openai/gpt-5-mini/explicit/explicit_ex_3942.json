@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 245,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Cannon has leadership skills.\nCannon is not charismatic.\nCannon collaborates with experts.\nCannon does not develop innovative products.\nCannon does not drive progress.\nCannon develops breakthrough technologies.\nCannon does not make a positive impact on the ecosystem.\nIf Cannon has leadership skills, then he is either an influential figure or charismatic (but not both).\nIf someone collaborates with experts and improves existing solutions, then they can develop innovative products.\nCannon either creates something original or improves existing solutions.\nIf Cannon is an influential figure, then he either publishes research papers or creates something original (but not both).\nAnyone who pursues innovative research drives progress.\nIf Cannon either publishes research papers or develops breakthrough technologies (but not both), then he receives global recognition.\nCannon either holds a PhD or pursues innovative research.\nIf Cannon holds a PhD and receives global recognition, then he is dedicated to environmental sustainability.",
+      "question": "Does the context entail the conclusion 'If Cannon dedicates himself to environmental sustainability, then he makes a positive impact on the ecosystem.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Cannon has leadership skills. Cannon is not charismatic.. If Cannon has leadership skills, then he is either an influential figure or charismatic (but not both).. Therefore, Cannon is an influential figure.. Cannon collaborates with experts. Cannon does not develop innovative products.. If someone collaborates with experts and improves existing solutions, then they can develop innovative products.. Therefore, Cannon does not improve existing solutions.. Cannon does not improve existing solutions.. Cannon either creates something original or improves existing solutions.. Therefore, Cannon creates something original.. Cannon is an influential figure. Cannon creates something original.. If Cannon is an influential figure, then he either publishes research papers or creates something original (but not both).. Therefore, Cannon does not publish research papers.. Cannon does not drive progress.. Anyone who pursues innovative research drives progress.. Therefore, Cannon does not pursue innovative research.. Cannon does not publish research papers. Cannon develops breakthrough technologies.. If Cannon either publishes research papers or develops breakthrough technologies (but not both), then he receives global recognition.. Therefore, Cannon receives global recognition.. Cannon does not pursue innovative research.. Cannon either holds a PhD or pursues innovative research.. Therefore, Cannon holds a PhD.. Cannon holds a PhD. Cannon receives global recognition.. If Cannon holds a PhD and receives global recognition, then he is dedicated to environmental sustainability.. Therefore, Cannon dedicates himself to environmental sustainability.. Cannon dedicates himself to environmental sustainability. Cannon does not make a positive impact on the ecosystem.. . Therefore, If Cannon dedicates himself to environmental sustainability, then he makes a positive impact on the ecosystem..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Cannon does not drive progress.\n\nAdded rules:\n- If Cannon receives global recognition, then he is not dedicated to environmental sustainability.",
+      "question": "Does the context entail the conclusion 'If Cannon dedicates himself to environmental sustainability, then he makes a positive impact on the ecosystem.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From leadership skills and not charismatic, Cannon is an influential figure. Given the rules and facts: if he collaborated and improved he could develop innovative products, but he does not develop innovative products, so he does not improve existing solutions and thus (by the either/or) creates something original. The influential exclusive rule then implies he does not publish research papers. He does develop breakthrough technologies, so exactly one of (publish, develop breakthrough) holds, hence he receives global recognition. The added rule says receiving global recognition implies he is not dedicated to environmental sustainability, so not dedicated is entailed. We also have the explicit fact that he does not make a positive impact on the ecosystem. Since dedication is refuted by the theory (the antecedent of the queried implication is false in all models of the theory), the conditional \u201cIf Cannon dedicates himself to environmental sustainability, then he makes a positive impact on the ecosystem\u201d is vacuously true and therefore entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 612
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x collaborates with experts and x improves existing solutions, then x develops innovative products.\n\nAdded facts:\n- Cannon does not drive progress.",
+      "question": "Does the context entail the conclusion 'If Cannon dedicates himself to environmental sustainability, then he makes a positive impact on the ecosystem.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With the removed rule, Collab+Improves -> InnovProd no longer applies. From leadership and not charismatic, Cannon is an influential figure. Influential enforces (Publish XOR Original); Original XOR Improves also holds. Two consistent branches arise: (A) Original=true => Publish=false, and because Breakthrough=true this makes GlobalRec=true. But GlobalRec with PhD (PhD is forced because PursueInnov would imply DriveProgress, which contradicts the fact ~DriveProgress) triggers PhD & GlobalRec -> Dedicated, while the added rule GlobalRec -> ~Dedicated gives the opposite, so any model with GlobalRec is inconsistent; hence GlobalRec cannot hold in any model. (B) Original=false and Publish=true (to satisfy the influential xor). Then Publish and Breakthrough are both true, so the antecedent of (Publish XOR Breakthrough) is false and GlobalRec is false. PhD is true (as above). With GlobalRec false neither PhD&GlobalRec->Dedicated nor GlobalRec->~Dedicated applies, so Dedicated is unconstrained. Because ~PositiveImpact is a fact, we can build a model with Dedicated=true and PositiveImpact=false that satisfies all rules (choose Original=false, Publish=true, GlobalRec=false, PhD=true, Dedicated=true). In that model the implication Dedicated -> PositiveImpact is false. Therefore the implication is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 887
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- If Cannon holds a PhD, then he is dedicated to environmental sustainability.",
+      "question": "Does the context entail the conclusion 'If Cannon dedicates himself to environmental sustainability, then he makes a positive impact on the ecosystem.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From ~DriveProgress and (PursueInnov -> DriveProgress) we get ~PursueInnov, so from (PhD \u2228 PursueInnov) Cannon must hold a PhD. The added rule (PhD -> Dedicated) therefore entails Dedicated. The context also includes the fact that Cannon does not make a positive impact on the ecosystem (~PositiveImpact). Thus there is (in every model) Dedicated=true and PositiveImpact=false, so the implication Dedicated -> PositiveImpact is false ( antecedent true, consequent false). Therefore the implication is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1259
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Cannon does not drive progress.\n\nAdded facts:\n- Cannon drives progress.\n- Cannon does not improve existing solutions.",
+      "question": "Does the context entail the conclusion 'If Cannon dedicates himself to environmental sustainability, then he makes a positive impact on the ecosystem.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From Leadership and ~Charismatic, the exclusive leadership rule yields Influential. From ~Improves and the (Original XOR Improves) fact, Original holds. Influential with Original forces Publish=false. Breakthrough=true and Publish=false make (Publish XOR Breakthrough) true, so GlobalRec holds. The disjunction (PhD \u2228 PursueInnov) must hold; PursueInnov \u2192 Drive and Drive is a fact, so there is a consistent choice with PursueInnov=true and PhD=false. If PhD were true it would conflict with GlobalRec because PhD\u2192Dedicated (and PhD\u2227GlobalRec\u2192Dedicated) while GlobalRec\u2192\u00acDedicated produces contradiction; thus no consistent model has PhD=true, hence no consistent model has Dedicated=true. With ~PositiveImpact a fact, any model with Dedicated=true would falsify the target implication, but there are no consistent models with Dedicated=true, so the implication \u201cIf Cannon dedicates himself to environmental sustainability, then he makes a positive impact on the ecosystem\u201d is vacuously true in all consistent models. Therefore the theory entails the implication.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1449
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Cannon is an influential figure.\n- Cannon creates something original.",
+      "question": "Does the context entail the conclusion 'If Cannon dedicates himself to environmental sustainability, then he makes a positive impact on the ecosystem.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given the added facts Influential and Original plus existing facts Breakthrough=true and the influential rule (Influential -> Publish XOR Original), Original being true forces Publish=false. Then (Publish XOR Breakthrough) is true (false XOR true), so GlobalRec follows. The rule GlobalRec -> \u00acDedicated therefore yields \u00acDedicated in all models. Since Dedicated is false in every model, the implication (Dedicated -> PositiveImpact) is vacuously true (regardless of the fact \u00acPositiveImpact). Therefore the theory entails the conditional.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1756
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Cannon receives global recognition, then he is not dedicated to environmental sustainability.\n\nAdded rules:\n- If Cannon is an influential figure and Cannon creates something original, then he does not pursue innovative research.",
+      "question": "Does the context entail the conclusion 'If Cannon dedicates himself to environmental sustainability, then he makes a positive impact on the ecosystem.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the added facts Influential and Original and the new rule (Influential \u2227 Original -> \u00acPursueInnov) we get \u00acPursueInnov. The disjunction (PhD \u2228 PursueInnov) therefore forces PhD. The rule PhD -> Dedicated (previously added) then yields Dedicated. The context also contains the fact \u00acPositiveImpact (Cannon does not make a positive impact on the ecosystem). Thus there is no model of the theory where Dedicated is true and PositiveImpact is also true; in particular Dedicated is true and PositiveImpact is false in all models, so the conditional (Dedicated -> PositiveImpact) is false. Therefore the implication is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1937
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Cannon creates something original.\n\nAdded rules:\n- If Cannon is an influential figure, then he pursues innovative research.\n- If Cannon pursues innovative research, then he is not dedicated to environmental sustainability.",
+      "question": "Does the context entail the conclusion 'If Cannon dedicates himself to environmental sustainability, then he makes a positive impact on the ecosystem.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Lead and \u00acChar entail Influential. The XOR (Original XOR Improve) together with the fact \u00acImprove entail Original. The new rule Influential -> PursueInnov yields PursueInnov, while the rule Influential \u2227 Original -> \u00acPursueInnov yields \u00acPursueInnov, producing a contradiction (the theory is inconsistent). In classical logic an inconsistent theory entails every formula, so the implication (Dedicated -> PositiveImpact) is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2177
+    }
+  ]
+}

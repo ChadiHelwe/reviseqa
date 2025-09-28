@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 159,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Abdiel values beauty.\nAbdiel does not respect culture.\nAbdiel does not listen to podcasts.\nAbdiel does not enjoy singing.\nAbdiel has charisma.\nAbdiel cannot lead groups.\nAbdiel does not have stage fright.\nAnyone who values beauty or respects culture appreciates harmony.\nAbdiel either listens to podcasts or collects records.\nIf Abdiel appreciates harmony and attends concerts, then he enjoys singing.\nIf Abdiel has charisma and enjoys the spotlight, then he can lead groups.\nIf Abdiel performs publicly, then he either has stage fright or enjoys the spotlight, but not both.\nEveryone who either attends concerts or collects records (but not both) loves music.\nIf Abdiel loves music and plays an instrument, then he will perform publicly.\nAbdiel sings with joy or plays an instrument.\nFor all humans, if they sing with joy, then they spread happiness.",
+      "question": "Does the context entail the conclusion 'Abdiel spreads happiness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Abdiel collects records.\n- Abdiel appreciates harmony.\n- Abdiel does not attend concerts.",
+      "question": "Does the context entail the conclusion 'Abdiel spreads happiness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From added facts: CR true, H true, and not AC. From (AC xor CR) -> loves music, since CR and not AC, Abdiel loves music (LM). From SJ or PI (sings with joy or plays an instrument). If PI were true: LM and PI -> performs publicly (P). P -> (SF xor SP). But SF is false, so P would force SP. C and SP -> can lead groups (LG). That contradicts the given not LG. Hence PI cannot hold in any model of the KB, so SJ must be true. From SJ -> spreads happiness, Abdiel spreads happiness. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 293
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if either x attends concerts or x collects records, but not both, then x loves music.\n\nAdded rules:\n- For all x, if x attends concerts and x does not collect records, then x loves music.\n- For all x, if x does not attend concerts and x collects records, then x loves music.\n- If Abdiel does not enjoy the spotlight, then Abdiel does not perform publicly.",
+      "question": "Does the context entail the conclusion 'Abdiel spreads happiness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From added/known facts: CR and not AC, so by the new rule (not attends and collects) -> loves music (LM). Also ~SF is given. The public-performance rule P -> (SF xor SP) with ~SF means P -> SP. The added rule ~SP -> ~P is the contrapositive, so P iff SP (effectively P -> SP and ~SP -> ~P). Charisma C is true and C & SP -> LG, but ~LG is given, so SP must be false. From ~SP and ~SP -> ~P we get ~P. Since LM and PI -> P, PI would force P, contradicting ~P, so PI must be false; therefore from (SJ or PI) SJ must be true. Finally SJ -> spreads happiness, so Abdiel spreads happiness is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 499
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Abdiel cannot lead groups.\n\nRemoved rules:\n- For all x, if x sings with joy, then x spreads happiness.\n\nAdded rules:\n- For all x, if x sings with joy, then x does not spread happiness.\n\nAdded facts:\n- Abdiel does not enjoy the spotlight.",
+      "question": "Does the context entail the conclusion 'Abdiel spreads happiness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From facts: CR and not AC imply loves music (LM). From SJ or PI and LM & PI -> P, if PI were true then P would hold; P -> (SF xor SP) and SF is false, so P would force SP, contradicting the explicit fact ~SP. Thus PI is impossible and SJ must be true. The new rule SJ -> ~SH therefore gives ~SH (Abdiel does not spread happiness). Hence SH is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 805
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x does not attend concerts and x collects records, then x loves music.\n\nAdded rules:\n- If Abdiel does not attend concerts and Abdiel collects records, then Abdiel plays an instrument.\n- If Abdiel plays an instrument, then Abdiel spreads happiness.",
+      "question": "Does the context entail the conclusion 'Abdiel spreads happiness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the cumulative context: Abdiel collects records (CR) and does not attend concerts (~AC). The added rule ~AC & CR -> plays instrument (PI) therefore yields PI. The added rule PI -> spreads happiness (SH) then yields SH. Although there is a rule SJ -> \u00acSH, SJ (sings with joy) is not forced (the disjunction SJ or PI is satisfied by PI), so \u00acSH is not entailed; SH holds in all models of the KB. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1006
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- Either Abdiel attends concerts, or Abdiel does not collect records, or Abdiel plays an instrument.\n\nAdded facts:\n- Abdiel plays an instrument.",
+      "question": "Does the context entail the conclusion 'Abdiel spreads happiness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The KB contains the fact PlaysInstrument (PI). Earlier a rule PI -> SpreadsHappiness (SH) was added, so from PI we derive SH. Although there is a rule SingsWithJoy -> \u00acSH, SingsWithJoy is not forced (the disjunction SingsWithJoy or PlaysInstrument is already satisfied by PI), so no contradiction arises. Therefore SH holds in all models of the KB and is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1222
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Abdiel does not spread happiness, then Abdiel does not play an instrument.",
+      "question": "Does the context entail the conclusion 'Abdiel spreads happiness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Abdiel plays an instrument is asserted (PI). The KB contains the rule PI -> spreads happiness, so spreads happiness (SH) follows. The added rule ~SH -> ~PI only enforces equivalence between PI and SH and does not block SH; SJ -> ~SH is not forced because PI already satisfies SJ\u2228PI. Hence SH is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1390
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- Abdiel spreads happiness.",
+      "question": "Does the context entail the conclusion 'Abdiel spreads happiness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The fact 'Abdiel spreads happiness' is explicitly added to the context. Any theory containing that fact entails it, so the conclusion follows.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1530
+    }
+  ]
+}

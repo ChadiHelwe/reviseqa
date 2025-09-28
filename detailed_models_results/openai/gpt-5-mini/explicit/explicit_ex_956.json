@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 330,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Tomas has authority.\nTomas writes publications.\nTomas is not diligent.\nTomas has expertise.\nTomas does not do pioneering work.\nTomas does not transform the field of chemistry.\nTomas is not established in his field.\nTomas is precise in his work.\nAnyone who has authority or writes publications shares knowledge.\nTomas either shares knowledge or contributes to science, but not both.\nIf Tomas makes accurate measurements, then he is either diligent or has expertise (but not both).\nEveryone who is innovative either does pioneering work or transforms their field (or both).\nAnyone who makes accurate measurements or is highly respected contributes to science.\nIf Tomas is influential, then he is either established in his field or highly respected, but not both.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Tomas has authority. Tomas writes publications.. Anyone who has authority or writes publications shares knowledge.. Therefore, Tomas shares knowledge.. Tomas shares knowledge.. Tomas either shares knowledge or contributes to science, but not both.. Therefore, Tomas does not contribute to science.. Tomas is not diligent. Tomas has expertise.. If Tomas makes accurate measurements, then he is either diligent or has expertise (but not both).. Therefore, . Tomas does not do pioneering work. Tomas does not transform the field of chemistry.. Everyone who is innovative either does pioneering work or transforms their field (or both).. Therefore, Tomas is not innovative.. Tomas does not contribute to science.. Anyone who makes accurate measurements or is highly respected contributes to science.. Therefore, Tomas is not highly respected.. Tomas is not established in his field. Tomas is not highly respected.. If Tomas is influential, then he is either established in his field or highly respected, but not both.. Therefore, Tomas is not influential.. Tomas is precise in his work. Tomas is not innovative. Tomas is not influential.. . Therefore, If Tomas is precise in his work, then he is either innovative or influential, but not both..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x does not do pioneering work and x does not transform the field of chemistry, then x is not innovative.\n- For all x, if x does not contribute to science, then x does not make accurate measurements and x is not highly respected.\n\nAdded facts:\n- Tomas shares knowledge and Tomas does not contribute to science.\n- Tomas has authority or Tomas is innovative.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From added fact Tomas shares knowledge and the exclusive rule (shares knowledge xor contributes), Tomas does not contribute to science. From (\u00accontribute \u2192 \u00acaccurate \u2227 \u00achighly_respected) we get Tomas does not make accurate measurements and is not highly respected. Given Tomas does not do pioneering work and does not transform chemistry, by the added rule (\u00acP \u2227 \u00acT \u2192 \u00acinnovative) Tomas is not innovative. Tomas is also not established (given) and not highly respected, so from (influential \u2192 (established \u2228 highly_respected)) we infer Tomas is not influential. The context also states Tomas is precise. Thus the antecedent of the conclusion (Tomas precise) is true while both disjuncts (innovative, influential) are false, so the implication fails in the model. Therefore the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 497
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Tomas shares knowledge.\n- Tomas does not make accurate measurements.\n- Tomas is not highly respected.\n- Tomas is not influential.\n- Tomas is not innovative.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The original context includes \u2018Tomas is precise in his work.\u2019 The added facts assert Tomas is not innovative and Tomas is not influential. Thus there is a model of the context where the antecedent (Tomas precise) is true while both disjuncts are false, so the conditional (precise \u2192 (innovative xor influential)) is false. Therefore the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 812
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Either Tomas is not influential, or he is either established in his field or highly respected, but not both.\n\nAdded facts:\n- Tomas is influential and it is not the case that he is either established in his field or highly respected, but not both.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The KB contains the fact Tomas is precise (original). The latest added facts include Tomas is influential and (from earlier additions) Tomas is not innovative. Thus (innovative xor influential) holds (influential \u2227 \u00acinnovative). Since the consequent is provable and the antecedent (precise) is a fact, the implication (precise \u2192 (innovative xor influential)) is entailed. (Any inconsistency involving established/highly_respected does not prevent deriving this conditional.)",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 983
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Tomas is influential and it is not the case that he is either established in his field or highly respected, but not both.\n\nAdded rules:\n- Either Tomas is not influential, or he is either established in his field or highly respected, but not both.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The KB still contains the fact Tomas is precise. It also contains the facts Tomas is not innovative and Tomas is not influential (and rules do not force either to hold). Since the antecedent (precise) is true while both disjuncts (innovative, influential) are false in the context, the implication precise \u2192 (innovative xor influential) is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1196
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Either Tomas is not influential, or he is either established in his field or highly respected, but not both.\n\nAdded facts:\n- Tomas is influential.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "KB contains Tomas is precise. From original facts Tomas does not do pioneering work and does not transform chemistry, and the added rule (\u00acp \u2227 \u00act \u2192 \u00acinnovative) entails Tomas is not innovative. The latest addition gives Tomas is influential. Thus innovation = false and influence = true, so (innovative xor influential) holds. Since the antecedent (precise) is a fact and the consequent is provable, the implication (precise \u2192 (innovative xor influential)) is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1386
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, x is innovative if and only if x does pioneering work or transforms the field of chemistry.\n- For all x, x contributes to science if and only if x makes accurate measurements or is highly respected.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The KB includes Tomas is precise. The added equivalence innovation \u2194 (pioneering \u2228 transforms) together with the facts Tomas does not do pioneering work and does not transform the field yields \u00acinnovative. The KB also contains the fact Tomas is influential (from prior additions). Thus innovative is false and influential is true, so (innovative xor influential) holds. Since the antecedent (precise) is true and the consequent is provable, the conditional is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1582
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x does pioneering work or transforms the field of chemistry then x is innovative.\n- For all x, if x contributes to science, then x makes accurate measurements or is highly respected.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The KB includes Tomas is precise. Also Tomas does not do pioneering work and does not transform the field, and there is a rule (\u00acpioneering \u2227 \u00actransform \u2192 \u00acinnovative) (and/or an explicit \u00acinnovative fact), so \u00acinnovative holds. The KB also contains the fact Tomas is influential. Thus innovative is false and influential is true, so (innovative xor influential) holds. Since the antecedent (precise) is true, the implication precise \u2192 (innovative xor influential) is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1785
+    }
+  ]
+}

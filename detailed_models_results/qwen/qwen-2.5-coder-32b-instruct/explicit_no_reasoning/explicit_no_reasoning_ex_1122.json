@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 10,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Louis rejects his family.\nLouis denies his background.\nLouis appreciates his roots.\nLouis does not preserve his cultural identity.\nLouis embraces change.\nAnyone who rejects their family or denies their background lacks a sense of identity.\nLouis either appreciates his roots or ignores his history, but not both.\nIf Louis ignores his history, then he dislikes his culture and lacks a sense of identity.\nIf someone values their customs, then they will preserve their cultural identity.\nIf Louis embraces change, then he either values his Grenadian customs or rejects his traditions (but not both).\nIf Louis rejects his traditions, then he is ashamed of his Grenadian heritage and dislikes his culture.\nLouis is either proud of his Grenadian heritage or ashamed of it, but not both.",
+      "question": "Does the context entail the conclusion 'Louis is proud of his Grenadian heritage.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Louis ignores his history, then he dislikes his culture and lacks a sense of identity.\n- If Louis rejects his traditions, then he is ashamed of his Grenadian heritage and dislikes his culture.\n\nAdded rules:\n- If Louis ignores his history, then he dislikes his culture.\n- If Louis ignores his history, then he lacks a sense of identity.\n- If Louis rejects his traditions, then he is ashamed of his Grenadian heritage.\n- If Louis rejects his traditions, then he dislikes his culture.\n\nAdded facts:\n- Louis lacks a sense of identity.",
+      "question": "Does the context entail the conclusion 'Louis is proud of his Grenadian heritage.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Louis lacks a sense of identity, which entails he ignores his history (via the rule). Ignoring history implies he dislikes his culture. Embracing change means he either values customs or rejects traditions (but not both). Since he does not preserve his identity (contradicting valuing customs), he must reject traditions. Rejecting traditions implies he is ashamed of his heritage. Since he is ashamed, he cannot be proud (as per the exclusive either/or rule).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 257
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- For all x, if x rejects their family, then x lacks a sense of identity.\n- For all x, if x denies their background, then x lacks a sense of identity.\n- For all x, if x does not lack a sense of identity, then x does not ignore their history.\n- If Louis rejects his traditions, then he is ashamed of his Grenadian heritage and dislikes his culture.\n\nAdded facts:\n- Louis does not ignore his history.\n- Louis does not value his Grenadian customs.",
+      "question": "Does the context entail the conclusion 'Louis is proud of his Grenadian heritage.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Louis rejects his family and denies his background (from original context), leading to lacking a sense of identity (via rules 1 and 2). The added fact 'Louis does not ignore his history' is consistent with this, as the contrapositive of Rule 3 only links ignoring history to lacking identity, not the other way around. Louis embraces change and does not value Grenadian customs (added fact), forcing him to reject traditions. Rejecting traditions implies he is ashamed of his heritage (via the added rule). Since Louis is ashamed, he cannot be proud (as per the 'either proud or ashamed' constraint).",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1194
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, if x lacks a sense of identity, then x rejects their family or denies their background or ignores their history.\n- If Louis is proud of his Grenadian heritage, then he is not ashamed of his Grenadian heritage.",
+      "question": "Does the context entail the conclusion 'Louis is proud of his Grenadian heritage.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Louis rejects his family and denies his background (original context), which triggers the new rule that lacking a sense of identity implies one of these actions (confirmed from previous steps). He also rejects traditions, leading to being ashamed of his heritage (from prior reasoning). The second rule explicitly states that being proud excludes being ashamed. Since Louis is ashamed, the conclusion that he is proud is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2728
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all x, if x does not lack a sense of identity, then x does not reject their family and x does not deny their background.\n- For all x, if x does not reject their family and x does not deny their background and x does not ignore their history, then x does not lack a sense of identity.\n\nAdded facts:\n- Louis rejects his traditions.",
+      "question": "Does the context entail the conclusion 'Louis is proud of his Grenadian heritage.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Louis rejects his family and denies his background (original context), which contradicts the antecedent of Rule 1. Therefore, Louis lacks a sense of identity. He also rejects traditions (added fact), which (from prior reasoning) makes him ashamed of his heritage. Since pride and shame are mutually exclusive (Rule 2), the conclusion 'Louis is proud' is false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 3574
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Louis rejects his traditions, then he is ashamed of his Grenadian heritage and dislikes his culture.",
+      "question": "Does the context entail the conclusion 'Louis is proud of his Grenadian heritage.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The removal of the rule linking 'rejecting traditions' to 'ashamed' eliminates the basis for concluding Louis is ashamed. Louis still lacks a sense of identity (due to rejecting family/denying background), but without direct rules connecting identity to pride/shame or traditions to shame, his attitude toward heritage is undetermined. While he appreciates his roots, this does not alone imply pride. The mutual-exclusivity of pride/shame (from prior rules) remains, but neither can be confirmed or denied under current constraints.",
+      "correct": false,
+      "tags": [
+        "removed_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 4351
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, if x ignores their history, then x lacks a sense of identity.\n\nAdded facts:\n- Louis is not ashamed of his Grenadian heritage.\n- Louis is proud of his Grenadian heritage or Louis is ashamed of his Grenadian heritage.\n- Louis is not proud of his Grenadian heritage or Louis is not ashamed of his Grenadian heritage.",
+      "question": "Does the context entail the conclusion 'Louis is proud of his Grenadian heritage.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The facts state Louis is not ashamed and that he must be either proud or ashamed (exclusive disjunction). Since 'not ashamed' discharges the disjunction (via disjunctive syllogism), Louis must be proud. The added 'not proud or not ashamed' clause is tautologically true given his non-ashamed state, providing no contradiction.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 5755
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Louis rejects his traditions, then he is not ashamed of his Grenadian heritage.\n\nAdded rules:\n- For all x, if x rejects their traditions, then x is ashamed of their Grenadian heritage.",
+      "question": "Does the context entail the conclusion 'Louis is proud of his Grenadian heritage.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The current rule added is 'If Louis rejects his traditions, then he is ashamed of his Grenadian heritage.' Louis has previously been confirmed to reject his traditions (from 2023-11-11 context). This entails he is ashamed. Since pride and shame are mutually exclusive (prior rule), the conclusion 'Louis is proud' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 6495
+    }
+  ]
+}

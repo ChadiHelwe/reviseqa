@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 155,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Rylan studies history.\nRylan does not appreciate diversity.\nRylan does not explore cultures.\nRylan does not broaden his horizons.\nRylan does not pursue a peaceful occupation.\nRylan values culture.\nRylan does not develop resilience.\nRylan does not find inner strength.\nIf Rylan either studies history or lives abroad (but not both), then he appreciates diversity.\nIf Rylan either explores cultures or learns languages (but not both), then he broadens his horizons.\nRylan cannot both serve overseas and pursue a peaceful occupation simultaneously.\nIf Rylan lives abroad, then he either travels extensively or learns languages (but not both).\nIf Rylan travels extensively, then he values culture and appreciates beauty.\nEveryone who serves overseas either develops resilience or faces adversity (or both).\nIf Rylan faces adversity, then he either experiences war or finds inner strength, but not both.\nIf Rylan experiences war, then he appreciates the beauty in life and forms lasting bonds with others.",
+      "question": "Does the context entail the conclusion 'Rylan forms lasting bonds with others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Rylan either serves overseas or pursues a peaceful occupation, but not both.\n\nAdded rules:\n- If Rylan appreciates beauty, then he does not form lasting bonds with others.",
+      "question": "Does the context entail the conclusion 'Rylan forms lasting bonds with others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts and XOR rules: Rylan studies history and we have (studies XOR lives_abroad) -> appreciates_diversity, yet appreciates_diversity is false, so to avoid deriving it we must have lives_abroad = true. lives_abroad -> (travels XOR learns). The rule (explores XOR learns) -> broadens_horizons together with explores = false and broadens_horizons = false forces learns = false (otherwise broadens_horizons would be derived). Given learns = false and lives_abroad = true, the XOR requires travels = true. travels -> appreciates_beauty (and values_culture). The added rule appreciates_beauty -> not forms_lasting_bonds therefore yields not forms_lasting_bonds. The only route to forms_lasting_bonds is via experiencing war, which requires faces_adversity and that in turn would require serves_overseas (since serves_overseas -> develops_resilience or faces_adversity) \u2014 but serves_overseas is not derivable from the context. Thus the theory entails that Rylan does not form lasting bonds, so it does not entail that he does form lasting bonds.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 307
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Rylan forms lasting bonds with others, then he does not appreciate beauty.\n\nAdded facts:\n- Rylan lives abroad.\n- Rylan does not learn languages.",
+      "question": "Does the context entail the conclusion 'Rylan forms lasting bonds with others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given lives_abroad = true and learns = false, the XOR in (lives_abroad -> (travels XOR learns)) forces travels_extensively = true. travels_extensively implies appreciates_beauty = true. The added rule appreciates_beauty -> not forms_lasting_bonds therefore yields not forms_lasting_bonds. The only other route to forms_lasting_bonds is via experiencing war, which requires faces_adversity (and that in turn requires serves_overseas), but no rule or fact yields serves_overseas, so war (and thus forms_lasting_bonds) cannot be derived. Therefore the context does not entail that Rylan forms lasting bonds.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 632
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- It is not the case that Rylan appreciates beauty and forms lasting bonds with others.\n\nAdded facts:\n- Rylan appreciates beauty.\n- Rylan does not serve overseas.",
+      "question": "Does the context entail the conclusion 'Rylan forms lasting bonds with others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context includes the fact Rylan appreciates beauty and the rule that if he appreciates beauty then he does not form lasting bonds (and the added rule forbids both being true). From appreciates_beauty we therefore derive not forms_lasting_bonds. No rule or fact derives forms_lasting_bonds (it would require serves_overseas -> faces_adversity -> experiences_war -> forms_lasting_bonds, but serves_overseas is explicitly false and there is no way to derive it). Thus the theory entails that Rylan does not form lasting bonds, so it does not entail that he does form lasting bonds.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 851
+    },
+    {
+      "step": 4,
+      "context": "Added facts:\n- Either Rylan does not appreciate beauty, or Rylan does not form lasting bonds with others.",
+      "question": "Does the context entail the conclusion 'Rylan forms lasting bonds with others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From earlier additions we have appreciates_beauty as a fact. The new disjunction (not appreciates_beauty OR not forms_lasting_bonds) together with appreciates_beauty yields not forms_lasting_bonds. Also existing rules (appreciates_beauty -> not forms_lasting_bonds and/or an explicit ban on both) further imply not forms_lasting_bonds. The only way to derive forms_lasting_bonds is via experiences_war, which requires faces_adversity and ultimately serves_overseas, but serves_overseas is not derivable (indeed was given false earlier). Therefore the theory does not entail that Rylan forms lasting bonds.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1061
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Rylan appreciates beauty.\n- It is not the case that Rylan appreciates beauty and forms lasting bonds with others.\n- Either Rylan does not appreciate beauty, or Rylan does not form lasting bonds with others.\n\nRemoved rules:\n- If Rylan appreciates beauty, then he does not form lasting bonds with others.\n- If Rylan forms lasting bonds with others, then he does not appreciate beauty.\n\nAdded rules:\n- If Rylan travels extensively, then he faces adversity.",
+      "question": "Does the context entail the conclusion 'Rylan forms lasting bonds with others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Lives_abroad = true and learns = false. From the rule lives_abroad -> (travels XOR learns) this forces travels_extensively = true. The added rule gives travels_extensively -> faces_adversity, so faces_adversity = true. The rule faces_adversity -> (experiences_war XOR finds_inner_strength) together with the fact not finds_inner_strength forces experiences_war = true. From experiences_war -> (appreciates_beauty AND forms_lasting_bonds) we derive forms_lasting_bonds = true. The earlier rules/facts that forbade appreciating beauty and forming bonds were removed, so there is no contradiction preventing this derivation. Therefore the context entails that Rylan forms lasting bonds with others.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1263
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Rylan does not find inner strength.\n\nAdded rules:\n- If Rylan appreciates beauty, then he does not form lasting bonds with others.\n\nAdded facts:\n- Rylan finds inner strength.",
+      "question": "Does the context entail the conclusion 'Rylan forms lasting bonds with others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Lives_abroad = True and learns = False. From lives_abroad -> (travels XOR learns) we get travels_extensively = True. travels_extensively implies appreciates_beauty = True (and values_culture). The added rule appreciates_beauty -> not forms_lasting_bonds therefore yields not forms_lasting_bonds. Also travels_extensively -> faces_adversity gives faces_adversity = True. From faces_adversity -> (experiences_war XOR finds_inner_strength) and the fact finds_inner_strength = True, XOR forces experiences_war = False, so there is no route via war to derive forms_lasting_bonds. Thus the theory entails that Rylan does not form lasting bonds, so it does not entail that he does form lasting bonds.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1558
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Rylan either studies history or lives abroad (but not both), then he appreciates diversity.\n- If Rylan either explores cultures or learns languages (but not both), then he broadens his horizons.\n\nAdded rules:\n- If either Rylan studies history and does not live abroad, or Rylan does not study history and lives abroad, then he appreciates diversity.\n- If either Rylan explores cultures and does not learn languages, or Rylan does not explore cultures and learns languages, then he broadens his horizons.\n\nAdded facts:\n- Rylan travels extensively.\n- Rylan appreciates beauty.\n- Rylan faces adversity.\n- Rylan does not experience war.",
+      "question": "Does the context entail the conclusion 'Rylan forms lasting bonds with others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context gives travels_extensively, appreciates_beauty, faces_adversity, and not experiences_war. From faces_adversity and the XOR rule (experiences_war XOR finds_inner_strength) and the fact not experiences_war we get finds_inner_strength, so experiences_war is false and cannot trigger the rule that yields forms_lasting_bonds. Also the rule If Rylan appreciates beauty then he does not form lasting bonds with others is present, so appreciates_beauty entails not forms_lasting_bonds. Thus the theory entails the negation of the conclusion, so it does not entail that Rylan forms lasting bonds.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1802
+    }
+  ]
+}

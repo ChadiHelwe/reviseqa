@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "google/gemini-2.5-pro",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 325,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Annie values education.\nAnnie does not become a leader.\nAnnie does not inspire confidence.\nAnnie advocates for change.\nAnnie does not raise awareness.\nAnnie is dedicated to community service.\nFor anyone who values education and fosters independence, they can become a leader.\nEveryone who empowers others either inspires confidence or fosters independence (or both).\nEveryone who advocates for change either supports marginalized groups or empowers others (or both).\nAnnie raises awareness or challenges social norms.\nIf Annie fights for equality, then she either challenges social norms or supports marginalized groups (but not both).\nIf Annie is passionate about social justice, then she fights for equality.\nIf Annie is either passionate about social justice or dedicated to community service (but not both), then she makes a positive impact.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Annie fights for equality, then she either challenges social norms or supports marginalized groups (but not both).\n- If Annie is either passionate about social justice or dedicated to community service (but not both), then she makes a positive impact.\n\nAdded rules:\n- If Annie challenges social norms and supports marginalized groups, then she is passionate about social justice.\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, but not both.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. We are given that Annie advocates for change ('AC') and that 'Everyone who advocates for change either supports marginalized groups or empowers others' ('AC -> SMG v EO'). Thus, Annie either supports marginalized groups ('SMG') or empowers others ('EO').\n2. We know Annie values education ('VE') but does not become a leader ('~L'). The rule 'For anyone who values education and fosters independence, they can become a leader' ('VE & FI -> L') implies, by modus tollens, that the antecedent is false. Since 'VE' is true, 'Annie fosters independence' ('FI') must be false.\n3. The rule 'Everyone who empowers others either inspires confidence or fosters independence' ('EO -> IC v FI'), combined with the given fact that Annie does not inspire confidence ('~IC') and our deduction that she does not foster independence ('~FI'), allows us to conclude by modus tollens that Annie does not empower others ('~EO').\n4. From step 1 ('SMG v EO') and step 3 ('~EO'), we deduce that Annie must support marginalized groups ('SMG' is true).\n5. We are given 'Annie raises awareness or challenges social norms' ('RA v CSN') and also that she does not raise awareness ('~RA'). Therefore, Annie challenges social norms ('CSN' is true).\n6. The new rule is 'If Annie challenges social norms and supports marginalized groups, then she is passionate about social justice' ('CSN & SMG -> PSJ'). Since we have established both 'CSN' and 'SMG' are true, we can conclude that Annie is passionate about social justice ('PSJ' is true).\n7. The final rule is 'Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, but not both' ('MPI <-> (PSJ XOR DCS)').\n8. We are given that Annie is dedicated to community service ('DCS' is true) and we have just deduced that she is passionate about social justice ('PSJ' is true).\n9. The condition for making a positive impact is an exclusive OR (XOR), which is only true if one of the inputs is true and the other is false. Since both 'PSJ' and 'DCS' are true, the condition '(PSJ XOR DCS)' is false.\n10. Therefore, it is false that Annie makes a positive impact, which means the conclusion 'Annie does not make a positive impact' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 266
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Annie does not raise awareness.\n\nAdded facts:\n- Annie does not fight for equality.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. We are given the new fact that 'Annie does not fight for equality' (~FE).\n2. We have the rule 'If Annie is passionate about social justice, then she fights for equality' (PSJ -> FE).\n3. By modus tollens, from ~FE and (PSJ -> FE), we can conclude that 'Annie is not passionate about social justice' (~PSJ).\n4. We are given the fact that 'Annie is dedicated to community service' (DCS).\n5. The rule for making a positive impact is: 'Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, but not both' (MPI <-> (PSJ XOR DCS)).\n6. We have established that PSJ is false and DCS is true.\n7. The exclusive OR (XOR) condition (PSJ XOR DCS) is true if and only if exactly one of the components is true. Since PSJ is false and DCS is true, the condition (PSJ XOR DCS) is true.\n8. Because the rule is a biconditional ('if and only if'), and the right side (PSJ XOR DCS) is true, the left side, 'Annie makes a positive impact' (MPI), must also be true.\n9. The question asks if the context entails the conclusion 'Annie does not make a positive impact' (~MPI). Since the context entails the opposite (MPI), the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 970
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, but not both.\n\nAdded rules:\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and it is not the case that she is both passionate about social justice and dedicated to community service.\n\nAdded facts:\n- Annie is not passionate about social justice.\n- Annie supports marginalized groups.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. The conclusion 'Annie does not make a positive impact' depends on the rule: 'Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and it is not the case that she is both passionate about social justice and dedicated to community service'. This is a biconditional statement equivalent to an exclusive OR (XOR). Let's represent this as MPI <-> (PSJ XOR DCS).\n2. To determine if Annie makes a positive impact (MPI), we need to know the truth values of 'Annie is passionate about social justice' (PSJ) and 'Annie is dedicated to community service' (DCS).\n3. A new fact in the context is 'Annie is not passionate about social justice'. This means PSJ is False.\n4. An existing fact in the context is 'Annie is dedicated to community service'. This means DCS is True.\n5. We can now evaluate the condition for making a positive impact: (PSJ XOR DCS) becomes (False XOR True).\n6. An exclusive OR is true if and only if exactly one of its operands is true. Since PSJ is False and DCS is True, the condition (False XOR True) is True.\n7. According to the rule MPI <-> (PSJ XOR DCS), since the right side is True, the left side (MPI) must also be True. This means 'Annie makes a positive impact' is True.\n8. The question asks if the context entails the conclusion 'Annie does not make a positive impact'. Since the context entails the opposite ('Annie makes a positive impact'), the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1368
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Annie is dedicated to community service.\n\nAdded facts:\n- Annie is not dedicated to community service.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. The rule for making a positive impact is: 'Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and it is not the case that she is both passionate about social justice and dedicated to community service'. This is a biconditional statement equivalent to an exclusive OR (XOR). Let's represent this as MPI <-> (PSJ XOR DCS).\n2. We need to evaluate the truth of the conclusion 'Annie does not make a positive impact' (~MPI).\n3. From the context, we have the fact 'Annie is not passionate about social justice'. So, PSJ is False.\n4. The newly added fact is 'Annie is not dedicated to community service'. So, DCS is False.\n5. We can now evaluate the right side of the biconditional rule: (PSJ XOR DCS) becomes (False XOR False).\n6. The result of an exclusive OR operation is False when both of its operands have the same truth value (both true or both false).\n7. Therefore, the condition (PSJ XOR DCS) is False.\n8. Since the rule is a biconditional (MPI <-> (PSJ XOR DCS)), and the right side is False, the left side, 'Annie makes a positive impact' (MPI), must also be False.\n9. This means that the statement 'Annie does not make a positive impact' (~MPI) is True.\n10. The context entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1870
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and it is not the case that she is both passionate about social justice and dedicated to community service.\n\nAdded rules:\n- Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and either she is not passionate about social justice or she is not dedicated to community service.\n\nAdded facts:\n- Annie does not foster independence.\n- Annie does not empower others.\n- Annie does not challenge social norms.\n- Annie raises awareness.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. The conclusion 'Annie does not make a positive impact' depends on the rule: 'Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and either she is not passionate about social justice or she is not dedicated to community service.'\n2. This rule can be expressed logically as MPI <-> ((PSJ v DCS) & (~PSJ v ~DCS)). The expression on the right is the definition of an exclusive OR (XOR). So, the rule is MPI <-> (PSJ XOR DCS).\n3. To determine if Annie makes a positive impact, we need the truth values of 'Annie is passionate about social justice' (PSJ) and 'Annie is dedicated to community service' (DCS).\n4. The context includes the fact 'Annie is not passionate about social justice'. Therefore, PSJ is False.\n5. The context also includes the fact 'Annie is not dedicated to community service'. Therefore, DCS is False.\n6. We can now evaluate the condition for making a positive impact: (PSJ XOR DCS) becomes (False XOR False).\n7. An exclusive OR operation is false if its operands have the same truth value. Since both are False, the result of (False XOR False) is False.\n8. According to the rule MPI <-> (PSJ XOR DCS), since the right side is False, the left side (MPI) must also be False. This means 'Annie makes a positive impact' is False.\n9. The question asks if the context entails the conclusion 'Annie does not make a positive impact'. Since we have determined that 'Annie makes a positive impact' is False, the conclusion 'Annie does not make a positive impact' is True.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2271
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Annie is not dedicated to community service.\n\nAdded facts:\n- Annie is dedicated to community service.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. The rule governing the conclusion is: 'Annie makes a positive impact if and only if she is either passionate about social justice or dedicated to community service, and either she is not passionate about social justice or she is not dedicated to community service.' This can be expressed logically as MPI <-> ((PSJ v DCS) & (~PSJ v ~DCS)), which is the definition of an exclusive OR (XOR). So, the rule is MPI <-> (PSJ XOR DCS).\n2. To determine if Annie makes a positive impact (MPI), we need the truth values for 'Annie is passionate about social justice' (PSJ) and 'Annie is dedicated to community service' (DCS).\n3. From the context, we have the fact 'Annie is not passionate about social justice'. This means PSJ is False.\n4. The new fact added in this step is 'Annie is dedicated to community service'. This means DCS is True.\n5. We can now evaluate the condition for making a positive impact: (PSJ XOR DCS).\n6. Substituting the values, we get (False XOR True).\n7. An exclusive OR operation is True if and only if exactly one of its operands is True. Since PSJ is False and DCS is True, the condition is True.\n8. According to the rule MPI <-> (PSJ XOR DCS), since the right side is True, the left side, 'Annie makes a positive impact' (MPI), must also be True.\n9. The question asks if the context entails the conclusion 'Annie does not make a positive impact'. Since the context entails the opposite ('Annie makes a positive impact'), the conclusion is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2824
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Annie raises awareness.\n- Annie does not challenge social norms.\n- Annie is not passionate about social justice.\n- Annie does not fight for equality.\n\nAdded facts:\n- Annie does not raise awareness.",
+      "question": "Does the context entail the conclusion 'Annie does not make a positive impact.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. The conclusion 'Annie does not make a positive impact' depends on the rule: MPI <-> (PSJ XOR DCS), where MPI is 'makes a positive impact', PSJ is 'passionate about social justice', and DCS is 'dedicated to community service'.\n2. We are given the fact that 'Annie is dedicated to community service', so DCS is True.\n3. To evaluate the rule, we need to determine the truth value of PSJ ('Annie is passionate about social justice').\n4. The rule for PSJ is 'If Annie challenges social norms and supports marginalized groups, then she is passionate about social justice' (CSN & SMG -> PSJ). So we need to determine the truth values of CSN and SMG.\n5. We are given the rule 'Annie raises awareness or challenges social norms' (RA v CSN) and the fact 'Annie does not raise awareness' (~RA). By disjunctive syllogism, we can conclude that 'Annie challenges social norms' (CSN) is True.\n6. To determine SMG ('supports marginalized groups'), we look at the rule 'Everyone who advocates for change either supports marginalized groups or empowers others' (AC -> SMG v EO). We are given that Annie advocates for change (AC is True), so we can conclude 'SMG v EO' is True.\n7. To resolve 'SMG v EO', we need to know the truth value of EO ('empowers others'). The rule is 'Everyone who empowers others either inspires confidence or fosters independence' (EO -> IC v FI). We are given that Annie does not inspire confidence (~IC) and we have the fact that she does not foster independence (~FI). Therefore, the disjunction 'IC v FI' is False. By modus tollens on the rule (EO -> IC v FI), we can conclude that Annie does not empower others (~EO is True).\n8. Returning to 'SMG v EO', since we now know ~EO is True, we can conclude by disjunctive syllogism that 'Annie supports marginalized groups' (SMG) is True.\n9. Now we can evaluate the rule for PSJ: (CSN & SMG -> PSJ). Since we have determined both CSN and SMG are True, by modus ponens, we conclude that 'Annie is passionate about social justice' (PSJ) is True.\n10. Finally, we evaluate the rule for the conclusion: MPI <-> (PSJ XOR DCS). We have PSJ is True and DCS is True. The exclusive OR (True XOR True) is False.\n11. Therefore, MPI ('Annie makes a positive impact') is False. This means the conclusion 'Annie does not make a positive impact' is True.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 3264
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 270,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Rowen wields power.\nRowen does not understand ancient magic.\nRowen does not read omens.\nIf Rowen either summons storms or controls flames (but not both), then he wields power.\nIf Rowen interprets omens or possesses wisdom, then he can understand ancient magic.\nIf Rowen controls flames or maintains balance, then he possesses wisdom.\nRowen understands nature or reads omens.\nIf Rowen understands nature and controls the elements, then he can maintain balance.\nRowen is either a controller of the elements or a slave to the elements, but not both.",
+      "question": "Does the context entail the conclusion 'Rowen is not a slave to the elements.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Rowen controls flames or maintains balance, then he possesses wisdom.\n\nAdded rules:\n- If Rowen does not possess wisdom, then he does not control flames and he does not maintain balance.\n- Rowen either controls the elements or is a slave to the elements, and it is not the case that Rowen both controls the elements and is a slave to the elements.\n\nAdded facts:\n- Rowen understands nature.\n- Rowen does not possess wisdom.\n- Rowen does not interpret omens.",
+      "question": "Does the context entail the conclusion 'Rowen is not a slave to the elements.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From added facts: Rowen does not possess wisdom, and the added rule gives \u00acwisdom \u21d2 \u00acmaintain_balance. So \u00acmaintain_balance holds. Also Rowen understands nature (given). The rule (understands_nature \u2227 controls_elements) \u21d2 maintain_balance together with understands_nature and \u00acmaintain_balance implies \u00accontrols_elements. The exclusive-or fact states controls_elements \u2228 slave and not both; since \u00accontrols_elements, it follows Rowen is a slave to the elements. Therefore the context entails that Rowen is a slave, so it does not entail 'Rowen is not a slave to the elements.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 227
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Rowen understands nature and controls the elements, then he can maintain balance.\n\nAdded rules:\n- Rowen understands nature and controls the elements, and he does not maintain balance.",
+      "question": "Does the context entail the conclusion 'Rowen is not a slave to the elements.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The context only adds that Rowen understands nature, controls the elements, and does not maintain balance. There are no rules or facts relating control of the elements (or any other facts) to being a slave to the elements, so neither 'slave' nor 'not slave' is derivable. Therefore the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 504
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Rowen understands nature and controls the elements, and he does not maintain balance.\n\nAdded facts:\n- It is not the case that Rowen understands nature and controls the elements, and he does not maintain balance.",
+      "question": "Does the context entail the conclusion 'Rowen is not a slave to the elements.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From earlier additions we have \u00acpossesses_wisdom and the rule \u00acpossesses_wisdom \u21d2 \u00acmaintain_balance, so \u00acmaintain_balance holds. We also have the fact understands_nature. The newly added fact \u00ac(understands_nature \u2227 controls_elements \u2227 \u00acmaintain_balance), together with understands_nature and \u00acmaintain_balance, yields \u00accontrols_elements. The exclusive-or fact (controls_elements XOR slave_to_elements) then gives slave_to_elements. Thus the context entails that Rowen is a slave to the elements, so it does not entail 'Rowen is not a slave to the elements.'",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 657
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Rowen does not possess wisdom.\n\nRemoved rules:\n- If Rowen interprets omens or possesses wisdom, then he can understand ancient magic.\n- It is not the case that Rowen understands nature and controls the elements, and he does not maintain balance.\n\nAdded facts:\n- Rowen possesses wisdom.\n- Rowen understands nature and controls the elements and he does not maintain balance.",
+      "question": "Does the context entail the conclusion 'Rowen is not a slave to the elements.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes the fact that Rowen controls the elements (from the added fact). It also includes the exclusive-or that Rowen either controls the elements or is a slave to the elements, but not both. Given controls_elements is true and exclusivity forbids both, we can infer that Rowen is not a slave to the elements. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 892
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Rowen understands nature and controls the elements and he does not maintain balance.\n\nAdded rules:\n- If Rowen understands nature, then he does not control the elements.",
+      "question": "Does the context entail the conclusion 'Rowen is not a slave to the elements.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We have the fact understands_nature and the added rule (understands_nature \u21d2 \u00accontrols_elements), so \u00accontrols_elements is entailed. The context still contains the exclusive-or that Rowen either controls the elements or is a slave to the elements (controls_elements \u2228 slave, and not both). Given \u00accontrols_elements and the disjunction, slave_to_elements must hold. Therefore \u00acslave is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1111
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Rowen understands nature, then he does not control the elements.\n\nAdded rules:\n- If Rowen understands nature, then he controls the elements.",
+      "question": "Does the context entail the conclusion 'Rowen is not a slave to the elements.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have the fact understands_nature and the added rule (understands_nature \u21d2 controls_elements), so controls_elements is entailed. The context also contains the exclusive disjunction (controls_elements XOR slave_to_elements), so since controls_elements holds it follows that slave_to_elements is false. Thus 'Rowen is not a slave to the elements.' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1295
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Rowen understands nature or reads omens.\n\nRemoved rules:\n- Rowen either controls the elements or is a slave to the elements, and it is not the case that Rowen both controls the elements and is a slave to the elements.\n\nAdded rules:\n- If Rowen does not read omens, then Rowen understands nature.\n- Rowen either controls the elements or is a slave to the elements, and either Rowen does not control the elements or Rowen is not a slave to the elements.\n\nAdded facts:\n- If Rowen controls flames or maintains balance, then he possesses wisdom.",
+      "question": "Does the context entail the conclusion 'Rowen is not a slave to the elements.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have the fact \u00acread_omens (initial) and the added rule \u00acread_omens \u21d2 understands_nature, and additionally earlier we have the fact understands_nature (from previous additions). The added rule understands_nature \u21d2 controls_elements is present, so controls_elements is entailed. The context also contains the exclusive disjunction (controls_elements \u2228 slave) \u2227 (\u00accontrols_elements \u2228 \u00acslave), so given controls_elements is true it follows \u00acslave. Therefore 'Rowen is not a slave to the elements.' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1465
+    }
+  ]
+}

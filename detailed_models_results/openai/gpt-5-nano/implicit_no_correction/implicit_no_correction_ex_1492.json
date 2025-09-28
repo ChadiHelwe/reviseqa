@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-nano",
+    "task_path": "implicit_no_correction",
+    "chain_index": 24,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Shelby does not let go of burdens.\nShelby does not live authentically.\nShelby takes time for reflection.\nShelby does not discover a new purpose.\nShelby takes risks.\nShelby does not achieve balance.\nAnyone who lets go of burdens or finds inner peace can live authentically.\nIf someone follows their heart and takes time for reflection, then they can find inner peace.\nShelby either makes bold decisions or follows her heart.\nIf Shelby makes bold decisions, then she either gains freedom or discovers a new purpose (or both).\nIf Shelby takes risks, then she either gains freedom or finds happiness (but not both).\nIf Shelby either feels fulfilled or achieves balance (but not both), then she finds happiness.\nIf someone finds creative expression, then they feel fulfilled.\nFor all humans, if they pursue their passion, then they find creative expression.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Shelby does not let go of burdens. Shelby does not live authentically.. Anyone who lets go of burdens or finds inner peace can live authentically.. Therefore, Shelby does not find inner peace.. Shelby takes time for reflection. Shelby does not find inner peace.. If someone follows their heart and takes time for reflection, then they can find inner peace.. Therefore, Shelby does not follow her heart.. Shelby does not follow her heart.. Shelby either makes bold decisions or follows her heart.. Therefore, Shelby makes bold decisions.. Shelby makes bold decisions. Shelby does not discover a new purpose.. If Shelby makes bold decisions, then she either gains freedom or discovers a new purpose (or both).. Therefore, Shelby gains freedom.. Shelby takes risks. Shelby gains freedom.. If Shelby takes risks, then she either gains freedom or finds happiness (but not both).. Therefore, Shelby does not find happiness.. Shelby does not achieve balance. Shelby does not find happiness.. If Shelby either feels fulfilled or achieves balance (but not both), then she finds happiness.. Therefore, Shelby does not feel fulfilled.. Shelby does not feel fulfilled.. If someone finds creative expression, then they feel fulfilled.. Therefore, Shelby does not find creative expression.. Shelby does not find creative expression.. For all humans, if they pursue their passion, then they find creative expression.. Therefore, Shelby pursues her passion..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Shelby does not let go of burdens.\nShelby does not live authentically.\nShelby takes time for reflection.\nShelby does not discover a new purpose.\nShelby takes risks.\nShelby does not achieve balance.\nFor all x, if x lets go of burdens or x finds inner peace, then x lives authentically.\nFor all x, if x follows their heart and x takes time for reflection, then x finds inner peace.\nShelby makes bold decisions or Shelby follows her heart.\nIf Shelby makes bold decisions, then she either gains freedom or discovers a new purpose.\nIf Shelby takes risks, then she either gains freedom or finds happiness, but not both.\nIf Shelby either feels fulfilled or achieves balance, but not both, then she finds happiness.\nFor all x, if x finds creative expression, then x feels fulfilled.\nFor all x, if x pursues their passion, then x finds creative expression.\nFor all x, if x does not find creative expression, then x does not pursue their passion.\nFor all x, if x does not feel fulfilled, then x does not find creative expression.\nIf Shelby makes bold decisions, then she gains freedom.\nFor all x, if x does not live authentically, then x does not let go of burdens and x does not find inner peace.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the facts, Shelby does not live authentically, which via the rule 'If x does not live authentically, then x does not let go of burdens and x does not find inner peace' yields NotLetGoBurden and NotFindInnerPeace. This creates potential tension with rule 2 (FollowsHeart and TakesReflection -> FindsInnerPeace), but we do not know that Shelby follows her heart. More importantly, there is no rule that derives PursuePassion from current facts, and the only rules linking passion involve PursuePassion -> CreativeExpression and NotCreativeExpression -> NotPursuePassion; the latter cannot be activated because we do not have NotCreativeExpression. Therefore, the context does not entail Shelby pursues her passion, nor does it entail its negation. The status is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 560
+    },
+    {
+      "step": 2,
+      "context": "Shelby does not let go of burdens.\nShelby takes time for reflection.\nShelby does not discover a new purpose.\nShelby takes risks.\nShelby does not achieve balance.\nFor all x, if x lets go of burdens or x finds inner peace, then x lives authentically.\nFor all x, if x follows their heart and x takes time for reflection, then x finds inner peace.\nShelby makes bold decisions or Shelby follows her heart.\nIf Shelby makes bold decisions, then she either gains freedom or discovers a new purpose.\nIf Shelby takes risks, then she either gains freedom or finds happiness, but not both.\nIf Shelby either feels fulfilled or achieves balance, but not both, then she finds happiness.\nFor all x, if x finds creative expression, then x feels fulfilled.\nFor all x, if x pursues their passion, then x finds creative expression.\nFor all x, if x does not find creative expression, then x does not pursue their passion.\nFor all x, if x does not feel fulfilled, then x does not find creative expression.\nIf Shelby makes bold decisions, then she gains freedom.\nFor all x, if x does not live authentically, then x does not let go of burdens and x does not find inner peace.\nShelby does not gain freedom.\nFor all x, if x lives authentically, then x pursues their passion.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the facts, we have Shelby takes reflection but not LetGo, and not NewPurpose, among others. PursuePassion would follow from LiveAuthentically (rule: LiveAuthentically -> PursuePassion), but LiveAuthentically cannot be derived because: (a) rule 1 needs LetGo or FindInnerPeace, and we do not have LetGo; (b) rule 2 would give FindInnerPeace only if Shelby followed her heart, and rule 3 only states a disjunction (BoldDecisions or FollowsHeart) without establishing either. Even if we could infer BoldDecisions, that would imply Freedom (rule 11) conflicting with the explicit fact Shelby does not gain freedom, but this contradiction does not yield LiveAuthentically. There is also no derivation of NotPursuePassion (we would need NotCreativeExpression, which requires NotFulfilled, which we cannot derive). Hence the context does not entail PursuePassion, nor its negation; the status is Uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1045
+    },
+    {
+      "step": 3,
+      "context": "Shelby does not let go of burdens.\nShelby takes time for reflection.\nShelby does not discover a new purpose.\nShelby takes risks.\nShelby does not achieve balance.\nFor all x, if x lets go of burdens or x finds inner peace, then x lives authentically.\nFor all x, if x follows their heart and x takes time for reflection, then x finds inner peace.\nIf Shelby makes bold decisions, then she either gains freedom or discovers a new purpose.\nIf Shelby takes risks, then she either gains freedom or finds happiness, but not both.\nIf Shelby either feels fulfilled or achieves balance, but not both, then she finds happiness.\nFor all x, if x finds creative expression, then x feels fulfilled.\nFor all x, if x pursues their passion, then x finds creative expression.\nFor all x, if x does not find creative expression, then x does not pursue their passion.\nFor all x, if x does not feel fulfilled, then x does not find creative expression.\nIf Shelby makes bold decisions, then she gains freedom.\nFor all x, if x does not live authentically, then x does not let go of burdens and x does not find inner peace.\nShelby does not gain freedom.\nFor all x, if x lives authentically, then x pursues their passion.\nIf Shelby finds happiness and Shelby does not achieve balance, then Shelby does not feel fulfilled.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts, Shelby takes risks and does not gain freedom. The rule 'Risks -> Freedom XOR Happiness' implies Happiness (since NotFreedom is given, Freedom is false, so Happiness must be true). With NotBalance given, the rule 'Happiness and NotBalance -> NotFulfilled' yields NotFulfilled. Then 'NotFulfilled -> NotCreativeExpression' gives NotCreativeExpression, and 'NotCreativeExpression -> NotPursuePassion' yields NotPursuePassion. Therefore the context entails not pursuing passion, so the conclusion 'Shelby pursues her passion' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1589
+    },
+    {
+      "step": 4,
+      "context": "Shelby does not let go of burdens.\nShelby takes time for reflection.\nShelby does not discover a new purpose.\nShelby takes risks.\nShelby does not achieve balance.\nFor all x, if x lets go of burdens or x finds inner peace, then x lives authentically.\nFor all x, if x does not find inner peace, then x does not follow their heart or x does not take time for reflection.\nIf Shelby makes bold decisions, then she either gains freedom or discovers a new purpose.\nIf Shelby takes risks, then she either gains freedom or finds happiness, but not both.\nIf Shelby either feels fulfilled or achieves balance, but not both, then she finds happiness.\nFor all x, if x finds creative expression, then x feels fulfilled.\nFor all x, if x pursues their passion, then x finds creative expression.\nFor all x, if x does not find creative expression, then x does not pursue their passion.\nFor all x, if x does not feel fulfilled, then x does not find creative expression.\nIf Shelby makes bold decisions, then she gains freedom.\nFor all x, if x does not live authentically, then x does not let go of burdens and x does not find inner peace.\nShelby does not gain freedom.\nFor all x, if x lives authentically, then x pursues their passion.\nIf Shelby finds happiness and Shelby does not achieve balance, then Shelby does not feel fulfilled.\nFor all x, if x does not feel fulfilled, then x does not pursue their passion.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts, Shelby does not gain freedom. The rule 'takes risks -> gains freedom or finds happiness, but not both' then implies Shelby finds happiness. Given 'Shelby finds happiness' and 'Shelby does not achieve balance', the rule 'If Shelby finds happiness and Shelby does not achieve balance, then Shelby does not feel fulfilled' yields Shelby does not feel fulfilled. From 'If x does not feel fulfilled, then x does not find creative expression' we get Shelby does not find creative expression. Then 'For all x, if x does not find creative expression, then x does not pursue their passion' gives Shelby does not pursue her passion. Therefore, the context entails not pursuing passion, so the conclusion 'Shelby pursues her passion' is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2051
+    },
+    {
+      "step": 5,
+      "context": "Shelby does not let go of burdens.\nShelby takes time for reflection.\nShelby does not discover a new purpose.\nShelby takes risks.\nShelby does not achieve balance.\nFor all x, if x lets go of burdens or x finds inner peace, then x lives authentically.\nFor all x, if x does not find inner peace, then x does not follow their heart or x does not take time for reflection.\nIf Shelby makes bold decisions, then she either gains freedom or discovers a new purpose.\nIf Shelby takes risks, then she either gains freedom or finds happiness, but not both.\nIf Shelby either feels fulfilled or achieves balance, but not both, then she finds happiness.\nFor all x, if x finds creative expression, then x feels fulfilled.\nFor all x, if x pursues their passion, then x finds creative expression.\nFor all x, if x does not find creative expression, then x does not pursue their passion.\nFor all x, if x does not feel fulfilled, then x does not find creative expression.\nIf Shelby makes bold decisions, then she gains freedom.\nFor all x, if x does not live authentically, then x does not let go of burdens and x does not find inner peace.\nShelby does not gain freedom.\nFor all x, if x lives authentically, then x pursues their passion.\nIf Shelby finds happiness and Shelby does not achieve balance, then Shelby does not feel fulfilled.\nFor all x, if x does not feel fulfilled, then x does not pursue their passion.\nFor all x, if x pursues their passion, then x feels fulfilled.\nFor all x, if x lives authentically, then x feels fulfilled.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts, Shelby does not gain freedom. The rule 'If Shelby takes risks, then she either gains freedom or finds happiness, but not both' implies Happiness (since GainsFreedom is false). With Happiness and NotBalance, the rule 'If Shelby finds happiness and Shelby does not achieve balance, then Shelby does not feel fulfilled' yields NotFulfilled. From NotFulfilled, the rule 'For all x, if x does not feel fulfilled, then x does not find creative expression' gives NotCreativeExpression. Then 'For all x, if x does not find creative expression, then x does not pursue their passion' yields NotPursuePassion (and this also aligns with NotFulfilled implying NotPursuePassion via another rule). Therefore, the context entails that Shelby does not pursue her passion, so the conclusion 'Shelby pursues her passion' is False.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2572
+    },
+    {
+      "step": 6,
+      "context": "Shelby does not let go of burdens.\nShelby takes time for reflection.\nShelby does not discover a new purpose.\nShelby takes risks.\nShelby does not achieve balance.\nFor all x, if x lets go of burdens or x finds inner peace, then x lives authentically.\nFor all x, if x does not find inner peace, then x does not follow their heart or x does not take time for reflection.\nIf Shelby makes bold decisions, then she either gains freedom or discovers a new purpose.\nIf Shelby takes risks, then she either gains freedom or finds happiness, but not both.\nIf Shelby either feels fulfilled or achieves balance, but not both, then she finds happiness.\nFor all x, if x finds creative expression, then x feels fulfilled.\nFor all x, if x pursues their passion, then x finds creative expression.\nFor all x, if x does not find creative expression, then x does not pursue their passion.\nFor all x, if x does not feel fulfilled, then x does not find creative expression.\nIf Shelby makes bold decisions, then she gains freedom.\nFor all x, if x does not live authentically, then x does not let go of burdens and x does not find inner peace.\nShelby does not gain freedom.\nFor all x, if x lives authentically, then x pursues their passion.\nFor all x, if x does not feel fulfilled, then x does not pursue their passion.\nFor all x, if x pursues their passion, then x feels fulfilled.\nFor all x, if x lives authentically, then x feels fulfilled.\nShelby follows her heart.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From the facts, Shelby does not gain freedom. The rule 'If Shelby takes risks, then she either gains freedom or finds happiness, but not both' combined with the fact 'Shelby does not gain freedom' implies Shelby finds happiness. With 'Shelby finds happiness' and 'Shelby does not achieve balance', the rule 'If Shelby finds happiness and Shelby does not achieve balance, then Shelby does not feel fulfilled' yields Shelby does not feel fulfilled. From 'If x does not feel fulfilled, then x does not find creative expression' we get Shelby does not find creative expression. Then 'For all x, if x does not find creative expression, then x does not pursue their passion' yields Shelby does not pursue her passion. There is no rule deriving pursuing passion from the given facts (the rule LiveAuthentically -> PursuePassion would apply only if we could establish LiveAuthentically, which we cannot from the available facts). Therefore, the context entails not pursuing passion, so the conclusion 'Shelby pursues her passion' is False.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 3150
+    },
+    {
+      "step": 7,
+      "context": "Shelby does not let go of burdens.\nShelby takes time for reflection.\nShelby does not discover a new purpose.\nShelby takes risks.\nShelby does not achieve balance.\nIf Shelby makes bold decisions, then she either gains freedom or discovers a new purpose.\nIf Shelby takes risks, then she either gains freedom or finds happiness, but not both.\nIf Shelby either feels fulfilled or achieves balance, but not both, then she finds happiness.\nFor all x, if x finds creative expression, then x feels fulfilled.\nFor all x, if x pursues their passion, then x finds creative expression.\nFor all x, if x does not find creative expression, then x does not pursue their passion.\nFor all x, if x does not feel fulfilled, then x does not find creative expression.\nIf Shelby makes bold decisions, then she gains freedom.\nShelby does not gain freedom.\nFor all x, if x lives authentically, then x pursues their passion.\nFor all x, if x does not feel fulfilled, then x does not pursue their passion.\nFor all x, if x pursues their passion, then x feels fulfilled.\nFor all x, if x lives authentically, then x feels fulfilled.\nShelby follows her heart.\nFor all x, if x follows their heart and x takes time for reflection, then x does not live authentically.\nFor all x, if x does not live authentically, then x does not feel fulfilled.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From 'Shelby follows her heart' and 'Shelby takes time for reflection', we get NotLiveAuthentically (rule: follows heart and takes reflection -> not live authentically). NotLiveAuthentically implies NotFulfilled (rule: not live authentically -> not fulfilled). NotFulfilled implies NotCreativeExpression (rule: not fulfilled -> not creative expression). NotCreativeExpression implies NotPursuePassion (rule: not creative expression -> not pursue passion). There is also a rule that if x pursues passion then x feels fulfilled, but no rule derives PursuePassion from other facts in this context. Therefore, the context entails not pursuing passion, so the conclusion 'Shelby pursues her passion' is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3752
+    }
+  ]
+}

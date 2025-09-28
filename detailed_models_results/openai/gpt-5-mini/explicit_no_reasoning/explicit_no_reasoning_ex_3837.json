@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 228,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Skyler does not respect her ancestors.\nSkyler honors customs.\nSkyler has curiosity.\nSkyler cannot create art.\nSkyler does not explore new ideas.\nSkyler embraces uncertainty.\nIf Skyler either respects her ancestors or honors customs (but not both), then she values tradition.\nIf Skyler has curiosity, then she will explore her creativity.\nSkyler either appreciates nature or values tradition, but not both.\nIf someone appreciates nature and explores creativity, then they seek inspiration.\nAnyone who values imagination or seeks inspiration can create art.\nIf Skyler either explores new ideas or embraces uncertainty (but not both), then she is open-minded.\nIf Skyler is skeptical of magic, then she is open-minded and values imagination.\nEither Skyler believes in magic or she is skeptical of magic, but not both.",
+      "question": "Does the context entail the conclusion 'Skyler does not believe in magic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x cannot create art, then x does not value imagination and x does not seek inspiration.\n- If Skyler is skeptical of magic, then she is open-minded.\n- If Skyler is skeptical of magic, then she values imagination.\n\nAdded facts:\n- Skyler values tradition.\n- Skyler explores her creativity.\n- Skyler does not appreciate nature.\n- Skyler is open-minded.",
+      "question": "Does the context entail the conclusion 'Skyler does not believe in magic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From facts: Skyler cannot create art, and added rule gives cannot create art -> not value imagination. So Skyler does not value imagination. If Skyler were skeptical of magic, added rules imply she values imagination, which contradicts not value imagination; therefore no model of the knowledge base makes 'skeptical' true. The XOR fact (believes or skeptical, but not both) forces 'believes in magic' to be true in all models. Hence the conclusion 'Skyler does not believe in magic.' is not entailed (it is false).",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 270
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Skyler values tradition, then she does not appreciate nature.\n- If Skyler is skeptical of magic, then she is open-minded, and if Skyler is skeptical of magic, then she values imagination.\n- If Skyler is not skeptical of magic, then she believes in magic.\n\nAdded facts:\n- Either Skyler respects her ancestors or Skyler honors customs, but not both.",
+      "question": "Does the context entail the conclusion 'Skyler does not believe in magic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the original facts Skyler honors customs and does not respect her ancestors, so by the XOR rule she values tradition. The added rule gives values tradition -> does not appreciate nature, so appreciate nature is false. Skyler has curiosity -> she explores her creativity, but since appreciate nature is false the rule (appreciate nature AND explore creativity) -> seek inspiration does not fire, and from (values imagination OR seeks inspiration) -> can create art together with the fact Skyler cannot create art we get \u00acvalues imagination and \u00acseeks inspiration. The rule (skeptical of magic) -> values imagination would contradict \u00acvalues imagination, so skeptical of magic cannot hold. Because either believes in magic XOR skeptical of magic holds, skeptical false forces believes in magic true (also supported by the added rule If not skeptical then believes). Therefore the context entails that Skyler believes in magic, so it does not entail 'Skyler does not believe in magic.'",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 515
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x cannot create art, then x does not value imagination and x does not seek inspiration.\n- For all x, if x values imagination or x seeks inspiration, then x can create art.\n\nAdded rules:\n- If Skyler is open-minded, then she is skeptical of magic.",
+      "question": "Does the context entail the conclusion 'Skyler does not believe in magic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes the fact Skyler is open-minded. The added rule 'If Skyler is open-minded, then she is skeptical of magic' yields that Skyler is skeptical. The XOR rule 'Either Skyler believes in magic or she is skeptical of magic, but not both' then forces that Skyler does not believe in magic. No rule forces belief in magic, so \u00acbelieves_in_magic is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 831
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Skyler is open-minded, then she is skeptical of magic.\n\nAdded rules:\n- If Skyler is open-minded, then she is not skeptical of magic.",
+      "question": "Does the context entail the conclusion 'Skyler does not believe in magic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The KB contains fact open_minded. The added rule gives open_minded -> not skeptical, so skeptical is false. There is a rule \u00acskeptical -> believes_in_magic, so believes_in_magic is entailed. Because Skyler believes in magic is entailed, the conclusion 'Skyler does not believe in magic.' is not entailed (it is contradicted).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1024
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Skyler is open-minded, then she is not skeptical of magic.\n\nAdded rules:\n- If Skyler is open-minded, then she is skeptical of magic.",
+      "question": "Does the context entail the conclusion 'Skyler does not believe in magic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The KB includes the fact Skyler is open-minded (from earlier additions). The added rule gives open-minded -> skeptical, so skeptical is entailed. The XOR rule (either believes in magic or is skeptical, but not both) then forces that Skyler does not believe in magic. No remaining rule forces belief in magic. Therefore 'Skyler does not believe in magic.' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1181
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Skyler does not explore new ideas.\n- Skyler is open-minded.\n\nAdded rules:\n- If Skyler explores new ideas and Skyler embraces uncertainty, then she is not open-minded.\n\nAdded facts:\n- Skyler explores new ideas.",
+      "question": "Does the context entail the conclusion 'Skyler does not believe in magic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the new fact Skyler explores new ideas and the original fact Skyler embraces uncertainty, the added rule gives \u00acopen_minded. The original rule (skeptical -> open_minded) thus yields \u00acskeptical by contrapositive. The XOR constraint (believes_in_magic XOR skeptical) requires at least one of believes_in_magic or skeptical to hold; with \u00acskeptical, believes_in_magic must hold. Therefore the KB entails that Skyler believes in magic, so it does not entail 'Skyler does not believe in magic.'",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1340
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Skyler is not skeptical of magic, then she believes in magic.\n\nAdded rules:\n- Either Skyler is skeptical of magic or she believes in magic.\n- It is not the case that Skyler believes in magic and Skyler is skeptical of magic.",
+      "question": "Does the context entail the conclusion 'Skyler does not believe in magic.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The final KB enforces an exclusive-or between 'skeptical' and 'believes' (exactly one must hold) but there is no rule or fact that determines which one holds. Neither 'skeptical' nor 'believes_in_magic' is forced by the remaining facts/rules, so both assignments are consistent. Therefore 'Skyler does not believe in magic' is not entailed (nor is its negation entailed).",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1547
+    }
+  ]
+}

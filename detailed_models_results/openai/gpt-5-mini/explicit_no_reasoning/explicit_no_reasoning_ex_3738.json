@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 209,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Caden meets expectations.\nCaden exceeds goals.\nCaden works under pressure.\nCaden does not meet deadlines.\nCaden does not demonstrate craftsmanship.\nCaden does not have a lack of experience.\nCaden does not take shortcuts.\nCaden does not lack accountability.\nCaden does not ignore feedback.\nIf Caden delivers results, then he either meets expectations or exceeds goals (but not both).\nIf Caden works under pressure, then he either delivers results or manages budgets (or both).\nIf Caden either manages budgets or meets deadlines (but not both), then he has a high-stakes project.\nIf Caden has a high-stakes project, then he either demonstrates craftsmanship or values integrity (or both).\nA person either values integrity or is unprofessional, but not both.\nIf Caden disregards standards, then he either has a lack of experience or is unprofessional (but not both).\nIf Caden prioritizes profits, then he takes shortcuts and lacks accountability.\nIf Caden loses his reputation, then he either ignores feedback or disregards standards (but not both).\nIf Caden either prioritizes profits or compromises quality (but not both), then he will lose his reputation.",
+      "question": "Does the context entail the conclusion 'Caden does not compromise quality.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Caden either prioritizes profits or compromises quality (but not both), then he will lose his reputation.\n\nAdded rules:\n- Either Caden prioritizes profits or compromises quality, if and only if he loses his reputation.\n\nAdded facts:\n- Caden loses his reputation.",
+      "question": "Does the context entail the conclusion 'Caden does not compromise quality.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added equivalence says: (prioritizes_profits XOR compromises_quality) iff loses_reputation. Since Caden loses his reputation, exactly one of (prioritizes_profits, compromises_quality) is true. But there is a rule: prioritizes_profits => takes_shortcuts AND lacks_accountability. The context also asserts Caden does not take shortcuts and does not lack accountability, so prioritizes_profits must be false. Therefore the XOR forces compromises_quality to be true. Thus Caden does compromise quality, so the statement 'Caden does not compromise quality.' is entailed false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 345
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, either x is unprofessional or x values integrity, but not both.\n- If Caden prioritizes profits, then he takes shortcuts and lacks accountability.\n\nAdded facts:\n- Caden prioritizes profits.",
+      "question": "Does the context entail the conclusion 'Caden does not compromise quality.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From facts: Caden works under pressure. Since delivers_results would imply an exclusive choice between meets expectations and exceeds goals, but both are given true, delivers_results must be false. Thus from works_under_pressure we get manages_budgets true. manages_budgets XOR meets_deadlines (meets_deadlines is false) gives high_stakes_project true, and then values_integrity must hold (demonstrates_craftsmanship is false). The rule that forced mutual exclusivity between values_integrity and unprofessional was removed, so having values_integrity creates no contradiction with later inferences. With Caden prioritizes_profits true and the remaining rule (prioritizes_profits XOR compromises_quality) -> loses_reputation, the antecedent simplifies to (not compromises_quality) -> loses_reputation. So assuming \u00accompromises_quality yields loses_reputation, then (since ignores_feedback is false) disregards_standards and then unprofessional follow; all of these are consistent because the integrity/unprofessional exclusivity was removed. Assuming compromises_quality is also consistent (it simply makes the XOR antecedent false and avoids loses_reputation). Therefore both compromises_quality true and false are consistent with the context, so 'Caden does not compromise quality.' is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 566
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Either Caden prioritizes profits or compromises quality, if and only if he loses his reputation.\n\nAdded rules:\n- Either Caden prioritizes profits or compromises quality, if and only if Caden does not lose his reputation.",
+      "question": "Does the context entail the conclusion 'Caden does not compromise quality.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts: ME and EG are both true, so DR (delivers_results) must be false because DR -> (ME xor EG). WUP (works under pressure) then implies MB (manages_budgets). MB xor not MD (MD false) yields HSP (high_stakes_project). HSP -> (demonstrates_craftsmanship or values_integrity); since demonstrates_craftsmanship is false, values_integrity is true. If LR (loses_reputation) held, LR -> (ignores_feedback xor disregards_standards); ignores_feedback is false so LR -> disregards_standards, and that would force unprofessional (lack_of_experience is false), contradicting values_integrity (they are exclusive). Hence LR is false, so not loses_reputation is entailed. Also PP (prioritizes_profits) would imply takes_shortcuts and lacks_accountability, but both are false, so PP is false. The added biconditional (PP xor CQ) iff not LR therefore reduces to CQ iff not LR; since not LR is true, CQ (compromises_quality) is true. Thus 'Caden does not compromise quality.' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 914
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Caden loses his reputation.\n\nAdded rules:\n- If Caden works under pressure, then he does not lose his reputation.",
+      "question": "Does the context entail the conclusion 'Caden does not compromise quality.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "PP is given true. The context includes the biconditional (PP XOR CQ) \u2194 \u00acLR, and the rule WUP \u2192 \u00acLR with WUP true. From WUP we infer \u00acLR. With PP true, (PP XOR CQ) is equivalent to \u00acCQ, and the biconditional with \u00acLR yields \u00acCQ. Therefore the context entails that Caden does not compromise quality.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1270
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Caden works under pressure, then he does not lose his reputation.\n\nAdded rules:\n- If Caden works under pressure, then he loses his reputation.",
+      "question": "Does the context entail the conclusion 'Caden does not compromise quality.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "WUP is given true and the added rule WUP -> LR entails LR. The context contains the biconditional (PP XOR CQ) \u2194 \u00acLR, and PP is a known fact. Since LR is true, \u00acLR is false, so (PP XOR CQ) must be false. With PP true, the XOR being false forces CQ to be true. Thus \u00acCQ is false, so the conclusion 'Caden does not compromise quality.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1446
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Caden prioritizes profits.\n\nAdded facts:\n- Caden does not prioritize profits.",
+      "question": "Does the context entail the conclusion 'Caden does not compromise quality.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From WUP (works under pressure) and the added rule WUP -> LR we get LR (loses reputation). The current biconditional is (PP xor CQ) \u2194 \u00acLR. Since LR is true, \u00acLR is false, so (PP xor CQ) must be false. The context now includes the fact \u00acPP (Caden does not prioritize profits), so PP is false and PP xor CQ simplifies to CQ. For the XOR to be false, CQ must be false. Therefore Caden does not compromise quality is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1642
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Caden works under pressure, then he loses his reputation.\n\nAdded facts:\n- Caden is not unprofessional.",
+      "question": "Does the context entail the conclusion 'Caden does not compromise quality.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "ME and EG are both true, so DR must be false (DR -> ME xor EG would be violated). From WUP and WUP -> (DR or MB) we get MB. MB xor MD (MD false) yields HSP, and HSP -> (DC or VI) with DC false gives VI. Facts include \u00acIF, \u00acLEX, \u00acUP. From LR -> (IF xor DS): if LR were true then, since IF is false, DS would be true; but DS -> (LEX xor UP) would then force (LEX xor UP) true, impossible because LEX and UP are both false. Hence LR leads to contradiction, so \u00acLR is entailed. The biconditional (PP xor CQ) \u2194 \u00acLR plus \u00acPP simplifies to CQ \u2194 \u00acLR, so \u00acLR entails CQ. Therefore \u00acCQ is false (not entailed).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1839
+    }
+  ]
+}

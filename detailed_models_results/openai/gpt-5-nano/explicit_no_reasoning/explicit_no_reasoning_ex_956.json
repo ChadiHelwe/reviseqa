@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-nano",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 330,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Tomas has authority.\nTomas writes publications.\nTomas is not diligent.\nTomas has expertise.\nTomas does not do pioneering work.\nTomas does not transform the field of chemistry.\nTomas is not established in his field.\nTomas is precise in his work.\nAnyone who has authority or writes publications shares knowledge.\nTomas either shares knowledge or contributes to science, but not both.\nIf Tomas makes accurate measurements, then he is either diligent or has expertise (but not both).\nEveryone who is innovative either does pioneering work or transforms their field (or both).\nAnyone who makes accurate measurements or is highly respected contributes to science.\nIf Tomas is influential, then he is either established in his field or highly respected, but not both.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x does not do pioneering work and x does not transform the field of chemistry, then x is not innovative.\n- For all x, if x does not contribute to science, then x does not make accurate measurements and x is not highly respected.\n\nAdded facts:\n- Tomas shares knowledge and Tomas does not contribute to science.\n- Tomas has authority or Tomas is innovative.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Tomas is precise. From the rule 'Innovative -> (P \u2228 Transform)' and the facts 'not pioneering' and 'not transform', Tomas is not innovative. From the rule 'Influential -> (Established \u2228 HighlyRes)' and the facts 'not established' and 'not highly respected' (derived from not contributing to science), Tomas is not influential. Therefore (Innovative \u2228 Influential) is false, so the consequent of the implication 'If Tomas is precise in his work, then he is either innovative or influential, but not both' is false. Hence the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 267
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Tomas shares knowledge.\n- Tomas does not make accurate measurements.\n- Tomas is not highly respected.\n- Tomas is not influential.\n- Tomas is not innovative.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The facts give not innovative and not influential for Tomas, so Innovative XOR Influential is false. The conclusion asserts that if Tomas is precise, then Innovative XOR Influential. Since precision is not established, there could be a model where Tomas is precise and the XOR is false, making the conditional false. Therefore the context does not entail the conclusion.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 568
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Either Tomas is not influential, or he is either established in his field or highly respected, but not both.\n\nAdded facts:\n- Tomas is influential and it is not the case that he is either established in his field or highly respected, but not both.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The context does not provide any information about Tomas being precise. It asserts Tomas is influential and, via a rule, establishes a relationship between influential and established/highly respected, but the added fact not(established XOR highly respected) creates inconsistency. There is no rule or fact in the context that forces Tomas to be precise, nor any fact that determines whether Tomas is innovative. Therefore we cannot guarantee that (precise -> (innovative XOR influential)) holds in all models of the context. It is not entailed, and there could be interpretations of the context where the antecedent holds with different truth values for innovative, so the conclusion is not derivable. Hence, the correct choice is Uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 734
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Tomas is influential and it is not the case that he is either established in his field or highly respected, but not both.\n\nAdded rules:\n- Either Tomas is not influential, or he is either established in his field or highly respected, but not both.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "There is no rule linking 'precise in his work' to 'innovative' or 'influential' in the given context. The only added rule concerns the status of influential vs. established/highly respected, and there are no facts forcing a link between precision and the XOR of innovation/influence. Therefore it is possible for Tomas to be precise while neither innovative nor influential holds, which would make the implication false in that model. Since the context does not entail the implication (it cannot guarantee the consequent whenever the antecedent holds), the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 995
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Either Tomas is not influential, or he is either established in his field or highly respected, but not both.\n\nAdded facts:\n- Tomas is influential.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The only explicit fact is that Tomas is influential. There is no information about Tomas being precise, or about whether he is innovative. The conclusion is the conditional (precise -> (innovative XOR influential)). Without any rule tying precision to the other predicates, and with only 'influential' known, the truth of the conditional cannot be determined: if precise is false, the conditional is vacuously true; if precise is true, the outcome depends on whether innovative is true or false, which is unspecified. Therefore the context does not entail the conclusion, and it remains uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1249
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, x is innovative if and only if x does pioneering work or transforms the field of chemistry.\n- For all x, x contributes to science if and only if x makes accurate measurements or is highly respected.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The added rules connect innovative to pioneering or transforming the field, and connect contributing to science to accurate measurements or being highly respected. There is no information linking 'precise' to either innovative, influential, or to the new RHS XOR itself. Without any facts about Tomas being precise or about him pioneering/transforms/measurements/respect, the implication (precise -> (innovative XOR influential)) is not entailed. Therefore the context cannot prove or disprove the conclusion; it is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1481
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x does pioneering work or transforms the field of chemistry then x is innovative.\n- For all x, if x contributes to science, then x makes accurate measurements or is highly respected.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The context provides only two rules: (pioneering OR transforms) -> innovative, and contributes -> (accurate measurements OR highly respected). There is no rule connecting precise to innovative or influential, nor any rule forcing precisely one of innovative or influential. We can construct a model where Tomas is precise, not innovative, not influential, and does not pioneer, transform, or contribute. This model satisfies the given rules and facts yet makes (innovative XOR influential) false, so the implication (precise -> (innovative OR influential) AND not both) is not entailed. Therefore the conclusion is not entailed by the context.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1710
+    }
+  ]
+}

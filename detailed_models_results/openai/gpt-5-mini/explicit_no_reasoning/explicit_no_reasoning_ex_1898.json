@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 52,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Daniela prioritizes the economy.\nDaniela disregards warnings.\nDaniela interferes with nature.\nDaniela acts irresponsibly.\nDaniela does not face legal action.\nDaniela damages nature.\nIf Daniela prioritizes the economy, then she ignores ecology and disregards warnings.\nIf Daniela interferes with nature, then she either disrupts the balance of the ecosystem or acts irresponsibly (but not both).\nIf Daniela harms the ecosystem or destroys habitats, then she will face legal action.\nAnyone who damages nature either disrupts the balance of the ecosystem or lacks knowledge (or both).\nIf someone lacks knowledge and pollutes habitats, then they harm the ecosystem.\nA person either preserves biodiversity or pollutes habitats, but not both.\nDaniela either exploits resources or preserves biodiversity, but not both.\nEveryone who either exploits resources or ignores ecology (but not both) is environmentally indifferent.\nDaniela is either environmentally conscious or environmentally indifferent, but not both.",
+      "question": "Does the context entail the conclusion 'Daniela is environmentally conscious.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Daniela ignores ecology.\n- Daniela does not disrupt the balance of the ecosystem.\n- Daniela lacks knowledge.\n- Daniela does not pollute habitats.\n- Daniela does not harm the ecosystem.\n- Daniela does not destroy habitats.",
+      "question": "Does the context entail the conclusion 'Daniela is environmentally conscious.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given 'does not pollute habitats' and the exclusive rule (preserve biodiversity xor pollute), Daniela preserves biodiversity. The xor (exploit resources xor preserve biodiversity) then implies she does not exploit resources. She also ignores ecology (given). The rule (exploit xor ignore ecology) => environmentally indifferent applies: exploit=false, ignore=true, so Daniela is environmentally indifferent. Finally, the xor (environmentally conscious xor environmentally indifferent) then implies she is not environmentally conscious. Hence the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 298
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Daniela does not pollute habitats.\n\nAdded rules:\n- Everyone who is environmentally indifferent either exploits resources or ignores ecology, but not both.\n\nAdded facts:\n- Daniela pollutes habitats.",
+      "question": "Does the context entail the conclusion 'Daniela is environmentally conscious.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From pollute (given) and XOR(preserve_biodiversity, pollute) we get preserve_biodiversity = false. From XOR(exploit_resources, preserve_biodiversity) preserve=false implies exploit_resources = true. From prioritizes_economy we have ignores_ecology = true. Thus exploit = true and ignore = true, so XOR(exploit,ignore) is false. The added rule (env_indifferent -> XOR(exploit,ignore)) then yields env_indifferent = false (because its consequent is false). Given the asserted XOR(env_conscious, env_indifferent) and env_indifferent = false, we conclude env_conscious = true. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 501
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If someone lacks knowledge and pollutes habitats, then they harm the ecosystem.",
+      "question": "Does the context entail the conclusion 'Daniela is environmentally conscious.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From pollutes_habitats (given) and XOR(preserve_biodiversity, pollute_habitats) we get preserve_biodiversity = false. Then XOR(exploit_resources, preserve_biodiversity) gives exploit_resources = true. From Daniela prioritizes the economy we have ignore_ecology = true. Thus exploit_resources = true and ignore_ecology = true, so XOR(exploit_resources, ignore_ecology) is false. The added rule env_indifferent -> XOR(exploit,ignore) has contrapositive: not XOR(...) -> not env_indifferent; since XOR(...) is false we get not env_indifferent. Finally XOR(env_conscious, env_indifferent) with env_indifferent = false yields env_conscious = true. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 724
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Daniela pollutes habitats.\n\nAdded facts:\n- Daniela does not pollute habitats.",
+      "question": "Does the context entail the conclusion 'Daniela is environmentally conscious.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With 'does not pollute habitats' and XOR(preserve_biodiversity, pollute_habitats) we get preserve_biodiversity = true. XOR(exploit_resources, preserve_biodiversity) then gives exploit_resources = false. From 'Daniela prioritizes the economy' we have ignore_ecology = true. So XOR(exploit_resources, ignore_ecology) = XOR(false, true) = true, and by the rule this implies Daniela is environmentally indifferent. Given XOR(env_conscious, env_indifferent) and env_indifferent = true, Daniela cannot be environmentally conscious. Hence the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 942
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Daniela does not pollute habitats.\n\nAdded facts:\n- Daniela pollutes habitats.",
+      "question": "Does the context entail the conclusion 'Daniela is environmentally conscious.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Pollutes_habitats is given, and XOR(preserve_biodiversity, pollute_habitats) yields preserve_biodiversity = false. XOR(exploit_resources, preserve_biodiversity) then gives exploit_resources = true. From prioritizes_economy we get ignore_ecology = true. Thus exploit_resources = true and ignore_ecology = true, so XOR(exploit_resources, ignore_ecology) is false. The added biconditional (env_indifferent iff XOR(exploit,ignore)) implies env_indifferent = false. Finally XOR(env_conscious, env_indifferent) with env_indifferent = false forces env_conscious = true, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1134
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For everyone x, if x is not environmentally indifferent, then x exploits resources if and only if x ignores ecology.\n\nAdded facts:\n- Daniela ignores ecology and Daniela disregards warnings.",
+      "question": "Does the context entail the conclusion 'Daniela is environmentally conscious.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From Daniela prioritizes the economy we get ignores_ecology = true. The domain XOR(preserve_biodiversity, pollute_habitats) and the fact Daniela pollutes_habitats (from earlier edits) yield preserve_biodiversity = false. Then XOR(exploit_resources, preserve_biodiversity) gives exploit_resources = true. So exploit_resources = true and ignores_ecology = true, hence XOR(exploit,ignore) is false. The two rules (env_indifferent -> XOR(exploit,ignore)) and (XOR(exploit,ignore) -> env_indifferent) make env_indifferent equivalent to XOR(exploit,ignore), so env_indifferent = false. With XOR(env_conscious, env_indifferent) this forces env_conscious = true. The added rule (not env_indifferent -> exploit iff ignore) is consistent and does not prevent the conclusion. Therefore Daniela is environmentally conscious is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1339
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For everyone x, x is environmentally indifferent if and only if x either exploits resources or ignores ecology, but not both.\n\nAdded facts:\n- Daniela does not preserve biodiversity.\n- Daniela exploits resources.",
+      "question": "Does the context entail the conclusion 'Daniela is environmentally conscious.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given the new equivalence env_indifferent \u2194 (exploits_resources XOR ignores_ecology) and the facts Daniela exploits_resources and Daniela ignores_ecology, the XOR is false, so Daniela is not environmentally indifferent. The exclusive fact that Daniela is either environmentally conscious or environmentally indifferent therefore implies Daniela is environmentally conscious. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1611
+    }
+  ]
+}

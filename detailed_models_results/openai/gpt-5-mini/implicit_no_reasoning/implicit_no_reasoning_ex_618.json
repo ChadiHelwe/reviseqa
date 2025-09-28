@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "implicit_no_reasoning",
+    "chain_index": 287,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jordan speaks openly.\nJordan does not get encouragement.\nJordan builds connections.\nJordan does not gain resilience.\nJordan meets obstacles.\nJordan's relationships are not strengthened.\nIf someone shares their struggles and speaks openly, then they can get encouragement.\nAnyone who builds connections or shares struggles can find support.\nAnyone who overcomes adversity will gain resilience.\nIf Jordan either meets obstacles or overcomes adversity (but not both), then she faces challenges.\nIf Jordan faces challenges, then she either finds support or receives compassion (but not both).\nIf Jordan either contracts an illness or receives compassion (but not both), then her relationships are strengthened.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Jordan speaks openly.\nJordan does not get encouragement.\nJordan builds connections.\nJordan does not gain resilience.\nJordan meets obstacles.\nJordan's relationships are not strengthened.\nFor all x, if x shares their struggles and x speaks openly, then x can get encouragement.\nFor all x, if x builds connections or x shares their struggles, then x can find support.\nFor all x, if x overcomes adversity, then x will gain resilience.\nIf Jordan either meets obstacles or overcomes adversity (but not both), then she faces challenges.\nIf Jordan faces challenges, then she either finds support or receives compassion (but not both).\nIf Jordan's relationships are not strengthened, then she either contracts an illness or receives compassion (but not both).",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From Jordan meets obstacles and Jordan does not gain resilience, Jordan cannot have overcome adversity (overcome -> gain resilience). Thus Jordan meets obstacles and not overcomes => (by the XOR rule) Jordan faces challenges. From faces challenges we get an exclusive choice: either Jordan finds support or Jordan receives compassion. From relationships not strengthened we get an exclusive choice: either Jordan contracts an illness or Jordan receives compassion. These combine so there are two consistent possibilities: (A) Jordan receives compassion (then she does not contract an illness), or (B) Jordan finds support (then she cannot receive compassion, so by the second XOR she must contract an illness). Because both a model with Jordan contracting an illness and a model without it are consistent with the context, the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 226
+    },
+    {
+      "step": 2,
+      "context": "Jordan speaks openly.\nJordan does not get encouragement.\nJordan builds connections.\nJordan does not gain resilience.\nJordan meets obstacles.\nJordan's relationships are not strengthened.\nFor all x, if x shares their struggles and x speaks openly, then x can get encouragement.\nFor all x, if x builds connections or x shares their struggles, then x can find support.\nFor all x, if x overcomes adversity, then x will gain resilience.\nIf Jordan either meets obstacles or overcomes adversity (but not both), then she faces challenges.\nIf Jordan faces challenges, then she either finds support or receives compassion (but not both).\nIf Jordan's relationships are not strengthened, then she either contracts an illness or receives compassion (but not both).\nIf Jordan meets obstacles and does not overcome adversity, then she faces challenges.\nIf Jordan does not meet obstacles and overcomes adversity, then she faces challenges.\nIf Jordan faces challenges and finds support, then she does not receive compassion.\nIf Jordan faces challenges and receives compassion, then she does not find support.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Interpreting the modal 'can find support' and 'can get encouragement' as actual implications: Jordan builds connections \u2192 Jordan finds support. Jordan meets obstacles and (since she does not overcome adversity) the XOR condition yields Jordan faces challenges. Faces challenges gives an exclusive choice: finds support or receives compassion. But we already have finds support, so compassion is false. From relationships not strengthened we have an exclusive choice: contracts illness or receives compassion. Compassion is false, so Jordan must contract an illness. Therefore the context entails that Jordan contracts an illness.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 569
+    },
+    {
+      "step": 3,
+      "context": "Jordan speaks openly.\nJordan does not get encouragement.\nJordan builds connections.\nJordan does not gain resilience.\nJordan meets obstacles.\nJordan's relationships are not strengthened.\nFor all x, if x shares their struggles and x speaks openly, then x can get encouragement.\nFor all x, if x overcomes adversity, then x will gain resilience.\nIf Jordan either meets obstacles or overcomes adversity (but not both), then she faces challenges.\nIf Jordan faces challenges, then she either finds support or receives compassion (but not both).\nIf Jordan's relationships are not strengthened, then she either contracts an illness or receives compassion (but not both).\nIf Jordan meets obstacles and does not overcome adversity, then she faces challenges.\nIf Jordan does not meet obstacles and overcomes adversity, then she faces challenges.\nIf Jordan faces challenges and finds support, then she does not receive compassion.\nIf Jordan faces challenges and receives compassion, then she does not find support.\nJordan does not find support.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We have: Jordan meets obstacles, Jordan\u2019s relationships are not strengthened, and Jordan does not find support. The relationships-not-strengthened rule gives an exclusive choice: either Jordan contracts an illness or Jordan receives compassion. To force one of those we would need more info about compassion. Compassion could follow if Jordan faces challenges (then by XOR between support and compassion, since she does not find support she would have to receive compassion). But we cannot derive that Jordan faces challenges: the rules make faces-challenges depend on the exclusive condition of meeting obstacles XOR overcoming adversity or on the additional conditional that requires \u2018does not overcome adversity\u2019. We lack any fact that Jordan does not overcome adversity (\u00ac(overcome) does not follow from \u00ac(gain resilience) because overcome \u2192 gain resilience is not reversible). Thus both models are consistent: one where Jordan faces challenges \u2192 receives compassion \u2192 no illness, and one where she does not face challenges \u2192 neither compassion nor its exclusion holds and she could instead be the illness case. Therefore the context does not entail that Jordan contracts an illness.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 945
+    },
+    {
+      "step": 4,
+      "context": "Jordan speaks openly.\nJordan does not get encouragement.\nJordan builds connections.\nJordan does not gain resilience.\nJordan meets obstacles.\nJordan's relationships are not strengthened.\nFor all x, if x shares their struggles and x speaks openly, then x can get encouragement.\nFor all x, if x overcomes adversity, then x will gain resilience.\nIf Jordan either meets obstacles or overcomes adversity (but not both), then she faces challenges.\nIf Jordan faces challenges, then she either finds support or receives compassion (but not both).\nIf Jordan's relationships are not strengthened, then she either contracts an illness or receives compassion (but not both).\nIf Jordan meets obstacles and does not overcome adversity, then she faces challenges.\nIf Jordan does not meet obstacles and overcomes adversity, then she faces challenges.\nIf Jordan faces challenges and finds support, then she does not receive compassion.\nIf Jordan faces challenges and receives compassion, then she does not find support.\nJordan does not find support.\nIf Jordan does not gain resilience, then she does not overcome adversity.\nIf Jordan faces challenges and does not find support, then she receives compassion.\nIf Jordan's relationships are not strengthened and she receives compassion, then she does not contract an illness.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acgain_resilience and (If \u00acgain_resilience then \u00acovercome) we get \u00acovercome_adversity. Jordan meets_obstacles and \u00acovercome_adversity and (If meets_obstacles and \u00acovercome then faces_challenges) give faces_challenges. faces_challenges and \u00acfind_support and (If faces_challenges and \u00acfind_support then receives_compassion) give receives_compassion. Given relationships_not_strengthened and the exclusive rule (either contracts_illness or receives_compassion but not both), since receives_compassion holds Jordan cannot contract an illness. The additional rule (relationships_not_strengthened and receives_compassion \u2192 \u00accontracts_illness) also yields \u00accontracts_illness. Therefore the context entails that Jordan does not contract an illness, so it does not entail that she contracts one.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1411
+    },
+    {
+      "step": 5,
+      "context": "Jordan speaks openly.\nJordan does not get encouragement.\nJordan builds connections.\nJordan does not gain resilience.\nJordan meets obstacles.\nJordan's relationships are not strengthened.\nFor all x, if x shares their struggles and x speaks openly, then x can get encouragement.\nFor all x, if x overcomes adversity, then x will gain resilience.\nIf either Jordan meets obstacles or overcomes adversity, and it is not the case that Jordan meets obstacles and overcomes adversity, then she faces challenges.\nIf Jordan faces challenges, then either she finds support or receives compassion, and it is not the case that she finds support and receives compassion.\nIf Jordan's relationships are not strengthened, then she either contracts an illness or receives compassion (but not both).\nIf Jordan meets obstacles and does not overcome adversity, then she faces challenges.\nIf Jordan does not meet obstacles and overcomes adversity, then she faces challenges.\nIf Jordan faces challenges and finds support, then she does not receive compassion.\nIf Jordan faces challenges and receives compassion, then she does not find support.\nJordan does not find support.\nIf Jordan does not gain resilience, then she does not overcome adversity.\nIf Jordan faces challenges and does not find support, then she receives compassion.\nIf Jordan's relationships are not strengthened and she receives compassion, then she does not contract an illness.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acgain_resilience and the rule \u00acgain_resilience \u2192 \u00acovercome_adversity we get \u00acovercome_adversity. With meets_obstacles and \u00acovercome_adversity and the clause (meets_obstacles \u2227 \u00acovercome_adversity) \u2192 faces_challenges, we get faces_challenges. faces_challenges together with \u00acfind_support and the clause (faces_challenges \u2227 \u00acfind_support) \u2192 receives_compassion yields receives_compassion. The exclusivity for relationships_not_strengthened says either contracts_illness or receives_compassion (but not both); since receives_compassion holds, contracts_illness must be false. The additional rule (relationships_not_strengthened \u2227 receives_compassion) \u2192 \u00accontracts_illness also gives \u00accontracts_illness. Therefore the context entails that Jordan does not contract an illness, so it does not entail that she contracts one.",
+      "correct": true,
+      "tags": [
+        "no_change"
+      ],
+      "is_demonstration": false,
+      "token_count": 1889
+    },
+    {
+      "step": 6,
+      "context": "Jordan speaks openly.\nJordan does not get encouragement.\nJordan builds connections.\nJordan does not gain resilience.\nJordan meets obstacles.\nJordan's relationships are not strengthened.\nFor all x, if x shares their struggles and x speaks openly, then x can get encouragement.\nFor all x, if x overcomes adversity, then x will gain resilience.\nIf either Jordan meets obstacles or overcomes adversity, and it is not the case that Jordan meets obstacles and overcomes adversity, then she faces challenges.\nIf Jordan faces challenges, then either she finds support or receives compassion, and it is not the case that she finds support and receives compassion.\nIf Jordan's relationships are not strengthened, then she either contracts an illness or receives compassion (but not both).\nEither it is not the case that Jordan meets obstacles and does not overcome adversity, or she faces challenges.\nIf Jordan does not meet obstacles and overcomes adversity, then she faces challenges.\nIf Jordan faces challenges and finds support, then she does not receive compassion.\nIf Jordan faces challenges and receives compassion, then she does not find support.\nJordan does not find support.\nIf Jordan does not gain resilience, then she does not overcome adversity.\nIf Jordan faces challenges and does not find support, then she receives compassion.\nIf Jordan's relationships are not strengthened and she receives compassion, then she does not contract an illness.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acgain_resilience and the rule \u00acgain_resilience \u2192 \u00acovercome_adversity we get \u00acovercome_adversity. Jordan meets_obstacles and \u00acovercome_adversity and the (meets \u2227 \u00acovercome) \u2192 faces_challenges clause entail faces_challenges. faces_challenges together with \u00acfind_support and (faces_challenges \u2227 \u00acfind_support) \u2192 receives_compassion yield receives_compassion. Given relationships_not_strengthened and the exclusive choice (contracts_illness or receives_compassion, but not both), receiving compassion entails \u00accontracts_illness. The additional rule (relationships_not_strengthened \u2227 receives_compassion) \u2192 \u00accontracts_illness also gives \u00accontracts_illness. Therefore the context entails that Jordan does not contract an illness, so it does not entail that she contracts one.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2402
+    },
+    {
+      "step": 7,
+      "context": "Jordan speaks openly.\nJordan does not get encouragement.\nJordan builds connections.\nJordan does not gain resilience.\nJordan meets obstacles.\nJordan's relationships are not strengthened.\nFor all x, if x shares their struggles and x speaks openly, then x can get encouragement.\nFor all x, if x overcomes adversity, then x will gain resilience.\nIf Jordan either meets obstacles or overcomes adversity (but not both), then she faces challenges.\nIf Jordan faces challenges, then she either finds support or receives compassion (but not both).\nIf Jordan's relationships are not strengthened, then she either contracts an illness or receives compassion (but not both).\nEither it is not the case that Jordan meets obstacles and does not overcome adversity, or she faces challenges.\nIf Jordan does not meet obstacles and overcomes adversity, then she faces challenges.\nIf Jordan faces challenges and finds support, then she does not receive compassion.\nIf Jordan faces challenges and receives compassion, then she does not find support.\nJordan does not find support.\nIf Jordan does not gain resilience, then she does not overcome adversity.\nIf Jordan faces challenges and does not find support, then she receives compassion.\nIf Jordan's relationships are not strengthened and she receives compassion, then she does not contract an illness.\nIf Jordan faces challenges, then she receives compassion.\nIf Jordan receives compassion, then she does not contract an illness.",
+      "question": "Does the context entail the conclusion 'Jordan contracts an illness.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acgain_resilience we get \u00acovercome_adversity. With meets_obstacles and (meets \u2227 \u00acovercome) \u2192 faces_challenges, we derive faces_challenges. faces_challenges \u2192 receives_compassion gives receives_compassion. receives_compassion \u2192 \u00accontracts_illness (and also relationships_not_strengthened \u2227 receives_compassion \u2192 \u00accontracts_illness) yields \u00accontracts_illness. Thus the theory entails that Jordan does not contract an illness, so it does not entail that she contracts one.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2909
+    }
+  ]
+}

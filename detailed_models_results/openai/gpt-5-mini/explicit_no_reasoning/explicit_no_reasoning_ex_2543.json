@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 118,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Marley champions transparency.\nMarley does not uphold principles.\nMarley has integrity.\nMarley investigates crime.\nMarley is not reliable.\nMarley pursues truth.\nIf Marley either champions transparency or seeks accountability (but not both), then she upholds principles.\nIf Marley has integrity, then she seeks accountability and exposes corruption.\nIf Marley investigates crime, then she either stands up for justice or exposes corruption (but not both).\nAnyone who earns respect is reliable.\nIf Marley takes risks or stands up for justice, then she will earn respect.\nEveryone who pursues truth is either fearless or takes risks (or both).\nMarley is either fearless or timid, but not both.",
+      "question": "Does the context entail the conclusion 'Marley is not timid.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Marley is not reliable.\n\nAdded rules:\n- If Marley exposes corruption, then she takes risks.\n- If Marley takes risks then she is not fearless.\n\nAdded facts:\n- Marley is reliable.",
+      "question": "Does the context entail the conclusion 'Marley is not timid.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From Marley has integrity => seeks accountability and exposes corruption. Exposes corruption => takes risks (added rule). Takes risks => not fearless (added rule). Investigates crime and exposes corruption with the exclusive-or rule forces \u00ac(stands up for justice) (since the XOR requires exactly one and exposes corruption is true). Takes risks => earns respect, and earns respect => reliable; this matches the added fact Marley is reliable. Given the fact \"Marley is either fearless or timid, but not both\" (exclusive OR) and we have \u00acfearless, it follows timid. Therefore Marley is timid, so the statement \"Marley is not timid\" is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 244
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- Anyone who earns respect is reliable.\n- Everyone who pursues truth is either fearless or takes risks (or both).\n- If Marley takes risks then she is not fearless.\n\nAdded rules:\n- For all x, either x does not earn respect or x is reliable.\n- For all x, either x does not pursue truth, or x is fearless, or x takes risks.\n- Either Marley does not take risks, or Marley is not fearless.\n\nAdded facts:\n- Marley seeks accountability.\n- Marley does not stand up for justice.\n- Marley earns respect.",
+      "question": "Does the context entail the conclusion 'Marley is not timid.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From Marley has integrity we get she seeks accountability and exposes corruption. Exposes corruption => Marley takes risks (rule). Takes risks => Marley is not fearless (rule). The context also includes the exclusive disjunction that Marley is either fearless or timid but not both; since she is not fearless, she must be timid. Thus the context entails Marley is timid, so the conclusion 'Marley is not timid.' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 469
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Marley exposes corruption, then she takes risks.\n\nAdded rules:\n- If Marley exposes corruption, then she does not take risks.",
+      "question": "Does the context entail the conclusion 'Marley is not timid.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From Marley has integrity we get she exposes corruption. The added rule makes exposes corruption imply not takes risks, so Marley does not take risks. Pursues truth implies (fearless or takes risks); with takes risks false, Marley must be fearless. Given the exclusive either fearless or timid (but not both), Marley is not timid. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 720
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Marley exposes corruption, then she does not take risks.\n\nAdded facts:\n- Marley takes risks.",
+      "question": "Does the context entail the conclusion 'Marley is not timid.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Marley takes risks is given. The rule \"either Marley does not take risks or Marley is not fearless\" is equivalent to takes_risks -> not fearless, so we deduce Marley is not fearless. With the exclusive disjunction \"Marley is either fearless or timid, but not both\", not fearless entails Marley is timid. Therefore the conclusion \"Marley is not timid.\" is refuted by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 871
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Either Marley does not take risks, or Marley is not fearless.\n\nAdded rules:\n- If Marley takes risks, then she earns respect.",
+      "question": "Does the context entail the conclusion 'Marley is not timid.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Current knowledge: Marley takes risks (fact) and Marley is either fearless or timid, but not both (exclusive). There is no remaining rule forcing not-fearless from taking risks (that rule was removed), nor any rule forcing fearless. The pursues-truth rule only gives (fearless OR takes_risks), and since takes_risks is true this does not imply fearless. Thus both models are possible: (a) fearless = true, timid = false (so \"Marley is not timid\" holds), or (b) fearless = false, timid = true (so \"Marley is not timid\" fails). Therefore the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1025
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- For all x, either x does not earn respect or x is reliable.\n\nAdded rules:\n- Anyone who earns respect is reliable.\n\nAdded facts:\n- Marley exposes corruption.",
+      "question": "Does the context entail the conclusion 'Marley is not timid.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Current facts: Marley takes risks and pursues truth (and exposes corruption). Rules give: pursues_truth -> (fearless \u2228 takes_risks), and exactly one of (fearless, timid) holds. Since takes_risks is true, the pursues_truth rule is satisfied without forcing fearless. There is no remaining rule that entails fearless, nor any rule that entails \u00acfearless. Thus both assignments (fearless true, timid false) and (fearless false, timid true) are compatible with the context. Therefore 'Marley is not timid.' is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1238
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Marley takes risks.\n\nAdded facts:\n- Marley does not take risks.",
+      "question": "Does the context entail the conclusion 'Marley is not timid.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From R6 (pursues_truth -> fearless \u2228 takes_risks) and the fact Marley pursues truth, together with the fact Marley does not take risks, we must conclude Marley is fearless. Given the exclusive rule that Marley is either fearless or timid (but not both), fearless entails Marley is not timid. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1461
+    }
+  ]
+}

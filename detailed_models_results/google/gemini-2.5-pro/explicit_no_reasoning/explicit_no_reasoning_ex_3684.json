@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "google/gemini-2.5-pro",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 201,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Parker does not make audiences laugh.\nParker is not a confident orator.\nParker listens actively.\nParker does not speak from the heart.\nParker cannot inspire others.\nParker does not give motivational talks.\nParker does not move audiences to tears.\nIf Parker either makes audiences laugh or receives standing ovations (but not both), then he is a confident orator.\nParker either listens actively or connects with people, but not both.\nAnyone who is charismatic or speaks from the heart can connect with people.\nAnyone who has global recognition or is charismatic can inspire others.\nIf Parker writes best sellers, then he either gives motivational talks or has global recognition (or both).\nParker is either an inspiring speaker or a writer of best sellers, but not both.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Anyone who has global recognition or is charismatic can inspire others.\n\nAdded rules:\n- If Parker listens actively, then he has global recognition.\n- If Parker either gives motivational talks or has global recognition, then he writes best sellers.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's formalize the given information:\n- A: Parker listens actively.\n- R: Parker has global recognition.\n- M: Parker gives motivational talks.\n- B: Parker writes best sellers.\n- IS: Parker is an inspiring speaker.\n- T: Parker moves audiences to tears.\n- S: Parker receives standing ovations.\n\nThe context provides these key statements:\n1.  `A` (Parker listens actively.) - Given as a fact.\n2.  `A -> R` (If Parker listens actively, then he has global recognition.) - A given rule.\n3.  `~M` (Parker does not give motivational talks.) - Given as a fact.\n4.  `(M OR R) -> B` (If Parker either gives motivational talks or has global recognition, then he writes best sellers.) - A given rule.\n5.  `IS XOR B` (Parker is either an inspiring speaker or a writer of best sellers, but not both.) - A given rule.\n\nFrom these statements, we can deduce the following:\n- From (1) `A` being true and (2) `A -> R`, we can conclude that `R` is true (Parker has global recognition).\n- Since we know `R` is true (from the previous step) and `M` is false (from 3), the condition `(M OR R)` is true.\n- From `(M OR R)` being true and the rule (4) `(M OR R) -> B`, we can conclude that `B` is true (Parker writes best sellers).\n- Now we look at rule (5) `IS XOR B`. This means one and only one of `IS` and `B` can be true. Since we have just proven that `B` is true, it must be that `IS` is false (Parker is not an inspiring speaker).\n\nThe conclusion we need to evaluate is: 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both)'. This can be written as `IS -> (T OR S)`.\n\nA conditional statement (an implication) of the form `P -> Q` is logically true if its premise `P` is false. This is known as a vacuous truth.\n\nIn our case, the premise of the conclusion is `IS` (Parker is an inspiring speaker). We have logically deduced from the context that `IS` is false. Because the premise of the conditional statement is false, the entire statement `IS -> (T OR S)` is necessarily true. Therefore, the context entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 277
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Parker either gives motivational talks or has global recognition, then he writes best sellers.\n\nAdded facts:\n- Parker does not write best sellers.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's break down the logic step by step:\n1.  Let 'IS' be 'Parker is an inspiring speaker' and 'BS' be 'Parker writes best sellers'. We are given the rule 'Parker is either an inspiring speaker or a writer of best sellers, but not both' (`IS XOR BS`). We are also given the fact 'Parker does not write best sellers' (`~BS`). For the `XOR` statement to be true when `BS` is false, `IS` must be true. So, we deduce that Parker is an inspiring speaker (`IS` is true).\n\n2.  The conclusion we need to evaluate is 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both)'. This can be written as `IS -> (T OR SO)`, where 'T' is 'Parker moves audiences to tears' and 'SO' is 'Parker receives standing ovations'.\n\n3.  We have already established that the premise of this conclusion, `IS`, is true. According to the rules of logic, for an `if-then` statement (`P -> Q`) to be true when its premise (`P`) is true, the consequent (`Q`) must also be true. In this case, the consequent is `(T OR SO)`.\n\n4.  So, the question now is: can we prove from the context that `(T OR SO)` is true? This means we need to prove that either `T` is true OR `SO` is true.\n\n5.  The context explicitly states 'Parker does not move audiences to tears', which means `T` is false.\n\n6.  Since `T` is false, our only remaining path to prove the conclusion is to prove that `SO` (Parker receives standing ovations) is true.\n\n7.  Let's examine the rules related to standing ovations. We have the rule 'If Parker either makes audiences laugh or receives standing ovations (but not both), then he is a confident orator' (`(L XOR SO) -> CO`). We also have the facts 'Parker does not make audiences laugh' (`~L`) and 'Parker is not a confident orator' (`~CO`).\n\n8.  By using the contrapositive of the rule, `~CO -> ~(L XOR SO)`. Since we know `~CO` is true, it must be that `~(L XOR SO)` is also true.\n\n9.  `~(L XOR SO)` is logically equivalent to `(L AND SO) OR (~L AND ~SO)`. Since we know `L` is false (`~L` is true), the expression simplifies to `(False AND SO) OR (True AND ~SO)`, which further simplifies to `False OR ~SO`, which means `~SO` must be true. This proves that Parker does not receive standing ovations.\n\n10. So, we have proven that `T` is false and `SO` is false. This makes the consequent of our conclusion, `(T OR SO)`, false.\n\n11. We are left with the statement `IS -> (T OR SO)`, which evaluates to `True -> False`. A statement of the form `True -> False` is logically false.\n\n12. Therefore, the context entails that the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 960
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, if x does not connect with people, then x is not charismatic and x does not speak from the heart.\n- If Parker does not give motivational talks and Parker does not have global recognition, then Parker does not write best sellers.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's formalize the propositions and follow the chain of logic:\n- IS: Parker is an inspiring speaker.\n- B: Parker writes best sellers.\n- T: Parker moves audiences to tears.\n- S: Parker receives standing ovations.\n- L: Parker makes audiences laugh.\n- CO: Parker is a confident orator.\n\nFrom the context, we have these key premises:\n1.  `IS XOR B` (Parker is either an inspiring speaker or a writer of best sellers, but not both).\n2.  `~B` (Parker does not write best sellers). - This was added in a previous step and persists.\n3.  `(L XOR S) -> CO` (If Parker either makes audiences laugh or receives standing ovations (but not both), then he is a confident orator).\n4.  `~L` (Parker does not make audiences laugh).\n5.  `~CO` (Parker is not a confident orator).\n6.  `~T` (Parker does not move audiences to tears).\n\nNow, let's make deductions:\n- From premise 1 (`IS XOR B`) and premise 2 (`~B`), we can conclude that `IS` must be true. For an exclusive OR to be true when one of its components is false, the other must be true. So, Parker is an inspiring speaker.\n\nThe conclusion we need to evaluate is: 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both)'. This can be written as `IS -> (T OR S)`.\n\n- We've already deduced that the premise of this conclusion, `IS`, is true.\n- For a conditional statement (`P -> Q`) to be true when the premise (`P`) is true, the consequent (`Q`) must also be true.\n- In our case, the consequent is `(T OR S)`.\n\nSo, the question becomes: Does the context entail that `(T OR S)` is true?\n\n- We are given in premise 6 that `~T` is true (Parker does not move audiences to tears).\n- Therefore, for `(T OR S)` to be true, `S` (Parker receives standing ovations) must be true.\n- Let's see if we can prove `S` is true. We use premise 3: `(L XOR S) -> CO`.\n- By contraposition, this rule is equivalent to `~CO -> ~(L XOR S)`.\n- We are given in premise 5 that `~CO` is true. Therefore, we can deduce `~(L XOR S)` is true.\n- The statement `~(L XOR S)` is logically equivalent to `(L AND S) OR (~L AND ~S)`.\n- We are given in premise 4 that `~L` is true. Substituting this in, the expression becomes `(False AND S) OR (True AND ~S)`, which simplifies to `~S`.\n- So, we have deduced that `~S` is true. Parker does not receive standing ovations.\n\nLet's re-evaluate the consequent `(T OR S)`:\n- We know `T` is false (from premise 6).\n- We have deduced that `S` is false.\n- Therefore, `(T OR S)` is `(False OR False)`, which is `False`.\n\nFinally, let's re-evaluate the full conclusion `IS -> (T OR S)`:\n- The premise `IS` is `True`.\n- The consequent `(T OR S)` is `False`.\n- A conditional statement `True -> False` is logically `False`.\n\nTherefore, the context entails that the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1785
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Parker does not make audiences laugh.\n\nAdded rules:\n- If Parker is an inspiring speaker, then he makes audiences laugh.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's break down the logic step by step based on the cumulative context.\n\n1.  **Establish if Parker is an inspiring speaker (IS).**\n    - We have the rule 'Parker is either an inspiring speaker or a writer of best sellers, but not both' (`IS XOR B`).\n    - We have the fact 'Parker does not write best sellers' (`~B`).\n    - For the `XOR` statement to be true when one component (`B`) is false, the other (`IS`) must be true. Therefore, we deduce that Parker is an inspiring speaker (`IS` is true).\n\n2.  **Analyze the conclusion to be tested.**\n    - The conclusion is 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both)'. This can be written as `IS -> (T OR S)`.\n    - Since we have established that the premise `IS` is true, for the entire conditional statement to be true, its consequent `(T OR S)` must also be true.\n\n3.  **Evaluate the consequent `(T OR S)`'s truth value.**\n    - We have the fact 'Parker does not move audiences to tears' (`~T`), which means `T` is false.\n    - For the expression `(T OR S)` to be true when `T` is false, `S` ('Parker receives standing ovations') must be true. So, our goal is to determine if `S` is true.\n\n4.  **Deduce the truth value of `S` (standing ovations).**\n    - A new rule was added: 'If Parker is an inspiring speaker, then he makes audiences laugh' (`IS -> L`). Since we know `IS` is true (from step 1), we can deduce that `L` (Parker makes audiences laugh) is also true.\n    - We have the rule 'If Parker either makes audiences laugh or receives standing ovations (but not both), then he is a confident orator' (`(L XOR S) -> CO`).\n    - We have the fact 'Parker is not a confident orator' (`~CO`).\n    - By contraposition, `~CO` implies `~(L XOR S)`.\n    - `~(L XOR S)` means that it's NOT the case that one is true and the other is false. This is logically equivalent to saying they must have the same truth value (`L <-> S`).\n    - We just deduced that `L` is true. Because `L` and `S` must have the same truth value, `S` must also be true.\n\n5.  **Final conclusion.**\n    - We needed to prove that `(T OR S)` is true.\n    - We know `T` is false, but we have now proven that `S` is true.\n    - Therefore, `(False OR True)` is true.\n    - The conclusion `IS -> (T OR S)` evaluates to `True -> True`, which is `True`.\n    - The context entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2732
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Parker is an inspiring speaker.\n- Parker receives standing ovations.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The conclusion to be evaluated is 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both)'. This can be represented logically as `IS -> (T OR S)`, where `IS` is 'Parker is an inspiring speaker', `T` is 'Parker moves audiences to tears', and `S` is 'Parker receives standing ovations'.\n\nTo determine if the context entails this conclusion, we must evaluate the truth values of its components based on the given facts. The context now explicitly provides two key facts:\n1. 'Parker is an inspiring speaker' (`IS` is True).\n2. 'Parker receives standing ovations' (`S` is True).\n\nThe conclusion is a conditional statement. Its premise, `IS`, is given as true. Its consequent is the expression `(T OR S)`. Since the fact 'Parker receives standing ovations' (`S`) is given as true, the 'OR' expression `(T OR S)` is automatically true (because `(T OR True)` is always true, regardless of the value of T). \n\nTherefore, the entire conditional statement evaluates to `True -> True`, which is logically true. Because the premises of the context directly establish that the conclusion is true, the context entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 3514
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Parker receives standing ovations.\n\nRemoved rules:\n- If Parker is an inspiring speaker, then he makes audiences laugh.\n\nAdded rules:\n- If Parker is an inspiring speaker, then he does not make audiences laugh.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's analyze the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both)' based on the current context.\n\n1.  Let's represent the components logically:\n    *   `IS`: Parker is an inspiring speaker.\n    *   `T`: Parker moves audiences to tears.\n    *   `S`: Parker receives standing ovations.\n    *   `L`: Parker makes audiences laugh.\n    *   `CO`: Parker is a confident orator.\n    The conclusion is `IS -> (T OR S)`.\n\n2.  Let's evaluate the premise of the conclusion, `IS`. The context includes the fact 'Parker is an inspiring speaker', so `IS` is **True**.\n\n3.  For a conditional statement (`P -> Q`) to be true when its premise (`P`) is true, the consequent (`Q`) must also be true. In this case, the consequent is `(T OR S)`. So, we must determine if the context entails that `(T OR S)` is true.\n\n4.  Let's evaluate the components of the consequent, `T` and `S`.\n    *   The context includes the fact 'Parker does not move audiences to tears', so `T` is **False**.\n    *   For the expression `(T OR S)` to be true when `T` is false, `S` must be true. We need to determine the truth value of `S`.\n\n5.  Let's find the truth value of `S` (Parker receives standing ovations).\n    *   We have the rule 'If Parker either makes audiences laugh or receives standing ovations (but not both), then he is a confident orator': `(L XOR S) -> CO`.\n    *   We have the fact 'Parker is not a confident orator': `~CO`.\n    *   By contraposition, `~CO` implies `~(L XOR S)`.\n    *   `~(L XOR S)` means that it's not the case that L and S have different truth values. This is logically equivalent to saying they must have the same truth value (`L <-> S`).\n\n6.  Now we need the truth value of `L` (Parker makes audiences laugh).\n    *   A new rule was added: 'If Parker is an inspiring speaker, then he does not make audiences laugh': `IS -> ~L`.\n    *   We know `IS` is true. Therefore, we can deduce that `~L` is true. So, `L` is **False**.\n\n7.  Since `L <-> S` (they must have the same truth value) and `L` is false, we can deduce that `S` must also be **False**.\n\n8.  Now we can evaluate the full conclusion.\n    *   The premise `IS` is **True**.\n    *   The consequent `(T OR S)` becomes `(False OR False)`, which is **False**.\n    *   The full conclusion `IS -> (T OR S)` becomes `True -> False`.\n\n9.  A statement of the form `True -> False` is logically **False**. Therefore, the context entails that the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3877
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Parker is an inspiring speaker, then he does not make audiences laugh.\n\nAdded facts:\n- Parker makes audiences laugh.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's analyze the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both)' based on the current context.\n\n1.  **Represent the conclusion logically:** `IS -> (T OR S)`.\n    *   `IS`: Parker is an inspiring speaker.\n    *   `T`: Parker moves audiences to tears.\n    *   `S`: Parker receives standing ovations.\n\n2.  **Evaluate the premise of the conclusion, `IS`.**\n    *   The context includes the fact 'Parker is an inspiring speaker'. Therefore, the premise `IS` is **True**.\n\n3.  **Analyze the logical requirement.**\n    *   For a conditional statement (`P -> Q`) to be true when its premise (`P`) is true, the consequent (`Q`) must also be true. In this case, the consequent is `(T OR S)`. Our goal is to determine if the context entails that `(T OR S)` is true.\n\n4.  **Evaluate the components of the consequent, `T` and `S`.**\n    *   `T`: The context includes the fact 'Parker does not move audiences to tears', so `T` is **False**.\n    *   `S`: For the expression `(T OR S)` to be true when `T` is false, `S` must be true. We need to determine if we can prove `S` is true from the context.\n\n5.  **Deduce the truth value of `S` (Parker receives standing ovations).**\n    *   Let `L` be 'Parker makes audiences laugh' and `CO` be 'Parker is a confident orator'.\n    *   We have the rule `(L XOR S) -> CO`.\n    *   We have the fact `~CO` (Parker is not a confident orator).\n    *   Using the contrapositive of the rule, `~CO -> ~(L XOR S)`.\n    *   Since `~CO` is true, it follows that `~(L XOR S)` is also true.\n    *   `~(L XOR S)` is logically equivalent to saying that `L` and `S` must have the same truth value (`L <-> S`).\n    *   A new fact was added to the context: 'Parker makes audiences laugh', so `L` is **True**.\n    *   Since `L` is true and `L` must have the same truth value as `S`, it follows that `S` is also **True**.\n\n6.  **Form the final conclusion.**\n    *   We needed to determine if `(T OR S)` is true.\n    *   We know `T` is false and we have just deduced `S` is true.\n    *   Therefore, `(False OR True)` is **True**.\n    *   The complete statement `IS -> (T OR S)` becomes `True -> True`, which is **True**.\n\nSince the conclusion can be proven true from the given context, the context entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 4713
+    }
+  ]
+}

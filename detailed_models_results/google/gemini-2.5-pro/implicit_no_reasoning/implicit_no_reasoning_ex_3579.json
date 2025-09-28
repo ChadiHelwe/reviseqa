@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "google/gemini-2.5-pro",
+    "task_path": "implicit_no_reasoning",
+    "chain_index": 180,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jack does not seek support.\nJack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both).\nIf someone is emotionally resilient, then they will thrive in life.\nIf Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Jack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both).\nFor all x, if x is emotionally resilient, then x will thrive in life.\nIf Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.\nIf Jack is resourceful, then he overcomes adversity.\nIf Jack seeks support, then he is mentally tough.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's formalize the statements:\n1. R: Jack is resourceful. (True)\n2. ~T: Jack does not thrive in life. (True)\n3. PA XOR SS: Jack either has a positive attitude or seeks support, but not both. (True)\n4. OA -> (PA XOR R): If Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both). (True)\n5. ER -> T: If a person is emotionally resilient, then they will thrive in life. (True)\n6. (MT XOR ER) -> OA: If Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity. (True)\n7. AA XOR MT: Jack is either athletically abled or mentally tough, but not both. (True)\n8. AA XOR PD: Either Jack is athletically abled or he is physically disabled, but not both. (True)\n9. R -> OA: If Jack is resourceful, then he overcomes adversity. (True)\n10. SS -> MT: If Jack seeks support, then he is mentally tough. (True)\n\nWe want to determine if PD (Jack is physically disabled) is true.\n\n- From (1) R is true. From (9) R -> OA, we can deduce OA is true (Jack overcomes adversity).\n- From (4) OA -> (PA XOR R) and the fact that OA is true, we deduce that (PA XOR R) is true.\n- Since R is true (1) and (PA XOR R) is true, PA must be false (~PA, Jack does not have a positive attitude).\n- From (3) (PA XOR SS) is true and PA is false, we deduce that SS is true (Jack seeks support).\n- From (10) SS -> MT and the fact that SS is true, we deduce that MT is true (Jack is mentally tough).\n- From (7) (AA XOR MT) is true and MT is true, we deduce that AA is false (~AA, Jack is not athletically abled).\n- From (8) (AA XOR PD) is true and AA is false, we deduce that PD is true (Jack is physically disabled).\n\nTherefore, the context logically entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 226
+    },
+    {
+      "step": 2,
+      "context": "Jack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then he has a positive attitude if and only if he is not resourceful.\nFor all x, if x is emotionally resilient, then x will thrive in life.\nIf Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.\nIf Jack is resourceful, then he overcomes adversity.\nIf Jack seeks support, then he is mentally tough.\nJack overcomes adversity.\nJack does not have a positive attitude.\nJack seeks support.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's formalize the propositions from the context:\n- SS: Jack seeks support.\n- MT: Jack is mentally tough.\n- AA: Jack is athletically abled.\n- PD: Jack is physically disabled.\n\nThe context provides these key statements:\n1. 'Jack seeks support.' This means SS is true.\n2. 'If Jack seeks support, then he is mentally tough.' This is the implication SS -> MT.\n3. 'Jack is either athletically abled or mentally tough, but not both.' This is the exclusive OR statement AA XOR MT.\n4. 'Either Jack is athletically abled or he is physically disabled, but not both.' This is the exclusive OR statement AA XOR PD.\n\nWe can use these premises to deduce the conclusion step-by-step:\n- From premise 1, we know that SS is true.\n- From premise 2 (SS -> MT) and the fact that SS is true, we can use Modus Ponens to conclude that MT is true (Jack is mentally tough).\n- Now we look at premise 3 (AA XOR MT). An exclusive OR is true only when one of its components is true and the other is false. Since we have deduced that MT is true, it must be that AA is false (Jack is not athletically abled).\n- Finally, we use premise 4 (AA XOR PD). We have just deduced that AA is false. For the exclusive OR to be true, PD must be true.\n\nTherefore, the context logically entails the conclusion that 'Jack is physically disabled'. While the context contains many other statements, they are all consistent with this chain of reasoning and do not lead to a contradiction.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 927
+    },
+    {
+      "step": 3,
+      "context": "Jack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then if he has a positive attitude, he is not resourceful.\nIf Jack overcomes adversity, then if he is not resourceful, he has a positive attitude.\nFor all x, if x is emotionally resilient, then x will thrive in life.\nIf Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.\nIf Jack is resourceful, then he overcomes adversity.\nIf Jack does not overcome adversity, then he is not resourceful.\nIf Jack seeks support, then he is mentally tough.\nJack overcomes adversity.\nJack does not have a positive attitude.\nJack seeks support.\nJack is not emotionally resilient.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's trace the logical implications from the given context. We are given several facts, but a direct chain of deductions can be made from a subset of them.\n1. The context explicitly states 'Jack seeks support.' (Let's call this SS).\n2. We are given the rule: 'If Jack seeks support, then he is mentally tough.' (SS -> MT).\n3. From (1) and (2), by Modus Ponens, we can conclude that 'Jack is mentally tough.' (MT is true).\n4. We are given the rule: 'Jack is either athletically abled or mentally tough, but not both.' (AA XOR MT).\n5. From (3), we know Jack is mentally tough (MT is true). For an exclusive OR (XOR) statement to be true, if one part is true, the other must be false. Therefore, 'Jack is athletically abled' must be false (AA is false).\n6. We are given the rule: 'Either Jack is athletically abled or he is physically disabled, but not both.' (AA XOR PD).\n7. From (5), we know Jack is not athletically abled (AA is false). For this XOR statement to be true, the other part must be true. Therefore, 'Jack is physically disabled' must be true (PD is true).\nAll other statements in the context are consistent with this conclusion. The conclusion is logically entailed by the premises.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1502
+    },
+    {
+      "step": 4,
+      "context": "Jack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then if he has a positive attitude, he is not resourceful.\nIf Jack overcomes adversity, then if he is not resourceful, he has a positive attitude.\nFor all x, if x is emotionally resilient, then x will thrive in life.\nIf Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.\nIf Jack is resourceful, then he overcomes adversity.\nIf Jack does not overcome adversity, then he is not resourceful.\nIf Jack seeks support, then he is mentally tough.\nJack overcomes adversity.\nJack does not have a positive attitude.\nJack seeks support.\nJack is not emotionally resilient.\nIf Jack is not mentally tough, then he does not seek support.\nIf Jack is emotionally resilient, then he thrives in life.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's trace the logical implications from the given context. We can form a direct chain of deductions to reach the conclusion.\n1.  The context explicitly states 'Jack seeks support.' (Let's denote this as SS being true).\n2.  We are given the rule: 'If Jack seeks support, then he is mentally tough.' (This is the implication SS -> MT).\n3.  From (1), SS is true. Using Modus Ponens on the rule in (2), we can conclude that 'Jack is mentally tough.' (MT is true).\n4.  We are given the rule: 'Jack is either athletically abled or mentally tough, but not both.' (This is an exclusive OR: AA XOR MT).\n5.  From (3), we know MT is true. For an exclusive OR to be true when one of its components is true, the other component must be false. Therefore, 'Jack is athletically abled' must be false. (AA is false).\n6.  We are given the rule: 'Either Jack is athletically abled or he is physically disabled, but not both.' (This is AA XOR PD).\n7.  From (5), we know AA is false. For this exclusive OR to be true, its other component must be true. Therefore, 'Jack is physically disabled' must be true. (PD is true).\n\nThe conclusion is a necessary consequence of the premises provided in the context.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2063
+    },
+    {
+      "step": 5,
+      "context": "Jack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then if he has a positive attitude, he is not resourceful.\nIf Jack overcomes adversity, then if he is not resourceful, he has a positive attitude.\nFor all x, if x is emotionally resilient, then x will thrive in life.\nIf Jack is mentally tough and not emotionally resilient, then he overcomes adversity.\nIf Jack is not mentally tough and is emotionally resilient, then he overcomes adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.\nIf Jack is resourceful, then he overcomes adversity.\nIf Jack does not overcome adversity, then he is not resourceful.\nIf Jack seeks support, then he is mentally tough.\nJack overcomes adversity.\nJack does not have a positive attitude.\nJack seeks support.\nJack is not emotionally resilient.\nIf Jack is not mentally tough, then he does not seek support.\nIf Jack is emotionally resilient, then he thrives in life.\nIf Jack overcomes adversity, then he has a positive attitude if and only if he is not resourceful.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's analyze the premises to see if they logically lead to the conclusion.\n1. The context explicitly states, 'Jack seeks support.'\n2. The context provides the rule: 'If Jack seeks support, then he is mentally tough.'\n3. From premises 1 and 2, using modus ponens, we can conclude that 'Jack is mentally tough.'\n4. The context states: 'Jack is either athletically abled or mentally tough, but not both.' This is an exclusive OR (XOR). Since we've established that 'Jack is mentally tough' is true, for this XOR statement to hold, 'Jack is athletically abled' must be false.\n5. The context states: 'Either Jack is athletically abled or he is physically disabled, but not both.' This is another XOR statement.\n6. From step 4, we know 'Jack is athletically abled' is false. For this second XOR statement to hold true, 'Jack is physically disabled' must be true.\nTherefore, the conclusion is a direct logical consequence of the statements provided in the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2649
+    },
+    {
+      "step": 6,
+      "context": "Jack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then if he has a positive attitude, he is not resourceful.\nIf Jack overcomes adversity, then if he is not resourceful, he has a positive attitude.\nFor all x, if x is emotionally resilient, then x will thrive in life.\nIf Jack is mentally tough and not emotionally resilient, then he overcomes adversity.\nIf Jack is not mentally tough and is emotionally resilient, then he overcomes adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.\nIf Jack is resourceful, then he overcomes adversity.\nIf Jack does not overcome adversity, then he is not resourceful.\nIf Jack seeks support, then he is mentally tough.\nJack overcomes adversity.\nJack does not have a positive attitude.\nJack seeks support.\nJack is not emotionally resilient.\nIf Jack is not mentally tough, then he does not seek support.\nIf Jack is emotionally resilient, then he thrives in life.\nIf Jack overcomes adversity, then he has a positive attitude if and only if he is not resourceful.\nIf Jack overcomes adversity, then he does not have a positive attitude if and only if he is resourceful.\nJack is mentally tough if and only if he is physically disabled.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let's trace the logic. The context provides two crucial pieces of information:\n1. 'Jack seeks support.' is stated as a fact.\n2. 'If Jack seeks support, then he is mentally tough.' is given as a rule.\nFrom these two statements, we can conclude that 'Jack is mentally tough' must be true.\nThe context also contains the statement: 'Jack is mentally tough if and only if he is physically disabled.' An 'if and only if' statement means that the two parts are logically equivalent; they are either both true or both false. Since we have already established that 'Jack is mentally tough' is true, it necessarily follows that 'Jack is physically disabled' must also be true. Therefore, the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3196
+    },
+    {
+      "step": 7,
+      "context": "Jack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then if he has a positive attitude, he is not resourceful.\nIf Jack overcomes adversity, then if he is not resourceful, he has a positive attitude.\nFor all x, if x is emotionally resilient, then x will thrive in life.\nIf Jack is mentally tough and not emotionally resilient, then he overcomes adversity.\nIf Jack is not mentally tough and is emotionally resilient, then he overcomes adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.\nIf Jack is resourceful, then he overcomes adversity.\nIf Jack does not overcome adversity, then he is not resourceful.\nJack overcomes adversity.\nJack does not have a positive attitude.\nJack seeks support.\nJack is not emotionally resilient.\nIf Jack is not mentally tough, then he does not seek support.\nIf Jack is emotionally resilient, then he thrives in life.\nIf Jack overcomes adversity, then he has a positive attitude if and only if he is not resourceful.\nIf Jack overcomes adversity, then he does not have a positive attitude if and only if he is resourceful.\nJack is mentally tough if and only if he is physically disabled.\nIf Jack seeks support, then he is not mentally tough.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's analyze the logical implications from the given statements. The context contains two key premises that lead to a direct conclusion:\n1. 'Jack seeks support.' (This is stated as a fact, so SS is true).\n2. 'If Jack seeks support, then he is not mentally tough.' (This is the rule SS -> ~MT).\n\nFrom these two premises, using Modus Ponens, we can definitively conclude that 'Jack is not mentally tough' (~MT is true).\n\nNow, let's consider another premise from the context:\n3. 'Jack is mentally tough if and only if he is physically disabled.' (This is a biconditional statement, MT <-> PD).\n\nA biconditional statement is true only if both parts have the same truth value (i.e., both are true or both are false).\n\nWe have already established that 'Jack is not mentally tough' is true, which means 'Jack is mentally tough' (MT) is false. For the biconditional statement (MT <-> PD) to be true, 'Jack is physically disabled' (PD) must also be false.\n\nTherefore, the context logically entails that Jack is NOT physically disabled. The conclusion 'Jack is physically disabled' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3697
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 92,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Aspen hosts cooking classes.\nAspen does not achieve culinary recognition.\nAspen shares family traditions.\nAspen cultivates a passion.\nAspen does not excel in culinary arts.\nIf Aspen either pursues her culinary dreams or hosts cooking classes, then she will achieve culinary recognition.\nIf Aspen pursues her culinary dreams, then she will own a bakery.\nAspen either develops a secret recipe or shares family traditions, but not both.\nIf Aspen cultivates a passion, then she either develops a secret recipe or creates specialty treats (or both).\nIf Aspen either becomes a pastry chef or creates specialty treats (but not both), then she excels in culinary arts.\nIf Aspen grows up in an orchard, then she can either become a pastry chef or own a bakery, but not both.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Aspen hosts cooking classes. Aspen does not achieve culinary recognition.. If Aspen either pursues her culinary dreams or hosts cooking classes, then she will achieve culinary recognition.. Therefore, Aspen pursues her culinary dreams.. Aspen pursues her culinary dreams.. If Aspen pursues her culinary dreams, then she will own a bakery.. Therefore, Aspen owns a bakery.. Aspen shares family traditions.. Aspen either develops a secret recipe or shares family traditions, but not both.. Therefore, Aspen does not develop a secret recipe.. Aspen cultivates a passion. Aspen does not develop a secret recipe.. If Aspen cultivates a passion, then she either develops a secret recipe or creates specialty treats (or both).. Therefore, Aspen creates specialty treats.. Aspen creates specialty treats. Aspen does not excel in culinary arts.. If Aspen either becomes a pastry chef or creates specialty treats (but not both), then she excels in culinary arts.. Therefore, Aspen becomes a pastry chef.. Aspen becomes a pastry chef. Aspen owns a bakery.. If Aspen grows up in an orchard, then she can either become a pastry chef or own a bakery, but not both.. Therefore, Aspen grows up in an orchard..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Aspen either pursues her culinary dreams or hosts cooking classes, then she will achieve culinary recognition.\n\nAdded rules:\n- If Aspen becomes a pastry chef and Aspen does not own a bakery, then Aspen grows up in an orchard.\n\nAdded facts:\n- Aspen does not pursue her culinary dreams.\n- Aspen does not own a bakery.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From facts: Aspen shares family traditions, so by the exclusive-or with secret recipe she does not develop a secret recipe. From Aspen cultivates a passion and not developing a secret recipe, the rule yields that she creates specialty treats. The rule (becomes a pastry chef XOR creates specialty treats) -> excels together with the fact that she does not excel yields that the XOR antecedent is false. Since she does create specialty treats, the XOR being false forces that she also becomes a pastry chef. The added fact asserts she does not own a bakery. With pastry-chef true and bakery false, the new rule (pastry chef \u2227 \u00acown bakery) -> grows up in an orchard applies, so Aspen grows up in an orchard is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 501
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Aspen grows up in an orchard, then she can either become a pastry chef or own a bakery, but not both.\n\nAdded rules:\n- If Aspen does not grow up in an orchard, then either Aspen does not become a pastry chef or Aspen owns a bakery.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: hosts cooking classes; shares family traditions (T); cultivates a passion (P); does not excel (\u00acE); does not pursue dreams (\u00acD); does not own a bakery (\u00acB). From T and the exclusive-or with secret recipe, Aspen does not develop a secret recipe (\u00acS). From P and (S or C), with \u00acS we get creates specialty treats (C). Rule (Y XOR C) -> E and fact \u00acE give \u00ac(Y XOR C). Since C is true, \u00ac(Y XOR C) forces Y (becomes pastry chef) true. With Y and \u00acB and the added rule (Y \u2227 \u00acB) -> grows up in an orchard (O), we derive O. The new rule \"if not O then (\u00acY or B)\" is irrelevant given O. Therefore the context entails that Aspen grows up in an orchard.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 770
+    },
+    {
+      "step": 3,
+      "context": "Added facts:\n- Aspen becomes a pastry chef.\n- Aspen creates specialty treats.\n- Aspen does not develop a secret recipe.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Current facts include Aspen becomes a pastry chef (Y) and Aspen does not own a bakery (\u00acB). The context contains the rule (Y \u2227 \u00acB) -> grows up in an orchard (O). Therefore O is entailed. Other rules (exclusive-or, specialty treats, excels) do not prevent this, so the conclusion follows.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1063
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Aspen becomes a pastry chef and Aspen does not own a bakery, then Aspen grows up in an orchard.\n- If Aspen does not grow up in an orchard, then either Aspen does not become a pastry chef or Aspen owns a bakery.\n\nAdded rules:\n- If Aspen creates specialty treats, then she does not grow up in an orchard.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Current facts include that Aspen creates specialty treats. The only relevant active rule added here is (creates specialty treats) -> \u00ac(grows up in an orchard). Therefore \u00ac(grows up in an orchard) is entailed, so the context does not entail that Aspen grows up in an orchard.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1206
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Aspen does not grow up in an orchard.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context explicitly includes the fact \"Aspen does not grow up in an orchard.\" Additionally the active rule \"If Aspen creates specialty treats, then she does not grow up in an orchard.\" There is no active rule that derives \"Aspen grows up in an orchard\" (those that could were removed). Therefore the context entails \u00ac(Aspen grows up in an orchard) and does not entail the positive conclusion.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1388
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Aspen grows up in an orchard, then she either becomes a pastry chef or owns a bakery, and it is not the case that she both becomes a pastry chef and owns a bakery.\n\nAdded rules:\n- If Aspen grows up in an orchard, then she either becomes a pastry chef or owns a bakery, but not both.\n\nAdded facts:\n- Aspen either becomes a pastry chef or owns a bakery, but not both.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The active rule is: if O then XOR(Y,B). The fact is XOR(Y,B). A material implication is not reversible: having the consequence (XOR(Y,B)) does not allow inferring the antecedent (O). There are no rules or facts deriving O, nor a fact \u00acO. Therefore O (Aspen grows up in an orchard) is not entailed but also not contradicted\u2014Uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1533
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Aspen does not grow up in an orchard.\n\nRemoved rules:\n- If Aspen creates specialty treats, then she does not grow up in an orchard.\n\nAdded rules:\n- If Aspen either becomes a pastry chef or owns a bakery, but not both, then Aspen grows up in an orchard.",
+      "question": "Does the context entail the conclusion 'Aspen grows up in an orchard.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context contains the fact \"Aspen either becomes a pastry chef or owns a bakery, but not both\" (Y XOR B) and the added rule (Y XOR B) -> \"Aspen grows up in an orchard\". From the fact and this rule we infer that Aspen grows up in an orchard. There is no active fact or rule contradicting this, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1759
+    }
+  ]
+}

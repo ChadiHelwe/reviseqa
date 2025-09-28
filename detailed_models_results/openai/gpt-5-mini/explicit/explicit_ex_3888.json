@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 235,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Cal's bank does not have a mobile app.\nCal's bank does not attract young customers.\nCal's bank is secure.\nCal's bank is not community-focused.\nIf Cal's bank either has a mobile app or offers low fees (but not both), then it attracts young customers.\nCal's bank is either user-friendly or offers low fees, but not both.\nIf Cal's bank is customer-centric, then it is either user-friendly or secure (but not both).\nCal's bank is either innovative or customer-centric (or both).\nIf Cal's bank is innovative, then it is either digital or community-focused (or both).\nCal's bank is either a traditional bank or a digital bank, but not both.",
+      "question": "Does the context entail the conclusion 'Cal's bank is not a traditional bank.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Cal's bank does not have a mobile app. Cal's bank does not attract young customers.. If Cal's bank either has a mobile app or offers low fees (but not both), then it attracts young customers.. Therefore, Cal's bank does not offer low fees.. Cal's bank does not offer low fees.. Cal's bank is either user-friendly or offers low fees, but not both.. Therefore, Cal's bank is user-friendly.. Cal's bank is user-friendly. Cal's bank is secure.. If Cal's bank is customer-centric, then it is either user-friendly or secure (but not both).. Therefore, Cal's bank is not customer-centric.. Cal's bank is not customer-centric.. Cal's bank is either innovative or customer-centric (or both).. Therefore, Cal's bank is innovative.. Cal's bank is innovative. Cal's bank is not community-focused.. If Cal's bank is innovative, then it is either digital or community-focused (or both).. Therefore, Cal's bank is a digital bank.. Cal's bank is a digital bank.. Cal's bank is either a traditional bank or a digital bank, but not both.. Therefore, Cal's bank is not a traditional bank..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Cal's bank offers low fees, then it attracts young customers.\n- If Cal's bank is customer-centric, then it is not user-friendly.",
+      "question": "Does the context entail the conclusion 'Cal's bank is not a traditional bank.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From low_fees -> attracts_young and given ~attracts_young, infer ~low_fees. From (user_friendly XOR low_fees) and ~low_fees infer user_friendly. From customer-centric -> not user_friendly, contrapositive of that gives user_friendly -> ~customer_centric, so ~customer_centric. From (innovative OR customer_centric) and ~customer_centric infer innovative. From innovative -> (digital OR community_focused) and ~community_focused infer digital. From (traditional XOR digital) and digital infer ~traditional. Therefore the conclusion follows.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 490
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Cal's bank is not community-focused.\n\nRemoved rules:\n- If Cal's bank is customer-centric, then it is not user-friendly.\n\nAdded rules:\n- If Cal's bank is innovative, then it is not digital.\n\nAdded facts:\n- Cal's bank is community-focused.",
+      "question": "Does the context entail the conclusion 'Cal's bank is not a traditional bank.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From low_fees -> attracts_young and ~attracts_young we get ~low_fees. From (user_friendly XOR low_fees) and ~low_fees we get user_friendly. secure is given. If customer_centric then (user_friendly XOR secure); since both user_friendly and secure hold, that conditional would be false if customer_centric were true, so infer ~customer_centric. From (innovative OR customer_centric) and ~customer_centric infer innovative. From innovative -> not digital infer ~digital. From (traditional XOR digital) and ~digital infer traditional. Thus the knowledge entails that Cal's bank is traditional, so it does not entail 'not a traditional bank.'",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 693
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- If Cal's bank is innovative, then it is community-focused.",
+      "question": "Does the context entail the conclusion 'Cal's bank is not a traditional bank.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From low_fees -> attracts_young and the rule (mobile_app XOR low_fees) -> attracts_young together with not attracts_young and not mobile_app, we infer not low_fees. From (user_friendly XOR low_fees) and not low_fees we infer user_friendly. secure is given, so both user_friendly and secure hold; hence customer_centric would make the consequent (user_friendly XOR secure) false, so customer_centric must be false. From (innovative OR customer_centric) and not customer_centric we infer innovative. From innovative -> not digital and the added innovative -> community_focused we infer not digital (community-focused is also given). From (traditional XOR digital) and not digital we infer traditional. Thus the knowledge entails traditional, so it does not entail not traditional.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 944
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Cal's bank either has a mobile app or offers low fees, but not both, then it attracts young customers.\n- If Cal's bank offers low fees, then it attracts young customers.\n\nAdded rules:\n- If Cal's bank is customer-centric, then it is not innovative.\n- If Cal's bank offers low fees, then it is digital.\n- If Cal's bank is community-focused, then it is not innovative.",
+      "question": "Does the context entail the conclusion 'Cal's bank is not a traditional bank.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: \u00acmobile_app, \u00acattract_young, secure, community_focused. From community_focused -> \u00acinnovative infer \u00acinnovative. From (innovative OR customer_centric) and \u00acinnovative infer customer_centric. From customer_centric -> (user_friendly XOR secure) and secure infer \u00acuser_friendly (since XOR with secure true forces user_friendly false). From (user_friendly XOR low_fees) and \u00acuser_friendly infer low_fees. From low_fees -> digital infer digital. From (traditional XOR digital) and digital infer \u00actraditional. Thus the context entails that Cal's bank is not a traditional bank.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1176
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Cal's bank is community-focused, then it is not innovative.\n\nAdded facts:\n- Cal's bank is not customer-centric.",
+      "question": "Does the context entail the conclusion 'Cal's bank is not a traditional bank.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: \u00acmobile_app, \u00acattract_young, secure, community_focused, \u00accustomer_centric. Rule: (innovative OR customer_centric). Since \u00accustomer_centric, infer innovative. Rules innovative -> \u00acdigital and innovative -> community_focused (consistent with fact). So infer \u00acdigital. From (traditional XOR digital) and \u00acdigital infer traditional. Thus the theory entails that Cal's bank is traditional, so it does not entail 'not a traditional bank.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1450
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Cal's bank is not customer-centric.\n\nAdded rules:\n- If Cal's bank is secure, then it is customer-centric.",
+      "question": "Does the context entail the conclusion 'Cal's bank is not a traditional bank.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: \u00acmobile_app, \u00acattract_young, secure, community_focused. From secure and (secure -> customer_centric) infer customer_centric. From customer_centric and (customer_centric -> \u00acinnovative) infer \u00acinnovative. From customer_centric and (customer_centric -> (user_friendly XOR secure)) and secure true, infer \u00acuser_friendly. From (user_friendly XOR low_fees) and \u00acuser_friendly infer low_fees. From (low_fees -> digital) infer digital. From (traditional XOR digital) and digital infer \u00actraditional. Thus the context entails that Cal's bank is not a traditional bank.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1624
+    },
+    {
+      "step": 7,
+      "context": "",
+      "question": "Does the context entail the conclusion 'Cal's bank is not a traditional bank.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "There are no premises. Without any facts or rules the statement 'Cal's bank is not a traditional bank' is not true in all models (models exist where it is traditional and where it is not), so the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "no_change"
+      ],
+      "is_demonstration": false,
+      "token_count": 1836
+    }
+  ]
+}

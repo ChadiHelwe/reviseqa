@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 285,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Collins protects the weak.\nCollins does not fight against injustice.\nCollins does not show empathy.\nCollins does not value diverse views.\nCollins does not argue persistently.\nCollins is confident.\nCollins does not stand up for justice.\nCollins did not win the case.\nAnyone who protects the weak supports human rights.\nIf Collins either supports human rights or fights against injustice (but not both), then he believes in justice.\nAnyone who shows empathy or values diverse views will listen to others.\nIf someone believes in justice, then they defend the vulnerable and listen to others.\nEveryone who defends the vulnerable either speaks passionately or argues persistently (or both).\nIf Collins is confident, then he faces intense pressure and speaks passionately.\nIf Collins faces intense pressure, then he will either refuse to back down or stand up for justice (but not both).\nIf Collins takes on high-stakes cases and refuses to back down, then he will win the case.",
+      "question": "Does the context entail the conclusion 'Collins takes on high-stakes cases.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Collins either supports human rights or fights against injustice (but not both), then he believes in justice.\n- If Collins faces intense pressure, then he will either refuse to back down or stand up for justice (but not both).\n\nAdded rules:\n- If either Collins supports human rights or fights against injustice, but not both, then he believes in justice.\n- If Collins faces intense pressure, then he will either refuse to back down or stand up for justice, but not both.\n\nAdded facts:\n- Collins supports human rights.\n- Collins believes in justice.",
+      "question": "Does the context entail the conclusion 'Collins takes on high-stakes cases.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts: Collins is confident, protects the weak, supports human rights, believes in justice, and did not win the case. BelieveJustice -> defends the vulnerable and listens. Defending the vulnerable implies speaking passionately or arguing persistently; Collins does not argue persistently, and confidence implies he speaks passionately and faces intense pressure. Pressure triggers an exclusive-or: refuse to back down or stand up for justice. Since Collins does not stand up for justice, he must refuse to back down. The rule (HighStakes AND refuses) -> Win together with the fact that Collins did not win and the fact he refuses to back down yields that Collins cannot be taking on high-stakes cases (if he were, he would have won). Therefore the context entails the negation of \u2018Collins takes on high-stakes cases.\u2019",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 300
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Collins listens to others.",
+      "question": "Does the context entail the conclusion 'Collins takes on high-stakes cases.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts: Collins is confident, so he faces intense pressure and speaks passionately. The pressure rule is exclusive-or between refusing to back down and standing up for justice; since Collins does not stand up for justice, he must refuse to back down. The rule (Collins takes on high-stakes cases AND refuses to back down) => he will win the case. But Collins did not win the case, so he cannot both take on high-stakes cases and refuse to back down; since refusing to back down is entailed, Collins taking on high-stakes cases must be false. The added fact that Collins listens to others does not affect this chain.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 625
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Collins is confident.\n\nRemoved rules:\n- If Collins is confident, then he faces intense pressure and speaks passionately.\n\nAdded rules:\n- If Collins speaks passionately and supports human rights, then he takes on high-stakes cases.",
+      "question": "Does the context entail the conclusion 'Collins takes on high-stakes cases.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given facts: Collins believes in justice and supports human rights. From belief in justice => Collins defends the vulnerable. From defending the vulnerable and the fact Collins does not argue persistently, we infer he speaks passionately (defend_vulnerable => speaks passionately OR argues persistently; \u00acargues_persistently yields speaks_passionately). The added rule says speaks passionately AND supports human rights => takes on high-stakes cases. Both antecedents hold, so Collins takes on high-stakes cases is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 810
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Collins speaks passionately and supports human rights, then he takes on high-stakes cases.\n\nAdded rules:\n- If Collins speaks passionately and supports human rights, then he does not take on high-stakes cases.",
+      "question": "Does the context entail the conclusion 'Collins takes on high-stakes cases.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Belief in justice is given, so Collins defends the vulnerable. From defending the vulnerable and the fact he does not argue persistently, Collins speaks passionately. He also supports human rights. The current rule explicitly states: if Collins speaks passionately and supports human rights, then he does not take on high-stakes cases. Thus the negation of the queried conclusion is entailed, so \u2018Collins takes on high-stakes cases.\u2019 is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1007
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Collins takes on high-stakes cases, then he does not speak passionately or he does not support human rights.\n- If Collins defends the vulnerable and does not argue persistently, then he speaks passionately.",
+      "question": "Does the context entail the conclusion 'Collins takes on high-stakes cases.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts Collins believes in justice, so by the belief rule he defends the vulnerable. He also does not argue persistently, and the rule (defends vulnerable \u2227 \u00acargues_persistently) \u21d2 speaks passionately yields that Collins speaks passionately. Collins also supports human rights. The rule (speaks passionately \u2227 supports human rights) \u21d2 \u00ac(takes on high-stakes cases) therefore entails that Collins does not take on high-stakes cases. Thus the context entails the negation of the queried conclusion.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1190
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Collins defends the vulnerable.\n- Collins speaks passionately.",
+      "question": "Does the context entail the conclusion 'Collins takes on high-stakes cases.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context includes the rule: If Collins takes on high-stakes cases, then (\u00acspeaks_passionately \u2228 \u00acsupports_human_rights). The added facts assert Collins speaks passionately and Collins supports human rights, so the rule's consequent (\u00acspeaks_passionately \u2228 \u00acsupports_human_rights) is false. From (takes_on_high_stakes \u2192 consequent) and \u00acconsequent we infer \u00ac(takes_on_high_stakes). Therefore \u2018Collins takes on high-stakes cases.\u2019 is entailed to be false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1381
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Collins protects the weak, then he supports human rights.\n- If Collins believes in justice, then he defends the vulnerable and listens to others.",
+      "question": "Does the context entail the conclusion 'Collins takes on high-stakes cases.'?",
+      "prediction": "ERROR",
+      "correct_answer": "False",
+      "reasoning": "ERROR",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1548
+    }
+  ]
+}

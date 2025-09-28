@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 211,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Pooh sniffs out food sources.\nPooh does not store food for winter.\nPooh is not searching for berries.\nPooh is not foraging for food.\nPooh does not learn a lesson.\nPooh does not appreciate nature.\nIf a bear sniffs out food sources and finds food, then it will store food for winter.\nAll bears who either explore the forest or search for berries (but not both) are foraging for food.\nAll bears that climb trees will find food.\nPooh either climbs trees or seeks nectar.\nIf Pooh seeks nectar, then he either visits hives or explores the forest, but not both.\nFor all bears, if they visit hives and get chased by bees, then they learn a lesson.\nAnyone who becomes a beekeeper will appreciate nature.\nIf Pooh loves honey, then he either gets chased by bees or becomes a beekeeper (or both).",
+      "question": "Does the context entail the conclusion 'Pooh does not love honey.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Pooh sniffs out food sources. Pooh does not store food for winter.. If a bear sniffs out food sources and finds food, then it will store food for winter.. Therefore, Pooh did not find food.. Pooh is not searching for berries. Pooh is not foraging for food.. All bears who either explore the forest or search for berries (but not both) are foraging for food.. Therefore, Pooh does not explore the forest.. Pooh did not find food.. All bears that climb trees will find food.. Therefore, Pooh does not climb trees.. Pooh does not climb trees.. Pooh either climbs trees or seeks nectar.. Therefore, Pooh seeks nectar.. Pooh seeks nectar. Pooh does not explore the forest.. If Pooh seeks nectar, then he either visits hives or explores the forest, but not both.. Therefore, Pooh visits hives.. Pooh visits hives. Pooh does not learn a lesson.. For all bears, if they visit hives and get chased by bees, then they learn a lesson.. Therefore, Pooh does not get chased by bees.. Pooh does not appreciate nature.. Anyone who becomes a beekeeper will appreciate nature.. Therefore, Pooh does not become a beekeeper.. Pooh does not get chased by bees. Pooh does not become a beekeeper.. If Pooh loves honey, then he either gets chased by bees or becomes a beekeeper (or both).. Therefore, Pooh does not love honey..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x sniffs out food sources and x finds food, then x will store food for winter.\n\nAdded facts:\n- Pooh does not find food.",
+      "question": "Does the context entail the conclusion 'Pooh does not love honey.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Pooh does not find food (given). From 'all bears that climb trees will find food' and Pooh does not find food we infer Pooh does not climb trees. From 'Pooh either climbs trees or seeks nectar' it follows Pooh seeks nectar. From 'All bears who either explore the forest or search for berries (but not both) are foraging for food', together with Pooh not searching for berries and Pooh not foraging, we infer Pooh does not explore the forest. From seeks nectar and not exploring, the exclusive-or rule gives Pooh visits hives. From 'if they visit hives and get chased by bees, then they learn a lesson' and Pooh does not learn a lesson, together with Pooh visiting hives, we infer Pooh is not chased by bees. From 'Anyone who becomes a beekeeper will appreciate nature' and Pooh does not appreciate nature we infer Pooh is not a beekeeper. Finally, 'If Pooh loves honey then he either gets chased by bees or becomes a beekeeper' with both disjuncts false implies Pooh does not love honey.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 602
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x visits hives and x gets chased by bees, then x learns a lesson.\n- For all x, if x becomes a beekeeper then x appreciates nature.\n\nAdded rules:\n- If Pooh sniffs out food sources, then Pooh loves honey.",
+      "question": "Does the context entail the conclusion 'Pooh does not love honey.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Pooh sniffs out food sources (given). The added rule says: if Pooh sniffs out food sources, then Pooh loves honey. Therefore Pooh loves honey is entailed. Since the context entails Pooh loves honey, it cannot entail Pooh does not love honey. (Earlier rules that might have been used to derive not-love were removed.)",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 918
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Pooh sniffs out food sources.\n\nAdded rules:\n- For all x, if x loves honey then x sniffs out food sources.\n\nAdded facts:\n- Pooh does not sniff out food sources.",
+      "question": "Does the context entail the conclusion 'Pooh does not love honey.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The only rule relating love and sniffing is one-way: loves honey -> sniffs out food sources. From Pooh does not sniff out food sources you cannot infer the converse (no rule sniffs -> loves or a contrapositive). There is no rule or fact deriving Pooh loves honey, nor one deriving Pooh does not love honey. Therefore the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1097
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x loves honey then x sniffs out food sources.\n\nAdded rules:\n- For all x, if x does not sniff out food sources, then x does not love honey.",
+      "question": "Does the context entail the conclusion 'Pooh does not love honey.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes the fact 'Pooh does not sniff out food sources' and the rule 'for all x, if x does not sniff out food sources, then x does not love honey.' Applying the rule to Pooh yields 'Pooh does not love honey', so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1263
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, if x does not find food, then x does not climb trees.\n- For all x, if x does not find food, then either x does not sniff out food sources or x stores food for winter.",
+      "question": "Does the context entail the conclusion 'Pooh does not love honey.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes the fact that Pooh does not sniff out food sources and the rule 'for all x, if x does not sniff out food sources, then x does not love honey.' Applying this rule to Pooh yields 'Pooh does not love honey'. The newly added rules about not finding food do not prevent this derivation, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1428
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Either Pooh does not sniff out food sources or Pooh stores food for winter.\n- Either Pooh does not sniff out food sources or Pooh does not find food or Pooh stores food for winter.\n- Pooh does not climb trees.\n- Pooh does not explore the forest.\n- Pooh seeks nectar.\n- Pooh visits hives.",
+      "question": "Does the context entail the conclusion 'Pooh does not love honey.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context still contains the fact that Pooh does not sniff out food sources and the rule 'if x does not sniff out food sources then x does not love honey' (added earlier and not removed). Applying that rule to Pooh yields 'Pooh does not love honey'. The newly added facts do not contradict this, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1612
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if x does not sniff out food sources, then x does not love honey.\n\nAdded facts:\n- Pooh loves honey.",
+      "question": "Does the context entail the conclusion 'Pooh does not love honey.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context explicitly includes the fact 'Pooh loves honey' (added) and there is no remaining rule that implies 'Pooh does not love honey'. The added rules only relate 'does not find food' to 'does not climb trees' and to a disjunction involving 'does not sniff out food sources' or 'stores food for winter'; they do not derive 'not loves honey'. Therefore 'Pooh does not love honey' is not entailed (indeed its negation, 'Pooh loves honey', is a fact).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1821
+    }
+  ]
+}

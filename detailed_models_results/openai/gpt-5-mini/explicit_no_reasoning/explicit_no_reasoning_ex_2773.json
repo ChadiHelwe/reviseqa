@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 153,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Joelle takes a risk.\nJoelle does not meet her deadline.\nJoelle fears criticism.\nJoelle does not question her talent.\nJoelle pursues perfection.\nJoelle feels pressure.\nJoelle faces rejection.\nIf Joelle takes a risk, then she either meets her deadline or experiences failure (but not both).\nEveryone who either fears criticism or questions their talent (but not both) will doubt their ability.\nIf someone pursues perfection, then they will encounter setbacks and feel pressure.\nIf someone encounters setbacks and doubts their ability, then they can lose motivation.\nIf Joelle experiences failure, then she either struggles with creativity or loses motivation (but not both).\nFor all humans, if they struggle with creativity or face rejection (or both), then they feel discouraged.",
+      "question": "Does the context entail the conclusion 'Joelle does not feel discouraged.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x does not feel discouraged, then x does not struggle with creativity and x does not face rejection.\n\nAdded facts:\n- It is not the case that it is not the case that Joelle faces rejection.",
+      "question": "Does the context entail the conclusion 'Joelle does not feel discouraged.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added fact (double negation) gives Joelle faces rejection. The general rule (struggle \u2228 facesRejection) \u2192 discouraged thus yields Joelle feels discouraged. That contradicts (and prevents entailing) Joelle does not feel discouraged. Hence the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 259
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x struggles with creativity or faces rejection (or both), then they feel discouraged.\n- For all x, if x does not feel discouraged, then x does not struggle with creativity and x does not face rejection.\n\nAdded rules:\n- For all x, if x struggles with creativity, then x feels discouraged.\n- For all x, if x faces rejection, then x feels discouraged.\n- For all x, if x does not feel discouraged, then x does not struggle with creativity.\n- For all x, if x does not feel discouraged, then x does not face rejection.\n\nAdded facts:\n- Joelle faces rejection.",
+      "question": "Does the context entail the conclusion 'Joelle does not feel discouraged.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Joelle faces rejection (given) and there is a rule that any x who faces rejection feels discouraged. Hence Joelle feels discouraged, so the statement 'Joelle does not feel discouraged' is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 410
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, either x does not face rejection, or x feels discouraged.\n- For all x, either x feels discouraged, or x does not feel discouraged.",
+      "question": "Does the context entail the conclusion 'Joelle does not feel discouraged.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context includes the fact Joelle faces rejection. The rule \u201ceither not face rejection or feel discouraged\u201d is equivalent to (facesRejection \u2192 feelsDiscouraged). From Joelle faces rejection we therefore infer Joelle feels discouraged. The added law of excluded middle for feeling discouraged doesn\u2019t change this. Hence the statement \u2018Joelle does not feel discouraged\u2019 is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 628
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- It is not the case that it is not the case that Joelle faces rejection.\n\nAdded rules:\n- For all x, if x loses motivation, then x does not feel discouraged.",
+      "question": "Does the context entail the conclusion 'Joelle does not feel discouraged.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Joelle takes a risk and does not meet her deadline. From the exclusive rule (risk \u2192 meetDeadline xor failure) this yields Joelle experiences failure. From failure we have an exclusive choice: Joelle either struggles with creativity or loses motivation. If she lost motivation then by the added rule losesMotivation \u2192 \u00acdiscouraged she would not be discouraged; but we also have the fact Joelle faces rejection and the rule facesRejection \u2192 discouraged, so that branch would imply both discouraged and \u00acdiscouraged (inconsistent). Therefore the only consistent choice from the exclusive disjunction is that Joelle struggles with creativity. With struggles \u2192 discouraged (present), Joelle is discouraged. Hence \u00acdiscouraged is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 784
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If someone encounters setbacks and doubts their ability, then they can lose motivation.\n\nAdded rules:\n- For all x, if x encounters setbacks and doubts their ability, then x does not lose motivation.",
+      "question": "Does the context entail the conclusion 'Joelle does not feel discouraged.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Joelle takes a risk and does not meet her deadline, so by the exclusive rule she experiences failure. Failure yields an exclusive choice: struggle with creativity or lose motivation. Joelle pursues perfection so she encounters setbacks, and she fears criticism while not questioning her talent, so she doubts her ability. From encounterSetbacks \u2227 doubtsAbility the added rule gives \u00ac(loseMotivation). Thus loseMotivation is false, so the exclusive failure outcome must be struggleWithCreativity. struggleWithCreativity \u2192 feel discouraged (and Joelle also faces rejection \u2192 feel discouraged), so Joelle feels discouraged. Therefore the context does not entail \u2018Joelle does not feel discouraged.\u2019",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1014
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If someone pursues perfection, then they will encounter setbacks and feel pressure.\n- If Joelle experiences failure, then she either struggles with creativity or loses motivation (but not both).\n\nAdded rules:\n- For all x, if x pursues perfection, then x will encounter setbacks.\n- For all x, if x pursues perfection, then x feels pressure.\n- If Joelle experiences failure, then she either struggles with creativity or loses motivation (but not both).\n\nAdded facts:\n- Either Joelle feels discouraged, or Joelle does not feel discouraged.",
+      "question": "Does the context entail the conclusion 'Joelle does not feel discouraged.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Joelle takes a risk and does not meet her deadline, so by the exclusive rule she experiences failure. Joelle pursues perfection, so she encounters setbacks. Joelle fears criticism and does not question her talent, so she doubts her ability. From setbacks \u2227 doubtsAbility the rule gives \u00ac(loseMotivation), so loseMotivation is false. The exclusive failure outcome therefore must be that Joelle struggles with creativity. Since struggling with creativity implies feeling discouraged (and Joelle also faces rejection, which also implies discouraged), Joelle is discouraged. Therefore the context does not entail \u2018Joelle does not feel discouraged.\u2019",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1252
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if x encounters setbacks and doubts their ability, then x does not lose motivation.\n\nAdded rules:\n- For all x, if x encounters setbacks and doubts their ability, then x loses motivation.",
+      "question": "Does the context entail the conclusion 'Joelle does not feel discouraged.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From Joelle taking a risk and not meeting her deadline, she experiences failure. Joelle pursues perfection, so she encounters setbacks; she fears criticism and does not question her talent, so she doubts her ability. From setbacks \u2227 doubtAbility we get loseMotivation. From failure\u2019s exclusive choice and loseMotivation being true, Joelle does not struggle with creativity and does lose motivation. The rule loseMotivation \u21d2 \u00acdiscouraged gives \u00acdiscouraged, but the fact Joelle faces rejection together with faceRejection \u21d2 discouraged gives discouraged. Both discouraged and \u00acdiscouraged are derivable (inconsistent), so the context does not entail uniquely that Joelle does not feel discouraged.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1551
+    }
+  ]
+}

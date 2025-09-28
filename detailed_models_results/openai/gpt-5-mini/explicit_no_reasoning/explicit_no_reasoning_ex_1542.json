@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 29,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Luz recycles waste.\nLuz does not train others.\nLuz advocates for change.\nLuz mobilizes the community.\nLuz does not organize her community.\nLuz supports local workers.\nLuz does not create jobs.\nIf Luz either recycles waste or trains others (but not both), then she improves livelihoods.\nIf Luz builds networks, then she either advocates for change or mobilizes the community (but not both).\nLuz either fights for rights or organizes her community.\nAnyone who builds networks or improves livelihoods can empower others.\nIf someone fights for rights and supports local workers, then they can become a community leader.\nIf Luz either creates jobs or empowers others (but not both), then she is resourceful.\nIf Luz is resourceful, then she is either a successful entrepreneur or a community leader, but not both.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x fights for rights and x supports local workers, then x can become a community leader.\n\nAdded rules:\n- For all x, if x fights for rights and x supports local workers, then x cannot become a community leader.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From facts: Luz recycles waste and does not train others, so by the XOR rule she improves livelihoods. She does not organize her community and the context says she either fights for rights or organizes\u2014thus she fights for rights. Fighting for rights and supporting local workers triggers the new added rule that she cannot become a community leader. From improving livelihoods (or building networks) anyone can empower others, so Luz empowers others. She does not create jobs and she does empower others, so by the XOR rule she is resourceful. Resourceful implies an exclusive choice: successful entrepreneur or community leader (but not both). Since she cannot become a community leader, she must be a successful entrepreneur. Therefore the statement \u201cLuz is not a successful entrepreneur\u201d is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 278
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x fights for rights and x supports local workers, then x cannot become a community leader.\n\nAdded rules:\n- If Luz fights for rights and Luz supports local workers, then Luz can become a community leader.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From facts: Luz recycles waste and does not train others, so by the exclusive rule she improves livelihoods. Improving livelihoods gives she can empower others, and since she does not create jobs but does empower others, the exclusive rule yields that Luz is resourceful. Resourceful implies an exclusive disjunction: Luz is either a successful entrepreneur or a community leader (but not both). Luz does not organize her community, so she fights for rights; together with supporting local workers the added rule gives that Luz can become a community leader (a possibility), but it does not assert that she actually is a community leader. We therefore cannot derive either \u2018Luz is a community leader\u2019 or \u2018Luz is a successful entrepreneur\u2019 from the context, so we cannot entail \u2018Luz is not a successful entrepreneur.\u2019",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 535
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Luz either recycles waste or trains others, but not both, then she improves livelihoods.\n\nAdded rules:\n- If Luz does not improve livelihoods, then Luz recycling waste is equivalent to Luz training others.\n\nAdded facts:\n- Luz either recycles waste or trains others, but not both.\n- Luz does not build networks.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Facts: Luz recycles waste (R) and does not train others (\u00acT), and the XOR fact R xor T is given. The rule (R xor T) -> I was removed, so I (improves livelihoods) is not derivable. The added rule \u00acI -> (R \u2194 T) does not allow deriving I from R and \u00acT (material implication\u2019s contrapositive is not available); it would only be falsified if \u00acI held, so it does not yield I. Luz does not organize her community, so from F xor O we get F (fights for rights). With S (supports local workers) and the reinstated rule F & S -> CL we get CL (can/becomes community leader). We have \u00acB (does not build networks), so (B or I) -> E gives no E. Thus C xor E -> Rf cannot be triggered (E unknown and C is false), so Rf (resourceful) is not derivable, and therefore Rf -> (SE xor CL) does not force either SE or \u00acSE. There is no rule directly negating SE. Therefore the context does not entail \u201cLuz is not a successful entrepreneur.\u201d",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 793
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Luz does not organize her community.\n\nAdded rules:\n- If Luz does not fight for rights, then Luz cannot become a community leader.\n\nAdded facts:\n- Luz organizes her community.\n- Luz does not fight for rights.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: R (recycles), \u00acT (doesn\u2019t train), O (organizes), \u00acF (doesn\u2019t fight), S (supports local workers), \u00acC (doesn\u2019t create jobs), \u00acB (doesn\u2019t build networks), and R xor T are present. The added rule \u00acI -> (R \u2194 T) combined with R true and T false makes R \u2194 T false, so \u00acI would imply false; thus \u00ac\u00acI and hence I (improves livelihoods) holds. From (B or I) -> E we get E (empowers others). With \u00acC and E true, C xor E holds, so Luz is resourceful (Rf). Rf -> (SE xor CL) gives an exclusive choice between successful entrepreneur (SE) and community leader (CL). The added rule \u00acF -> cannot become CL with \u00acF true gives CL false, so SE must be true. Therefore \u2018Luz is not a successful entrepreneur\u2019 is not entailed (indeed SE is entailed), so the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1176
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Luz does not fight for rights.\n\nRemoved rules:\n- If Luz does not improve livelihoods, then Luz recycling waste is equivalent to Luz training others.\n- If Luz does not fight for rights, then Luz cannot become a community leader.\n\nAdded rules:\n- If it is not the case that Luz recycling waste is equivalent to Luz training others, then she improves livelihoods.\n\nAdded facts:\n- Luz fights for rights.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given R and \u00acT, R\u2194T is false, so by the added rule \u00ac(R\u2194T) -> I we derive I. With \u00acB and I, (B or I) -> E yields E. With \u00acC_job and E, (C xor E) -> Rf gives Rf. From Rf -> (SE xor CL) we have an exclusive choice SE xor CL. Also F and S are facts, so F & S -> CL yields CL. Since CL holds and SE xor CL is exclusive, SE must be false. Thus \u2018Luz is not a successful entrepreneur\u2019 is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1501
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Luz fights for rights and Luz supports local workers, then Luz can become a community leader.\n- If it is not the case that Luz recycling waste is equivalent to Luz training others, then she improves livelihoods.\n\nAdded rules:\n- If Luz cannot become a community leader, then either Luz does not fight for rights or Luz does not support local workers.\n- If Luz either recycles waste or trains others, but not both, then she improves livelihoods.\n\nAdded facts:\n- It is not the case that Luz recycling waste is equivalent to Luz training others.\n- Luz fights for rights and Luz supports local workers.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Facts: Luz recycles waste (R) and does not train others (\u00acT), and the context contains the XOR rule (R xor T) -> improves livelihoods (I), so I holds. With Luz not building networks (\u00acB) and (B or I) -> empowers others (E), we get E. With Luz not creating jobs (\u00acC) and (C xor E) -> resourceful (Rf), Rf holds. From Rf -> (successful entrepreneur (SE) xor community leader (CL)) we have an exclusive choice SE xor CL. The context also entails Luz fights for rights (F) and supports local workers (S) and contains the rule (F & S) -> cannot become CL, so CL is ruled out. Therefore SE must hold. Hence the statement \u201cLuz is not a successful entrepreneur\u201d is not entailed (it is contradicted).",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1778
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Luz either fights for rights or organizes her community.\n\nAdded rules:\n- If Luz does not fight for rights, then Luz organizes her community.\n\nAdded facts:\n- Luz recycles waste and Luz does not train others.",
+      "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From facts: R (recycles) and \u00acT with the given XOR fact and the rule (R xor T) -> I we derive I (improves livelihoods). From (B or I) -> E and \u00acB we get E. With \u00acC_job and (C xor E) -> Rf we get Rf (resourceful). From Rf -> (SE xor CL) we obtain an exclusive disjunction: either SE (successful entrepreneur) or CL (community leader). However, the rule (F & S) -> CL was removed earlier, and there is no rule now that derives CL from the available facts; nor is there any rule that derives \u00acSE. Therefore neither SE nor \u00acSE is entailed by the context, so the statement \u201cLuz is not a successful entrepreneur\u201d is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2151
+    }
+  ]
+}

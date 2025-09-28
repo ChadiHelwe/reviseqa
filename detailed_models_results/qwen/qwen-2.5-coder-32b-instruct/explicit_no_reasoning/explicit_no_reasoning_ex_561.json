@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 280,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Max has supportive friends.\nMax is successful.\nMax does not have good health.\nMax is not content.\nIf Max has supportive friends, then he is either successful or happy (but not both).\nEveryone who smiles often either has good health or is happy (or both).\nIf Max enjoys independence, then he will be content.\nIf someone feels fulfilled, then they will smile often.\nEveryone values freedom or enjoys independence.\nMax either finds inner peace or values freedom, but not both.\nAnyone who appreciates nature or finds inner peace will feel fulfilled.\nMax either appreciates nature or pursues his passion (or both).",
+      "question": "Does the context entail the conclusion 'Max does not pursue his passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Max has supportive friends, then he is either successful or happy (but not both).\n- Anyone who appreciates nature or finds inner peace will feel fulfilled.\n\nAdded rules:\n- If Max has supportive friends, then he is either successful or happy.\n- If Max has supportive friends, then it is not the case that he is both successful and happy.\n- Everyone who appreciates nature will feel fulfilled.\n- Everyone who finds inner peace will feel fulfilled.",
+      "question": "Does the context entail the conclusion 'Max does not pursue his passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Max has supportive friends and is successful, so by the rules he cannot be happy. He is not content, so he does not enjoy independence (contrapositive of 'if enjoys independence, then content'). Since everyone values freedom or independence, and he doesn't enjoy the latter, he values freedom. He cannot find inner peace (due to the 'either/or' rule with freedom). The 'appreciates nature or passion' rule means if he doesn't appreciate nature, he must pursue passion. If he did appreciate nature, he'd feel fulfilled -> smile often, which requires good health or happiness (he lacks both). Thus, he cannot appreciate nature, forcing him to pursue passion. This contradicts the conclusion 'does not pursue passion.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 228
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Max is not happy.\n- Max does not appreciate nature.",
+      "question": "Does the context entail the conclusion 'Max does not pursue his passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Max does not appreciate nature (added fact). The rule 'Max either appreciates nature or pursues his passion (or both)' requires that if he does not appreciate nature, he must pursue his passion (or both). Since 'or both' is allowed, but we now know he does not appreciate nature, the only remaining possibility under this rule is that he *must* pursue his passion. Thus, the conclusion 'Max does not pursue his passion' is directly contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1259
+    },
+    {
+      "step": 3,
+      "context": "Added facts:\n- Max does not enjoy independence.\n- Max values freedom.\n- Max does not find inner peace.",
+      "question": "Does the context entail the conclusion 'Max does not pursue his passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Max does not appreciate nature (from previous step). The rule 'Max either appreciates nature or pursues his passion (or both)' and the added fact 'Max does not appreciate nature' force the conclusion that Max *must* pursue his passion (since 'or both' is possible but 'and' alone satisfies the rule). New facts about freedom/independence and inner peace do not affect this logic. The conclusion 'Max does not pursue his passion' is thus directly contradicted.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1940
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Max does not have good health.\n- Max does not appreciate nature.\n\nAdded rules:\n- If Max values freedom, then he appreciates nature and has good health.\n- It is not the case that Max appreciates nature and pursues his passion.",
+      "question": "Does the context entail the conclusion 'Max does not pursue his passion.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Max values freedom (from prior context). The added rule 'If Max values freedom, then he appreciates nature and has good health' directly implies that he appreciates nature. The added rule 'It is not the case that Max appreciates nature and pursues his passion' (written as \u00ac(appreciates nature \u2227 pursues passion)) and the derived fact that he appreciates nature forces the conclusion that he does *not* pursue his passion (via disjunctive syllogism: from \u00ac(P \u2227 Q) and P, infer \u00acQ). Thus, the conclusion 'Max does not pursue his passion' is necessarily true.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2776
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Max values freedom, then he appreciates nature and has good health.\n\nAdded rules:\n- If Max values freedom, then he does not appreciate nature.",
+      "question": "Does the context entail the conclusion 'Max does not pursue his passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Max values freedom (from prior context), and the current rule 'If Max values freedom, then he does not appreciate nature' implies he does not appreciate nature. The remaining rule 'It is not the case that Max appreciates nature and pursues his passion' (\u00ac(appreciates nature \u2227 pursues passion)) is vacuously satisfied because he does not appreciate nature. However, the earlier rule 'Max either appreciates nature or pursues his passion (or both)' (not removed) now forces him to pursue his passion (since he does not appreciate nature). Thus, the conclusion 'Max does not pursue his passion' is directly contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 4023
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Max either finds inner peace or values freedom, but not both.\n- It is not the case that Max appreciates nature and pursues his passion.\n\nAdded rules:\n- If Max has supportive friends, then he is either successful or happy (but not both).\n- If Max is not content, then he does not enjoy independence.\n\nAdded facts:\n- Max either values freedom or enjoys independence.\n- It is not the case that Max finds inner peace and values freedom.\n- Either Max does not appreciate nature or he does not pursue his passion.",
+      "question": "Does the context entail the conclusion 'Max does not pursue his passion.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The key rule is 'Either Max does not appreciate nature or he does not pursue his passion'. This does not provide sufficient information to deduce the truth value of 'Max does not pursue his passion' directly, as it depends on whether Max appreciates nature. No rules explicitly link 'appreciates nature' to other facts in the context. Thus, the conclusion is neither confirmed nor denied by the context.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 4925
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- Max either appreciates nature or pursues his passion, but not both.\n- Max either finds inner peace or values freedom, but not both.",
+      "question": "Does the context entail the conclusion 'Max does not pursue his passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Max cannot find inner peace (from 'Max either finds inner peace or values freedom, but not both' and 'Max values freedom'). If he appreciated nature, he would feel fulfilled \u2192 smile often \u2192 require good health or happiness (he has neither). Therefore, he cannot appreciate nature. From the rule 'Max either appreciates nature or pursues his passion, but not both', he must pursue his passion. The conclusion 'Max does not pursue his passion' is contradicted.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 6115
+    }
+  ]
+}

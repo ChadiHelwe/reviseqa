@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 269,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jordan pursues excellence.\nJordan does not strive for innovation.\nJordan does not work hard.\nJordan has original ideas.\nJordan is passionate.\nJordan is not a perfectionist.\nEveryone who pursues excellence either strives for innovation or values craftsmanship (or both).\nJordan either creates masterpieces or works hard.\nAll individuals who create masterpieces value craftsmanship and have attention to detail.\nIf Jordan has original ideas, then she is either meticulous in her work or respected professionally, but not both.\nIf Jordan is admired or has a unique style, then she is respected professionally.\nIf Jordan is passionate, then she is either a perfectionist or dedicated, but not both.\nIf Jordan is successful, then she is admired.\nIf Jordan is either talented or dedicated (but not both), then she is successful.",
+      "question": "Does the context entail the conclusion 'Jordan is talented.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Jordan is not respected professionally, then she is not admired and she does not have a unique style.\n- If Jordan is not admired, then she is not successful.\n\nAdded facts:\n- Jordan values craftsmanship.\n- Jordan has attention to detail.\n- Jordan is dedicated.\n- Jordan is not respected professionally.\n- Jordan is not admired.\n- Jordan does not have a unique style.\n- Jordan is not successful.",
+      "question": "Does the context entail the conclusion 'Jordan is talented.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given added facts, Jordan is dedicated and not successful. Rule (talented XOR dedicated) -> successful (R8) means if talented were false then (talented XOR dedicated) would be true (since dedicated is true) and would imply successful, contradicting the fact Jordan is not successful. Thus \u00actalented leads to inconsistency, so talented must hold in every model of the knowledge base. Therefore the context entails that Jordan is talented.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 259
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Jordan is dedicated.\n\nRemoved rules:\n- If Jordan is passionate, then she is either a perfectionist or dedicated, but not both.\n\nAdded facts:\n- Jordan is not dedicated.",
+      "question": "Does the context entail the conclusion 'Jordan is talented.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We have Jordan is not dedicated (fact). Rule (talented XOR dedicated) -> successful means if talented were true (with dedicated false) then the antecedent would be true and so Jordan would be successful. But the context includes Jordan is not successful, so talented true leads to contradiction. Therefore talented cannot be true in any model of the knowledge base, so the context entails that Jordan is not talented. Hence the conclusion 'Jordan is talented.' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 472
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Jordan is not dedicated.\n\nAdded facts:\n- Jordan is dedicated.",
+      "question": "Does the context entail the conclusion 'Jordan is talented.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Jordan is given as dedicated. Rule R: (talented XOR dedicated) -> successful means if exactly one of {talented, dedicated} holds then Jordan is successful. There is also the fact Jordan is not successful. If talented were false, then (talented XOR dedicated) would be true (since dedicated is true) and R would imply Jordan is successful, contradicting the fact Jordan is not successful. Thus talented cannot be false in any model of the knowledge base; to avoid deriving success we must have talented true (making the XOR antecedent false). No other rule forces success when both talented and dedicated hold. Therefore the knowledge base entails that Jordan is talented.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 644
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Jordan has original ideas, then she is either meticulous in her work or respected professionally, but not both.\n\nAdded facts:\n- Jordan values craftsmanship and has attention to detail.\n- Jordan is not admired and she does not have a unique style.",
+      "question": "Does the context entail the conclusion 'Jordan is talented.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The KB includes fact dedicated and fact not successful plus the rule (talented XOR dedicated) -> successful. If talented were false, then (talented XOR dedicated) would be true (since dedicated is true) and would imply successful, contradicting the fact not successful. Therefore talented cannot be false in any model of the KB, so talented must hold. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 835
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Jordan is not talented, then she is successful.",
+      "question": "Does the context entail the conclusion 'Jordan is talented.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have facts D (dedicated) and \u00acS (not successful). The XOR rule (T XOR D) -> S and the added rule \u00acT -> S both yield \u00acT -> S. Contrapositing gives \u00acS -> T, and since \u00acS is a fact, T (Jordan is talented) follows. Thus the KB entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1005
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Jordan is talented and not dedicated, then she is successful.\n- If Jordan is not talented and dedicated, then she is successful.\n\nAdded facts:\n- Jordan creates masterpieces.\n- Jordan has attention to detail if and only if she is not respected professionally.",
+      "question": "Does the context entail the conclusion 'Jordan is talented.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The KB contains the fact \u00acSuccessful. It also contains the rule \u00acTalented -> Successful (and duplicate rules that would make Successful from \u00acTalented when combined with Dedicated). Therefore assuming \u00acTalented leads to Successful, contradicting the fact \u00acSuccessful. Hence \u00acTalented is impossible in all models, so Talented must hold. Thus the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1131
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Jordan is not successful, then she is talented.\n- If Jordan is dedicated and not successful, then she is talented.",
+      "question": "Does the context entail the conclusion 'Jordan is talented.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The KB contains the fact Jordan is not successful (from earlier additions) and the added rule \u201cIf Jordan is not successful, then she is talented.\u201d From these, Jordan being not successful entails Jordan is talented. The second added rule is redundant. Therefore the context entails that Jordan is talented.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1304
+    }
+  ]
+}

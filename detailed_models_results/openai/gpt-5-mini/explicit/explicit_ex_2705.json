@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 140,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Sylvia has strong curiosity.\nSylvia does not make new discoveries.\nSylvia sets high standards.\nSylvia does not plan carefully.\nSylvia does not read old charts.\nSylvia cannot identify new land.\nSylvia has spatial awareness.\nIf someone has strong curiosity and is thorough, then they can make new discoveries.\nIf Sylvia either sets high standards or plans carefully (but not both), then she is a perfectionist.\nIf Sylvia is a perfectionist, then she is either thorough or meticulous (but not both).\nAnyone who is meticulous has attention to detail.\nIf Sylvia knows cartography or reads old charts, then she can identify new land.\nIf Sylvia creates accurate maps, then she either has attention to detail or has spatial awareness (but not both).\nSylvia knows cartography or understands geography.\nFor anyone who understands geography and is skilled at navigation, they can create accurate maps.\nSylvia is skilled at navigation or passionate about exploration (or both).",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Sylvia has strong curiosity. Sylvia does not make new discoveries.. If someone has strong curiosity and is thorough, then they can make new discoveries.. Therefore, Sylvia is not thorough.. Sylvia sets high standards. Sylvia does not plan carefully.. If Sylvia either sets high standards or plans carefully (but not both), then she is a perfectionist.. Therefore, Sylvia is a perfectionist.. Sylvia is a perfectionist. Sylvia is not thorough.. If Sylvia is a perfectionist, then she is either thorough or meticulous (but not both).. Therefore, Sylvia is meticulous.. Sylvia is meticulous.. Anyone who is meticulous has attention to detail.. Therefore, Sylvia has attention to detail.. Sylvia does not read old charts. Sylvia cannot identify new land.. If Sylvia knows cartography or reads old charts, then she can identify new land.. Therefore, Sylvia does not know cartography.. Sylvia has attention to detail. Sylvia has spatial awareness.. If Sylvia creates accurate maps, then she either has attention to detail or has spatial awareness (but not both).. Therefore, Sylvia cannot create accurate maps.. Sylvia does not know cartography.. Sylvia knows cartography or understands geography.. Therefore, Sylvia understands geography.. Sylvia understands geography. Sylvia cannot create accurate maps.. For anyone who understands geography and is skilled at navigation, they can create accurate maps.. Therefore, Sylvia is not skilled at navigation.. Sylvia is not skilled at navigation.. Sylvia is skilled at navigation or passionate about exploration (or both).. Therefore, Sylvia is passionate about exploration..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Sylvia has attention to detail, then she is skilled at navigation.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From strong curiosity and the fact Sylvia does not make new discoveries, she cannot be thorough. She sets high standards and does not plan carefully, so by the exclusive-or rule she is a perfectionist. A perfectionist (and not thorough) must be meticulous, and meticulous implies attention to detail. The added rule gives attention to detail -> skilled at navigation, so SN holds. Sylvia cannot identify new land and does not read old charts, so she does not know cartography; with (KC or UG) this yields UG. UG and SN imply she can create accurate maps (CAM). But CAM implies exactly one of attention-to-detail or spatial-awareness; she has both attention-to-detail and spatial-awareness, so CAM must be false. From UG & SN -> CAM and CAM false we get not (UG & SN); with UG true this yields not SN. Thus both SN and not SN are derivable, producing an inconsistent theory. In classical logic an inconsistent set of premises entails any formula (ex falso), hence the conclusion 'Sylvia is passionate about exploration.' is entailed.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 604
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x has strong curiosity and x is thorough, then x can make new discoveries.\n\nAdded rules:\n- For all x, if x has strong curiosity then x is thorough.\n- For all x, if x is not meticulous then x does not have attention to detail.\n- For all x, if x does not have attention to detail, then x is not skilled at navigation.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the added rule strong_curiosity -> thorough and the fact Sylvia has strong curiosity, infer thorough. Sylvia sets high standards and does not plan carefully, so by the exclusive-or rule she is a perfectionist. Perfectionist implies exactly one of thorough or meticulous; since thorough holds, meticulous is false. From meticulous -> attention and the new rule \u00acmeticulous -> \u00acattention we get attention is false. From \u00acattention -> \u00acskilled_at_navigation we get Sylvia is not skilled at navigation. She cannot identify new land and does not read old charts, so by contrapositive of (knows_cartography or reads_old_charts) -> can_identify_new_land she does not know cartography; with (knows_cartography or understands_geography) this yields understands_geography. understands_geography together with skilled_at_navigation would be needed to create accurate maps, but skilled_at_navigation is false so she does not create accurate maps. Finally, the fact (skilled_at_navigation or passionate_about_exploration) together with \u00acskilled_at_navigation yields passionate_about_exploration. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 897
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x has strong curiosity then x is thorough.\n\nAdded facts:\n- Sylvia is not thorough.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given added fact Sylvia is not thorough. Sylvia sets high standards and does not plan carefully, so by the exclusive-or rule she is a perfectionist. From perfectionist and TH false, the exclusive-or (TH xor M) forces M (meticulous) true. From M -> attention-to-detail and \u00acM -> \u00acattention-to-detail (both present) we get attention-to-detail true. From attention-to-detail -> skilled-at-navigation and \u00acattention-to-detail -> \u00acskilled-at-navigation we get skilled-at-navigation true. The fact (skilled-at-navigation or passionate-about-exploration) is thus satisfied by skilled-at-navigation, but no rule or fact derives passionate-about-exploration itself. There is no derivation of PE nor of its negation, so PE is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1267
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Sylvia is not thorough.\n\nAdded facts:\n- Sylvia is thorough.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Sylvia sets high standards and does not plan carefully, so by the exclusive-or rule she is a perfectionist. Perfectionist implies exactly one of thorough or meticulous; since Sylvia is given thorough, she must not be meticulous. The added rule \u00acmeticulous -> \u00acattention yields that Sylvia does not have attention to detail. With attention -> skilled_at_navigation and \u00acattention -> \u00acskilled_at_navigation present, Sylvia is not skilled at navigation. Given the fact Sylvia is skilled at navigation or passionate about exploration (inclusive or) and \u00acskilled_at_navigation, we conclude Sylvia is passionate about exploration.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1513
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Sylvia is thorough.\n\nAdded facts:\n- Sylvia is not thorough.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Sylvia sets high standards and does not plan carefully, so by the exclusive-or rule she is a perfectionist. Perfectionist implies exactly one of thorough or meticulous; with the fact Sylvia is not thorough, she must be meticulous. Meticulous implies attention to detail, and attention implies skilled at navigation, so Sylvia is skilled at navigation. The premise 'skilled at navigation or passionate about exploration' is therefore satisfied by skilled-at-navigation; there is no rule deriving that she is passionate about exploration (nor its negation). Hence 'Sylvia is passionate about exploration' is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1712
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Sylvia is not thorough.\n\nAdded facts:\n- Sylvia is thorough.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: Sylvia has strong curiosity; Sylvia sets high standards; Sylvia does not plan carefully; Sylvia does not read old charts; Sylvia cannot identify new land; Sylvia has spatial awareness; Sylvia knows cartography or understands geography; Sylvia is skilled at navigation or passionate about exploration. Added fact: Sylvia is thorough. Rules in force: (sets_high_standards XOR plans_carefully) -> perfectionist; perfectionist -> (thorough XOR meticulous); meticulous -> attention_to_detail; \u00acmeticulous -> \u00acattention_to_detail; attention_to_detail -> skilled_at_navigation; \u00acattention_to_detail -> \u00acskilled_at_navigation; (knows_cartography \u2228 reads_old_charts) -> can_identify_new_land; (understands_geography \u2227 skilled_at_navigation) -> creates_accurate_maps; (creates_accurate_maps) -> (attention_to_detail XOR spatial_awareness). Derivation: From sets_high_standards true and not planning, the XOR antecedent holds, so Sylvia is a perfectionist. Perfectionist and thorough true force \u00acmeticulous (exclusive-or), so by \u00acmeticulous -> \u00acattention_to_detail we get \u00acattention_to_detail. Then \u00acattention_to_detail -> \u00acskilled_at_navigation gives \u00acskilled_at_navigation. From (skilled_at_navigation \u2228 passionate_about_exploration) and \u00acskilled_at_navigation we infer passionate_about_exploration. No rule yields \u00acpassionate_about_exploration, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1912
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Sylvia is thorough.\n\nAdded facts:\n- Sylvia is not thorough.",
+      "question": "Does the context entail the conclusion 'Sylvia is passionate about exploration.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Sylvia sets high standards and does not plan carefully, so by the exclusive-or rule she is a perfectionist. Perfectionist together with the fact Sylvia is not thorough forces Sylvia to be meticulous. Meticulous implies attention to detail, and attention to detail implies Sylvia is skilled at navigation. Thus skilled_at_navigation holds. The premise (skilled_at_navigation or passionate_about_exploration) is satisfied by skilled_at_navigation, but there is no rule or fact that derives passionate_about_exploration itself (nor its negation). Therefore the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2290
+    }
+  ]
+}

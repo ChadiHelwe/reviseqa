@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "google/gemini-2.5-pro",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 165,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Annika has curiosity.\nAnnika enjoys learning.\nAnnika pursues higher education.\nAnnika does not secure a prestigious position.\nAnnika is not motivated.\nAnnika becomes influential.\nAnnika is a dedicated scientist.\nIf Annika has curiosity, then she either values knowledge or enjoys learning, but not both.\nIf Annika pursues higher education, then she will either secure a prestigious position or have expertise (but not both).\nIf Annika either values knowledge or seeks financial gain (but not both), then she is motivated.\nIf Annika has expertise, then she will either gain recognition or become influential (but not both).\nAnnika either pursues her passion or seeks financial gain, but not both.\nAnyone who pursues their passion and makes groundbreaking discoveries will gain recognition.",
+      "question": "Does the context entail the conclusion 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Annika does not value knowledge.\n- Annika has expertise.\n- Annika does not gain recognition.",
+      "question": "Does the context entail the conclusion 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's break down the logic. The conclusion we are testing is 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.' This is an 'if-then' statement. Let's call the 'if' part the antecedent and the 'then' part the consequent.\n\n1.  **Antecedent**: 'Annika is a dedicated scientist.' The context explicitly states this fact is true.\n2.  **Consequent**: 'she will make groundbreaking discoveries AND inspire others.' For this to be true, both parts of the 'AND' statement must be true.\n    -   Part A: 'she will make groundbreaking discoveries'. Let's see if we can determine the truth of this.\n    -   We have a rule: 'Anyone who pursues their passion and makes groundbreaking discoveries will gain recognition.'\n    -   The contrapositive of this rule is: 'If someone does NOT gain recognition, then they did NOT both pursue their passion AND make groundbreaking discoveries.'\n    -   We know from the context that 'Annika does not gain recognition.' This is true.\n    -   Therefore, it must be true that 'Annika did NOT both pursue her passion AND make groundbreaking discoveries.'\n    -   Do we know if she pursues her passion? We have the rule 'Annika either pursues her passion or seeks financial gain, but not both.' We can deduce that she does not seek financial gain from the facts that she is not motivated (`~M`), does not value knowledge (`~V`), and the rule `(V XOR F) -> M`. The contrapositive `~M -> ~(V XOR F)` means `~M -> ((V AND F) OR (~V AND ~F))`. Since `~M` and `~V` are true, `~F` must be true. Therefore, from 'Annika either pursues her passion or seeks financial gain', we know she *does* pursue her passion.\n    -   So, we know two things: (1) Annika pursues her passion, and (2) it's false that 'Annika pursues her passion AND makes groundbreaking discoveries'.\n    -   For (2) to be true while (1) is true, the part about 'makes groundbreaking discoveries' must be false.\n    -   Therefore, we have proven from the context that 'Annika does NOT make groundbreaking discoveries'. The first part of the consequent is false.\n3.  **Evaluating the Full Conclusion**: The original statement is 'If (Annika is a dedicated scientist), then (she makes groundbreaking discoveries AND inspires others)'.\n    -   The 'if' part is true.\n    -   The 'then' part is false because 'she makes groundbreaking discoveries' is false.\n    -   An 'if-then' statement where the antecedent is true and the consequent is false is a false statement.\n\nSince the conclusion is proven to be false from the context, the context does not entail it. The answer is False.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 273
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- Annika either pursues her passion or seeks financial gain, but not both.\n\nAdded rules:\n- Annika either pursues her passion or seeks financial gain, and it is not the case that Annika pursues her passion and seeks financial gain.\n- Either Annika does not pursue her passion, or Annika does not make groundbreaking discoveries.\n\nAdded facts:\n- Annika does not seek financial gain.",
+      "question": "Does the context entail the conclusion 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's analyze the conclusion: 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.' This is a conditional statement. Let's call the antecedent (the 'if' part) 'P' and the consequent (the 'then' part) 'Q'.\n\n1.  **Analyze the antecedent (P): 'Annika is a dedicated scientist.'**\n    The context explicitly states as a fact that 'Annika is a dedicated scientist.' Therefore, the antecedent P is TRUE.\n\n2.  **Analyze the consequent (Q): 'she will make groundbreaking discoveries and inspire others.'**\n    For this 'and' statement to be true, both parts must be true:\n    *   Q1: 'she will make groundbreaking discoveries'\n    *   Q2: 'she will inspire others'\n\n3.  **Determine the truth value of Q1 ('she will make groundbreaking discoveries').**\n    *   We have a rule: 'Annika either pursues her passion or seeks financial gain...'. This translates to `Pursues_Passion XOR Seeks_Financial_Gain`. Let's call this `PP XOR SFG`.\n    *   We have a fact: 'Annika does not seek financial gain.' This means `SFG` is FALSE.\n    *   For an XOR statement to be true, the two components must have different truth values. Since `SFG` is FALSE, `PP` must be TRUE. So, we deduce that Annika pursues her passion.\n    *   We have another rule: 'Either Annika does not pursue her passion, or Annika does not make groundbreaking discoveries.' This translates to `NOT Pursues_Passion OR NOT Makes_Groundbreaking_Discoveries` (`~PP OR ~GD`).\n    *   We just deduced that `PP` is TRUE, which means `~PP` is FALSE.\n    *   For the statement `FALSE OR ~GD` to be true, `~GD` must be TRUE.\n    *   Therefore, we can conclude that 'Annika does not make groundbreaking discoveries' is TRUE. This means Q1 is FALSE.\n\n4.  **Evaluate the full consequent (Q).**\n    *   The consequent is `Q1 AND Q2` ('she will make groundbreaking discoveries AND inspire others').\n    *   We have proven that Q1 is FALSE.\n    *   In logic, if any part of an 'AND' statement is false, the entire statement is false. It doesn't matter whether she inspires others (Q2) or not.\n    *   Therefore, the consequent Q is FALSE.\n\n5.  **Evaluate the entire conclusion.**\n    *   The conclusion is of the form `P -> Q` ('If P then Q').\n    *   We found that the antecedent P ('Annika is a dedicated scientist') is TRUE.\n    *   We found that the consequent Q ('she will make groundbreaking discoveries and inspire others') is FALSE.\n    *   A conditional statement with a true antecedent and a false consequent (`TRUE -> FALSE`) is FALSE.\n\nSince the conclusion is demonstrably false based on the context, the context does not entail it.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1010
+    },
+    {
+      "step": 3,
+      "context": "Added facts:\n- Annika pursues her passion.",
+      "question": "Does the context entail the conclusion 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's analyze the conclusion: 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.' This is a conditional statement. Let's call the 'if' part the antecedent (P) and the 'then' part the consequent (Q).\n\n1.  **Analyze the antecedent (P): 'Annika is a dedicated scientist.'**\n    The context explicitly states as a fact that 'Annika is a dedicated scientist.' Therefore, the antecedent P is TRUE.\n\n2.  **Analyze the consequent (Q): 'she will make groundbreaking discoveries and inspire others.'**\n    For this 'and' statement to be true, both sub-parts must be true:\n    *   Q1: 'she will make groundbreaking discoveries'\n    *   Q2: 'she will inspire others'\n\n3.  **Determine the truth value of Q1 ('she will make groundbreaking discoveries').**\n    *   We have a rule: 'Either Annika does not pursue her passion, or Annika does not make groundbreaking discoveries.' This can be written as `(NOT Pursues_Passion) OR (NOT Makes_Groundbreaking_Discoveries)`.\n    *   We have a fact: 'Annika pursues her passion.' This means `Pursues_Passion` is TRUE.\n    *   Therefore, `NOT Pursues_Passion` is FALSE.\n    *   Substituting this into the rule, we get `FALSE OR (NOT Makes_Groundbreaking_Discoveries)`. For this entire 'OR' statement to be true, the second part must be true.\n    *   Thus, we can conclude that `NOT Makes_Groundbreaking_Discoveries` is TRUE.\n    *   This means the statement 'Annika makes groundbreaking discoveries' (Q1) is FALSE.\n\n4.  **Evaluate the full consequent (Q).**\n    *   The consequent is `Q1 AND Q2` ('she will make groundbreaking discoveries AND inspire others').\n    *   We have proven that Q1 is FALSE.\n    *   In formal logic, if any part of an 'AND' statement is false, the entire statement is false. We do not need to know the truth value of Q2 ('she will inspire others').\n    *   Therefore, the consequent Q is FALSE.\n\n5.  **Evaluate the entire conclusion.**\n    *   The conclusion has the form `P -> Q` ('If P then Q').\n    *   We found that the antecedent P ('Annika is a dedicated scientist') is TRUE.\n    *   We found that the consequent Q ('she will make groundbreaking discoveries and inspire others') is FALSE.\n    *   A conditional statement with a true antecedent and a false consequent (`TRUE -> FALSE`) is itself FALSE.\n\nSince the context allows us to prove that the conclusion is false, the context does not entail the conclusion.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1869
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- Annika either pursues her passion or seeks financial gain, and either Annika does not pursue her passion or Annika does not seek financial gain.\n\nAdded rules:\n- For all x, if x does not gain recognition, then it is not the case that x pursues their passion and makes groundbreaking discoveries.\n- Annika either pursues her passion or seeks financial gain, but not both.\n\nAdded facts:\n- Annika does not make groundbreaking discoveries.",
+      "question": "Does the context entail the conclusion 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's break down the question. We need to determine if the context entails the conclusion: 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.' This is a conditional statement (an 'if-then' statement).\n\n1.  **Analyze the antecedent (the 'if' part):** The antecedent is 'Annika is a dedicated scientist.' The context explicitly states this as a fact. Therefore, the antecedent is TRUE.\n\n2.  **Analyze the consequent (the 'then' part):** The consequent is 'she will make groundbreaking discoveries and inspire others.' This is a compound statement joined by 'and'. For it to be true, both parts must be true:\n    *   Part A: 'she will make groundbreaking discoveries'\n    *   Part B: 'she will inspire others'\n\n3.  **Evaluate Part A of the consequent:** The context has a newly added fact: 'Annika does not make groundbreaking discoveries.' This fact directly makes the statement 'she will make groundbreaking discoveries' FALSE.\n\n4.  **Evaluate the full consequent:** Since the consequent is an 'and' statement ('Part A AND Part B'), and we have proven Part A to be false, the entire consequent is FALSE. It doesn't matter whether Part B ('inspire others') is true or not; a statement like `FALSE and (TRUE/FALSE)` is always FALSE.\n\n5.  **Evaluate the entire conclusion:** The conclusion is a conditional statement in the form 'If P, then Q', where P is the antecedent and Q is the consequent.\n    *   We established P is TRUE.\n    *   We established Q is FALSE.\n    *   In logic, a conditional statement with a true antecedent and a false consequent (`TRUE -> FALSE`) is always FALSE.\n\nSince the conclusion is demonstrably false based on the facts in the context, the context does not entail the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2585
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Annika has curiosity and Annika enjoys learning, then Annika does not value knowledge.\n- If Annika pursues higher education and Annika does not secure a prestigious position, then Annika has expertise.\n- If Annika pursues her passion, then Annika does not seek financial gain.",
+      "question": "Does the context entail the conclusion 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Let's analyze the conclusion: 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.' This is a conditional statement (if P, then Q).\n\n1.  **Analyze the antecedent (P): 'Annika is a dedicated scientist.'**\n    The context explicitly includes 'Annika is a dedicated scientist' as a given fact. Therefore, the antecedent (P) is TRUE.\n\n2.  **Analyze the consequent (Q): 'she will make groundbreaking discoveries and inspire others.'**\n    This is a compound statement joined by 'and'. For it to be true, both of its parts must be true:\n    *   Q1: 'she will make groundbreaking discoveries'\n    *   Q2: 'she will inspire others'\n\n3.  **Evaluate the truth value of Q1 ('she will make groundbreaking discoveries').**\n    In a prior step, the fact 'Annika does not make groundbreaking discoveries' was added to the context. This fact has not been removed. Therefore, based on the current context, the statement 'she will make groundbreaking discoveries' (Q1) is FALSE.\n\n4.  **Evaluate the full consequent (Q).**\n    The consequent is 'Q1 AND Q2'. Since we have established that Q1 is FALSE, the entire 'and' statement is automatically FALSE, regardless of the truth value of Q2 ('she will inspire others'). A false statement conjoined with any other statement results in a false statement.\n\n5.  **Evaluate the entire conclusion.**\n    The conclusion is in the form 'P -> Q' (If P then Q).\n    *   We determined that the antecedent P is TRUE.\n    *   We determined that the consequent Q is FALSE.\n    *   In logic, a conditional statement with a true antecedent and a false consequent (TRUE -> FALSE) is definitively FALSE.\n\nSince the conclusion is demonstrably false given the context, the context does not entail the conclusion.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3168
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Annika is a dedicated scientist.\n\nAdded facts:\n- Annika is not a dedicated scientist.",
+      "question": "Does the context entail the conclusion 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The question asks if the context entails the conclusion 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.' This is a conditional statement, which can be represented as 'if P, then Q'.\n\n1.  **Analyze the antecedent (P):** The antecedent is 'Annika is a dedicated scientist'.\n\n2.  **Check the context for the antecedent's truth value:** A new fact has been added to the context: 'Annika is not a dedicated scientist'. This directly negates the antecedent, making it FALSE.\n\n3.  **Evaluate the conditional statement:** In formal logic, a conditional statement ('if P, then Q') is always considered true if its antecedent (P) is false. This is regardless of the truth value of the consequent (Q). This is known as a 'vacuous truth'.\n\n4.  **Conclusion:** Since the 'if' part of the statement ('Annika is a dedicated scientist') is false according to the context, the entire 'if-then' statement is logically true. Therefore, the context entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 3737
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Annika is a dedicated scientist, then she values knowledge and does not value knowledge.",
+      "question": "Does the context entail the conclusion 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The question asks if the context entails the conclusion: 'If Annika is a dedicated scientist, then she will make groundbreaking discoveries and inspire others.' This is a conditional statement (an 'if P, then Q' statement).\n\n1.  **Analyze the Antecedent (the 'if' part):** The antecedent is 'Annika is a dedicated scientist.'\n\n2.  **Check the Context for the Antecedent's Truth Value:** The context explicitly contains the fact 'Annika is not a dedicated scientist.' This directly makes the antecedent ('Annika is a dedicated scientist') FALSE.\n\n3.  **Evaluate the Conditional Statement:** In formal logic, a conditional statement ('if P, then Q') is always considered TRUE if its antecedent (P) is false. This principle is known as 'vacuous truth'. It does not matter what the consequent (Q, 'she will make groundbreaking discoveries and inspire others') is; the entire 'if-then' statement is true by definition when the 'if' clause is false.\n\n4.  **Consider the New Rule:** The new rule is 'If Annika is a dedicated scientist, then she values knowledge and does not value knowledge.' The 'then' part of this rule is a logical contradiction ('A and not A'), which is always false. This rule effectively means 'If Annika is a dedicated scientist, then FALSE'. The only way for this rule to be true is if the antecedent ('Annika is a dedicated scientist') is false. So, this rule simply reinforces the existing fact that Annika is not a dedicated scientist.\n\nSince the premise 'Annika is a dedicated scientist' is false according to the context, the conclusion 'If Annika is a dedicated scientist, then...' is vacuously true. Therefore, the context entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 4068
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 0,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Rhys embraces nature.\nRhys does not feel content.\nRhys possesses expertise.\nRhys publishes research.\nRhys does not practice mindfulness.\nRhys does not find fulfillment.\nIf someone embraces nature and seeks inner peace, then they will feel content.\nIf Rhys possesses expertise, then he either publishes research or helps others through his knowledge (or both).\nIf Rhys either practices mindfulness or lives with purpose (but not both), then he will find fulfillment.\nAnyone who seeks inner peace or values spiritual growth will live with purpose.\nRhys is either passionate about minerals or values spiritual growth, but not both.\nIf Rhys is passionate about minerals, then he will make groundbreaking discoveries and help others through his knowledge.",
+      "question": "Does the context entail the conclusion 'Rhys makes groundbreaking discoveries.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Rhys does not find fulfillment.\n\nAdded facts:\n- Rhys values spiritual growth.\n- Rhys seeks inner peace.",
+      "question": "Does the context entail the conclusion 'Rhys makes groundbreaking discoveries.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Added facts give Rhys both 'seeks inner peace' and 'values spiritual growth'. From 'seeks inner peace' and 'embraces nature' we get 'feels content' (contradicting the existing 'does not feel content', but that does not help derive groundbreaking discoveries). From 'seeks inner peace or values spiritual growth' (either holds) we get 'lives with purpose'. He does not practice mindfulness, so the exclusive-or (mindfulness or lives with purpose) is true, hence he will find fulfillment. The exclusive fact 'either passionate about minerals or values spiritual growth, but not both' together with the added 'values spiritual growth' yields \u00ac(passionate about minerals). Rule 12 (which produces 'makes groundbreaking discoveries') requires Rhys to be passionate about minerals; that antecedent is false, and no other rule implies groundbreaking discoveries. Therefore the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 248
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Rhys does not feel content.\n- Rhys values spiritual growth.\n\nAdded rules:\n- If Rhys finds fulfillment, then he is passionate about minerals.",
+      "question": "Does the context entail the conclusion 'Rhys makes groundbreaking discoveries.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have seeks_inner_peace as a fact. By the rule 'seeks inner peace or values spiritual growth -> lives_with_purpose', Rhys lives_with_purpose. Given the fact 'Rhys does not practice mindfulness', the exclusive-or (practices_mindfulness, lives_with_purpose) holds, so by the xor->finds_fulfillment rule Rhys finds_fulfillment. The newly added rule 'finds_fulfillment -> passionate_about_minerals' yields passionate_minerals. From passionate_minerals the rule passionate_minerals -> makes_groundbreaking_discoveries (and helps others) gives makes_groundbreaking_discoveries. No present fact or rule blocks these derivations, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 504
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Rhys seeks inner peace.\n\nAdded facts:\n- Rhys does not value spiritual growth.\n- If Rhys possesses expertise and publishes research, then he does not make groundbreaking discoveries.",
+      "question": "Does the context entail the conclusion 'Rhys makes groundbreaking discoveries.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the XOR fact (Rhys is either passionate_about_minerals or values_spiritual_growth, but not both) together with the added fact 'Rhys does not value spiritual growth' we derive passionate_about_minerals. From passionate_about_minerals and the rule 'passionate_about_minerals -> makes_groundbreaking_discoveries' we derive makes_groundbreaking_discoveries. Although the new rule 'possesses_expertise \u2227 publishes_research -> \u00acmakes_groundbreaking_discoveries' also applies (since Rhys possesses expertise and publishes research), yielding a contradiction, the positive atom makes_groundbreaking_discoveries is directly derivable from the context. Therefore the conclusion is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 732
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Rhys possesses expertise and publishes research, then he does not make groundbreaking discoveries.\n\nAdded rules:\n- If Rhys possesses expertise and publishes research, then he makes groundbreaking discoveries.",
+      "question": "Does the context entail the conclusion 'Rhys makes groundbreaking discoveries.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the XOR fact (Rhys is either passionate_about_minerals or values_spiritual_growth, but not both) together with the fact 'Rhys does not value spiritual growth' we infer passionate_about_minerals. The rule passionate_about_minerals -> makes_groundbreaking_discoveries yields makes_groundbreaking_discoveries. The newly added rule possesses_expertise \u2227 publishes_research -> makes_groundbreaking_discoveries also applies (Rhys possesses expertise and publishes research), so the conclusion is derivable. No rule derives \u00acmakes_groundbreaking_discoveries in the current context, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 952
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Rhys seeks inner peace, then he will live with purpose.\n- If Rhys lives with purpose, then he will find fulfillment.\n- Either Rhys does not possess expertise, or he publishes research, or he helps others through his knowledge.\n\nAdded facts:\n- Rhys is passionate about minerals.",
+      "question": "Does the context entail the conclusion 'Rhys makes groundbreaking discoveries.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes the fact 'Rhys is passionate about minerals' and the rule 'If Rhys is passionate about minerals, then he will make groundbreaking discoveries.' Therefore makes_groundbreaking_discoveries is directly derivable. No rule derives \u00acmakes_groundbreaking_discoveries in the current context, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1179
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Rhys is passionate about minerals, then Rhys will make groundbreaking discoveries and help others through his knowledge.\n- If Rhys possesses expertise and publishes research, then he makes groundbreaking discoveries.\n\nAdded rules:\n- If Rhys is passionate about minerals, then he helps others through his knowledge.\n- If Rhys helps others through his knowledge, then he does not make groundbreaking discoveries.",
+      "question": "Does the context entail the conclusion 'Rhys makes groundbreaking discoveries.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Rhys is given as passionate_about_minerals and there is a rule passionate_about_minerals -> helps_others, so helps_others holds. There is a rule helps_others -> \u00acmakes_groundbreaking_discoveries, so \u00acmakes_groundbreaking_discoveries is entailed. No current rule derives makes_groundbreaking_discoveries (the rules that did so were removed), hence the statement 'Rhys makes groundbreaking discoveries.' is not entailed (in fact its negation is entailed).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1373
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Rhys lives with purpose, then he is passionate about minerals.\n\nAdded facts:\n- Rhys helps others through his knowledge.",
+      "question": "Does the context entail the conclusion 'Rhys makes groundbreaking discoveries.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context includes the fact that Rhys helps others through his knowledge. There is a rule (helps_others -> \u00acmakes_groundbreaking_discoveries), so \u00acmakes_groundbreaking_discoveries is entailed. The earlier rules that would have derived makes_groundbreaking_discoveries have been removed, and no remaining rule derives makes_groundbreaking_discoveries. Thus the conclusion 'Rhys makes groundbreaking discoveries.' is not entailed (its negation is entailed).",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1617
+    }
+  ]
+}

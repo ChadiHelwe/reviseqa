@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit",
+    "chain_index": 176,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Babe gets enough rest.\nBabe does not sing beautifully.\nBabe is a social bird.\nIf Babe stays healthy and gets enough rest, then she sings beautifully.\nIf a bird finds food, then it stays healthy.\nAny bird that follows its instinct or has good memory can find food.\nAll birds that migrate seasonally follow their instinct.\nBabe either defends her home or migrates seasonally, but not both.\nAny bird that defends its home is territorial.\nBabe is either territorial or forms a flock, but not both.\nIf Babe is a social bird, then she either forms a flock or has a mate, but not both.\nEvery bird that has a mate builds a nest.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Babe gets enough rest. Babe does not sing beautifully.. If Babe stays healthy and gets enough rest, then she sings beautifully.. Therefore, Babe does not stay healthy.. Babe does not stay healthy.. If a bird finds food, then it stays healthy.. Therefore, Babe cannot find food.. Babe cannot find food.. Any bird that follows its instinct or has good memory can find food.. Therefore, Babe does not follow her instinct.. Babe does not follow her instinct.. All birds that migrate seasonally follow their instinct.. Therefore, Babe does not migrate seasonally.. Babe does not migrate seasonally.. Babe either defends her home or migrates seasonally, but not both.. Therefore, Babe defends her home.. Babe defends her home.. Any bird that defends its home is territorial.. Therefore, Babe is territorial.. Babe is territorial.. Babe is either territorial or forms a flock, but not both.. Therefore, Babe does not form a flock.. Babe is a social bird. Babe does not form a flock.. If Babe is a social bird, then she either forms a flock or has a mate, but not both.. Therefore, Babe has a mate.. Babe has a mate.. Every bird that has a mate builds a nest.. Therefore, Babe does not build a nest..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Babe stays healthy and Babe gets enough rest, then she sings beautifully.\n\nAdded rules:\n- Either Babe does not stay healthy, or Babe does not get enough rest, or Babe sings beautifully.\n\nAdded facts:\n- Babe does not stay healthy.\n- Babe does not find food.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given facts: Babe gets enough rest, Babe does not sing beautifully, Babe is social, Babe does not stay healthy, Babe does not find food. From (followsInstinct or goodMemory) -> find and not find, infer not followInstinct and not goodMemory. From migrate -> followInstinct and not followInstinct, infer not migrate. From exclusive (defendsHome xor migrates) and not migrate, infer defendsHome. DefendsHome -> territorial, so Babe is territorial. From exclusive (territorial xor formsFlock) and territorial, infer not formsFlock. From social and exclusive (formsFlock xor hasMate) and not formsFlock, infer hasMate. hasMate -> buildsNest, so Babe builds a nest. Therefore the context does not entail 'Babe does not build a nest.' (indeed it entails the opposite).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 498
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Babe is a social bird and Babe does not form a flock, then Babe has a mate.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Facts: Babe gets enough rest, Babe does not sing beautifully, Babe is social, Babe does not stay healthy, Babe does not find food. Rules: (followsInstinct or goodMemory) -> findsFood; migrate -> followsInstinct; (defendHome xor migrate); defendHome -> territorial; (territorial xor formsFlock); social and not formsFlock -> hasMate (added); hasMate -> buildsNest. From not findsFood and (followsInstinct or goodMemory) -> findsFood infer not followsInstinct and not goodMemory. From not followsInstinct and migrate -> followsInstinct infer not migrate. From (defendHome xor migrate) and not migrate infer defendHome. From defendHome -> territorial infer territorial. From (territorial xor formsFlock) and territorial infer not formsFlock. From social and not formsFlock and the added rule infer hasMate. From hasMate -> buildsNest infer Babe builds a nest. Thus the context entails that Babe builds a nest, so it does not entail 'Babe does not build a nest.'",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 780
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Babe does not stay healthy.\n- Babe does not find food.\n\nRemoved rules:\n- If Babe is a social bird and Babe does not form a flock, then Babe has a mate.\n\nAdded rules:\n- For all x, if x builds a nest, then x has a mate.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: Babe gets enough rest; Babe does not sing beautifully; Babe is social. Rules: (1) \u00achealthy \u2228 \u00acgetsEnoughRest \u2228 sings (disjunction). (2) findFood \u2192 healthy. (3) (followsInstinct \u2228 goodMemory) \u2192 findFood. (4) migrate \u2192 followsInstinct. (5) defendHome xor migrate. (6) defendHome \u2192 territorial. (7) territorial xor formsFlock. (8) social \u2192 (formsFlock xor hasMate). (9) hasMate \u2194 buildsNest (both directions, since hasMate \u2192 buildsNest from original and buildsNest \u2192 hasMate was just added). From (1) together with getsEnoughRest (true) and sings (false) we must have \u00achealthy. From \u00achealthy and (2) contrapositive we get \u00acfindFood. From \u00acfindFood and (3) contrapositive we get \u00acfollowsInstinct and \u00acgoodMemory, hence \u00acfollowsInstinct. From \u00acfollowsInstinct and (4) contrapositive we get \u00acmigrate. From defendHome xor migrate and \u00acmigrate we get defendHome. From defendHome \u2192 territorial we get territorial. From territorial xor formsFlock and territorial we get \u00acformsFlock. From social and (formsFlock xor hasMate) and \u00acformsFlock we get hasMate. From hasMate \u2194 buildsNest we get buildsNest. Therefore the context entails that Babe builds a nest, so it does not entail 'Babe does not build a nest.'",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1072
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all x, x has a mate if and only if x builds a nest.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: Babe gets enough rest, Babe does not sing, Babe is social. From the disjunction (\u00achealthy \u2228 \u00acgetsEnoughRest \u2228 sings) and getsEnoughRest=true, sings=false, infer \u00achealthy. From findFood\u2192healthy contrapositive infer \u00acfindFood. From (followsInstinct \u2228 goodMemory)\u2192findFood contrapositive infer \u00acfollowsInstinct and \u00acgoodMemory. From migrate\u2192followsInstinct contrapositive infer \u00acmigrate. From (defendHome xor migrate) and \u00acmigrate infer defendHome. From defendHome\u2192territorial infer territorial. From (territorial xor formsFlock) and territorial infer \u00acformsFlock. From social and (formsFlock xor hasMate) and \u00acformsFlock infer hasMate. From hasMate\u2192buildsNest (and the added equivalence) infer buildsNest. Thus the context entails that Babe builds a nest, so it does not entail \u2018Babe does not build a nest.\u2019",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1522
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Babe either defends her home or migrates seasonally.\n- It is not the case that Babe both defends her home and migrates seasonally.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Facts: Babe gets enough rest; Babe does not sing beautifully; Babe is social. Rules include: (\u00achealthy \u2228 \u00acgetsEnoughRest \u2228 sings), findFood\u2192healthy, (followsInstinct \u2228 goodMemory)\u2192findFood, migrate\u2192followsInstinct, defendHome xor migrate, defendHome\u2192territorial, territorial xor formsFlock, social\u2192(formsFlock xor hasMate), and hasMate\u2194buildsNest. From the disjunction and getsEnoughRest=true and sings=false infer \u00achealthy. From \u00achealthy and findFood\u2192healthy infer \u00acfindFood. From \u00acfindFood and (followsInstinct \u2228 goodMemory)\u2192findFood infer \u00acfollowsInstinct and \u00acgoodMemory, hence \u00acmigrate via migrate\u2192followsInstinct. From defendHome xor migrate and \u00acmigrate infer defendHome, so territorial, so \u00acformsFlock. From social and the exclusive (formsFlock xor hasMate) and \u00acformsFlock infer hasMate. From hasMate\u2194buildsNest infer buildsNest. Thus the context entails that Babe builds a nest, so it does not entail 'Babe does not build a nest.'",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1813
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- For all x, if x migrates seasonally, then x follows its instinct.\n\nAdded facts:\n- Babe migrates seasonally and Babe does not follow her instinct.\n- Babe is not territorial.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: getsEnoughRest, \u00acsings, social, migrates, \u00acfollowsInstinct, \u00acterritorial. Rules: (\u00achealthy \u2228 \u00acgetsEnoughRest \u2228 sings); findFood\u2192healthy; (followsInstinct \u2228 goodMemory)\u2192findFood; (defendHome xor migrate); defendHome\u2192territorial; (territorial xor formsFlock); social\u2192(formsFlock xor hasMate); hasMate \u2194 buildsNest. From getsEnoughRest and \u00acsings and the disjunction infer \u00achealthy. From findFood\u2192healthy contrapositive infer \u00acfindFood. From \u00acfindFood and (followsInstinct \u2228 goodMemory)\u2192findFood contrapositive infer \u00acfollowsInstinct and \u00acgoodMemory (consistent with given \u00acfollowsInstinct). From defendHome xor migrate and migrates infer \u00acdefendHome. Given \u00acterritorial and (territorial xor formsFlock) we infer formsFlock. From social and (formsFlock xor hasMate) with formsFlock infer \u00achasMate. From hasMate \u2194 buildsNest infer \u00acbuildsNest. Thus the context entails 'Babe does not build a nest.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2160
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x is not territorial, then x does not defend its home.\n- For all x, if x does not find food, then x does not follow its instinct and x does not have good memory.\n- For all x, if x does not stay healthy, then x does not find food.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: Babe getsEnoughRest; \u00acsings; social; migrates; \u00acfollowsInstinct; \u00acterritorial; (defendHome xor migrate) given. Rules: (\u00achealthy \u2228 \u00acgetsEnoughRest \u2228 sings); findFood\u2192healthy; (followsInstinct \u2228 goodMemory)\u2192findFood; defendHome\u2192territorial; (territorial xor formsFlock); social\u2192(formsFlock xor hasMate); hasMate\u2194buildsNest; \u00acterritorial\u2192\u00acdefendHome; \u00acfindFood\u2192(\u00acfollowsInstinct \u2227 \u00acgoodMemory); \u00achealthy\u2192\u00acfindFood. From getsEnoughRest and \u00acsings and the disjunction infer \u00achealthy. From \u00achealthy and \u00achealthy\u2192\u00acfindFood infer \u00acfindFood. From \u00acfindFood and \u00acfindFood\u2192(\u00acfollowsInstinct \u2227 \u00acgoodMemory) infer \u00acfollowsInstinct and \u00acgoodMemory (consistent with given \u00acfollowsInstinct). From migrate=true and (defendHome xor migrate) infer \u00acdefendHome; also from \u00acterritorial\u2192\u00acdefendHome and \u00acterritorial we get \u00acdefendHome. From (territorial xor formsFlock) and \u00acterritorial infer formsFlock. From social and social\u2192(formsFlock xor hasMate) and formsFlock infer \u00achasMate. From hasMate\u2194buildsNest and \u00achasMate infer \u00acbuildsNest. Therefore the context entails 'Babe does not build a nest.'",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2514
+    }
+  ]
+}

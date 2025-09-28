@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 90,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kaizen is deceptive in his claims of illness.\nKaizen has strong emotions.\nKaizen takes risks.\nKaizen is resilient.\nKaizen is emotionally intelligent.\nKaizen works hard.\nKaizen is disciplined.\nKaizen is either passionate about his art or deceptive in his claims of illness, but not both.\nIf Kaizen has strong emotions, then he is either passionate or persuasive (but not both).\nIf Kaizen takes risks, then he is either confident or resilient (but not both).\nIf Kaizen is emotionally intelligent, then he is either persuasive or can manipulate others (but not both).\nIf Kaizen works hard, then he is either disciplined or successful, but not both.\nIf Kaizen is confident or has talent, then he can achieve success.\nIf Kaizen has talent or charisma (or both), then he can manipulate others.",
+      "question": "Does the context entail the conclusion 'Kaizen has charisma.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Kaizen has talent or charisma, or both, then he can manipulate others.\n\nAdded rules:\n- If Kaizen does not achieve success, then he has charisma.",
+      "question": "Does the context entail the conclusion 'Kaizen has charisma.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From WorksHard and the exclusive rule (disciplined XOR successful) together with the fact Kaizen is disciplined, Successful must be false. From TakesRisks and Resilient and the exclusive rule (confident XOR resilient), Confident is false. From (Confident OR Talent) -> Successful and Successful false, Talent must be false as well. From StrongEmotions and the exclusive rules with DeceptiveIllness, Passionate is false and Persuasive is true; from EmotionalIntelligence and that exclusive rule, ManipulateOthers is false. The added rule says \u00acSuccessful -> Charisma; since Successful is false, Charisma follows. Thus the context entails Kaizen has charisma.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 273
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Kaizen does not have charisma, then he achieves success.\n- If Kaizen does not achieve success, then he is not confident and he does not have talent.",
+      "question": "Does the context entail the conclusion 'Kaizen has charisma.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "WorksHard and Disciplined with the exclusive rule (Disciplined XOR Successful) yield Successful = false. From TakesRisks and Resilient with (Confident XOR Resilient) get Confident = false. StrongEmotions plus the XOR rule and the fact DeceptiveIllness = true yield Passionate = false and Persuasive = true; EmotionalIntelligence with (Persuasive XOR ManipulateOthers) then gives ManipulateOthers = false. The added rule (\u00acCharisma -> Successful) together with Successful = false makes \u00acCharisma impossible, so Charisma must be true. Therefore Kaizen has charisma.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 490
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Kaizen works hard, then he is either disciplined or achieves success, but not both.\n\nAdded rules:\n- If Kaizen is resilient, then he has talent.\n- If Kaizen achieves success, then he does not have charisma.",
+      "question": "Does the context entail the conclusion 'Kaizen has charisma.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "TakesRisks and the XOR (Confident XOR Resilient) with Resilient true force Confident = false. Resilient -> Talent gives Talent = true. But \u00acSuccessful -> \u00acTalent means Successful cannot be false when Talent is true, so Successful = true. The added rules give Successful -> \u00acCharisma and (together with the existing \u00acSuccessful -> Charisma and \u00acCharisma -> Successful) imply Charisma \u2194 \u00acSuccessful; hence Successful true implies Charisma = false. Therefore Kaizen does not have charisma, so the statement 'Kaizen has charisma.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 699
+    },
+    {
+      "step": 4,
+      "context": "Added facts:\n- Kaizen either achieves success or has charisma, but not both.",
+      "question": "Does the context entail the conclusion 'Kaizen has charisma.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From Resilient (given) and Resilient -> Talent, we get Talent. From \u00acSuccessful -> \u00acTalent (added) the contrapositive gives Talent -> Successful, so Successful holds. From Successful -> \u00acCharisma we get \u00acCharisma. Thus Charisma is false in all models, so the context does not entail 'Kaizen has charisma.'",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 934
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Kaizen is confident or has talent, then he achieves success.\n- If Kaizen does not achieve success, then he is not confident and he does not have talent.\n\nAdded rules:\n- If Kaizen is resilient, then he does not achieve success.",
+      "question": "Does the context entail the conclusion 'Kaizen has charisma.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Resilient is given and the added rule Resilient -> \u00acSuccessful makes Successful false. From the earlier added rule \u00acSuccessful -> Charisma, Charisma follows. No active rule forces Successful true, so Charisma is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1069
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- Kaizen achieves success if and only if he does not have charisma.\n\nAdded facts:\n- Kaizen achieves success or has charisma, or both.",
+      "question": "Does the context entail the conclusion 'Kaizen has charisma.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Resilient is a given fact. The context includes Resilient -> \u00acSuccessful, so Successful is false. The added biconditional Successful \u2194 \u00acCharisma (equivalently \u00acSuccessful -> Charisma) then yields Charisma true. Therefore Kaizen has charisma is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1216
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Kaizen is resilient, then he does not achieve success.\n\nAdded rules:\n- If Kaizen is resilient, then he achieves success.",
+      "question": "Does the context entail the conclusion 'Kaizen has charisma.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Resilient is true and the added rule Resilient -> Successful yields Successful. The rule Successful iff \u00acCharisma then gives \u00acCharisma, so Charisma is false. No active rule derives Charisma, hence 'Kaizen has charisma.' is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1348
+    }
+  ]
+}

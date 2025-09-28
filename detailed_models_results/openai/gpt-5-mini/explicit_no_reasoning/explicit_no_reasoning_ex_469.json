@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 267,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Addilynn does not face adversity.\nAddilynn does not gain recognition.\nAddilynn does not leave a lasting impact.\nAddilynn motivates others.\nAddilynn overcomes obstacles.\nAddilynn does not make history.\nIf a historical figure leads troops, they do not necessarily face adversity, and if they face adversity, they do not necessarily lead troops.\nEvery historical figure who makes strategic decisions either gains recognition or leaves a lasting impact (or both).\nIf Addilynn either makes strategic decisions or motivates others (but not both), then she exhibits leadership.\nAll historical figures who achieve success overcome obstacles and make history.\nEvery historical figure achieves success or earns respect.\nIf Addilynn leads troops, then she either exhibits leadership or shows courage, but not both.\nAddilynn shows courage or demonstrates bravery.\nFor all historical figures, if they demonstrate bravery, then they earn respect and inspire others.",
+      "question": "Does the context entail the conclusion 'Addilynn does not inspire others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, x leads troops if and only if x faces adversity.\n\nAdded rules:\n- For all x, x leads troops or x faces adversity.\n- For all x, it is not the case that x leads troops and x faces adversity.\n\nAdded facts:\n- Addilynn does not achieve success.\n- Addilynn earns respect.",
+      "question": "Does the context entail the conclusion 'Addilynn does not inspire others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From added rules: for any x leadsTroops(x) XOR facesAdversity(x). Given \u00acfacesAdversity(Addilynn), infer leadsTroops(Addilynn). From makesStrategicDecisions(Add) -> (gainRecognition or leaveLastingImpact) and facts \u00acgainRecognition and \u00acleaveLastingImpact, infer \u00acmakesStrategicDecisions(Addilynn) (modus tollens). The XOR condition (makesStrategicDecisions XOR motivatesOthers) with motivatesOthers(Addilynn) and \u00acmakesStrategicDecisions(Addilynn) yields leadership(Addilynn). From leadsTroops(Addilynn) -> (leadership XOR showsCourage) and leadership(Addilynn) we get \u00acshowsCourage(Addilynn). Given showsCourage(Addilynn) or demonstratesBravery(Addilynn) and \u00acshowsCourage(Addilynn), infer demonstratesBravery(Addilynn). Finally, demonstratesBravery(x) -> (earnsRespect(x) and inspiresOthers(x)) yields inspiresOthers(Addilynn). Thus the context entails that Addilynn does inspire others, so it does not entail \u201cAddilynn does not inspire others.\u201d",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 290
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Addilynn either makes strategic decisions or motivates others, but not both, then she exhibits leadership.\n\nAdded rules:\n- If Addilynn either makes strategic decisions or motivates others, but not both, then she does not exhibit leadership.\n- If Addilynn shows courage, then she does not inspire others.",
+      "question": "Does the context entail the conclusion 'Addilynn does not inspire others.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From added rules: for any x exactly one of leadsTroops(x) or facesAdversity(x) holds. Given \u00acfacesAdversity(Addilynn), infer leadsTroops(Addilynn). From makesStrategicDecisions(Addilynn) -> (gainRecognition or leaveLastImpact) and \u00acgainRecognition & \u00acleaveLastImpact, infer \u00acmakesStrategicDecisions(Addilynn). The XOR (makesStrategicDecisions XOR motivatesOthers) holds because motivatesOthers(Addilynn) is true and \u00acmakesStrategicDecisions(Addilynn) holds; by the added rule this yields \u00acleadership(Addilynn). From leadsTroops(Addilynn) -> (leadership XOR showsCourage) and \u00acleadership(Addilynn) we infer showsCourage(Addilynn). The new rule showsCourage(Addilynn) -> \u00acinspiresOthers(Addilynn) therefore yields \u00acinspiresOthers(Addilynn). The only rule that could make inspiresOthers(Addilynn) true is demonstratesBravery -> inspiresOthers, but demonstratesBravery would contradict the derived \u00acinspiresOthers when combined with showsCourage(Addilynn), so it cannot hold in any model of the theory; thus \u00acinspiresOthers(Addilynn) is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 664
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Addilynn either makes strategic decisions or motivates others, but not both, then she does not exhibit leadership.\n\nAdded rules:\n- If Addilynn either makes strategic decisions or motivates others, but not both, then she exhibits leadership.",
+      "question": "Does the context entail the conclusion 'Addilynn does not inspire others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acfacesAdversity and (leadsTroops \u2228 facesAdversity) together with \u00ac(leadsTroops \u2227 facesAdversity) we get leadsTroops(Addilynn). \u00acgainRecognition and \u00acleaveLastingImpact with makesStrategicDecisions \u2192 (gainRecognition \u2228 leaveLastingImpact) yield \u00acmakesStrategicDecisions. Given motivatesOthers and the XOR rule for Addilynn, she exhibits leadership. leadsTroops \u2192 (leadership XOR showsCourage) and leadership imply \u00acshowsCourage. From showsCourage \u2228 demonstratesBravery and \u00acshowsCourage we get demonstratesBravery, and demonstratesBravery \u2192 (earnsRespect \u2227 inspiresOthers) yields inspiresOthers. The rule showsCourage \u2192 \u00acinspiresOthers exists but its antecedent is false here, so it does not apply. Therefore \u00acinspiresOthers is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1054
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Addilynn leads troops, then she either exhibits leadership or shows courage, but not both.\n\nAdded rules:\n- If Addilynn leads troops, then she either exhibits leadership or shows courage.\n- If Addilynn leads troops, then it is not the case that she exhibits leadership and shows courage.\n\nAdded facts:\n- Addilynn leads troops.\n- Addilynn does not make strategic decisions.",
+      "question": "Does the context entail the conclusion 'Addilynn does not inspire others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acfacesAdversity and the rule (leadsTroops \u2228 facesAdversity) with \u00ac(leadsTroops \u2227 facesAdversity) we get leadsTroops(Addilynn). Given \u00acmakesStrategicDecisions and motivatesOthers, the XOR condition (makesStrategicDecisions XOR motivatesOthers) yields leadership(Addilynn). From leadsTroops \u2192 (leadership \u2228 showsCourage) together with the prohibition of both, leadership implies \u00acshowsCourage. With showsCourage \u2228 demonstratesBravery and \u00acshowsCourage we get demonstratesBravery(Addilynn). demonstratesBravery \u2192 (earnsRespect \u2227 inspiresOthers) then yields inspiresOthers(Addilynn). Thus the theory entails inspiresOthers(Addilynn), so it does not entail \u00acinspiresOthers.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1337
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Addilynn either makes strategic decisions or motivates others, but not both, then she exhibits leadership.\n\nAdded rules:\n- If Addilynn either makes strategic decisions or motivates others, but not both, then she does not exhibit leadership.",
+      "question": "Does the context entail the conclusion 'Addilynn does not inspire others.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "We have \u00acfacesAdversity, leadsTroops (from earlier additions), \u00acmakesStrategicDecisions and motivatesOthers. The XOR rule (makesStrategicDecisions XOR motivatesOthers) now entails leadership(Addilynn) since she motivates others and does not make strategic decisions. leadsTroops together with the rule forbidding both leadership and showsCourage implies \u00acshowsCourage. From (showsCourage \u2228 demonstratesBravery) and \u00acshowsCourage we get demonstratesBravery. demonstratesBravery \u2192 inspiresOthers yields inspiresOthers(Addilynn). Thus the theory entails that she does inspire others, so it does not entail \u201cAddilynn does not inspire others.\u201d",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1636
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Addilynn either makes strategic decisions or motivates others, but not both, then she does not exhibit leadership.\n\nAdded rules:\n- If Addilynn motivates others, then she exhibits leadership.",
+      "question": "Does the context entail the conclusion 'Addilynn does not inspire others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Addilynn motivates others (given). The new rule gives leadership(Addilynn). From \u00acfacesAdversity and the XOR (leadsTroops \u2228 facesAdversity with not both) we get leadsTroops(Addilynn). The leadsTroops rule (leadership \u2228 showsCourage, not both) plus leadership(Addilynn) yields \u00acshowsCourage(Addilynn). With (showsCourage \u2228 demonstratesBravery) and \u00acshowsCourage we infer demonstratesBravery(Addilynn). demonstratesBravery \u2192 inspiresOthers therefore gives inspiresOthers(Addilynn). No rule forcing \u00acinspiresOthers is present, so the context does not entail \u201cAddilynn does not inspire others.\u201d",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1876
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- Addilynn does not lead troops or Addilynn does not exhibit leadership or Addilynn does not show courage.\n- Addilynn does not demonstrate bravery or Addilynn earns respect and Addilynn inspires others.",
+      "question": "Does the context entail the conclusion 'Addilynn does not inspire others.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From earlier context we have motivates(Addilynn) and the rule motivates \u2192 leadership, so leadership(Addilynn). Also leads(Addilynn) holds. The new disjunction \u00acleads \u2228 \u00acleadership \u2228 \u00acshowsCourage with leads and leadership true yields \u00acshowsCourage. With showsCourage \u2228 demonstratesBravery and \u00acshowsCourage we infer demonstratesBravery. From demonstratesBravery \u2192 (earnsRespect \u2227 inspiresOthers) we get inspiresOthers(Addilynn). Thus the context entails that she does inspire others, so it does not entail \u201cAddilynn does not inspire others.\u201d",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2135
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+    "task_path": "explicit",
+    "chain_index": 125,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Leonardo does not pursue excellence.\nLeonardo is ambitious.\nLeonardo does not think critically.\nLeonardo is a perfectionist.\nLeonardo either values work-life balance or pursues excellence.\nLeonardo either values work-life balance or achieves success, but not both.\nIf Leonardo is ambitious, then he either sets lofty goals or thinks critically (but not both).\nIf Leonardo demands quality, then he will achieve success.\nIf Leonardo either sets lofty goals or demands quality (but not both), then he has high expectations.\nIf someone is a perfectionist, then they struggle with balance in their life.\nIf Leonardo has high expectations, then he struggles with balance and is detached from his passion.\nLeonardo is either dedicated to his passion or detached from his passion, but not both.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Leonardo does not pursue excellence.. Leonardo either values work-life balance or pursues excellence.. Therefore, Leonardo values work-life balance.. Leonardo values work-life balance.. Leonardo either values work-life balance or achieves success, but not both.. Therefore, Leonardo does not achieve success.. Leonardo is ambitious. Leonardo does not think critically.. If Leonardo is ambitious, then he either sets lofty goals or thinks critically (but not both).. Therefore, Leonardo sets lofty goals.. Leonardo does not achieve success.. If Leonardo demands quality, then he will achieve success.. Therefore, Leonardo does not demand quality.. Leonardo sets lofty goals. Leonardo does not demand quality.. If Leonardo either sets lofty goals or demands quality (but not both), then he has high expectations.. Therefore, Leonardo has high expectations.. Leonardo is a perfectionist.. If someone is a perfectionist, then they struggle with balance in their life.. Therefore, Leonardo struggles with balance.. Leonardo has high expectations. Leonardo struggles with balance.. If Leonardo has high expectations, then he struggles with balance and is detached from his passion.. Therefore, Leonardo is detached from his passion.. Leonardo is detached from his passion.. Leonardo is either dedicated to his passion or detached from his passion, but not both.. Therefore, Leonardo is not dedicated to his passion..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Leonardo demands quality, then he will achieve success.\n\nAdded rules:\n- If Leonardo does not achieve success, then he does not demand quality.\n\nAdded facts:\n- Leonardo values work-life balance.\n- Leonardo does not achieve success.\n- Leonardo struggles with balance in his life.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Leonardo values work-life balance (given). He does not achieve success (given). Therefore, via the added rule (\u00acS \u2192 \u00acQ), he does not demand quality. He is ambitious and does not think critically, so he must set lofty goals. Setting lofty goals and not demanding quality (only one of the two) implies he has high expectations. Having high expectations\u2014per the rule\u2014requires struggling with balance (already true) and being detached from his passion. Since he is either dedicated or detached from his passion (but not both), and he is detached, the conclusion 'Leonardo is not dedicated to his passion' follows directly.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 514
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Leonardo does not think critically.\n\nAdded facts:\n- Leonardo thinks critically.\n- Leonardo is not detached from his passion.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Leonardo is ambitious and now thinks critically (added fact), so he does not set lofty goals (via the 'ambitious' rule). Since he does not set lofty goals and the prior context establishes he does not demand quality (via \u00acS \u2192 \u00acQ), the 'high expectations' rule's condition is unmet. Therefore, he has no high expectations, so the rule about high expectations (struggling with balance + detachment) does not apply. The added fact 'Leonardo is not detached from his passion' now directly implies he *must* be dedicated (since the passion-states are mutually exclusive). Thus, the conclusion 'Leonardo is not dedicated to his passion' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1782
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Leonardo is not detached from his passion.\n\nRemoved rules:\n- If Leonardo does not achieve success, then he does not demand quality.\n\nAdded rules:\n- If Leonardo does not achieve success, then he demands quality.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Leonardo does not achieve success (from the fact that he values work-life balance and the sixth rule). The current rule (\u00acS \u2192 Q) compels him to demand quality. Since he thinks critically (added in a prior step), he cannot set lofty goals (via the ambitious rule), but he does demand quality. The 'high expectations' rule now applies (demand quality alone), triggering the conclusion that he struggles with balance and is detached. Given the mutually exclusive passion-states, and since he is detached, the context entails 'Leonardo is not dedicated to his passion.'",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3233
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Leonardo thinks critically.\n\nAdded rules:\n- If Leonardo is ambitious, then he either sets lofty goals or does not think critically (but not both).\n- If Leonardo has high expectations, then he struggles with balance and is not detached from his passion.\n\nAdded facts:\n- Leonardo does not think critically.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Leonardo is ambitious and does not think critically (added fact), so via the new ambitious rule (XOR: lofty goals or not think critical), he must *not* set lofty goals. He does not achieve success (from work-life balance logic), so per the earlier rule (\u00acS \u2192 Q), he *does* demand quality. The 'high expectations' rule (lofty goals XOR quality) thus applies (since only demand quality is true). Therefore, he has high expectations. The added rule states that high expectations \u2192 not detached from passion. Since he is either dedicated or detached, and he is not detached, the context entails he is *dedicated*. Therefore, the conclusion 'Leonardo is not dedicated to his passion' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 5196
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Leonardo has high expectations, then he struggles with balance and is not detached from his passion.\n\nAdded rules:\n- If Leonardo struggles with balance in his life, then he is detached from his passion.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Leonardo is a perfectionist (original fact), which means he struggles with balance. The new rule (struggles with balance \u2192 detached from passion) now applies, making him detached. Since he is either dedicated or detached (but not both), and he is detached, the context entails he is not dedicated. The prior reliance on 'high expectations' is irrelevant now, as the new rule directly links his balance struggles to his detachment. Therefore, the conclusion 'Leonardo is not dedicated to his passion' is true.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 6867
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Leonardo has high expectations and Leonardo is not dedicated to his passion.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added fact explicitly states that 'Leonardo is not dedicated to his passion.' Since the conclusion is a direct restatement of this fact, the context trivially entails the conclusion. No additional reasoning is required beyond confirming that the fact is present in the context.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 7752
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Leonardo has high expectations and Leonardo is not dedicated to his passion.\n\nRemoved rules:\n- If Leonardo struggles with balance in his life, then he is detached from his passion.\n\nAdded rules:\n- If Leonardo struggles with balance in his life, then he is not detached from his passion.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Leonardo is a perfectionist (original fact), which implies he struggles with balance. The new rule (struggles with balance \u2192 not detached) now applies, making him *not* detached. Since he is either dedicated or detached (but not both), and he is not detached, he *must* be dedicated. Therefore, the conclusion 'Leonardo is not dedicated to his passion' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 8087
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 180,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jack does not seek support.\nJack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both).\nIf someone is emotionally resilient, then they will thrive in life.\nIf Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Jack does not seek support.\n\nAdded rules:\n- If Jack is resourceful, then he overcomes adversity.\n- If Jack seeks support, then he is mentally tough.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Jack is resourceful (given). Added rule: resourceful -> overcomes adversity, so Jack overcomes adversity. From (overcomes -> (positive XOR resourceful)) and resourceful true, Jack cannot have a positive attitude, so positive=false. From (positive XOR seeks_support) and positive=false, seeks_support must be true. Added rule: seeks_support -> mentally_tough, so Jack is mentally tough. From (athletically_abled XOR mentally_tough) and mentally_tough true, athletically_abled is false. From (athletically_abled XOR physically_disabled) and athletically_abled false, physically_disabled must be true. Therefore the context entails that Jack is physically disabled.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 226
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Jack overcomes adversity.\n- Jack does not have a positive attitude.\n- Jack seeks support.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the context: Jack is resourceful (original), Jack overcomes adversity (added fact), Jack does not have a positive attitude (added fact), and Jack seeks support (added fact). The exclusive-or constraint (positive XOR seeks_support) is satisfied since seeks_support is true and positive is false. The rule resourceful -> overcomes is satisfied (resourceful true). The rule seeks_support -> mentally_tough yields mentally_tough true. From (athletically_abled XOR mentally_tough) and mentally_tough true, athletically_abled must be false. From (athletically_abled XOR physically_disabled) and athletically_abled false, physically_disabled must be true. Therefore the context entails that Jack is physically disabled.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 452
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Jack overcomes adversity, then he has a positive attitude if and only if he is not resourceful.\n\nAdded rules:\n- If Jack overcomes adversity, then if he has a positive attitude, he is not resourceful.\n- If Jack overcomes adversity, then if he is not resourceful, he has a positive attitude.\n- If Jack does not overcome adversity, then he is not resourceful.\n\nAdded facts:\n- Jack is not emotionally resilient.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Current facts include: Jack is resourceful; Jack overcomes adversity; Jack does not have a positive attitude; Jack seeks support; Jack is not emotionally resilient. From seeks_support -> mentally_tough we get mentally_tough. From (athletically_abled XOR mentally_tough) and mentally_tough true, athletically_abled is false. From (athletically_abled XOR physically_disabled) and athletically_abled false, physically_disabled must be true. Therefore the context entails that Jack is physically disabled.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 669
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Jack is not mentally tough, then he does not seek support.\n- If Jack is emotionally resilient, then he thrives in life.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given the facts, Jack seeks support and the rule seeks_support -> mentally_tough (and its contrapositive not mentally_tough -> not seeks_support), Jack is mentally tough. From (athletically_abled XOR mentally_tough) and mentally_tough true, Jack is not athletically abled. From (athletically_abled XOR physically_disabled) and athletically_abled false, Jack must be physically disabled. No rule or fact contradicts this, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 915
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\n\nAdded rules:\n- If Jack is mentally tough and not emotionally resilient, then he overcomes adversity.\n- If Jack is not mentally tough and is emotionally resilient, then he overcomes adversity.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Seeks_support -> mentally_tough and fact Jack seeks support imply Jack is mentally tough. From (athletically_abled XOR mentally_tough) and mentally_tough true, Jack is not athletically abled. From (athletically_abled XOR physically_disabled) and athletically_abled false, Jack must be physically disabled. No available rule/fact contradicts this, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1094
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Jack overcomes adversity, then he does not have a positive attitude if and only if he is resourceful.\n- Jack is mentally tough if and only if he is physically disabled.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: Jack is resourceful, overcomes adversity, does not have a positive attitude, and seeks support. From seeks_support -> mentally_tough we get mentally_tough. The added equivalence mentally_tough <-> physically_disabled yields physically_disabled. The XOR constraints (athletically_abled XOR mentally_tough and athletically_abled XOR physically_disabled) are consistent with mentally_tough and physically_disabled being true (athletically_abled false). The other rules (overcomes -> resourceful iff not positive, etc.) are satisfied and do not contradict this. Hence the context entails that Jack is physically disabled.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1288
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Jack seeks support, then he is mentally tough.\n\nAdded rules:\n- If Jack seeks support, then he is not mentally tough.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Current facts include: Jack is resourceful, Jack overcomes adversity, Jack does not have a positive attitude, Jack seeks support, and Jack is not emotionally resilient. The added rule 'seeks_support -> not mentally_tough' yields not mentally_tough. There is also the rule 'not mentally_tough -> not seeks_support', which conflicts with the fact seeks_support (inconsistency), but regardless: from not mentally_tough and the XOR 'athletically_abled XOR mentally_tough' we infer athletically_abled. From 'athletically_abled XOR physically_disabled' and athletically_abled we infer not physically_disabled. Also the equivalence 'mentally_tough \u2194 physically_disabled' gives not mentally_tough -> not physically_disabled. No rule or fact supports physically_disabled being true. Therefore the context entails that Jack is not physically disabled, so it does not entail 'Jack is physically disabled.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1497
+    }
+  ]
+}

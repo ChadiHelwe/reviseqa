@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 200,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Yosef is not academically accomplished.\nYosef does not influence his peers.\nYosef has good role models.\nYosef does not become a leader.\nYosef pursues research.\nYosef does not share knowledge.\nIf someone publishes research papers, then they are academically accomplished.\nEither Yosef publishes research papers or he mentors students, but not both.\nIf Yosef either mentors students or has expertise (but not both), then he influences his peers.\nIf someone contributes to society and has good role models, then they can become a leader.\nIf someone pursues research and leaves a legacy, then they contribute to society.\nIf someone makes a lasting impact, then they will leave a legacy.\nIf someone inspires others, then they have expertise and share knowledge.\nIf Yosef is dedicated to conservation or passionate about wildlife, then he will inspire others.",
+      "question": "Does the context entail the conclusion 'If Yosef is dedicated to conservation, then he will make a lasting impact and earn recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Yosef does not share knowledge.\n\nRemoved rules:\n- For all x, if x inspires others, then x has expertise and x shares knowledge.\n\nAdded rules:\n- If Yosef mentors students, then Yosef is dedicated to conservation.",
+      "question": "Does the context entail the conclusion 'If Yosef is dedicated to conservation, then he will make a lasting impact and earn recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From (publishes -> academically accomplished) and the fact Yosef is not academically accomplished, we get \u00ac(publishes). With the exclusive-or (publishes XOR mentors), Yosef must mentor students. The added rule (mentors -> dedicated) yields that Yosef is dedicated to conservation (so the antecedent holds). Although dedicated -> inspires still exists, the rule (inspires -> expertise \u2227 shares knowledge) was removed, and there is no rule from inspiring or from dedication that yields \u201cmakes a lasting impact\u201d or anything about \u201cearn recognition.\u201d In particular \u201cearn recognition\u201d does not appear anywhere, so the consequent (lasting impact \u2227 earn recognition) is not entailed. Therefore the conditional is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 300
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x publishes research papers, then x is academically accomplished.\n\nAdded rules:\n- For all x, if x is not academically accomplished, then x does not publish research papers.\n\nAdded facts:\n- Yosef does not publish research papers.\n- Yosef mentors students.\n- Yosef is dedicated to conservation.",
+      "question": "Does the context entail the conclusion 'If Yosef is dedicated to conservation, then he will make a lasting impact and earn recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Though Yosef is now given as dedicated to conservation, and dedication implies he will inspire others, the rule linking inspiring to expertise and sharing knowledge was previously removed, and there are no rules that derive making a lasting impact from inspiring (or from dedication). Moreover, there is no rule or fact about \u201cearn recognition\u201d anywhere in the knowledge base. Therefore the consequent (make a lasting impact and earn recognition) is not entailed, so the conditional is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 563
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Yosef is dedicated to conservation.\n\nAdded facts:\n- Yosef mentors students and Yosef is not dedicated to conservation.",
+      "question": "Does the context entail the conclusion 'If Yosef is dedicated to conservation, then he will make a lasting impact and earn recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly includes the fact that Yosef is not dedicated to conservation. Therefore the antecedent of the conditional is impossible in the knowledge base, so the implication is vacuously true (in every model of the KB the antecedent fails). Hence the conditional is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 790
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Yosef mentors students and Yosef is not dedicated to conservation.\n\nAdded facts:\n- Either Yosef does not mentor students, or Yosef is dedicated to conservation.",
+      "question": "Does the context entail the conclusion 'If Yosef is dedicated to conservation, then he will make a lasting impact and earn recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acacademically accomplished and the rule \u00acAcad -> \u00acpubl, plus the XOR (publ XOR mentors), \u00acpubl entails Yosef mentors. The rule mentors -> dedicated then yields Yosef is dedicated, so the antecedent holds in all models. There is no rule deriving \u201cmake a lasting impact\u201d (MakesImpact) or \u201cearn recognition\u201d from dedicated or any consequences (the inspires->expertise&share rule was removed), and \u201cearn recognition\u201d does not appear anywhere. Thus the consequent is not entailed while the antecedent is, so the conditional is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 934
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- For all x, if x contributes to society and x has good role models, then x becomes a leader.\n\nAdded facts:\n- Yosef makes a lasting impact.\n- Yosef earns recognition.",
+      "question": "Does the context entail the conclusion 'If Yosef is dedicated to conservation, then he will make a lasting impact and earn recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Both atoms in the consequent \u2014 \"Yosef makes a lasting impact\" and \"Yosef earns recognition\" \u2014 are asserted as facts in the context. Therefore in every model of the knowledge base those two propositions are true, so whenever the antecedent \"Yosef is dedicated to conservation\" holds the consequent also holds. Hence the implication is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1158
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Yosef makes a lasting impact.\n\nAdded facts:\n- Yosef does not make a lasting impact.",
+      "question": "Does the context entail the conclusion 'If Yosef is dedicated to conservation, then he will make a lasting impact and earn recognition.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acacademically accomplished we have \u00acpubl and the exclusive-or (publ XOR mentors) forces mentors. With mentors and the rule mentors -> dedicated (and the added disjunction which also yields dedicated when mentors holds) the antecedent (dedicated) is entailed. EarnRecognition is asserted as a fact, but MakesImpact is explicitly negated (\u00acMakesImpact). Thus the consequent (MakesImpact \u2227 EarnRecognition) is false while the antecedent is true, so the implication is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1334
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Either Yosef does not mentor students, or Yosef is dedicated to conservation.\n\nAdded rules:\n- Either Yosef does not mentor students, or Yosef is not dedicated to conservation.",
+      "question": "Does the context entail the conclusion 'If Yosef is dedicated to conservation, then he will make a lasting impact and earn recognition.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From earlier additions we have \u00acpubl and the XOR (publ XOR mentors), so Yosef mentors. The rule added early (mentors -> dedicated) yields Dedicated, while the currently added rule (\u00acmentors \u2228 \u00acdedicated) is equivalent to (mentors -> \u00acdedicated) and yields \u00acDedicated. Thus both Dedicated and \u00acDedicated are derivable, making the KB inconsistent (no models). In classical/model-theoretic entailment an inconsistent KB entails every formula, so the conditional is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1522
+    }
+  ]
+}

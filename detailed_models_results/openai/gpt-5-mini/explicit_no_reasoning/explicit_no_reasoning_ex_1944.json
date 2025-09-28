@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-5-mini",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 56,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Felicity values feedback.\nFelicity is not open-minded.\nFelicity does not achieve success.\nFelicity avoids the spotlight.\nFelicity does not stay grounded.\nFelicity is passionate.\nFelicity does not pursue excellence.\nFelicity is not innovative.\nIf Felicity either embraces collaboration or values feedback (but not both), then she is open-minded.\nFelicity either sets goals or embraces collaboration, but not both.\nIf Felicity either sets goals or has perseverance (but not both), then she achieves success.\nEveryone who either remains humble or avoids the spotlight (but not both) stays grounded.\nFelicity either earns recognition or remains humble, but not both.\nIf Felicity is passionate, then she is either curious or has perseverance (but not both).\nIf Felicity either pursues excellence or makes breakthroughs (but not both), then she earns recognition.\nAnyone who has curiosity and is dedicated can make breakthroughs.\nIf Felicity is either dedicated or brilliant (but not both), then she is innovative.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Everyone who has curiosity and is dedicated can make breakthroughs.\n\nAdded rules:\n- Everyone who has curiosity and does not make breakthroughs is dedicated.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From facts: Felicity values feedback and is not open-minded. Rule (embraces collaboration XOR values feedback) -> open-minded and VF true with ~open-minded forces embraces collaboration true. Collaboration XOR sets goals gives goals false. (sets goals XOR perseverance) -> success and ~success with goals false forces perseverance false. Passion -> (curious XOR perseverance) gives curiosity true. Avoids spotlight and ~stays grounded with (humble XOR avoids spotlight) -> stays grounded forces remains humble true. (earns recognition XOR remains humble) gives earns recognition false. (pursues excellence XOR makes breakthroughs) -> earns recognition with pursues excellence false and earns recognition false forces makes breakthroughs false. Added rule (curiosity AND not breakthroughs) -> dedicated yields dedicated true. Now rule (dedicated XOR brilliant) -> innovative and we have ~innovative, so the antecedent must be false: not(dedicated XOR brilliant). With dedicated true this forces brilliant true. Thus the theory entails Felicity is brilliant, so the claim \"Felicity is not brilliant.\" is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 317
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Felicity either embraces collaboration or values feedback, but not both, then she is open-minded.\n\nAdded rules:\n- If Felicity has perseverance, then she is not dedicated.\n\nAdded facts:\n- Felicity does not have curiosity.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Start from facts: Felicity is passionate, does not have curiosity, does not achieve success, avoids the spotlight, does not stay grounded, does not pursue excellence, and is not innovative. From passionate and (curious XOR perseverance) with curiosity false, perseverance must be true. Added rule perseverance -> not dedicated gives dedicated = false. The rule (sets_goals XOR perseverance) -> success and success = false force the antecedent to be false; with perseverance true that requires sets_goals = true (hence embraces_collaboration = false by sets_goals XOR embraces_collaboration). avoids_spotlight true together with rule (remains_humble XOR avoids_spotlight) -> stays_grounded and stays_grounded = false forces remains_humble = true. Then (earns_recognition XOR remains_humble) gives earns_recognition = false. pursues_excellence = false and earns_recognition = false force makes_breakthroughs = false (to avoid making the antecedent of (pursues_excellence XOR makes_breakthroughs) -> earns_recognition true). Finally, (dedicated XOR brilliant) -> innovative and innovative = false mean the antecedent must be false; with dedicated = false this yields brilliant = false. Thus the context entails that Felicity is not brilliant.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 613
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Felicity either sets goals or has perseverance, but not both, then she achieves success.\n\nAdded rules:\n- If Felicity is dedicated, then she does not have perseverance.\n- If Felicity is not innovative, then it is not the case that she is either dedicated or brilliant, but not both.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: VF, ~Open, ~Success, AvoidSpot, ~Grounded, Pass, ~PursueEx, ~Innovative. From (Collab XOR VF)->Open and VF & ~Open we get Collab = True. From SetsGoals XOR Collab we get SetsGoals = False. From (Humble XOR AvoidSpot)->Grounded and AvoidSpot & ~Grounded we get Humble = True. From EarnRec XOR Humble we get EarnRec = False. From (PursueEx XOR MakeBreak)->EarnRec with PursueEx = False and EarnRec = False we get MakeBreak = False. From Pass -> (Curious XOR Perseverance) we have (Curious XOR Perseverance)=True, so either (Curious & ~Perseverance) or (~Curious & Perseverance). From (Dedicated XOR Brilliant)->Innovative and ~Innovative we get ~(Dedicated XOR Brilliant) so Dedicated and Brilliant have the same truth value (both true or both false). From (Curious & Dedicated)->MakeBreak and MakeBreak = False we get ~(Curious & Dedicated) (so not both). Consider cases: (1) Curious = True then Dedicated must be False (to avoid Curious&Dedicated), hence Brilliant = False. (2) Curious = False then Perseverance = True; with Added rule Dedicated -> ~Perseverance and Perseverance = True we get Dedicated = False, hence Brilliant = False. In all possible cases Brilliant is false, so the context entails 'Felicity is not brilliant.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 967
+    },
+    {
+      "step": 4,
+      "context": "Added facts:\n- Felicity remains humble.\n- Felicity does not earn recognition.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given facts: VF, ~Open, ~Success, AvoidSpot, ~Grounded, Pass, ~PursueEx, ~Innovative, Humble, ~EarnRec. From (Collab XOR VF)->Open and VF & ~Open we must have Collab = true. From SetsGoals XOR Collab we get SetsGoals = false. From (SetsGoals XOR Perseverance)->Success and ~Success with SetsGoals = false we get Perseverance = false. From Pass -> (Curious XOR Perseverance) and Perseverance = false we get Curious = true. From (PursueEx XOR MakeBreak)->EarnRec with ~PursueEx and ~EarnRec we get MakeBreak = false. From (Curious AND Dedicated)->MakeBreak, Curious = true and MakeBreak = false imply Dedicated = false. From ~Innovative and (Dedicated XOR Brilliant)->Innovative we get \u00ac(Dedicated XOR Brilliant), so Dedicated and Brilliant have same truth value. With Dedicated = false it follows Brilliant = false. Therefore the context entails that Felicity is not brilliant.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1414
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Felicity does not have curiosity.\n\nAdded facts:\n- Felicity has curiosity.\n- Felicity does not make breakthroughs.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "Facts: values_feedback, ~open, ~success, avoids_spotlight, ~grounded, passionate, ~pursue_excellence, ~innovative, humble, ~earns_recognition, curious, ~makes_breakthroughs. From (collab XOR values_feedback)->open and ~open with values_feedback true we get collab = true. From sets_goals XOR collab we get sets_goals = false. From (sets_goals XOR perseverance)->success and ~success we get perseverance = false. From passionate -> (curious XOR perseverance) with perseverance = false we get curious = true (consistent). From (humble XOR avoids_spotlight)->grounded and ~grounded with avoids_spotlight true we get humble = true (given). From earns_recognition XOR humble we get earns_recognition = false (given). From (pursue_excellence XOR makes_breakthroughs)->earns_recognition and earns_recognition = false with pursue_excellence = false we get makes_breakthroughs = false (given). From (curious AND dedicated)->makes_breakthroughs and makes_breakthroughs = false with curious = true we get dedicated = false. From ~innovative and (dedicated XOR brilliant)->innovative we get \u00ac(dedicated XOR brilliant), so dedicated and brilliant have same truth value; with dedicated = false it follows brilliant = false. Hence the context entails Felicity is not brilliant.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1708
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Felicity is not innovative, then she is dedicated if and only if she is brilliant.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the current facts: Felicity is curious and does not make breakthroughs, and Felicity is not innovative. The added rule says curiosity AND not-makes-breakthroughs => dedicated, so Felicity is dedicated. The added rule 'if not innovative then dedicated iff brilliant' (i.e. dedicated == brilliant) together with not-innovative yields that dedicated and brilliant have the same truth value. Since dedicated is true, brilliant must also be true. Therefore 'Felicity is not brilliant' is false (the context entails Felicity is brilliant, not that she is not brilliant).",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2071
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Everyone who has curiosity and does not make breakthroughs is dedicated.\n\nAdded facts:\n- Felicity is not dedicated.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the base facts we still have Felicity is not innovative. The added rule says: if not innovative then (dedicated iff brilliant). The new fact says Felicity is not dedicated. From 'not dedicated' plus 'dedicated iff brilliant' we get that Felicity is not brilliant. Hence the context entails 'Felicity is not brilliant.'",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2274
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 263,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Gemma has a large wingspan.\nGemma does not travel far for food.\nGemma does not fly long distances.\nGemma does not hibernate during winter.\nGemma lives in caves.\nGemma has a specialized noseleaf.\nGemma has good navigation skills.\nFor all bats, if they have a large wingspan and migrate seasonally, then they travel far for food.\nIf Gemma either flies long distances or roosts in groups (but not both), then she migrates seasonally.\nGemma either roosts in groups or is nocturnal, but not both.\nIf Gemma is nocturnal, then she has both acute hearing and keen vision.\nGemma either hibernates during winter or has thick fur, but not both.\nIf Gemma lives in caves, then she either has large ears or thick fur (but not both).\nIf Gemma emits high frequency sounds, then she either has acute hearing or has a specialized noseleaf (but not both).\nEvery bat that can find food in darkness either has large ears or emits high frequency sounds (or both).\nFor all bats, if a bat has good navigation skills and uses echolocation, then it can find food in darkness.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Either Gemma roosts in groups or is nocturnal, but not both.\n- If Gemma is nocturnal, then she has both acute hearing and keen vision.\n\nAdded rules:\n- Either Gemma roosts in groups or she is nocturnal, and it is not the case that Gemma both roosts in groups and is nocturnal.\n- If it is not the case that Gemma has both acute hearing and keen vision, then she is not nocturnal.\n\nAdded facts:\n- Gemma does not roost in groups.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Gemma does not roost in groups, so she must be nocturnal. This means she has acute hearing and keen vision. To use echolocation, she needs good navigation skills (which she has) and to find food in darkness. Finding food in darkness requires large ears or high-frequency sounds. She can't have large ears (has thick fur from the winter non-hibernation rule). Thus, high-frequency sounds are needed. However, emitting high-frequency sounds requires having acute hearing or a noseleaf, but not both. She has both (from being nocturnal and her noseleaf), which violates the rule. Hence, she cannot use high-frequency sounds for echolocation, leading to a contradiction. Therefore, she does not use echolocation.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 349
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Gemma does not fly long distances.\n\nAdded rules:\n- For all x, if x has a large wingspan and does not travel far for food, then x uses echolocation.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The new rule states that if a bat has a large wingspan and does not travel far for food, then it uses echolocation. Gemma satisfies both conditions (large wingspan and not traveling far for food), directly entailing that she uses echolocation regardless of previous contradictions with other rules about high-frequency sounds or noseleaf interactions. The added rule takes precedence here.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1646
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x has a large wingspan and does not travel far for food, then x uses echolocation.\n\nAdded facts:\n- Gemma does not have large ears.\n- Gemma does not emit high frequency sounds.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Gemma lacks large ears and high-frequency sound emission, making it impossible for her to find food in darkness. Since she has good navigation skills, if she used echolocation, this would imply she can find food in darkness (contradicting the rule that 'can find food in darkness' requires large ears or high-frequency sounds). The only way to resolve this contradiction is to conclude she does not use echolocation.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2347
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- Every bat that can find food in darkness, either has large ears or emits high frequency sounds, or both.\n\nAdded rules:\n- If Gemma has acute hearing, then she uses echolocation.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Gemma is nocturnal (because she does not roost in groups and the 'roosts in groups or nocturnal' exclusive rule holds). Being nocturnal means she has both acute hearing and keen vision (from the rule: not having both would mean not nocturnal). With acute hearing, the added rule 'if Gemma has acute hearing, then she uses echolocation' directly entails she uses echolocation. Previous rules about high-frequency sounds and large ears are irrelevant due to the removed finding-food-in-darkness rule.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3339
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If it is not the case that Gemma has both acute hearing and keen vision, then she is not nocturnal.\n\nAdded facts:\n- Gemma is nocturnal.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Gemma is nocturnal (added fact), but the rule linking nocturnality to acute hearing has been removed. Without that rule, we cannot infer she has acute hearing. The rule 'if Gemma has acute hearing, then she uses echolocation' requires her to have acute hearing for the conclusion, but this remains unproven. No other rules connect her nocturnality directly to echolocation. Thus, the conclusion is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 4069
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Gemma does not migrate seasonally.\n- Gemma has acute hearing.\n- Gemma has keen vision.\n- Gemma has thick fur.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The rule 'if Gemma has acute hearing, then she uses echolocation' is active, and 'Gemma has acute hearing' is explicitly added as a fact. This directly entails that she uses echolocation, regardless of other unrelated rules or traits like thick fur or keen vision.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 5314
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Gemma has acute hearing.\n\nRemoved rules:\n- If Gemma has acute hearing, then she uses echolocation.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The removed rule (acute hearing \u2192 echolocation) and fact (acute hearing) are no longer in the context. No remaining rules or facts directly link Gemma's traits (e.g., large wingspan, thick fur, good navigation, etc.) to echolocation. Since the only prior justification for echolocation was removed, there is insufficient evidence to conclude she uses it. Her ability to find food in darkness (if applicable) was previously tied to high-frequency sounds or large ears, but those are not relevant here.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 5897
+    }
+  ]
+}
