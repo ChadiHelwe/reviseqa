@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 257,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Landyn does not communicate effectively.\nLandyn does not earn recognition.\nLandyn works tirelessly.\nLandyn does not make breakthroughs.\nLandyn is highly educated.\nIf Landyn has attention to detail, then he communicates effectively and remains calm under pressure.\nLandyn either practices deliberately or has attention to detail, but not both.\nAnyone who studies thoroughly or practices deliberately will have precision.\nAnyone who has precision and is successful will earn recognition.\nIf Landyn either works tirelessly or is dedicated (but not both), then he makes breakthroughs.\nIf Landyn is dedicated, then he is either highly educated or skilled, but not both.\nIf Landyn is either experienced or skilled (but not both), then he is successful.",
+      "question": "Does the context entail the conclusion 'Landyn is not experienced.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Landyn is either experienced or skilled (but not both), then he is successful.\n\nAdded rules:\n- If Landyn is experienced, then he is successful.\n\nAdded facts:\n- Landyn does not have attention to detail.\n- Landyn practices deliberately.",
+      "question": "Does the context entail the conclusion 'Landyn is not experienced.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given the facts, Landyn practices deliberately, which gives him precision (rule 3). If Landyn were experienced, rule 'If experienced then successful' would make him successful, and together with precision this would trigger rule 4, leading to 'earn recognition'. This contradicts the explicit fact that Landyn does not earn recognition. To keep the knowledge base consistent, Landyn cannot be experienced. Hence 'Landyn is not experienced' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 249
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Landyn either works tirelessly or is dedicated (but not both), then he makes breakthroughs.\n\nAdded rules:\n- For all x, if x does not have precision, then x neither studies thoroughly nor practices deliberately.",
+      "question": "Does the context entail the conclusion 'Landyn is not experienced.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Landyn practices deliberately, so by the rule 'studies thoroughly or practices deliberately \u2192 precision' he has precision. The rule 'precision and successful \u2192 earn recognition' together with the fact that Landyn does not earn recognition implies that Landyn cannot be successful. The added rule 'if experienced then successful' combined with the derived \u00acsuccessful yields \u00acexperienced via modus tollens. Hence the statement 'Landyn is not experienced' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 445
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x does not have precision, then x neither studies thoroughly nor practices deliberately.\n\nAdded rules:\n- For all x, either x has precision, or x neither studies thoroughly nor practices deliberately.\n\nAdded facts:\n- Landyn has precision.",
+      "question": "Does the context entail the conclusion 'Landyn is not experienced.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have precision(Landyn) as a fact. Rule 4 states: precision \u2227 successful \u2192 earn_recognition. Since earn_recognition(Landyn) is false, the antecedent cannot be true; with precision true this forces \u00acsuccessful(Landyn). Rule 6 says: experienced \u2192 successful. Using modus tollens on experienced \u2192 successful together with \u00acsuccessful, we infer \u00acexperienced(Landyn). Thus the conclusion 'Landyn is not experienced' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 632
+    },
+    {
+      "step": 4,
+      "context": "Added facts:\n- Landyn is dedicated.\n- Landyn is not successful.",
+      "question": "Does the context entail the conclusion 'Landyn is not experienced.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have the fact that Landyn is dedicated. From the rule 'If Landyn is dedicated, then he is either highly educated or skilled, but not both', and the existing fact that Landyn is highly educated, we infer that Landyn is not skilled. The rule 'If Landyn is either experienced or skilled (but not both), then he is successful' means that (experienced XOR skilled) implies successful. The contrapositive of this rule gives: if not successful, then NOT (experienced XOR skilled), i.e., either both experienced and skilled are false, or both are true. Since we already know skilled is false, the only way to satisfy NOT (experienced XOR skilled) with \u00acsuccessful is for experienced to be false as well. Therefore, Landyn is not experienced. Hence the conclusion 'Landyn is not experienced' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 835
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Landyn is experienced, then he is successful.\n\nAdded rules:\n- If Landyn is highly educated, then he is experienced.",
+      "question": "Does the context entail the conclusion 'Landyn is not experienced.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the fact that Landyn is highly educated and the rule \"If highly educated then experienced\", we infer experienced(L). From the fact \u00acsuccessful(L) and the rule \"(experienced XOR skilled) \u2192 successful\", we infer the negation of the antecedent: \u00ac(experienced XOR skilled). Since dedicated implies (highly educated XOR skilled) and we have highly educated true, we get \u00acskilled(L). Knowing \u00acskilled and \u00ac(experienced XOR skilled) forces experienced to be false (both experienced and skilled must have the same truth value, and skilled is false). Thus \u00acexperienced(L) is derivable. Therefore the conclusion \"Landyn is not experienced\" is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1075
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Landyn is highly educated, then he is experienced.\n\nAdded rules:\n- If Landyn is highly educated, then he is not experienced.",
+      "question": "Does the context entail the conclusion 'Landyn is not experienced.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The fact 'Landyn is highly educated' is given. The current rule added states: If Landyn is highly educated, then he is not experienced. Applying Modus Ponens yields that Landyn is not experienced. No other rule derives experienced, and there is no conflict. Therefore the conclusion 'Landyn is not experienced' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1298
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Landyn is highly educated, then he is not experienced.\n\nAdded rules:\n- If Landyn is dedicated, then he is experienced.",
+      "question": "Does the context entail the conclusion 'Landyn is not experienced.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The current rules include: (1) dedicated(L) \u2192 experienced(L). Since the fact dedicated(L) is given, we can infer experienced(L). There is no rule that derives \u00acexperienced(L) in the present context. Thus the statement 'Landyn is not experienced' is contradicted by the derived fact experienced(L) and is not entailed. Hence the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1467
+    }
+  ]
+}

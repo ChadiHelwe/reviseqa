@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 22,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Lachlan does not pursue personal gain.\nLachlan does not speak the truth.\nLachlan does not stand up for others.\nLachlan fights for freedom.\nLachlan does not inspire others.\nLachlan is honorable.\nLachlan either guards his community or pursues personal gain, but not both.\nIf Lachlan earns respect, then he either speaks the truth or stands up for others (but not both).\nAnyone who guards their community will protect others.\nIf Lachlan either risks his life or fights for freedom (but not both), then he earns respect.\nIf someone is selfless and risks their life, then they inspire others.\nIf Lachlan protects others, then he is either selfless or loyal, but not both.\nIf Lachlan is loyal, then he is either courageous or honorable, but not both.",
+      "question": "Does the context entail the conclusion 'Lachlan is courageous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Lachlan is honorable.\n\nAdded facts:\n- Lachlan is not honorable.",
+      "question": "Does the context entail the conclusion 'Lachlan is courageous.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The given facts and rules force Lachlan to risk his life (to avoid earning respect, which would contradict the truth/standing up rule). With risk of life, the rule for selfless individuals that would inspire others forces Lachlan to be not selfless because he already does not inspire others. The rule that protecting others (implied by guarding his community) requires he be either selfless or loyal, but not both, gives Loyal=true (since Selfless=false). Then the rule that loyalty implies either courageous or honorable (but not both) together with his not being honorable forces Courageous=true. Thus 'Lachlan is courageous' follows inevitably. Therefore the statement is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 278
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Lachlan is not honorable.\n\nAdded facts:\n- Lachlan is honorable.",
+      "question": "Does the context entail the conclusion 'Lachlan is courageous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given the facts, Guards community \u2192 ProtectOthers true. Anti\u2010turning rule 8 and 10 imply Lachlan must risk his life to avoid earning respect, which leads to EarnRespect false. Rule 12 then forces Selfless XOR Loyal; rule 11 (Selfless \u2227 RiskLife \u2192 Inspire) with Inspire false forces Selfless false, so Loyal must be true. Rule 13 (Loyal \u2192 Courageous XOR Honorable) with Honorable true forces Courageous false. Hence Lachlan is not courageous. Therefore the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 481
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, either x is not selfless, or x does not risk their life, or x inspires others.\n\nAdded facts:\n- Lachlan guards his community.\n- Lachlan protects others.",
+      "question": "Does the context entail the conclusion 'Lachlan is courageous.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the added facts Lachlan guards his community, implying he protects others. Since he fights for freedom, the rule that either risks his life or fights for freedom (but not both) forces him not to risk his life, giving EarnRespect and hence requiring he either speak the truth or stand up for others\u2014yet he does neither, causing an inconsistency but not affecting other derivations. Protective obligation forces a self\u2011less versus loyal split; being protected yields either Selfless XOR Loyal. No rule forces Selfless to be true, so the split could place Loyal as either true or false. Only if Loyal were true would the rule Loyal \u2192 (Courageous XOR Honour) force Courageous to be false (because Honour is true). If Loyal were false, no rule forces Courageous to be true or false. No other rule constraints Courageous. Therefore the context does not entail that Lachlan is courageous; its truth status remains undetermined. The conclusion is not guaranteed, so the entailment is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 663
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all x, if x is selfless and x risks their life, then x inspires others.",
+      "question": "Does the context entail the conclusion 'Lachlan is courageous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The only consistent model of the given facts and rules forces Lachlan\u2019s self\u2011lessness to be false, which by the rule \u201cLoyal \u2192 (Courageous XOR Honorable)\u201d (and the fact that he is honorable) yields Courageous\u202f=\u202ffalse. No alternative model satisfies all constraints with Courageous\u202f=true, so the conclusion is not entailed but is contradicted. Hence the context entails that Lachlan is not courageous.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 961
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Lachlan is honorable.\n\nRemoved rules:\n- If Lachlan is loyal, then he is either courageous or honorable, but not both.\n\nAdded rules:\n- If Lachlan is loyal, then he is courageous.",
+      "question": "Does the context entail the conclusion 'Lachlan is courageous.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The facts force Lachlan to guard his community, so he protects others. By rule\u202f12, from protecting others he is either selfless or loyal, but not both. A selfless assignment would induce the rule \u201cselfless \u2227 risk life \u2192 inspire\u201d together with the fact that Lachlan does not inspire from a contradiction unless he also risks his life. If he risks his life, the rule \u201crisk life \u2227 selfless \u2192 inspire\u201d would again be violated because inspiring is false; thus selfless cannot hold. Consequently, the alternative in rule\u202f12 holds: Lachlan is loyal. The added rule \u201cIf Lachlan is loyal, then he is courageous\u201d immediately gives the desired conclusion. All other rules are satisfied by choosing the remaining atoms consistently (for example, Lachlan does not risk his life, so the exclusive\u2011or rule for earning respect is false and no further restriction arises). Thus every model of the given facts and rules forces \u201cLachlan is courageous.\u201d Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1120
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- For all x, either x is not selfless, or x does not risk their life, or x inspires others.\n- For all x, if x is selfless and x risks their life, then x inspires others.\n\nAdded rules:\n- For all x, if x risks their life, then x is selfless.\n- For all x, if x is selfless, then x is not loyal.\n- For all x, if x is not loyal, then x is not courageous.",
+      "question": "Does the context entail the conclusion 'Lachlan is courageous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts and updated rules we derive: Lachlan risks his life (required to avoid earning respect, because he fights for freedom and hence the \u2018either risk or fight for freedom but not both\u2019 rule forces risk=true). The rule \u201cIf x risks life then x is selfless\u201d gives Lachlan selfless=true. The rule \u201cIf x is selfless then x is not loyal\u201d makes loyal=false. The rule \u201cIf x is not loyal then x is not courageous\u201d then forces courageous=false. No other rule can override this or produce courageous=true. Thus the theory always sets \u2018Lachlan is courageous.\u2019 to false. Therefore the conclusion is not entailed.\n",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1421
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Lachlan either risks his life or fights for freedom (but not both), then he earns respect.\n\nAdded rules:\n- For all x, if x is selfless, then x is not courageous.\n\nAdded facts:\n- Lachlan risks his life.",
+      "question": "Does the context entail the conclusion 'Lachlan is courageous.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the final set of facts and rules we have the following deductions:\n- The fact \"Lachlan risks his life\" (R) is true. By rule\u202f15 (R \u2192 Self), Lachlan is selfless.\n- Rule\u202f16 states Self \u2192 \u00acL, so Lachlan is not loyal.\n- Rule\u202f17 is \u00acL \u2192 \u00acC, hence Lachlan is not courageous.\n- Rule\u202f18 (Self \u2192 \u00acC) also confirms that Lachlan is not courageous.\nNo rule in the remaining theory derives \"Lachlan is courageous\"; indeed we have a direct derivation that he is not. Therefore the theory does not entail the conclusion; it actually entails its negation. Thus the correct answer is \"False\".",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1705
+    }
+  ]
+}

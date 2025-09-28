@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 365,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Hayley does not read books.\nHayley does not appreciate life.\nHayley does not enjoy nature.\nHayley has a routine.\nHayley is methodical.\nHayley is disciplined.\nHayley does not care deeply.\nHayley does not feel happy.\nIf Hayley either lives a simple life or reads books (but not both), then she appreciates life.\nIf Hayley either enjoys nature or is content (but not both), then she lives a simple life.\nIf Hayley has a routine, then she is either organized or methodical, but not both.\nIf Hayley manages her time well, then she is either organized or disciplined, but not both.\nAll responsible people care deeply and manage their time well.\nIf Hayley keeps pets, then she is responsible.\nIf Hayley either owns chickens or keeps pets (but not both), then she feels happy.\nIf Hayley either owns chickens or loves animals (but not both), then she is content.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Hayley does not live a simple life.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Given the facts and rules, there is no way to derive 'Hayley loves animals' or its negation. The only rule involving loves animals is (OwnsChickens XOR LovesAnimals) -> Content, but we have no information about Content, OwnsChickens, or LovesAnimals. No other rules lead to LovesAnimals. Therefore the conclusion is not entailed nor contradicted.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 298
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Hayley is responsible, then she cares deeply.\n- If Hayley keeps pets, then she cares deeply.\n\nAdded facts:\n- Hayley is not responsible.\n- Hayley is not content.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the given facts we have \u00acReadBooks and \u00acAppreciateLife. Rule (SimpleLife XOR ReadBooks) -> AppreciateLife therefore SimpleLife must be false, matching the added fact. Rule (EnjoyNature XOR Content) -> SimpleLife together with \u00acEnjoyNature and \u00acSimpleLife makes the antecedent false, so no new info. Rule (OwnsChickens XOR KeepsPets) -> Happy combined with \u00acHappy forces \u00ac(OwnsChickens XOR KeepsPets), meaning OwnsChickens and KeepsPets have the same truth value. Since KeepsPets -> Responsible and we have \u00acResponsible, KeepsPets must be false, therefore OwnsChickens is also false. Rule (OwnsChickens XOR LovesAnimals) -> Content with \u00acContent likewise forces \u00ac(OwnsChickens XOR LovesAnimals), so OwnsChickens and LovesAnimals have the same truth value. Because OwnsChickens is false, LovesAnimals must also be false. Hence the statement 'Hayley loves animals' is contradicted by the context. Therefore it is not entailed; it is false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 442
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Hayley keeps pets, then she is responsible.\n- If Hayley keeps pets, then she cares deeply.\n\nAdded rules:\n- If Hayley does not care deeply, then she keeps pets.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From \u00acCareDeeply and the rule (\u00acCareDeeply -> KeepsPets) we infer KeepsPets. No rule derives LovesAnimals from KeepsPets, and the only rule involving LovesAnimals is (OwnsChickens XOR LovesAnimals) -> Content, which cannot be used backward from \u00acContent. There is also no rule giving \u00acLovesAnimals. Therefore the truth of 'Hayley loves animals' cannot be determined from the current knowledge.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 767
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Hayley does not care deeply, then she keeps pets.\n\nAdded rules:\n- If Hayley does not care deeply, then she does not keep pets.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The current knowledge base gives \u00acCareDeeply, which via the rule (\u00acCareDeeply -> \u00acKeepsPets) yields \u00acKeepsPets. No rule derives LovesAnimals from \u00acKeepsPets, and the only rule involving LovesAnimals is (OwnsChickens XOR LovesAnimals) -> Content, which cannot be used backward from the known \u00acContent. Thus we cannot infer LovesAnimals nor its negation; the statement is not entailed nor contradicted.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 953
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Hayley loves animals, then she is content.\n- If Hayley owns chickens, then she feels happy.\n- If Hayley is responsible, then she manages her time well.\n- If Hayley keeps pets, then she cares deeply.\n\nAdded facts:\n- Hayley does not keep pets.\n- Hayley does not own chickens.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The only rules involving 'loves animals' are (OwnsChickens XOR LovesAnimals) -> Content and LovesAnimals -> Content. Given the facts \u00acOwnsChickens and \u00acContent, we cannot infer LovesAnimals nor its negation using forward reasoning (no contrapositive). No other rule derives LovesAnimals or \u00acLovesAnimals. Therefore the truth of 'Hayley loves animals' cannot be determined from the current knowledge.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1136
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Hayley has a routine, then she is not organized.\n- If Hayley manages her time well, then she is not organized.\n\nAdded facts:\n- Hayley does not love animals.\n- Hayley is not organized.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context explicitly includes the fact 'Hayley does not love animals' (\u00acLovesAnimals). No rules can derive LovesAnimals, and there is no rule that would invalidate the given \u00acLovesAnimals. Therefore the statement 'Hayley loves animals' is contradicted by the context, so it is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1350
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Hayley does not love animals.\n- Hayley is not content.\n\nAdded rules:\n- If Hayley does not own chickens, then she loves animals.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The rule 'If Hayley does not own chickens, then she loves animals' combined with the fact 'Hayley does not own chickens' allows us to infer that Hayley loves animals. No rule derives the negation of this statement, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1515
+    }
+  ]
+}

@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.14285714285714285
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Added facts:\n- Chosen has a shining horn.",
       "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's break down the logic step by step.\n1. We are given the new fact 'Chosen has a shining horn' (ShiningHorn).\n2. The context states 'Chosen either roams free-spirited or has a shining horn, but not both' (RoamsFreeSpirited \u2295 ShiningHorn). Since we know ShiningHorn is true, RoamsFreeSpirited must be false. This is consistent with the initial context.\n3. The context states 'If Chosen either radiates soft light or has a majestic appearance (but not both), then she inspires wonder' ((RadiatesSoftLight \u2295 MajesticAppearance) -> InspiresWonder). We also know 'Chosen does not inspire wonder' (\u00acInspiresWonder). By modus tollens, we can conclude that it's not the case that 'Chosen either radiates soft light or has a majestic appearance (but not both)' (\u00ac(RadiatesSoftLight \u2295 MajesticAppearance)). This is equivalent to '(RadiatesSoftLight AND MajesticAppearance) OR (NOT RadiatesSoftLight AND NOT MajesticAppearance)'.\n4. The context states 'If Chosen has delicate features or radiates soft light, then she possesses magic' ((DelicateFeatures \u2228 RadiatesSoftLight) -> PossessesMagic). We also know 'Chosen does not possess magic' (\u00acPossessesMagic). By modus tollens, we can conclude 'NOT (DelicateFeatures \u2228 RadiatesSoftLight)', which simplifies to 'NOT DelicateFeatures AND NOT RadiatesSoftLight'. So we know Chosen does not radiate soft light (\u00acRadiatesSoftLight).\n5. From step 3, we know '(RadiatesSoftLight AND MajesticAppearance) OR (NOT RadiatesSoftLight AND NOT MajesticAppearance)'. From step 4, we know 'NOT RadiatesSoftLight'. This makes the first part of the OR statement in step 3 false. Therefore, the second part must be true: 'NOT RadiatesSoftLight AND NOT MajesticAppearance'. From this, we have deduced that Chosen does not have a majestic appearance (\u00acMajesticAppearance).\n6. The context states 'Chosen either possesses healing powers or has a majestic appearance, but not both' (PossessesHealingPowers \u2295 MajesticAppearance). We just deduced 'NOT MajesticAppearance' (\u00acMajesticAppearance). For the XOR statement to be true, PossessesHealingPowers must be true.\n7. The final premise is 'If Chosen has a shining horn and possesses healing powers, then she brings joy and peace' ((ShiningHorn \u2227 PossessesHealingPowers) -> BringsJoyAndPeace).\n8. We know 'Chosen has a shining horn' (ShiningHorn) from the added fact. We deduced in step 6 that 'Chosen possesses healing powers' (PossessesHealingPowers). Therefore, the condition 'ShiningHorn \u2227 PossessesHealingPowers' is true.\n9. Since the condition of the final premise is true, the conclusion must also be true. Therefore, 'Chosen brings joy and peace' is a necessary conclusion from the context.\n10. The question asks if the context entails the conclusion 'Chosen does not bring joy and peace'. Since we have proven the opposite ('Chosen brings joy and peace'), the answer is False.",
+      "correct": true,
       "tags": [
         "added_facts"
       ],
@@ -40,91 +40,91 @@
       "step": 2,
       "context": "Removed rules:\n- If Chosen either radiates soft light or has a majestic appearance (but not both), then she inspires wonder.\n\nAdded rules:\n- If Chosen has a shining horn and Chosen does not possess healing powers, then Chosen does not bring joy and peace.",
       "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "Let's analyze the new context. Our goal is to determine if 'Chosen does not bring joy and peace' (\u00acBringsJoyAndPeace) is entailed.\n\n1.  **Initial Facts:** We know from previous steps that Chosen has a shining horn (ShiningHorn) is true. We also know 'Chosen does not possess magic' (\u00acPossessesMagic) and 'Chosen is not a graceful unicorn' (\u00acGracefulUnicorn) and 'Chosen does not roam free-spirited' (\u00acRoamsFreeSpirited).\n\n2.  **Evaluate new rules:** We have two key rules regarding 'joy and peace':\n    *   'If Chosen has a shining horn and possesses healing powers, then she brings joy and peace' ((ShiningHorn \u2227 PossessesHealingPowers) -> BringsJoyAndPeace).\n    *   'If Chosen has a shining horn and Chosen does not possess healing powers, then Chosen does not bring joy and peace' ((ShiningHorn \u2227 \u00acPossessesHealingPowers) -> \u00acBringsJoyAndPeace).\n\n3.  **Simplify the rules:** Since we know 'ShiningHorn' is true, these two rules simplify to:\n    *   PossessesHealingPowers -> BringsJoyAndPeace\n    *   \u00acPossessesHealingPowers -> \u00acBringsJoyAndPeace\n    This means that whether Chosen brings joy and peace is now entirely dependent on whether she possesses healing powers. If she has them, she brings joy and peace. If she doesn't, she does not.\n\n4.  **Determine 'PossessesHealingPowers':** We need to find out the status of 'PossessesHealingPowers'. The only remaining rule that mentions it is: 'Chosen either possesses healing powers or has a majestic appearance, but not both' (PossessesHealingPowers \u2295 MajesticAppearance).\n\n5.  **Determine 'MajesticAppearance':** To solve the XOR statement for 'PossessesHealingPowers', we need to know the status of 'MajesticAppearance'. Let's look for clues.\n    *   The rule 'If Chosen either radiates soft light or has a majestic appearance (but not both), then she inspires wonder' was removed.\n    *   In the previous step, we used this removed rule along with 'Chosen does not inspire wonder' to deduce that Chosen does not have a majestic appearance.\n    *   Without this rule, there are no other facts or rules in the context that can determine whether Chosen has a majestic appearance.\n\n6.  **Conclusion:** Since 'MajesticAppearance' could be either true or false, we cannot determine the status of 'PossessesHealingPowers'.\n    *   If 'MajesticAppearance' is true, then 'PossessesHealingPowers' must be false. This would make the conclusion 'Chosen does not bring joy and peace' true.\n    *   If 'MajesticAppearance' is false, then 'PossessesHealingPowers' must be true. This would make the conclusion 'Chosen does not bring joy and peace' false.\n\nSince both outcomes are possible based on the provided context, the conclusion 'Chosen does not bring joy and peace' is not entailed. We cannot be certain if it's true or false.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 314
+      "token_count": 1037
     },
     {
       "step": 3,
       "context": "Removed rules:\n- If Chosen has delicate features or radiates soft light, then she possesses magic.\n\nAdded facts:\n- Chosen does not have delicate features.\n- Either Chosen has delicate features or Chosen radiates soft light.",
       "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Let's analyze the context to determine if 'Chosen does not bring joy and peace' is a necessary conclusion.\n\n1.  The question's conclusion, 'Chosen does not bring joy and peace' (\u00acBringsJoyAndPeace), is subject to two key rules from the previous context:\n    *   'If Chosen has a shining horn and possesses healing powers, then she brings joy and peace.' ((ShiningHorn \u2227 PossessesHealingPowers) -> BringsJoyAndPeace)\n    *   'If Chosen has a shining horn and Chosen does not possess healing powers, then Chosen does not bring joy and peace.' ((ShiningHorn \u2227 \u00acPossessesHealingPowers) -> \u00acBringsJoyAndPeace)\n\n2.  We know that 'Chosen has a shining horn' (ShiningHorn) is a true fact established in previous steps. Therefore, the two rules above effectively mean that whether Chosen brings joy and peace is entirely dependent on whether she possesses healing powers. If `PossessesHealingPowers` is true, then `BringsJoyAndPeace` is true. If `PossessesHealingPowers` is false, then `\u00acBringsJoyAndPeace` is true.\n\n3.  To determine the truth value of the conclusion, we must determine the truth value of 'PossessesHealingPowers'. The only rule that mentions this is 'Chosen either possesses healing powers or has a majestic appearance, but not both' (PossessesHealingPowers \u2295 MajesticAppearance).\n\n4.  This XOR rule means that `PossessesHealingPowers` has the opposite truth value of `MajesticAppearance`. If we can determine the status of 'MajesticAppearance', we can determine 'PossessesHealingPowers'.\n\n5.  Let's look for information about 'MajesticAppearance'. The rule that previously allowed us to deduce its status ('If Chosen either radiates soft light or has a majestic appearance (but not both), then she inspires wonder') has been removed. The new facts are 'Chosen does not have delicate features' (\u00acDelicateFeatures) and 'Either Chosen has delicate features or Chosen radiates soft light' (DelicateFeatures \u2228 RadiatesSoftLight). Using disjunctive syllogism on these new facts, we can deduce that 'Chosen radiates soft light' (RadiatesSoftLight) must be true. However, there are no remaining rules or facts that connect 'radiates soft light' or any other predicate to 'has a majestic appearance'.\n\n6.  Since there is no information in the current context to confirm or deny whether 'Chosen has a majestic appearance', its truth value is unknown.\n\n7.  Because 'MajesticAppearance' is unknown, 'PossessesHealingPowers' is also unknown (it could be true or false).\n\n8.  Finally, because 'PossessesHealingPowers' is unknown, we cannot determine whether 'Chosen brings joy and peace' or 'Chosen does not bring joy and peace'. Both remain possibilities. Therefore, the conclusion is not entailed by the context.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 427
+      "token_count": 1880
     },
     {
       "step": 4,
       "context": "Removed facts:\n- Chosen does not have delicate features.\n\nAdded facts:\n- Chosen does not radiate soft light.",
       "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "Let's analyze the current state of the facts and rules to determine if the conclusion 'Chosen does not bring joy and peace' (\u00acBringsJoyAndPeace) is entailed.\n\n1.  There are two rules governing whether Chosen brings joy and peace:\n    *   'If Chosen has a shining horn and possesses healing powers, then she brings joy and peace.' ((ShiningHorn \u2227 PossessesHealingPowers) -> BringsJoyAndPeace)\n    *   'If Chosen has a shining horn and Chosen does not possess healing powers, then Chosen does not bring joy and peace.' ((ShiningHorn \u2227 \u00acPossessesHealingPowers) -> \u00acBringsJoyAndPeace)\n\n2.  We know from a previous step that 'Chosen has a shining horn' (ShiningHorn) is a true fact. Given this, the two rules simplify. The outcome is now entirely dependent on 'PossessesHealingPowers'. If 'PossessesHealingPowers' is true, then Chosen brings joy and peace. If 'PossessesHealingPowers' is false, then Chosen does not bring joy and peace.\n\n3.  Our task is to determine the truth value of 'PossessesHealingPowers'. The only remaining rule that includes this predicate is: 'Chosen either possesses healing powers or has a majestic appearance, but not both' (PossessesHealingPowers \u2295 MajesticAppearance).\n\n4.  This XOR rule means that 'PossessesHealingPowers' and 'MajesticAppearance' must have opposite truth values. To find the state of 'PossessesHealingPowers', we must first find the state of 'MajesticAppearance'.\n\n5.  Let's examine the context for any information that would determine if 'Chosen has a majestic appearance' is true or false. The rule that previously connected 'MajesticAppearance' to the rest of the system ('If Chosen either radiates soft light or has a majestic appearance...') was removed. The new fact added in this step is 'Chosen does not radiate soft light' (\u00acRadiatesSoftLight). However, there are no remaining rules that use 'RadiatesSoftLight' to deduce anything about 'MajesticAppearance' or any other predicate.\n\n6.  Therefore, there is nothing in the current context to confirm or deny that 'Chosen has a majestic appearance'. Its truth value is unknown.\n\n7.  Because the status of 'MajesticAppearance' is unknown, the status of 'PossessesHealingPowers' is also unknown (it could be true if MajesticAppearance is false, or false if MajesticAppearance is true).\n\n8.  Since we cannot determine whether 'PossessesHealingPowers' is true or false, we cannot determine the outcome of the conclusion. It is possible that Chosen possesses healing powers (and therefore brings joy and peace), and it is also possible that Chosen does not possess healing powers (and therefore does not bring joy and peace). The context does not entail the conclusion.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 531
+      "token_count": 2661
     },
     {
       "step": 5,
       "context": "Removed facts:\n- Chosen does not radiate soft light.\n\nAdded facts:\n- Chosen radiates soft light.",
       "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Let's analyze the context to determine if the conclusion 'Chosen does not bring joy and peace' (\u00acBringsJoyAndPeace) is entailed.\n\n1.  The conclusion hinges on two rules:\n    *   'If Chosen has a shining horn and possesses healing powers, then she brings joy and peace.' ((ShiningHorn \u2227 PossessesHealingPowers) -> BringsJoyAndPeace)\n    *   'If Chosen has a shining horn and Chosen does not possess healing powers, then Chosen does not bring joy and peace.' ((ShiningHorn \u2227 \u00acPossessesHealingPowers) -> \u00acBringsJoyAndPeace)\n\n2.  We know as a fact from previous steps that 'Chosen has a shining horn' (ShiningHorn). Therefore, the truth of the conclusion 'Chosen does not bring joy and peace' is entirely dependent on whether 'Chosen does not possess healing powers' (\u00acPossessesHealingPowers) is true.\n\n3.  Our task is to determine the truth value of 'PossessesHealingPowers'. The only rule in the current context that mentions this is: 'Chosen either possesses healing powers or has a majestic appearance, but not both' (PossessesHealingPowers \u2295 MajesticAppearance).\n\n4.  This exclusive OR (XOR) statement means that 'PossessesHealingPowers' and 'MajesticAppearance' must have opposite truth values. If we can determine whether 'MajesticAppearance' is true or false, we can determine the status of 'PossessesHealingPowers'.\n\n5.  Let's search the current context for any rules or facts that could determine the truth value of 'MajesticAppearance'. The original rule connecting 'MajesticAppearance' to other predicates ('If Chosen either radiates soft light or has a majestic appearance (but not both), then she inspires wonder') was removed. The new fact added in this step is 'Chosen radiates soft light' (RadiatesSoftLight). However, there are no remaining rules that connect 'RadiatesSoftLight' to 'MajesticAppearance' or any other predicate that would help us solve for it.\n\n6.  Since there is no information in the context to confirm or deny that 'Chosen has a majestic appearance', its truth value is unknown.\n\n7.  Because the truth value of 'MajesticAppearance' is unknown, the truth value of 'PossessesHealingPowers' is also unknown. It could be true (if MajesticAppearance is false) or false (if MajesticAppearance is true).\n\n8.  Since we cannot determine whether 'PossessesHealingPowers' is true or false, we cannot definitively conclude whether 'Chosen brings joy and peace' or 'Chosen does not bring joy and peace'. Both outcomes are possible. Therefore, the conclusion is not entailed by the context.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 612
+      "token_count": 3399
     },
     {
       "step": 6,
       "context": "Removed facts:\n- Chosen radiates soft light.\n\nAdded facts:\n- Chosen does not radiate soft light.",
       "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "Let's break down the logic step by step to determine if the conclusion 'Chosen does not bring joy and peace' (\u00acBringsJoyAndPeace) is entailed.\n\n1.  The conclusion's truth value depends on two rules:\n    *   'If Chosen has a shining horn and possesses healing powers, then she brings joy and peace.' ((ShiningHorn \u2227 PossessesHealingPowers) -> BringsJoyAndPeace)\n    *   'If Chosen has a shining horn and Chosen does not possess healing powers, then Chosen does not bring joy and peace.' ((ShiningHorn \u2227 \u00acPossessesHealingPowers) -> \u00acBringsJoyAndPeace)\n\n2.  We know that 'Chosen has a shining horn' (ShiningHorn) is an established fact from previous steps. Therefore, these rules mean that the conclusion `\u00acBringsJoyAndPeace` is true if and only if 'Chosen does not possess healing powers' (\u00acPossessesHealingPowers) is true. Our task is to determine the status of `PossessesHealingPowers`.\n\n3.  The single rule governing 'PossessesHealingPowers' is: 'Chosen either possesses healing powers or has a majestic appearance, but not both' (PossessesHealingPowers \u2295 MajesticAppearance).\n\n4.  This means 'PossessesHealingPowers' and 'MajesticAppearance' have opposite truth values. To find the status of 'PossessesHealingPowers', we must find the status of 'MajesticAppearance'.\n\n5.  Let's examine the current context for clues about 'MajesticAppearance'. \n    *   The new given fact is 'Chosen does not radiate soft light' (\u00acRadiatesSoftLight).\n    *   A fact carried over from a previous step is 'Either Chosen has delicate features or Chosen radiates soft light' (DelicateFeatures \u2228 RadiatesSoftLight).\n    *   Using disjunctive syllogism on these two facts, we can deduce that 'Chosen has delicate features' (DelicateFeatures) must be true.\n\n6.  Now, we must see if knowing `DelicateFeatures` is true helps us determine the status of `MajesticAppearance`. We scan the full list of active rules and facts. There are no rules or facts that connect 'delicate features' to 'majestic appearance'. The original rule that linked 'majestic appearance' to other predicates ('If Chosen either radiates soft light or has a majestic appearance...') was removed.\n\n7.  Therefore, there is no information in the context to either confirm or deny that 'Chosen has a majestic appearance'. Its truth value is unknown.\n\n8.  Because the truth value of 'MajesticAppearance' is unknown, the truth value of 'PossessesHealingPowers' is also unknown.\n\n9.  Since we cannot determine whether 'PossessesHealingPowers' is true or false, we cannot determine if 'Chosen does not bring joy and peace' is true or false. Both outcomes are possible. Thus, the conclusion is not entailed.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 692
+      "token_count": 4101
     },
     {
       "step": 7,
       "context": "Removed facts:\n- Chosen does not radiate soft light.\n\nAdded facts:\n- Chosen radiates soft light.",
       "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Let's analyze the context to determine if the conclusion 'Chosen does not bring joy and peace' (\u00acBringsJoyAndPeace) is entailed.\n\n1.  The truth of the conclusion depends on two rules:\n    *   'If Chosen has a shining horn and possesses healing powers, then she brings joy and peace.' ((ShiningHorn \u2227 PossessesHealingPowers) -> BringsJoyAndPeace)\n    *   'If Chosen has a shining horn and Chosen does not possess healing powers, then Chosen does not bring joy and peace.' ((ShiningHorn \u2227 \u00acPossessesHealingPowers) -> \u00acBringsJoyAndPeace)\n\n2.  We know that 'Chosen has a shining horn' (ShiningHorn) is an established fact. Therefore, the conclusion 'Chosen does not bring joy and peace' is true if and only if 'Chosen does not possess healing powers' (\u00acPossessesHealingPowers) is also true. Our goal is to determine the status of 'PossessesHealingPowers'.\n\n3.  The single rule governing 'PossessesHealingPowers' is: 'Chosen either possesses healing powers or has a majestic appearance, but not both' (PossessesHealingPowers \u2295 MajesticAppearance). This means 'PossessesHealingPowers' and 'MajesticAppearance' have opposite truth values.\n\n4.  To determine the status of 'PossessesHealingPowers', we must find the status of 'MajesticAppearance'. Let's check the current facts and rules.\n    *   The new fact is 'Chosen radiates soft light' (RadiatesSoftLight).\n    *   A carried-over fact is 'Either Chosen has delicate features or Chosen radiates soft light' (DelicateFeatures \u2228 RadiatesSoftLight). The new fact makes this statement true, but it doesn't help us determine the status of 'DelicateFeatures'.\n    *   There are no remaining rules or facts in the current context that connect 'radiates soft light', 'delicate features', or any other predicate to 'majestic appearance'. The rule that originally connected them was removed in a prior step.\n\n5.  Since there is no information in the context to confirm or deny that 'Chosen has a majestic appearance', its truth value is unknown.\n\n6.  Because the truth value of 'MajesticAppearance' is unknown, the truth value of 'PossessesHealingPowers' is also unknown (it could be true if MajesticAppearance is false, or false if MajesticAppearance is true).\n\n7.  Since we cannot determine whether 'PossessesHealingPowers' is true or false, we cannot determine if the conclusion 'Chosen does not bring joy and peace' is true or false. Both outcomes are possible. Thus, the conclusion is not entailed.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 772
+      "token_count": 4864
     }
   ]
 }

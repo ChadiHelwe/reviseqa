@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 364,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Nadia does not gain recognition.\nNadia does not make breakthroughs.\nNadia travels widely.\nNadia does not become an expert.\nNadia studies Xylariaceae.\nIf Nadia receives awards, then she either gains recognition or makes breakthroughs, but not both.\nIf Nadia collaborates internationally and travels widely, then she becomes an expert.\nIf Nadia publishes research, then she either collaborates internationally or receives awards, but not both.\nIf Nadia analyzes data, then she publishes research.\nNadia either analyzes data or classifies fungi, but not both.\nNadia either discovers new species or classifies fungi, but not both.\nIf Nadia studies Xylariaceae, then she can either discover new species or develop new applications, but not both.",
+      "question": "Does the context entail the conclusion 'Nadia develops new applications.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Nadia does not receive awards.\n- Nadia does not collaborate internationally.\n- Nadia classifies fungi.",
+      "question": "Does the context entail the conclusion 'Nadia develops new applications.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given that Nadia studies Xylariaceae and cannot discover new species (because she classifies fungi, ruling that out by the exclusive \"either discover new species or classify fungi\" rule), the exclusive \"either discover new species or develop new applications\" rule forces Nadia to develop new applications. No other rule contradicts this conclusion. Therefore, the context entails that Nadia develops new applications.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 263
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Nadia studies Xylariaceae, then she can either discover new species or develop new applications, but not both.\n\nAdded rules:\n- If Nadia studies Xylariaceae, then she can either discover new species or not develop new applications, but not both.",
+      "question": "Does the context entail the conclusion 'Nadia develops new applications.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The new rule states: if Nadia studies Xylariaceae (which she does), then she either discovers new species or does not develop new applications (exactly one). She already does not discover new species because she is classifying fungi, so the only consistent possibility is that she does not develop new applications. Therefore the statement that Nadia develops new applications is false, and the context does not entail it.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 417
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Nadia either discovers new species or classifies fungi, but not both.\n\nAdded rules:\n- If Nadia classifies fungi, then she discovers new species.\n- If Nadia discovers new species, then she develops new applications.",
+      "question": "Does the context entail the conclusion 'Nadia develops new applications.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Starting with the known facts: Nadia does not become an expert despite traveling widely, which forces her to not collaborate internationally (otherwise the rule \u2018If collaborates internationally and travels widely, then she becomes an expert\u2019 would be violated). Consequently, if Nadia were to publish research, she would have to receive awards because the rule \u2018If publishes research, then either collaborates internationally or receives awards, but not both\u2019 leaves only awards as the viable alternative. However, awards would compel Nadia to gain either recognition or breakthroughs (rule \u2018If receives awards, then either gains recognition or makes breakthroughs, but not both\u2019), contradicting her facts that she gains neither recognition nor breakthroughs. Therefore, Nadia cannot publish research. The rule \u2018If analyzes data, then publishes research\u2019 together with its contrapositive (not publishing implies not analyzing data) means she does not analyze data. The exclusivity rule \u2018Either analyzes data or classifies fungi, but not both\u2019 forces her to classify fungi. The added rule \u2018If classifies fungi, then discovers new species\u2019 then applies, so she discovers new species. Finally, the rule \u2018If discovers new species, then develops new applications\u2019 gives the conclusion. Hence the context logically entails that Nadia develops new applications.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 610
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Nadia classifies fungi, then she discovers new species.\n\nAdded rules:\n- If Nadia classifies fungi, then she does not discover new species.",
+      "question": "Does the context entail the conclusion 'Nadia develops new applications.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The updated rules state that if Nadia classifies fungi, she does not discover new species. The rule \"If Nadia studies Xylariaceae, then she can either discover new species or not develop new applications, but not both\" then forces the alternative; since she cannot discover new species, she must not develop new applications. Thus the context actually entails that Nadia does not develop new applications, and does not entail that she does develop them. Therefore the conclusion \"Nadia develops new applications\" is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 965
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Nadia classifies fungi, then she does not discover new species.\n\nAdded rules:\n- If Nadia classifies fungi, then she discovers new species.",
+      "question": "Does the context entail the conclusion 'Nadia develops new applications.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The facts give us that Nadia classifies fungi, studies Xylariaceae, does not receive awards, does not collaborate internationally, travels widely, and the other assumptions from the initial context. The only remaining relevant rules are:\n1. *Classify* \u2192 *Discover* (added rule).\n2. *Discover* \u2192 *Develop* (added rule).\n3. If *StudiesX* then (*Discover* XOR \u00ac*Develop*).\n4. *Analyze* XOR *Classify* (enforces *Analyze* is false).\n\nGiven *Classify* is true, rule (1) forces *Discover* to be true. Rule (2) then forces *Develop* to be true. The exclusive condition in rule (3) requires exactly one of *Discover* and \u00ac*Develop* to be true. Since *Discover* is true and \u00ac*Develop* is false, the exclusive condition holds, satisfying the implication. No other rule contradicts *Develop* being true, so the statement \u201cNadia develops new applications\u201d follows logically from the context. Therefore the conclusion is entailed.\n",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1154
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Nadia classifies fungi, then she discovers new species.\n\nAdded rules:\n- If Nadia classifies fungi, then she does not discover new species.",
+      "question": "Does the context entail the conclusion 'Nadia develops new applications.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "The current context gives us the facts that Nadia studies Xylariaceae and classifies fungi. The added rule states: if she classifies fungi, then she does NOT discover new species. Hence Nadia does not discover new species. The rule (still present) \"If Nadia studies Xylariaceae, then she can either discover new species or develop new applications, but not both\" applies because she studies Xylariaceae. Since the first alternative is false, the second alternative \u2013 that she develops new applications \u2013 must be true. No other rule contradicts this conclusion. Therefore the context entails that Nadia develops new applications.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1465
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Nadia classifies fungi, then she does not discover new species.\n\nAdded rules:\n- If Nadia classifies fungi, then she discovers new species.",
+      "question": "Does the context entail the conclusion 'Nadia develops new applications.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Given the facts, Nadia classifies fungi. The added rule states that if she classifies fungi, she discovers new species. Therefore Nadia discovers new species. The rule stating that if Nadia studies Xylariaceae, she can either discover new species or develop new applications, but not both, requires that exactly one of those outcomes be true. Since she has discovered new species, the alternative\u2014developing new applications\u2014must be false. No other rule forces her to develop new applications, so the conclusion that Nadia develops new applications does not follow. Thus the context does not entail that conclusion.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1674
+    }
+  ]
+}

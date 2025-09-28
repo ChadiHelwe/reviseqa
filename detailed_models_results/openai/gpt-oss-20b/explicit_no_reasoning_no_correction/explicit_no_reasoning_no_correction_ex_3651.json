@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 194,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Flame plays a crucial role.\nFlame does not have a distinctive appearance.\nFlame does not feed on sap.\nFlame is beneficial.\nFlame does not have value.\nFlame does not pollinate plants.\nIf Flame plays a crucial role, then she is either endangered or has a distinctive appearance, but not both.\nFlame either lives on the nopal cactus or feeds on sap.\nIf Flame is beneficial, then she either provides a food source or is endangered, but not both.\nFlame either contributes to the ecosystem or provides a food source, but not both.\nIf Flame either supports the economy or contributes to the ecosystem (but not both), then she has value.\nIf Flame lives on the nopal cactus, then she either pollinates plants or produces dye, but not both.\nIf Flame produces dye, then she either creates art or supports the economy, but not both.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Flame either supports the economy or contributes to the ecosystem (but not both), then she has value.\n\nAdded rules:\n- If Flame does not have value, then she supports the economy if and only if she contributes to the ecosystem.\n\nAdded facts:\n- Flame is endangered.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We analyze the logical structure.\n- Crucial role \u2192 (Endangered XOR Distinctive). We have Endangered=True, Distinctive=False \u2192 satisfied.\n- Beneficial \u2192 (FoodSource XOR Endangered). Endangered=True and given Beneficial=True implies FoodSource=False.\n- Exclusive rule \u201cFoodSource OR Ecosystem\u201d forces Ecosystem=True.\n- New rule (not Value) \u2192 Econ \u2194 Ecosystem. Value is False, Ecosystem=true, so Econ=True.\n- Rule 5: If LivesOnCactus True \u2192 (Pollinate XOR Dye). Pollinate is false, so Dye would be true if LivesOnCactus is true.\n- Rule 6: If Dye True \u2192 (Ar XOR Econ). Econ is true, so if Dye True Ar must be false.\n- To satisfy all constraints while keeping all conditions, we can set LivesOnCactus=False, Dye=False. Then rule 6 does not constrain Ar, and Ar can be either true or false.\nSince a consistent assignment exists with Ar=False, the conclusion \u201cFlame creates art\u201d is not logically entailed by the context.\nTherefore the choice is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 286
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Flame produces dye, then she either creates art or supports the economy, but not both.\n\nAdded rules:\n- If Flame produces dye, then she either creates art or supports the economy, or both.\n- If Flame produces dye, then it is not the case that she both creates art and supports the economy.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The updated context includes the following facts and rules: \n- Facts: Flame is endangered (true), flames does not have a distinctive appearance (false), does not feed on sap (false), is beneficial (true), does not have value (false), does not pollinate plants (false), plays a crucial role (true), and either lives on the nopal cactus or feeds on sap.\n- From the \u2018either lives on cactus or feeds on sap\u2019 rule and the fact that it does not feed on sap, we conclude Flame lives on the cactus (true).\n- The rule that if she lives on the cactus, then she either pollinates plants or produces dye (exclusive) together with Pollinate=false forces\u00a0Dye=true.\n- The new rules about dye now say: if Dye then exactly one of \u2018creates art\u2019 or \u2018supports the economy\u2019 (due to the combination of the two added rules). Therefore, one of Art and Econ is true, but we do not know which one yet.\n- Beneficial\u2010to\u2010food\u2011source rule (Beneficial \u2192 FoodSource XOR Endangered) with Endangered=true forces FoodSource=false.\n- The ecosystem\u2011foodsource rule (Ecosystem XOR FoodSource) then gives Ecosystem=true.\n- The remaining rules are satisfied with these assignments.\nSince there is no rule that forces \u2018creates art\u2019 to be true (both assignments Art=true/Econ=false and Art=false/Econ=true satisfy every rule), the conclusion \u201cFlame creates art\u201d is not entailed by the context.\nThus the status is Uncertain.\n",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 630
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- Either Flame does not produce dye, or she does not create art, or she does not support the economy.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "With the added rule\u202f\u201cEither Flame does not produce dye, or she does not create art, or she does not support the economy,\u201d we obtain the clause \u00acDye \u2228 \u00acArt \u2228 \u00acEcon. Since earlier deductions still give Dye\u202f=\u202ftrue, the statement simplifies to \u00acArt \u2228 \u00acEcon. The previous rule set (from the earlier context) states that if Dye then exactly one of Art or Econ is true (Art\u202f\u2227\u202f\u00acEcon\u202f\u2228\u202f\u00acArt\u202f\u2227\u202fEcon). This allows both assignments {Art\u202f=\u202ftrue, Econ\u202f=\u202ffalse} and {Art\u202f=\u202ffalse, Econ\u202f=\u202ftrue}. Both satisfy \u00acArt \u2228 \u00acEcon, so the new rule does not force Art to be true. Therefore, \u201cFlame creates art\u201d is not logically entailed by the context. The correct choice is Uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1071
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Flame produces dye, then she either creates art or supports the economy, but not both.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the initial facts:\n- \u201cFlame is endangered\u201d (true)\n- \u201cFlame does not have a distinctive appearance\u201d (false)\n- \u201cFlame does not feed on sap\u201d (false)\n- \u201cFlame is beneficial\u201d (true)\n- \u201cFlame does not have value\u201d (false)\n- \u201cFlame does not pollinate plants\u201d (false)\n- \u201cFlame plays a crucial role\u201d (true)\n- \u201cFlame either lives on the nopal cactus or feeds on sap\u201d (exclusive). Since she does not feed on sap, she lives on the cactus.\n\nRules that still apply (none were removed):\n1. If she lives on the cactus, then she either pollinates plants or produces dye, but not both. With pollination false, dye is true.\n2. If she produces dye, then she either creates art or supports the economy, but not both. (Added rule.)\n3. If she produces dye, then it is not the case that she both creates art and supports the economy. (Same exclusion as rule 2.)\n4. If \u201cshe either supports the economy or contributes to the ecosystem (but not both)\u201d, then she has value. (From earlier context.)\n5. If she does not have value, then she supports the economy iff she contributes to the ecosystem. (Earlier context.)\n6. If she is beneficial, then she either provides a food source or is endangered, but not both. Since endangered is true, food source is false.\n7. If she either contributes to the ecosystem or provides a food source, but not both. Food source false \u21d2 ecosystem true.\n\nNow we know:\n- Dye = true.\n- Ecosystem = true.\n- From rule 5, with value false, Econ \u2194 Ecosystem \u21d2 Econ = true.\n- Since Econ = true and the exclusive rule 2/3, Art must be false.\nHence the conclusion \u201cFlame creates art\u201d is false, i.e., the context entails that she does NOT create art.\n\nTherefore the answer is False.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1348
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Flame does not have value, then she supports the economy if and only if she contributes to the ecosystem.\n\nAdded rules:\n- If Flame does not have value, then she either supports the economy or contributes to the ecosystem, but not both.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given the facts and remaining rules:\n1. Plays crucial role \u21d2 (Endangered XOR Distinctive). Endangered = True, Distinctive = False.\n2. Lives on cactus XOR feeds on sap. Since feeds on sap = False (fact), lives on cactus = True.\n3. Beneficial \u21d2 (FoodSource XOR Endangered). Endangered = True, Beneficial = True \u21d2 FoodSource = False.\n4. Either contributes to ecosystem or provides food source (exclusive). FoodSource = False \u21d2 Ecosystem = True.\n5. Lives on cactus \u21d2 (Pollinates plants XOR Produces dye). Pollinates plants = False \u21d2 Dye = True.\n6. Produces dye \u21d2 (Creates art XOR Supports economy). (Exclusive)\n7. Not having value \u21d2 (Supports economy XOR Contributes ecosystem). Not value = True, ecosystem = True \u21d2 Supports economy = False.\nFrom rule 6 with Supports economy = False, we conclude Creates art = True.\nThus the statement \u2018Flame creates art\u2019 is entailed.\n",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1863
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Flame does not have a distinctive appearance.\n- Flame is endangered.\n\nAdded facts:\n- Flame has a distinctive appearance.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Starting from the original facts and rules, we removed the facts \u201cFlame does not have a distinctive appearance\u201d and \u201cFlame is endangered\u201d and added the fact \u201cFlame has a distinctive appearance.\u201d All other rules remain as they were after the previous modifications.\n\n1. Crucial role is still true. The rule \u201cIf Flame plays a crucial role, then she is either endangered or has a distinctive appearance, but not both\u201d together with the new fact that she has a distinctive appearance forces *endangered* to be false.\n\n2. Beneficial is true, and the exclusive rule \u201cIf Flame is beneficial, then she either provides a food source or is endangered, but not both\u201d yields *food source* true (since endangered is false).\n\n3. The rule \u201cFlame either contributes to the ecosystem or provides a food source, but not both\u201d gives *ecosystem* false because food source is true.\n\n4. The rule \u201cFlame either lives on the nopal cactus or feeds on sap\u201d (exclusive) and the fact that she does not feed on sap (still true) forces *lives on cactus* true.\n\n5. With *lives on cactus* true, the exclusive rule \u201cIf Flame lives on the nopal cactus, then she either pollinates plants or produces dye\u201d together with the fact that she does not pollinate plants implies *produces dye* true.\n\n6. The rule \u201cIf Flame produces dye, then she either creates art or supports the economy, but not both\u201d gives an exclusive relationship between *creates art* and *supports economy*.\n\n7. The fact \u201cFlame does not have value\u201d is still true, and the rule added earlier (the remaining one) states \u201cIf Flame does not have value, then she either supports the economy or contributes to the ecosystem, but not both.\u201d With *ecosystem* false, this forces *supports economy* to be true.\n\n8. From step 6, since *supports economy* is true and the relationship is exclusive with *creates art*, we must have *creates art* false.\n\nNo other rule forces *creates art* to be true, and the assignment with *creates art* false satisfies all remaining constraints. Thus the context entails that she does *not* create art.\n\nTherefore the conclusion \u2018Flame creates art.\u2019 is not entailed by the context.\n",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2180
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Flame produces dye, then it is not the case that she both creates art and supports the economy.\n\nAdded rules:\n- If Flame produces dye and creates art, then she does not support the economy.",
+      "question": "Does the context entail the conclusion 'Flame creates art.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The current context retains all original facts; the only changes are that the rule \u201cIf Flame produces dye, then not both creates art and supports economy\u201d is removed, and a new rule \u201cIf Flame produces dye and creates art, then she does not support economy\u201d is added. The original exclusive rule \u201cIf Flame produces dye, then she either creates art or supports the economy, but not both\u201d remains in place.\n\nBy the given facts and the remaining rules:\n1. *Flame plays a crucial role* \u2192 with the rule \u201ccrucial role \u2192 (Endangered XOR Distinctive)\u201d and the fact **distinctive = true** (added in an earlier step), we infer *Endangered = false*.\n2. *Beneficial* \u2192 with \u201cbeneficial \u2192 (FoodSource XOR Endangered)\u201d, since Endangered = false, we get *FoodSource = true*.\n3. *FoodSource = true* together with \u201c(FoodSource XOR Ecosystem)\u201d forces *Ecosystem = false*.\n4. The rule \u201cif not value then (SupportEconomy XOR Ecosystem)\u201d with *Value = false* and *Ecosystem = false* gives *SupportEconomy = true*.\n5. *Lives on cactus* follows from \u201c(LivesOnCactus XOR FeedsOnSap)\u201d with FeedsOnSap = false.\n6. *Living on cactus* together with \u201c(LivesOnCactus \u2192 (Pollinate XOR Dye))\u201d and Pollinate = false yields *Dye = true*.\n7. Finally, because *Dye* is true, the exclusive rule \u201cDye \u2192 (CreateArt XOR SupportEconomy)\u201d applies. Since *SupportEconomy* is true, we must have *CreateArt = false*.\n\nNo other rule contradicts this assignment, and the only new rule about \u201cDye & CreateArt \u2192 not SupportEconomy\u201d is satisfied vacuously (CreateArt is false). Thus the context forces *CreateArt = false* and does **not** entail that Flame creates art.\n\nTherefore the conclusion \u2018Flame creates art.\u2019 is false entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2755
+    }
+  ]
+}

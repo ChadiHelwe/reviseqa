@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_correction",
+    "chain_index": 265,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Ramon values quality.\nRamon does not care about his community.\nRamon does not respect the seasons.\nRamon does not live off the land.\nRamon does not love nature.\nAll humans who support local producers value quality and care about their community.\nAnyone who respects the seasons or appreciates local food supports local producers.\nIf Ramon either appreciates local food or values a simple life (but not both), then he lives off the land.\nRamon values a simple life or embraces modern technology.\nRamon either preserves traditional practices or embraces modern technology, but not both.\nIf Ramon loves nature or practices sustainable farming (or both), then he preserves traditional practices.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Ramon values quality. Ramon does not care about his community.. All humans who support local producers value quality and care about their community.. Therefore, Ramon does not support local producers.. Ramon does not respect the seasons. Ramon does not support local producers.. Anyone who respects the seasons or appreciates local food supports local producers.. Therefore, Ramon does not appreciate local food.. Ramon does not appreciate local food. Ramon does not live off the land.. If Ramon either appreciates local food or values a simple life (but not both), then he lives off the land.. Therefore, Ramon does not value a simple life.. Ramon does not value a simple life.. Ramon values a simple life or embraces modern technology.. Therefore, Ramon embraces modern technology.. Ramon embraces modern technology.. Ramon either preserves traditional practices or embraces modern technology, but not both.. Therefore, Ramon does not preserve traditional practices.. Ramon does not love nature. Ramon does not preserve traditional practices.. If Ramon loves nature or practices sustainable farming (or both), then he preserves traditional practices.. Therefore, Ramon practices sustainable farming..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Ramon does not embrace modern technology.\n- Ramon appreciates local food.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We added facts that Ramon does not embrace modern technology and that he appreciates local food. From the disjunction \"Ramon values a simple life or embraces modern technology\", together with the fact that he does not embrace modern technology, we logically infer that Ramon values a simple life. The exclusive\u2011or \"Ramon either preserves traditional practices or embraces modern technology, but not both\" then forces him to preserve traditional practices, because the other alternative (embraces modern technology) is false. Thus we conclude that he preserves traditional practices. Rule 6 states: if Ramon loves nature or practices sustainable farming, then he preserves traditional practices. Since he does preserve traditional practices, the antecedent could be true, but it could also be false; rule 6 is one\u2011directional, so we cannot infer the converse \u2013 we cannot deduce that he definitely loves nature or practices sustainable farming. No other rule forces him to practice sustainable farming or forbids it. The initial fact that he does not love nature does not contradict practicing sustainable farming, because the rule only requires *at least* one of love nature or sustainable farming to hold for preservation, not that he must love nature. Therefore the statement \"Ramon practices sustainable farming\" is neither entailed nor contradicted by the given facts and rules; it remains uncertain.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 472
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Ramon does not care about his community.\n- Ramon does not love nature.\n\nAdded rules:\n- For all x, if x supports local producers, then x does not practice sustainable farming.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We need to see if every model satisfying the facts and rules forces \"Ramon practices sustainable farming.\" The new rule states that anyone supporting local producers cannot practice sustainable farming. To allow sustainable farming, Ramon must not support local producers. Rule\u202f2 then forces him to not appreciate local food (since he does not respect seasons). Rule\u202f3\u2019s XOR must be false, so with appreciate local food false, simple life must also be false, which by rule\u202f4 forces modern technology to be true. Rule\u202f5 then requires he cannot preserve traditional practices. But rule\u202f6 says that if he practices sustainable farming, he must preserve traditional practices. Hence sustainable farming cannot hold in any consistent assignment\u2014while a model with sustainable farming false is possible. Therefore the conclusion is not entailed (and in fact is contradicted).",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 801
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x supports local producers, then x does not practice sustainable farming.\n\nAdded rules:\n- For all x, if x preserves traditional practices, then x practices sustainable farming.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added rule \"If x preserves traditional practices, then x practices sustainable farming\" forces anyone who preserves traditional practices to practice sustainable farming. From the exclusive\u2011or rule \"Ramon either preserves traditional practices or embraces modern technology, but not both,\" and the fact that Ramon does not embrace modern technology, it follows that Ramon must preserve traditional practices. Therefore, by the new rule, Ramon must practice sustainable farming in every model. All other rules and facts are compatible with this conclusion, so the statement is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1056
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Ramon does not embrace modern technology.\n\nAdded facts:\n- Ramon embraces modern technology.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Because Ramon embraces modern technology, rule\u202f6 (\"either preserves traditional practices or embraces modern technology, but not both\") implies he does NOT preserve traditional practices. Rule\u202f7 states that if Ramon loves nature or practices sustainable farming, then he preserves traditional practices. Since preserve\u2011traditional is false, the antecedent of rule\u202f7 must be false; otherwise the implication would be false. Thus both \"he loves nature\" and \"he practices sustainable farming\" are false. Therefore the conclusion \"Ramon practices sustainable farming\" is contradicted, i.e., not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1245
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, if x supports local producers, then x values quality.\n- For all x, if x supports local producers, then x cares about their community.\n\nAdded facts:\n- Ramon does not preserve traditional practices.\n- Ramon supports local producers.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The fact \u00acPTP is given. Rule 6 states that if (LovesNature \u2228 PracticesSustainableFarming) then PTP. Since PTP is false, the antecedent of this implication must be false; otherwise the implication would force PTP to be true. Hence both \u00acLovesNature and \u00acPracticesSustainableFarming must hold. The added rule that \u2018supports local producers \u2192 respects quality, cares about community\u2019 does not create any conflict. The rule \u2018preserves traditional practices \u2192 practices sustainable farming\u2019 is vacuously satisfied because the antecedent is false. Thus every model that satisfies the given facts and rules must set \u2018Ramon practices sustainable farming\u2019 to false. Therefore the statement is not entailed; in fact it is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1429
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Ramon does not preserve traditional practices.\n- Ramon embraces modern technology.\n\nAdded facts:\n- Ramon preserves traditional practices.\n- Ramon does not embrace modern technology.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have the facts \u201cRamon preserves traditional practices\u201d (PT) and \u201cRamon does not embrace modern technology\u201d (\u00acEMT). Rule\u202f7 states: for all x, if x preserves traditional practices then x practices sustainable farming. Applying this to Ramon gives \u201cRamon practices sustainable farming\u201d (PSF). Therefore the conclusion follows directly from the given facts and rules. No rule derives \u00acPSF, so the statement is entailed.\n\nHence the correct choice is True.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1687
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if x preserves traditional practices, then x practices sustainable farming.\n\nAdded rules:\n- For all x, if x preserves traditional practices, then x does not practice sustainable farming.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added rule says: if an individual preserves traditional practices, then that individual does not practice sustainable farming. The given facts include \"Ramon preserves traditional practices.\" Therefore we can conclude \"Ramon does not practice sustainable farming.\" This contradicts the hypothesis that \"Ramon practices sustainable farming.\" Thus the conclusion is not entailed (and is actually contradicted).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1869
+    }
+  ]
+}

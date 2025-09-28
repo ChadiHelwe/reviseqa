@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.8571428571428571
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Lilian has financial expertise.\nLilian does not achieve economic success.\nLilian speaks multiple languages.\nLilian works cross-culturally.\nLilian faces significant challenges.\nIf Lilian makes informed decisions and has financial expertise, then she can achieve economic success.\nLilian makes informed decisions or has strategic vision.\nIf Lilian speaks multiple languages, then she either works cross-culturally or is globally minded (or both).\nIf Lilian has strategic vision, then she will either succeed professionally or face significant challenges (but not both).\nIf Lilian thinks broadly, then she will succeed professionally.\nLilian is either narrowly focused or thinks broadly.\nIf Lilian works cross-culturally, then she is not globally minded.",
       "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's formalize the statements:\n- FE: Lilian has financial expertise (True)\n- ES: Lilian can achieve economic success (False, based on '~ES')\n- ML: Lilian speaks multiple languages (True)\n- WC: Lilian works cross-culturally (True)\n- SC: Lilian faces significant challenges (True)\n- ID: Lilian makes informed decisions\n- SV: Lilian has strategic vision\n- GM: Lilian is globally minded\n- SP: Lilian will succeed professionally\n- TB: Lilian thinks broadly\n- NF: Lilian is narrowly focused\n\nThe context provides these rules:\n1. (ID & FE) -> ES\n2. ID v SV\n3. ML -> (WC v GM)\n4. SV -> (SP XOR SC)\n5. TB -> SP\n6. NF XOR TB (or NF v TB; the result is the same)\n7. WC -> ~GM\n\nThe conclusion to test is: GM XOR NF ('Lilian is either globally minded or narrowly focused, but not both.')\n\nLet's deduce the truth values of GM and NF.\n\nTo determine GM's value:\n- We are given that Lilian works cross-culturally (WC is True).\n- We are given the rule: 'If Lilian works cross-culturally, then she is not globally minded' (WC -> ~GM).\n- By Modus Ponens, since WC is True, ~GM must be True. \n- Therefore, 'Lilian is globally minded' (GM) is False.\n\nTo determine NF's value:\n- From (1), we have (ID & FE) -> ES. We know ES is False. By Modus Tollens, ~(ID & FE) is True. Since FE is True, this means ID must be False.\n- From (2), we have ID v SV. Since ID is False, SV must be True.\n- From (4), we have SV -> (SP XOR SC). Since SV is True, (SP XOR SC) must be True.\n- We are given that SC is True. For the exclusive or (XOR) to be True, SP must be False.\n- From (5), we have TB -> SP. Since SP is False, by Modus Tollens, TB must be False.\n- From (6), we have NF XOR TB. Since TB is False, for the exclusive or to be True, NF must be True.\n- Therefore, 'Lilian is narrowly focused' (NF) is True.\n\nNow, let's evaluate the conclusion 'GM XOR NF' with our findings:\n- GM is False.\n- NF is True.\n- The expression 'False XOR True' evaluates to True.\n\nSince the conclusion must be True given the premises, the context entails the conclusion.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_rules",
@@ -42,89 +42,89 @@
       "step": 2,
       "context": "Lilian has financial expertise.\nLilian does not achieve economic success.\nLilian speaks multiple languages.\nLilian works cross-culturally.\nLilian faces significant challenges.\nIf Lilian makes informed decisions and has financial expertise, then she can achieve economic success.\nLilian makes informed decisions or has strategic vision.\nIf Lilian speaks multiple languages, then she either works cross-culturally or is globally minded (or both).\nIf Lilian has strategic vision, then she will either succeed professionally or face significant challenges (but not both).\nIf Lilian thinks broadly, then she will succeed professionally.\nLilian is either narrowly focused or thinks broadly.\nIf Lilian works cross-culturally, then she is not globally minded.\nIf Lilian has strategic vision, then she is narrowly focused.",
       "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Let's formalize the statements and rules:\n- FE: Lilian has financial expertise (True)\n- ES: Lilian can achieve economic success (False, based on '~ES')\n- ML: Lilian speaks multiple languages (True)\n- WC: Lilian works cross-culturally (True)\n- SC: Lilian faces significant challenges (True)\n- ID: Lilian makes informed decisions\n- SV: Lilian has strategic vision\n- GM: Lilian is globally minded\n- SP: Lilian will succeed professionally\n- TB: Lilian thinks broadly\n- NF: Lilian is narrowly focused\n\nThe context provides these rules:\n1. (ID & FE) -> ES\n2. ID v SV\n3. ML -> (WC v GM)\n4. SV -> (SP XOR SC)\n5. TB -> SP\n6. NF XOR TB\n7. WC -> ~GM\n8. SV -> NF\n\nThe conclusion to test is: GM XOR NF ('Lilian is either globally minded or narrowly focused, but not both.')\n\nLet's deduce the truth values of GM and NF.\n\nTo determine GM's value:\n- We are given that Lilian works cross-culturally (WC is True).\n- We are given the rule: 'If Lilian works cross-culturally, then she is not globally minded' (WC -> ~GM).\n- By Modus Ponens, since WC is True, ~GM must be True.\n- Therefore, 'Lilian is globally minded' (GM) is False.\n\nTo determine NF's value:\n- From rule 1, (ID & FE) -> ES. We know FE is True and ES is False. By Modus Tollens, we can conclude that ~(ID & FE) is true. Since FE is True, this means ~ID must be true, so ID is False.\n- From rule 2, ID v SV. Since ID is False, SV must be True for the statement to be true.\n- From rule 8, SV -> NF. We just determined that SV is True.\n- By Modus Ponens, since SV is True, NF must be True.\n- Therefore, 'Lilian is narrowly focused' (NF) is True.\n\nNow, let's evaluate the conclusion 'GM XOR NF' with our findings:\n- GM is False.\n- NF is True.\n- The exclusive disjunction 'False XOR True' evaluates to True.\n\nSince the conclusion must be True based on the premises, the context entails the conclusion.",
       "correct": false,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 449
+      "token_count": 1057
     },
     {
       "step": 3,
       "context": "Lilian has financial expertise.\nLilian speaks multiple languages.\nLilian works cross-culturally.\nLilian faces significant challenges.\nIf Lilian makes informed decisions and has financial expertise, then she can achieve economic success.\nLilian makes informed decisions or has strategic vision.\nIf Lilian speaks multiple languages, then she either works cross-culturally or is globally minded (or both).\nIf Lilian has strategic vision, then she will either succeed professionally or face significant challenges (but not both).\nIf Lilian thinks broadly, then she will succeed professionally.\nLilian is either narrowly focused or thinks broadly.\nIf Lilian works cross-culturally, then she is not globally minded.\nIf Lilian has strategic vision, then she is narrowly focused.\nIf Lilian achieves economic success, then she is globally minded.",
       "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's formalize the statements and rules from the context.\n\nAtomic Statements and their initial values:\n- FE: Lilian has financial expertise (True)\n- ML: Lilian speaks multiple languages (True)\n- WC: Lilian works cross-culturally (True)\n- SC: Lilian faces significant challenges (True)\n- ES: Lilian can achieve economic success\n- ID: Lilian makes informed decisions\n- SV: Lilian has strategic vision\n- GM: Lilian is globally minded\n- SP: Lilian will succeed professionally\n- NF: Lilian is narrowly focused\n- TB: Lilian thinks broadly\n\nRules from the context:\n1. (ID & FE) -> ES\n2. ID v SV\n3. ML -> (WC v GM)\n4. SV -> (SP XOR SC)\n5. TB -> SP\n6. NF XOR TB\n7. WC -> ~GM\n8. SV -> NF\n9. ES -> GM\n\nQuestion: Does the context entail 'GM XOR NF' (Lilian is either globally minded or narrowly focused, but not both)?\n\nLet's deduce the truth values of GM and NF.\n\nStep 1: Determine the truth value of GM (globally minded).\n- We are given that Lilian works cross-culturally (WC is True).\n- We have the rule 'If Lilian works cross-culturally, then she is not globally minded' (Rule 7: WC -> ~GM).\n- By Modus Ponens, since WC is True, ~GM must be True.\n- Therefore, GM is False.\n\nStep 2: Determine the truth value of NF (narrowly focused).\n- We can create a logical chain. Rule 1, (ID & FE) -> ES, simplifies to ID -> ES because FE is True. Rule 9 is ES -> GM. Chaining these gives us ID -> ES -> GM, which means ID -> GM.\n- We established in Step 1 that GM is False. From the derived rule ID -> GM, we can use Modus Tollens to conclude that ID must be False.\n- Now consider Rule 2: ID v SV. Since we have deduced that ID is False, SV must be True for this 'or' statement to be true.\n- Now consider Rule 8: SV -> NF. Since we have deduced that SV is True, we can use Modus Ponens to conclude that NF must be True.\n\nStep 3: Evaluate the conclusion 'GM XOR NF'.\n- From Step 1, we found GM is False.\n- From Step 2, we found NF is True.\n- The conclusion 'GM XOR NF' becomes 'False XOR True'.\n- An exclusive 'or' (XOR) is true if and only if one of its arguments is true and the other is false.\n- 'False XOR True' evaluates to True.\n\nTherefore, the context entails the conclusion.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 668
+      "token_count": 1823
     },
     {
       "step": 4,
       "context": "Lilian has financial expertise.\nLilian speaks multiple languages.\nLilian works cross-culturally.\nLilian faces significant challenges.\nIf Lilian makes informed decisions and has financial expertise, then she can achieve economic success.\nLilian makes informed decisions or has strategic vision.\nIf Lilian speaks multiple languages, then she either works cross-culturally or is globally minded (or both).\nIf Lilian has strategic vision, then she will either succeed professionally or face significant challenges (but not both).\nIf Lilian thinks broadly, then she will succeed professionally.\nLilian is either narrowly focused or thinks broadly.\nIf Lilian works cross-culturally, then she is not globally minded.\nIf Lilian has strategic vision, then she is narrowly focused.\nIf Lilian achieves economic success, then she is globally minded.\nIf Lilian has strategic vision, then she does not succeed professionally.\nIf Lilian does not succeed professionally, then she does not think broadly.",
       "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's formalize the statements and rules from the context.\n\nAtomic Statements and their known initial values:\n- FE: Lilian has financial expertise (True)\n- ML: Lilian speaks multiple languages (True)\n- WC: Lilian works cross-culturally (True)\n- SC: Lilian faces significant challenges (True)\n- ES: Lilian can achieve economic success\n- ID: Lilian makes informed decisions\n- SV: Lilian has strategic vision\n- GM: Lilian is globally minded\n- SP: Lilian will succeed professionally\n- NF: Lilian is narrowly focused\n- TB: Lilian thinks broadly\n\nRules from the context:\n1. (ID & FE) -> ES\n2. ID v SV\n3. ML -> (WC v GM)  (This rule is redundant given the facts, but let's keep it)\n4. SV -> (SP XOR SC)\n5. TB -> SP\n6. NF XOR TB\n7. WC -> ~GM\n8. SV -> NF\n9. ES -> GM\n10. SV -> ~SP\n11. ~SP -> ~TB (This is the contrapositive of Rule 5, providing no new information)\n\nQuestion: Does the context entail 'GM XOR NF' (Lilian is either globally minded or narrowly focused, but not both)?\n\nLet's deduce the truth values of GM and NF step-by-step.\n\nStep 1: Determine the truth value of GM (globally minded).\n- We are given as a fact that Lilian works cross-culturally (WC is True).\n- We have Rule 7: 'If Lilian works cross-culturally, then she is not globally minded' (WC -> ~GM).\n- By Modus Ponens, since WC is True, we can conclude that ~GM is True.\n- Therefore, GM is False.\n\nStep 2: Determine the truth value of NF (narrowly focused).\n- From Step 1, we know GM is False.\n- We have Rule 9: 'If Lilian achieves economic success, then she is globally minded' (ES -> GM).\n- By Modus Tollens, since GM is False, we can conclude that ES is False.\n- We have Rule 1: 'If Lilian makes informed decisions and has financial expertise, then she can achieve economic success' ((ID & FE) -> ES). We also know FE is True. The rule simplifies to (ID -> ES).\n- By Modus Tollens again, since ES is False, we can conclude that ID is False.\n- We have Rule 2: 'Lilian makes informed decisions or has strategic vision' (ID v SV).\n- Since we have deduced that ID is False, for this 'or' statement to be true, SV must be True.\n- We have Rule 8: 'If Lilian has strategic vision, then she is narrowly focused' (SV -> NF).\n- By Modus Ponens, since we have deduced that SV is True, we can conclude that NF is True.\n\nStep 3: Evaluate the conclusion 'GM XOR NF'.\n- From Step 1, we determined that GM is False.\n- From Step 2, we determined that NF is True.\n- The conclusion is 'GM XOR NF', which becomes 'False XOR True'.\n- An exclusive or (XOR) statement is true if and only if one of its operands is true and the other is false.\n- 'False XOR True' evaluates to True.\n\nTherefore, the context entails the conclusion.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 892
+      "token_count": 2683
     },
     {
       "step": 5,
       "context": "Lilian has financial expertise.\nLilian speaks multiple languages.\nLilian works cross-culturally.\nLilian faces significant challenges.\nIf Lilian makes informed decisions and has financial expertise, then she can achieve economic success.\nLilian makes informed decisions or has strategic vision.\nIf Lilian speaks multiple languages, then she either works cross-culturally or is globally minded (or both).\nIf Lilian has strategic vision, then she will either succeed professionally or face significant challenges (but not both).\nIf Lilian thinks broadly, then she will succeed professionally.\nLilian is either narrowly focused or thinks broadly.\nIf Lilian works cross-culturally, then she is not globally minded.\nIf Lilian has strategic vision, then she is narrowly focused.\nIf Lilian achieves economic success, then she is globally minded.\nIf Lilian has strategic vision, then she does not succeed professionally.\nIf Lilian does not succeed professionally, then she does not think broadly.\nIf Lilian has strategic vision, then she does not think broadly.",
       "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's formalize the statements and their truth values based on the context.\n\nFactual Premises:\n- FE (Financial Expertise): True\n- ML (Speaks Multiple Languages): True\n- WC (Works Cross-Culturally): True\n- SC (Faces Significant Challenges): True\n\nConditional Premises (Rules):\n1. (ID & FE) -> ES\n2. ID v SV\n3. ML -> (WC v GM)\n4. SV -> (SP XOR SC)\n5. TB -> SP\n6. NF XOR TB\n7. WC -> ~GM\n8. SV -> NF\n9. ES -> GM\n10. SV -> ~SP\n11. ~SP -> ~TB\n12. SV -> ~TB\n\nConclusion to be evaluated: GM XOR NF (Lilian is either globally minded or narrowly focused, but not both).\n\nStep-by-step deduction:\n1.  **Determine the value of GM (globally minded):** We are given that WC is True. Rule 7 is WC -> ~GM. By Modus Ponens, since WC is True, ~GM must be True. Therefore, GM is False.\n\n2.  **Determine the value of ES (economic success):** We have determined GM is False. Rule 9 is ES -> GM. By Modus Tollens, since the consequent (GM) is False, the antecedent (ES) must also be False.\n\n3.  **Determine the value of ID (informed decisions):** We have determined ES is False. We are given FE is True. Rule 1 is (ID & FE) -> ES, which simplifies to ID -> ES because FE is True. By Modus Tollens, since the consequent (ES) is False, the antecedent (ID) must be False.\n\n4.  **Determine the value of SV (strategic vision):** We have determined ID is False. Rule 2 is ID v SV. For this 'or' statement to be true, SV must be True.\n\n5.  **Determine the value of NF (narrowly focused):** We have determined SV is True. Rule 8 is SV -> NF. By Modus Ponens, since the antecedent (SV) is True, the consequent (NF) must be True.\n\n6.  **Evaluate the conclusion:** We need to evaluate 'GM XOR NF'.\n    - From Step 1, we found GM is False.\n    - From Step 5, we found NF is True.\n    - The expression 'False XOR True' is True, because an exclusive 'or' is true if and only if exactly one of the operands is true.\n\nSince the conclusion can be logically deduced as True from the given context, the context entails the conclusion.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 1145
+      "token_count": 3704
     },
     {
       "step": 6,
       "context": "Lilian has financial expertise.\nLilian speaks multiple languages.\nLilian works cross-culturally.\nLilian faces significant challenges.\nIf Lilian makes informed decisions, then she can achieve economic success.\nLilian makes informed decisions or has strategic vision.\nIf Lilian speaks multiple languages, then she either works cross-culturally or is globally minded (or both).\nIf Lilian has strategic vision, then she will either succeed professionally or face significant challenges (but not both).\nIf Lilian thinks broadly, then she will succeed professionally.\nLilian is either narrowly focused or thinks broadly.\nIf Lilian works cross-culturally, then she is not globally minded.\nIf Lilian has strategic vision, then she is narrowly focused.\nIf Lilian achieves economic success, then she is globally minded.\nIf Lilian has strategic vision, then she does not succeed professionally.\nIf Lilian does not succeed professionally, then she does not think broadly.\nIf Lilian has strategic vision, then she does not think broadly.\nLilian thinks broadly if and only if she succeeds professionally.\nLilian does not make informed decisions.",
       "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's formalize the statements and rules from the context.\n\nFactual Premises:\n- FE: Lilian has financial expertise (True)\n- ML: Lilian speaks multiple languages (True)\n- WC: Lilian works cross-culturally (True)\n- SC: Lilian faces significant challenges (True)\n- ~ID: Lilian does not make informed decisions (True), which means ID is False.\n\nConditional Premises (Rules):\n1. ID -> ES\n2. ID v SV\n3. ML -> (WC v GM)\n4. SV -> (SP XOR SC)\n5. TB -> SP\n6. NF XOR TB\n7. WC -> ~GM\n8. SV -> NF\n9. ES -> GM\n10. SV -> ~SP\n11. ~SP -> ~TB\n12. SV -> ~TB\n13. TB <-> SP\n\nQuestion: Does the context entail the conclusion 'GM XOR NF' (Lilian is either globally minded or narrowly focused, but not both)?\n\nLet's deduce the truth values of GM and NF step-by-step.\n\nStep 1: Determine the truth value of GM (globally minded).\n- We are given as a fact that Lilian works cross-culturally (WC is True).\n- We have Rule 7: 'If Lilian works cross-culturally, then she is not globally minded' (WC -> ~GM).\n- By Modus Ponens, since WC is True, we can conclude that ~GM is True.\n- Therefore, GM is False.\n\nStep 2: Determine the truth value of NF (narrowly focused).\n- We are given as a fact that Lilian does not make informed decisions (~ID is True), so ID is False.\n- We have Rule 2: 'Lilian makes informed decisions or has strategic vision' (ID v SV).\n- Since we have deduced that ID is False, for this 'or' statement to be true, SV must be True.\n- We have Rule 8: 'If Lilian has strategic vision, then she is narrowly focused' (SV -> NF).\n- By Modus Ponens, since we have deduced that SV is True, we can conclude that NF is True.\n\nStep 3: Evaluate the conclusion 'GM XOR NF'.\n- From Step 1, we determined that GM is False.\n- From Step 2, we determined that NF is True.\n- The conclusion is 'GM XOR NF', which becomes 'False XOR True'.\n- An exclusive or (XOR) statement is true if and only if one of its operands is true and the other is false.\n- 'False XOR True' evaluates to True.\n\nTherefore, the context entails the conclusion.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1412
+      "token_count": 4573
     },
     {
       "step": 7,
       "context": "Lilian has financial expertise.\nLilian speaks multiple languages.\nLilian does not work cross-culturally.\nLilian faces significant challenges.\nIf Lilian makes informed decisions, then she can achieve economic success.\nLilian makes informed decisions or has strategic vision.\nIf Lilian speaks multiple languages, then she either works cross-culturally or is globally minded (or both).\nIf Lilian has strategic vision, then she will either succeed professionally or face significant challenges (but not both).\nIf Lilian thinks broadly, then she will succeed professionally.\nLilian is either narrowly focused or thinks broadly.\nIf Lilian works cross-culturally, then she is not globally minded.\nIf Lilian has strategic vision, then she is narrowly focused.\nIf Lilian achieves economic success, then she is globally minded.\nIf Lilian has strategic vision, then she does not succeed professionally.\nIf Lilian does not succeed professionally, then she does not think broadly.\nIf Lilian has strategic vision, then she does not think broadly.\nLilian thinks broadly if and only if she succeeds professionally.\nLilian does not make informed decisions.",
       "question": "Does the context entail the conclusion 'Lilian is either globally minded or narrowly focused, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's formalize the statements and rules from the context.\n\nFactual Premises:\n- FE: Lilian has financial expertise (True)\n- ML: Lilian speaks multiple languages (True)\n- WC: Lilian does not work cross-culturally (False)\n- SC: Lilian faces significant challenges (True)\n- ~ID: Lilian does not make informed decisions (True), which means ID is False.\n\nConditional Premises (Rules):\n1. ID -> ES\n2. ID v SV\n3. ML -> (WC v GM)\n4. SV -> (SP XOR SC)\n5. TB -> SP\n6. NF XOR TB\n7. WC -> ~GM\n8. SV -> NF\n9. ES -> GM\n... and others.\n\nQuestion: Does the context entail the conclusion 'GM XOR NF' (Lilian is either globally minded or narrowly focused, but not both)?\n\nLet's deduce the truth values of GM and NF step-by-step.\n\nStep 1: Determine the truth value of GM (globally minded).\n- We are given that Lilian speaks multiple languages (ML is True).\n- We are given that Lilian does not work cross-culturally (WC is False).\n- We have Rule 3: 'If Lilian speaks multiple languages, then she either works cross-culturally or is globally minded (or both)' (ML -> (WC v GM)).\n- Since ML is True, the consequent (WC v GM) must be True.\n- We know WC is False, so the expression becomes (False v GM).\n- For this 'or' statement to be True, GM must be True.\n- Therefore, Lilian is globally minded (GM is True).\n\nStep 2: Determine the truth value of NF (narrowly focused).\n- We are given as a fact that Lilian does not make informed decisions (ID is False).\n- We have Rule 2: 'Lilian makes informed decisions or has strategic vision' (ID v SV).\n- Since ID is False, for this 'or' statement to be true, SV must be True.\n- We have Rule 8: 'If Lilian has strategic vision, then she is narrowly focused' (SV -> NF).\n- By Modus Ponens, since SV is True, we can conclude that NF must be True.\n- Therefore, Lilian is narrowly focused (NF is True).\n\nStep 3: Evaluate the conclusion 'GM XOR NF'.\n- The conclusion is 'Lilian is either globally minded or narrowly focused, but not both', which is the exclusive or (XOR) operation.\n- From Step 1, we determined that GM is True.\n- From Step 2, we determined that NF is True.\n- The conclusion becomes 'True XOR True'.\n- An exclusive or statement is true only if exactly one of its operands is true. Since both are true, the expression 'True XOR True' evaluates to False.\n\nSince the conclusion is demonstrably False based on the premises, the context does not entail the conclusion.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1695
+      "token_count": 5449
     }
   ]
 }

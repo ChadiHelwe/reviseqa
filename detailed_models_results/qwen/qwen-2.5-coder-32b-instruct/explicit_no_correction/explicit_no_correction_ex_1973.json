@@ -6,7 +6,7 @@
     "include_reasoning": true,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.2857142857142857
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Removed rules:\n- For all x, if x is a pioneering scientist, then x makes groundbreaking discoveries and x earns recognition.\n\nAdded rules:\n- For all x, if x is a pioneering scientist, then x makes groundbreaking discoveries and x does not earn recognition.\n- If Kylie thinks critically and Kylie analyzes data, then Kylie is a pioneering scientist.",
       "question": "Does the context entail the conclusion 'Kylie is not a pioneering scientist.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Kylie is curious. If curious, she analyzes data. She cannot solve problems. From the 'but not both' rule, she must both think critically and analyze data to avoid contradiction. Given the added rule: if Kylie thinks critically and analyzes data, she is a pioneering scientist. Thus, she meets the condition to be a pioneering scientist. The new rule requires PD scientists to not earn recognition (she doesn't) and to make discoveries (not confirmed, but the rule doesn't tie this to her actions). Since the second added rule directly links the two conditions to being a PD scientist, the context entails she *is* one. Therefore, the conclusion 'Kylie is not a pioneering scientist' is false.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules"
@@ -41,9 +41,9 @@
       "step": 2,
       "context": "Removed rules:\n- If Kylie either thinks critically or analyzes data (but not both), then she can solve problems.\n\nAdded rules:\n- Either it is not the case that Kylie either thinks critically or analyzes data (but not both), or Kylie can solve problems.\n\nAdded facts:\n- Kylie analyzes data.\n- Kylie thinks critically.",
       "question": "Does the context entail the conclusion 'Kylie is not a pioneering scientist.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Kylie analyzes data and thinks critically, satisfying both conditions. The added rule (OR statement) is satisfied because the left side (\u00acXOR) is true. However, no rule in the current context links her traits to being a pioneering scientist. The previous added rules (e.g., 'if thinks critically and analyzes data \u2192 pioneering scientist') are not part of this context. Without such a rule, the context neither confirms nor denies her status as a pioneering scientist. Thus, the conclusion is uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -51,15 +51,15 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 532
+      "token_count": 2638
     },
     {
       "step": 3,
       "context": "Removed rules:\n- Either it is not the case that Kylie either thinks critically or analyzes data (but not both), or Kylie can solve problems.\n\nAdded rules:\n- Either (Kylie does not think critically and Kylie does not analyze data) or (Kylie thinks critically and Kylie analyzes data) or Kylie can solve problems.\n\nAdded facts:\n- Kylie thinks critically and Kylie analyzes data.\n- Kylie makes groundbreaking discoveries.\n- Kylie does not earn recognition.\n- It is not the case that Kylie either thinks critically or analyzes data (but not both).",
       "question": "Does the context entail the conclusion 'Kylie is not a pioneering scientist.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The current context includes facts that Kylie thinks critically, analyzes data, makes groundbreaking discoveries, and does not earn recognition. The added rule is satisfied via (T \u2227 A) being true. However, no rule explicitly links these traits to being a pioneering scientist. Without a rule stating, for example, that a pioneering scientist requires these attributes, the context does not provide sufficient information to confirm or deny her status. Thus, the conclusion is uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -67,15 +67,15 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 652
+      "token_count": 4069
     },
     {
       "step": 4,
       "context": "Removed facts:\n- Kylie analyzes data.\n- Kylie thinks critically.\n- Kylie thinks critically and Kylie analyzes data.\n\nRemoved rules:\n- It is not the case that Kylie either thinks critically or analyzes data (but not both).\n- If Kylie is curious, then she has passion and analyzes data.\n\nAdded rules:\n- Either Kylie does not think critically or Kylie analyzes data.\n- Either Kylie does not analyze data or Kylie thinks critically.\n- If Kylie does not think critically and Kylie does not analyze data, then Kylie is not a pioneering scientist.",
       "question": "Does the context entail the conclusion 'Kylie is not a pioneering scientist.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The added rules imply T \u21d4 A (T = thinks critically, A = analyzes data). The third rule (\u00acT \u2227 \u00acA \u2192 \u00acS) only concludes \u00acS if both T and A are false. However, since the context removes all facts determining T or A, their truth values remain unknown. Thus, S could be true (if T and A are true) or false (if both are false), making the conclusion uncertain.",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -83,50 +83,50 @@
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 816
+      "token_count": 5606
     },
     {
       "step": 5,
       "context": "Added facts:\n- Kylie thinks critically if and only if Kylie analyzes data.",
       "question": "Does the context entail the conclusion 'Kylie is not a pioneering scientist.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The added fact T \u21d4 A (Kylie thinks critically iff she analyzes data) allows T and A to be both true or both false. The only rule affecting S (pioneering scientist) is (\u00acT \u2227 \u00acA) \u2192 \u00acS. Since T and A's status is undetermined (either both true or both false), we cannot confirm \u00acT \u2227 \u00acA as true. Thus, the conclusion is uncertain.",
       "correct": false,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 978
+      "token_count": 6737
     },
     {
       "step": 6,
       "context": "Removed rules:\n- If Kylie is curious, then she has passion and Kylie does not analyze data.\n\nAdded rules:\n- If Kylie can drive innovation, then she thinks critically.",
       "question": "Does the context entail the conclusion 'Kylie is not a pioneering scientist.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The context includes the rule 'if Kylie can drive innovation, then she thinks critically' and establishes that T \u21d4 A (previously added). Since Kylie drives innovation, she thinks critically and analyzes data (via T \u21d4 A). However, the rule linking 'thinks critically and analyzes data \u2192 pioneering scientist' is not in the current context. Without this, we cannot determine her pioneering status. The conclusion is uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 1048
+      "token_count": 7259
     },
     {
       "step": 7,
       "context": "Added facts:\n- Kylie thinks critically.\n- Kylie analyzes data.\n- Kylie is a pioneering scientist.",
       "question": "Does the context entail the conclusion 'Kylie is not a pioneering scientist.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "The context explicitly states that Kylie is a pioneering scientist. The conclusion 'Kylie is not a pioneering scientist' directly contradicts this fact. No conflicting information or rules are present in the context. Therefore, the conclusion is false.",
+      "correct": true,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1138
+      "token_count": 8034
     }
   ]
 }

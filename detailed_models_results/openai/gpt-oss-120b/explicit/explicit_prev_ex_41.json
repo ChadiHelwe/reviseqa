@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit",
+    "chain_index": 376,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Cali does not play a sport.\nCali uses ice.\nCali seeks treatment.\nCali needs rehabilitation.\nCali is either an athlete or plays a sport.\nIf Cali is an athlete, then she either sees a doctor or uses ice, but not both.\nIf Cali experiences pain or has swelling, then she will see a doctor.\nIf Cali either experiences pain or has an injury (but not both), then she seeks treatment.\nIf Cali has an injury or needs rehabilitation, then she takes etodolac.\nIf Cali takes etodolac, then she manages her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Cali does not play a sport.. Cali is either an athlete or plays a sport.. Therefore, Cali is an athlete.. Cali is an athlete. Cali uses ice.. If Cali is an athlete, then she either sees a doctor or uses ice, but not both.. Therefore, Cali does not see a doctor.. Cali does not see a doctor.. If Cali experiences pain or has swelling, then she will see a doctor.. Therefore, Cali does not experience pain.. Cali does not experience pain. Cali seeks treatment.. If Cali either experiences pain or has an injury (but not both), then she seeks treatment.. Therefore, . Cali needs rehabilitation.. If Cali has an injury or needs rehabilitation, then she takes etodolac.. Therefore, Cali takes etodolac.. Cali takes etodolac.. If Cali takes etodolac, then she manages her pain.. Therefore, Cali does not manage her pain..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Cali takes etodolac, then she manages her pain.\n\nAdded rules:\n- If Cali takes etodolac, then she does not manage her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context states that Cali needs rehabilitation. The rule 'If Cali has an injury or needs rehabilitation, then she takes etodolac' allows us to infer that Cali takes etodolac. The added rule 'If Cali takes etodolac, then she does not manage her pain' then directly yields the conclusion that Cali does not manage her pain. Therefore, the conclusion is entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 433
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Cali experiences pain or has swelling, then she will see a doctor.\n- If Cali has an injury or needs rehabilitation, then she takes etodolac.\n- If Cali takes etodolac, then she does not manage her pain.\n\nAdded rules:\n- Either Cali does not experience pain and does not have swelling, or she sees a doctor.\n- Either Cali does not have an injury and does not need rehabilitation, or she takes etodolac.\n- Either Cali does not take etodolac, or she does not manage her pain.\n- If Cali manages her pain, then she does not take etodolac.\n\nAdded facts:\n- Either Cali needs rehabilitation, or she does not need rehabilitation.\n- Either Cali needs rehabilitation, or she has an injury.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the fact that either Cali needs rehabilitation or she has an injury (rehab \u2228 injury) and the rule that either Cali does not have an injury and does not need rehabilitation, or she takes etodolac ((\u00acinjury \u2227 \u00acrehab) \u2228 takesEtodolac), we can rewrite the latter as (injury \u2228 rehab) \u2192 takesEtodolac. Since rehab \u2228 injury holds, we infer that Cali takes etodolac. The rule (\u00actakesEtodolac) \u2228 (\u00acmanagesPain) is equivalent to takesEtodolac \u2192 \u00acmanagesPain. Given that Cali takes etodolac, we conclude that Cali does not manage her pain. Therefore the conclusion is entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 612
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Either Cali does not have an injury and does not need rehabilitation, or she takes etodolac.\n\nAdded rules:\n- Either Cali manages her pain, or she is not an athlete.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts we know Cali does not play a sport and she is either an athlete or plays a sport, so she must be an athlete. The added rule 'Either Cali manages her pain, or she is not an athlete' together with the fact that she is an athlete forces the other disjunct to be true, i.e., Cali manages her pain. This contradicts the statement 'Cali does not manage her pain'. Therefore the conclusion is not entailed; in fact the opposite is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 999
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Cali is an athlete, then she manages her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the original facts we have that Cali does not play a sport and that she is either an athlete or plays a sport. Hence she must be an athlete. The newly added rule 'If Cali is an athlete, then she manages her pain' therefore entails that Cali manages her pain. No rule in the current context derives that she does not manage her pain (the only rule that could give \u00acmanagesPain requires Cali to take etodolac, which is not provable). Thus the conclusion 'Cali does not manage her pain' is contradicted by the derived fact that she does manage her pain, so it is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1199
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Cali does not manage her pain, then she is not an athlete.\n- Either Cali manages her pain, or she manages her pain.\n- Either Cali manages her pain, or she does not manage her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have that Cali does not play a sport and that she is either an athlete or plays a sport, so she must be an athlete. The added rule \"If Cali is an athlete, then she manages her pain\" therefore gives us that Cali manages her pain. The rule \"If Cali does not manage her pain, then she is not an athlete\" together with the fact that she is an athlete also implies she does manage her pain. No rule in the current context derives that she does not manage her pain. Hence the conclusion 'Cali does not manage her pain' is not entailed (in fact the opposite is entailed).",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1401
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Cali does not manage her pain, then she is not an athlete.\n- Either Cali manages her pain, or she manages her pain.\n\nAdded rules:\n- If Cali is an athlete, then she does not manage her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the fact that Cali does not play a sport and the fact that she is either an athlete or plays a sport, we infer that Cali is an athlete. The added rule \"If Cali is an athlete, then she does not manage her pain\" therefore gives us \u00acmanagePain. Hence the statement \"Cali does not manage her pain\" is provable from the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1637
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Either Cali manages her pain, or she is not an athlete.\n\nAdded rules:\n- Either Cali manages her pain, or she is an athlete.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have the fact \u00acplaySport and the rule athlete \u2228 playSport, allowing us to infer that Cali is an athlete. The context includes two rules concerning an athlete: (1) If Cali is an athlete, then she manages her pain; (2) If Cali is an athlete, then she does not manage her pain. Both conclusions are therefore derivable. Since \u00acmanagePain is derivable, the statement 'Cali does not manage her pain' is entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1820
+    }
+  ]
+}

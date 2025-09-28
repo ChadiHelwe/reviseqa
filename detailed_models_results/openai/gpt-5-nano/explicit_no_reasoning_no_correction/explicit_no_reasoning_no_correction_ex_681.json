@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.14285714285714285
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Added rules:\n- If Chana pursues her passion, then she is either determined or overcomes adversity, or both.\n- Either Chana is not determined, or she either achieves recognition or inspires others, but not both.\n\nAdded facts:\n- Chana does not foster collaboration.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "From the added facts and rules: Chana does not foster collaboration (C = false). By the XOR rule between mentors and drives innovation (with drives innovation true), mentors must be false, yielding leads by example (L = true). The rule on sets goals XOR pursues passion implies that since sets goals is true and Mot is false, pursues passion must also be true. Pursuing passion then makes D true (determined). From D, D -> (R XOR I). The rule that inspires others XOR leads by example, combined with L = true, gives I = false. Therefore R XOR I reduces to R, hence R = true. Thus Chana achieves recognition is entailed.",
+      "correct": true,
       "tags": [
         "added_rules",
         "added_facts"
@@ -41,23 +41,23 @@
       "step": 2,
       "context": "Added facts:\n- Chana pursues her passion.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "From the added fact, P is true. Rule: P -> Det or OA, so at least one of Det, OA is true. Consider a model where Det is true and Insp is true. Then Det -> Rec XOR Insp implies Rec must be false (since Insp is true). Also Insp true implies LbE is false (from Insp XOR LbE). This model satisfies all rules (we can assign the remaining variables to meet XOR constraints, e.g., choose Mentor and DI to make 3 vacuously true, and set EX or Collab to satisfy 2, etc.). Therefore Rec is not forced to be true; the conclusion 'Chana achieves recognition' is not entailed by the context.",
       "correct": false,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 379
+      "token_count": 514
     },
     {
       "step": 3,
       "context": "Removed rules:\n- If Chana mentors her peers, then she either pursues excellence or fosters collaboration (but not both).\n\nAdded rules:\n- Chana either mentors her peers or drives innovation if and only if she leads by example.\n\nAdded facts:\n- Chana mentors her peers.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "From the added fact M = true and the rule L iff (M XOR D), L is true exactly when D is false. So possible combinations are (D=false, L=true) or (D=true, L=false). There is no rule in the given context that ties Rec (recognition) to M, D, or L, so Rec is unconstrained. Therefore 'Chana achieves recognition' is not entailed (nor contradicted) by the context.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -65,15 +65,15 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 442
+      "token_count": 716
     },
     {
       "step": 4,
       "context": "Removed rules:\n- Everyone who pursues their passion is either determined or overcomes adversity (or both).\n- If Chana pursues her passion, then she is either determined or overcomes adversity, or both.\n\nAdded rules:\n- If Chana pursues her passion then she is determined.\n\nAdded facts:\n- Chana leads by example.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "With the current rules, the only implication is P -> D, and the sole fact is L (leads by example). There is no rule connecting recognition (Rec) to P, D, or L, nor any rule giving not Rec. Hence, whether Chana achieves recognition is neither entailed nor contradicted by the context.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -81,51 +81,51 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 552
+      "token_count": 916
     },
     {
       "step": 5,
       "context": "Removed facts:\n- Chana leads by example.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The context contains no facts or rules about Chana's recognition. With nothing linking recognition to other predicates, the statement 'Chana achieves recognition' is neither entailed nor contradicted by the context.",
       "correct": false,
       "tags": [
         "removed_facts"
       ],
       "is_demonstration": false,
-      "token_count": 673
+      "token_count": 1099
     },
     {
       "step": 6,
       "context": "Added rules:\n- Either it is not the case that Chana either mentors her peers or drives innovation (but not both), or she leads by example.\n- Either it is not the case that Chana either sets goals or pursues her passion (but not both), or she stays motivated.\n- If Chana is not determined, then she does not pursue her passion.\n\nAdded facts:\n- It is not the case that Chana either sets goals or pursues her passion (but not both).\n- It is not the case that Chana either mentors her peers or drives innovation (but not both).",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The added facts constrain XOR-like predicates: S XOR P is false (not (S XOR P) is true) and M XOR D is false (not (M XOR D) is true). The third rule only says if not Det then not P, but there is no rule connecting recognition (Rec) to any of these predicates, nor a fact about Rec. Therefore the context neither entails nor contradicts 'Chana achieves recognition'.",
       "correct": false,
       "tags": [
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 735
+      "token_count": 1197
     },
     {
       "step": 7,
       "context": "Removed facts:\n- Chana mentors her peers.\n- It is not the case that Chana either mentors her peers or drives innovation (but not both).\n\nAdded facts:\n- Chana does not mentor her peers.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The context provides only that Chana does not mentor her peers. There are no rules or facts linking recognition (Rec) to mentoring or any other predicate in this context, so Rec is neither entailed nor contradicted.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 908
+      "token_count": 1454
     }
   ]
 }

@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 70,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kayleigh volunteers outdoors.\nKayleigh educates others.\nKayleigh does not document species.\nKayleigh does not conserve habitats.\nIf Kayleigh volunteers outdoors, then she will either raise awareness or educate others (but not both).\nIf Kayleigh cares for nature, then she will raise awareness about its importance.\nIf someone protects endangered species, then they care for nature.\nIf Kayleigh either documents species or studies animal behavior (but not both), then she conserves habitats.\nIf Kayleigh studies animal behavior or appreciates wildlife, then she will protect endangered species.\nKayleigh either appreciates wildlife or supports conservation (or both).",
+      "question": "Does the context entail the conclusion 'Kayleigh supports conservation.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Kayleigh cares for nature, then she will raise awareness about its importance.\n\nAdded rules:\n- If Kayleigh cares for nature, then she will not raise awareness about its importance.\n- If Kayleigh appreciates wildlife, then she does not support conservation.\n\nAdded facts:\n- Kayleigh appreciates wildlife.",
+      "question": "Does the context entail the conclusion 'Kayleigh supports conservation.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We have the fact that Kayleigh appreciates wildlife (A). The added rule states that if Kayleigh appreciates wildlife, then she does not support conservation (\u00acS). Therefore we can directly infer \u00acS. Additionally, the original disjunction \"Kayleigh either appreciates wildlife or supports conservation (or both)\" is satisfied by A, but does not force S. Hence the context entails that she does NOT support conservation, making the statement \"Kayleigh supports conservation\" false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 228
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Kayleigh does not support conservation.",
+      "question": "Does the context entail the conclusion 'Kayleigh supports conservation.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context explicitly states the fact that Kayleigh does not support conservation. This directly contradicts the conclusion that she supports conservation, so the conclusion is not entailed and is false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 438
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Kayleigh does not support conservation.\n\nRemoved rules:\n- Kayleigh appreciates wildlife.",
+      "question": "Does the context entail the conclusion 'Kayleigh supports conservation.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the remaining facts and rules, we have V (volunteers) and E (educates), which via the exclusive-or rule yields that Kayleigh does not raise awareness. The rule that caring for nature implies not raising awareness does not let us infer caring for nature. The exclusivity rule about documenting species or studying animal behavior, combined with the fact that she does not document species and does not conserve habitats, forces that she does not study animal behavior. The rule that studying animal behavior or appreciating wildlife leads to protecting endangered species therefore gives no conclusion because both antecedents are false (we have no evidence she appreciates wildlife). The disjunction \"appreciates wildlife or supports conservation\" together with the added rule \"if she appreciates wildlife then she does not support conservation\" leaves two consistent possibilities: either she supports conservation and does not appreciate wildlife, or she does not support conservation and does appreciate wildlife. Both are compatible with the rest of the knowledge, so we cannot determine whether she supports conservation. Hence the conclusion is not entailed nor contradicted, making it uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 532
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Kayleigh does not appreciate wildlife.\n\nAdded rules:\n- If Kayleigh educates others, then she appreciates wildlife.",
+      "question": "Does the context entail the conclusion 'Kayleigh supports conservation.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Current facts: Kayleigh volunteers outdoors (V) and educates others (E). The rule E -> appreciates wildlife (A) gives A. The rule (B OR A) -> protects endangered species (P) with A true yields P, and P -> cares for nature (C) yields C. The rule C -> not raise awareness (\u00acR) and V -> (R XOR E) together with E true give \u00acR, consistent. The rule ((D XOR B) -> conserves habitats) combined with \u00acD and \u00acconserves habitats forces B false. The added rule A -> not support conservation (\u00acS) was removed in earlier modifications, so it is no longer present. Thus we have no rule linking A to \u00acS. The only remaining relevant rule is the disjunction A OR S, which is satisfied by A true, leaving S undetermined. Therefore the context does not entail that Kayleigh supports conservation, nor does it entail the opposite; the status of S is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 818
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Kayleigh supports conservation, then she does not appreciate wildlife.\n\nAdded facts:\n- Kayleigh appreciates wildlife.\n- Kayleigh does not study animal behavior.",
+      "question": "Does the context entail the conclusion 'Kayleigh supports conservation.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given the current facts: Kayleigh volunteers (V), educates (E), does not document species (\u00acD), does not conserve habitats (\u00acH), appreciates wildlife (A), and does not study animal behavior (\u00acB). Rules: V -> (R XOR E) forces raise awareness R to be false because E is true. From (B OR A) -> P and A true, we infer P. P -> C gives C true. C -> \u00acR (already satisfied). The rule A -> \u00acS (added earlier) gives \u00acS because A is true. Thus Kayleigh does not support conservation. Therefore the conclusion 'Kayleigh supports conservation' is not entailed; its negation is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1115
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Kayleigh protects endangered species.\n- Kayleigh cares for nature.\n- Kayleigh does not raise awareness about its importance.",
+      "question": "Does the context entail the conclusion 'Kayleigh supports conservation.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The current facts include that Kayleigh appreciates wildlife (A). One of the rules in the context is 'If Kayleigh appreciates wildlife, then she does not support conservation' (A -> \u00acS). Therefore we can directly infer \u00acS, i.e., Kayleigh does not support conservation. Since the negation of the conclusion is entailed, the statement 'Kayleigh supports conservation' is false in this context.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1363
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- Kayleigh appreciates wildlife if and only if she does not support conservation.",
+      "question": "Does the context entail the conclusion 'Kayleigh supports conservation.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We have the fact that Kayleigh appreciates wildlife (A). The newly added biconditional states that Kayleigh appreciates wildlife if and only if she does not support conservation, i.e., A \u2194 \u00acS. From A being true, we infer \u00acS (Kayleigh does not support conservation). Therefore the statement \"Kayleigh supports conservation\" is contradicted by the context, making it false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1541
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit",
+    "chain_index": 125,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Leonardo does not pursue excellence.\nLeonardo is ambitious.\nLeonardo does not think critically.\nLeonardo is a perfectionist.\nLeonardo either values work-life balance or pursues excellence.\nLeonardo either values work-life balance or achieves success, but not both.\nIf Leonardo is ambitious, then he either sets lofty goals or thinks critically (but not both).\nIf Leonardo demands quality, then he will achieve success.\nIf Leonardo either sets lofty goals or demands quality (but not both), then he has high expectations.\nIf someone is a perfectionist, then they struggle with balance in their life.\nIf Leonardo has high expectations, then he struggles with balance and is detached from his passion.\nLeonardo is either dedicated to his passion or detached from his passion, but not both.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Leonardo does not pursue excellence.. Leonardo either values work-life balance or pursues excellence.. Therefore, Leonardo values work-life balance.. Leonardo values work-life balance.. Leonardo either values work-life balance or achieves success, but not both.. Therefore, Leonardo does not achieve success.. Leonardo is ambitious. Leonardo does not think critically.. If Leonardo is ambitious, then he either sets lofty goals or thinks critically (but not both).. Therefore, Leonardo sets lofty goals.. Leonardo does not achieve success.. If Leonardo demands quality, then he will achieve success.. Therefore, Leonardo does not demand quality.. Leonardo sets lofty goals. Leonardo does not demand quality.. If Leonardo either sets lofty goals or demands quality (but not both), then he has high expectations.. Therefore, Leonardo has high expectations.. Leonardo is a perfectionist.. If someone is a perfectionist, then they struggle with balance in their life.. Therefore, Leonardo struggles with balance.. Leonardo has high expectations. Leonardo struggles with balance.. If Leonardo has high expectations, then he struggles with balance and is detached from his passion.. Therefore, Leonardo is detached from his passion.. Leonardo is detached from his passion.. Leonardo is either dedicated to his passion or detached from his passion, but not both.. Therefore, Leonardo is not dedicated to his passion..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Leonardo demands quality, then he will achieve success.\n\nAdded rules:\n- If Leonardo does not achieve success, then he does not demand quality.\n\nAdded facts:\n- Leonardo values work-life balance.\n- Leonardo does not achieve success.\n- Leonardo struggles with balance in his life.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts, Leonardo is ambitious and does not think critically. Rule 7 states that an ambitious person either sets lofty goals or thinks critically, but not both. Since he does not think critically, he must set lofty goals. Rule 13 says that if Leonardo does not achieve success (fact), then he does not demand quality. Thus, Leonardo sets lofty goals and does not demand quality, satisfying the exclusive-or condition of rule 9, so he has high expectations. Rule 11 then yields that high expectations imply Leonardo struggles with balance (already given) and is detached from his passion. Finally, rule 12 says Leonardo is either dedicated to his passion or detached from his passion, but not both. Since he is detached, he cannot be dedicated. Therefore, the conclusion \"Leonardo is not dedicated to his passion\" follows from the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 514
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Leonardo does not think critically.\n\nAdded facts:\n- Leonardo thinks critically.\n- Leonardo is not detached from his passion.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context provides the fact that Leonardo is not detached from his passion. Rule 12 states that Leonardo is either dedicated to his passion or detached from his passion, but not both (exclusive-or). Since 'detached' is false, the exclusive-or forces 'dedicated' to be true. Therefore Leonardo is dedicated to his passion, which directly contradicts the conclusion 'Leonardo is not dedicated to his passion.' Hence the conclusion is false given the context.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 795
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Leonardo is not detached from his passion.\n\nRemoved rules:\n- If Leonardo does not achieve success, then he does not demand quality.\n\nAdded rules:\n- If Leonardo does not achieve success, then he demands quality.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Leonardo is ambitious and thinks critically (fact). By the rule for ambitious people, he must not set lofty goals (exclusive-or). He does not achieve success (fact), and the new rule says this implies he demands quality. Therefore, he both does not set lofty goals and does demand quality, which satisfies the exclusive-or condition of the rule that yields high expectations. High expectations then imply he struggles with balance and is detached from his passion. The exclusive-or rule about dedication states he can be either dedicated or detached, but not both; since he is detached, he cannot be dedicated. Hence Leonardo is not dedicated to his passion, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 965
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Leonardo thinks critically.\n\nAdded rules:\n- If Leonardo is ambitious, then he either sets lofty goals or does not think critically (but not both).\n- If Leonardo has high expectations, then he struggles with balance and is not detached from his passion.\n\nAdded facts:\n- Leonardo does not think critically.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have Leonardo is ambitious and does not think critically. The original rule (R3) says an ambitious Leonardo either sets lofty goals or thinks critically, but not both. Since he does not think critically, he must set lofty goals. The rule added in step 4 (R4c) states that if Leonardo does not achieve success (a fact), then he demands quality. Hence Leonardo both sets lofty goals and demands quality, violating the exclusive-or condition required by the rule that yields high expectations (R5). Therefore we cannot derive that Leonardo has high expectations. Without high expectations we cannot use the rules that would give either \"detached\" or \"not detached\". The exclusive\u2011or rule (R8) only tells us that Leonardo is either dedicated or detached, but not which one. Since we have no way to determine which side holds, we cannot conclude that Leonardo is not dedicated to his passion. Thus the statement is not entailed and remains uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1196
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Leonardo has high expectations, then he struggles with balance and is not detached from his passion.\n\nAdded rules:\n- If Leonardo struggles with balance in his life, then he is detached from his passion.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts we have: Leonardo is ambitious (F2) and does not achieve success (F8). Rule R7 (If not achieve success then demands quality) gives that Leonardo demands quality. Ambitious triggers two exclusive-or rules: R1 (sets lofty goals XOR thinks critically) and R8 (sets lofty goals XOR does not think critically). We have both \"Leonardo thinks critically\" (F10) and \"Leonardo does not think critically\" (F12). Using R8, the true side is \"does not think critically\", thus \"sets lofty goals\" must be false to satisfy the exclusive\u2011or. Hence Leonardo does not set lofty goals. Now we have exactly one of the two conditions for high expectations: demands quality (true) and sets lofty goals (false). By R3 this yields high expectations. Rule R5 states that high expectations imply Leonardo is detached from his passion. Finally, rule R6 says Leonardo is either dedicated or detached, but not both; since he is detached, he cannot be dedicated. Therefore, the conclusion \"Leonardo is not dedicated to his passion\" follows from the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1508
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Leonardo has high expectations and Leonardo is not dedicated to his passion.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly includes the fact 'Leonardo is not dedicated to his passion.' Since the conclusion is exactly this statement, it is directly entailed by the given information.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1850
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Leonardo has high expectations and Leonardo is not dedicated to his passion.\n\nRemoved rules:\n- If Leonardo struggles with balance in his life, then he is detached from his passion.\n\nAdded rules:\n- If Leonardo struggles with balance in his life, then he is not detached from his passion.",
+      "question": "Does the context entail the conclusion 'Leonardo is not dedicated to his passion.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have Leonardo is ambitious and both thinks critically and does not think critically. The rule for ambitious (R1) forces that exactly one of 'sets lofty goals' or 'thinks critically' holds; since 'thinks critically' is true, we infer Leonardo does NOT set lofty goals. The rule added in step four gives that because Leonardo does not achieve success, he demands quality. Therefore the exclusive-or condition of rule R3 (sets lofty goals XOR demands quality) is satisfied, giving Leonardo high expectations. Rule R5 then yields that Leonardo is detached from his passion. Additionally, the fact that Leonardo struggles with balance (from step two) and rule R9 give that Leonardo is NOT detached from his passion. Hence both 'detached' and 'not detached' are derivable. The original exclusive\u2011or rule (R6) states Leonardo is either dedicated or detached, but not both. Since 'detached' is derivable, the exclusive\u2011or forces that Leonardo is NOT dedicated to his passion. Therefore the conclusion \"Leonardo is not dedicated to his passion\" is entailed by the context.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1970
+    }
+  ]
+}

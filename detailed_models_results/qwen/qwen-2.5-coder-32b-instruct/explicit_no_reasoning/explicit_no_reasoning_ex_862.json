@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": true,
     "total_steps": 8,
-    "final_accuracy": 0.14285714285714285
+    "final_accuracy": 0.42857142857142855
   },
   "predictions": [
     {
@@ -28,7 +28,7 @@
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
       "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "The context now includes the rule that if someone is curious, they are not knowledgeable. Since Tripp is explicitly stated to be curious, this rule directly applies. Thus, Tripp cannot be knowledgeable, making the conclusion 'Tripp is knowledgeable' false.",
+      "reasoning": "The context includes the added rule: 'For all x, if x is curious, then x is not knowledgeable.' Since Tripp is stated to be curious, this rule directly implies he is not knowledgeable. Therefore, the conclusion 'Tripp is knowledgeable' is false.",
       "correct": true,
       "tags": [
         "removed_facts",
@@ -42,38 +42,38 @@
       "step": 2,
       "context": "Removed facts:\n- Tripp is curious.\n\nAdded rules:\n- If Tripp seeks adventure, then Tripp is not curious.",
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
-      "prediction": "C) Uncertain",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "Tripp 'seeks adventure or takes risks.' The added rule states if he seeks adventure, he is not curious. The original rule requires Tripp to be curious or knowledgeable. If Tripp seeks adventure, he must be knowledgeable (not curious). If he does not seek adventure but takes risks, his curiosity status is undetermined, making his knowledge uncertain. Since two possibilities exist (knowledgeable if seeks adventure, uncertain otherwise), the conclusion 'Tripp is knowledgeable' cannot be definitively determined.",
+      "reasoning": "The previous rule about curiosity implying not being knowledgeable was removed when 'Tripp is curious' was removed. The new rule connects seeking adventure to not being curious, but there's no direct information about Tripp's knowledge state. Without a rule or fact linking remaining attributes (e.g., seeking adventure, cautious, impulsive) to knowledge, the conclusion remains uncertain.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 685
+      "token_count": 750
     },
     {
       "step": 3,
       "context": "Added rules:\n- For all x, if x is impulsive then x takes risks.\n- For all x, if x is impulsive then x faces challenges.\n- If Tripp is curious, then Tripp is passionate.\n- If Tripp is curious, then Tripp is adventurous.",
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
-      "prediction": "A) True",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "Tripp is either impulsive or responsible. If impulsive, he is adventurous (not cautious) and must be either curious or knowledgeable (or both). If curious, the new rules (curious \u2192 adventurous and passionate) are satisfied, and he can still be knowledgeable. If not curious, the rule requires him to be knowledgeable. If responsible, he is cautious, not adventurous, and the 'curious \u2192 adventurous' rule makes being curious impossible, forcing him to be knowledgeable. Thus, in all cases, Tripp must be knowledgeable.",
-      "correct": false,
+      "reasoning": "The key is the rule cascade: If Tripp is curious \u2192 he is passionate \u2192 he is dedicated to his work. However, the original context stated 'Tripp is not dedicated to his work.' This creates a contradiction: being curious would force passion (and thus dedication), conflicting with the known fact of Tripp not being dedicated. Therefore, Tripp cannot be curious, and since he must be either curious or knowledgeable (or both), he must be knowledgeable. The added context (if impulsive, takes risks/faces challenges) does not negate this chain of reasoning.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 4751
+      "token_count": 1462
     },
     {
       "step": 4,
       "context": "Removed rules:\n- If Tripp either seeks adventure or embraces uncertainty (but not both), then he lives life on his own terms.\n\nAdded rules:\n- If Tripp takes risks and faces challenges, then Tripp is curious.\n\nAdded facts:\n- Tripp is adventurous.",
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Tripp's being adventurous implies he is not cautious (since 'adventurous or cautious'), making him impulsive (since if responsible, he would be cautious). Impulsive leads to taking risks and facing challenges, triggering the new rule that he is curious. From prior rules, being curious implies passionate and adventurous. However, the initial contradiction (passionate \u2192 dedicated) no longer applies as 'Tripp is not dedicated' was removed. Now, under the current context, 'Tripp is either curious or knowledgeable (or both)' allows for both. Since Tripp is explicitly curious, knowledge status remains undetermined (could coexist or not). Thus, the conclusion cannot be entailed.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -81,52 +81,52 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 8177
+      "token_count": 6425
     },
     {
       "step": 5,
       "context": "Removed facts:\n- Tripp is adventurous.\n\nAdded rules:\n- If Tripp is cautious, then he is responsible.\n- If Tripp is responsible, then he seeks adventure.\n- If Tripp takes risks, then he faces challenges.\n\nAdded facts:\n- Tripp is not adventurous.",
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Tripp is not adventurous, forcing him to be cautious (since 'adventurous or cautious'). This, along with the new rule 'cautious \u2192 responsible', makes Tripp responsible. From original rules, 'responsible \u2192 not adventurous' (aligned). The rule 'curious \u2192 adventurous and passionate' becomes infeasible since Tripp is not adventurous. Thus, Tripp cannot be curious. Given 'Tripp is either curious or knowledgeable (or both)', and he is not curious, knowledge is entailed. The prior claim of 'False' likely stems from conflicting steps or rule misapplication.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 8302
+      "token_count": 9040
     },
     {
       "step": 6,
       "context": "Removed facts:\n- Tripp is not adventurous.\n\nAdded facts:\n- Tripp is impulsive.",
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Tripp is impulsive, so he takes risks and faces challenges. The rule 'taking risks and facing challenges \u2192 curious' makes him curious. Curiousness implies passionate and adventurous (from prior rules). Passion requires dedication, but the restriction on Tripp not being dedicated has been removed (via prior removal). Now, Tripp is either curious or knowledgeable (or both). Since he is curious, the context allows both, but no rule forces him to be knowledgeable. Therefore, the conclusion is uncertain. The prior user claim of 'True' likely reflects older rules or missed constraints.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 8430
+      "token_count": 10982
     },
     {
       "step": 7,
       "context": "Added facts:\n- If Tripp is impulsive, then he takes risks and faces challenges.\n- If Tripp is curious, then he is both passionate and adventurous.\n- If Tripp is impulsive, then he is not responsible.\n- If Tripp is adventurous, then he is not cautious.\n- If Tripp is responsible, then he is not curious.",
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Tripp is either impulsive or responsible. If responsible, he is not curious (via rule) and thus must be knowledgeable (from 'curious or knowledgeable'). If impulsive, no rule links curiosity, so he could be curious (and thus not knowledgeable) or not (and then knowledgeable). Since the context doesn't entitle knowledge in all scenarios, the answer is 'Uncertain'. The prior 'False' claim likely overlooked the responsible-curious conflict.",
       "correct": false,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 8520
+      "token_count": 12854
     }
   ]
 }

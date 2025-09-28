@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "implicit_no_reasoning_no_correction",
+    "chain_index": 185,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kartier lives alone.\nKartier does not have good memory.\nKartier eats less.\nKartier does not weigh lightly.\nKartier either lives alone or leads a herd, but not both.\nAny elephant that is experienced or has good memory can lead the herd.\nIf Kartier either eats less or weighs lightly (but not both), then he is small.\nEvery elephant is either experienced or young.\nIf Kartier is young and small, then he has a short trunk.\nEither Kartier has a long trunk or a short trunk, but not both.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Kartier lives alone.\nKartier does not have good memory.\nKartier eats less.\nKartier does not weigh lightly.\nKartier either lives alone or leads a herd, but not both.\nFor all x, if x is experienced or x has good memory, then x leads the herd.\nIf Kartier either eats less or weighs lightly, but not both, then Kartier is small.\nFor all x, x is experienced or x is young.\nIf Kartier is young and Kartier is small, then Kartier has a short trunk.\nEither Kartier has a long trunk or Kartier has a short trunk, but not both.\nFor all x, if x does not lead a herd, then x is not experienced and x does not have good memory.\nIf Kartier is young, then if Kartier is small, then Kartier has a short trunk.\nKartier does not lead a herd.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts we get Small(K) because K eats less and does not weigh lightly, satisfying the exclusive-or condition. \u00acLead(K) is given, and rule 11 implies \u00acExperienced(K). Rule 8 states every elephant is experienced or young; with \u00acExperienced(K) we infer Young(K). Young(K) and Small(K) together trigger rule 9 (or 12) giving ShortTrunk(K). The exclusive-or rule 10 states that LongTrunk(K) xor ShortTrunk(K); since ShortTrunk(K) is true, LongTrunk(K) must be false. Hence the conclusion 'Kartier does not have a long trunk' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 224
+    },
+    {
+      "step": 2,
+      "context": "Kartier lives alone.\nKartier does not have good memory.\nKartier eats less.\nKartier does not weigh lightly.\nKartier either lives alone or leads a herd, but not both.\nFor all x, if x is experienced or x has good memory, then x leads the herd.\nIf Kartier either eats less or weighs lightly, but not both, then Kartier is small.\nFor all x, x is experienced or x is young.\nIf Kartier is young and Kartier is small, then Kartier has a short trunk.\nEither Kartier has a long trunk or Kartier has a short trunk, but not both.\nFor all x, if x does not lead a herd, then x is not experienced and x does not have good memory.\nIf Kartier is young, then if Kartier is small, then Kartier has a short trunk.\nKartier does not lead a herd.\nFor all x, if x is not experienced, then x is young.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Eats less and not weigh lightly satisfy the exclusive-or condition, so Small(K) holds. Given Kartier does not lead a herd, rule 6 implies \u00acExperienced(K) and \u00acGoodMemory(K). From rule 8, \u00acExperienced(K) yields Young(K). With Young(K) and Small(K), rule 4 (or the equivalent rule 7) gives ShortTrunk(K). The exclusive-or rule asserts that exactly one of LongTrunk(K) and ShortTrunk(K) is true; since ShortTrunk(K) is true, LongTrunk(K) must be false. Therefore the statement 'Kartier does not have a long trunk' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 606
+    },
+    {
+      "step": 3,
+      "context": "Kartier does not have good memory.\nKartier eats less.\nKartier does not weigh lightly.\nKartier either lives alone or leads a herd, but not both.\nFor all x, if x is experienced or x has good memory, then x leads the herd.\nIf Kartier either eats less or weighs lightly, but not both, then Kartier is small.\nFor all x, x is experienced or x is young.\nIf Kartier is young and Kartier is small, then Kartier has a short trunk.\nEither Kartier has a long trunk or Kartier has a short trunk, but not both.\nFor all x, if x does not lead a herd, then x is not experienced and x does not have good memory.\nIf Kartier is young, then if Kartier is small, then Kartier has a short trunk.\nFor all x, if x is not experienced, then x is young.\nKartier is not young.\nFor all x, if x is not young and x is small, then x does not have a short trunk.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the facts we infer Small(K) (EatsLess true and not WeighsLightly). The knowledge base leaves open whether Kartier leads a herd. If LeadsHerd is true, then by rule 7 (Experienced \u2228 Young) and \u00acYoung we get Experienced, yielding \u00acShortTrunk via rule 14, which forces LongTrunk true due to the exclusive-or. If LeadsHerd is false, rule 10 gives \u00acExperienced, which via rule 12 yields Young, and together with Small gives ShortTrunk; the exclusive-or then forces LongTrunk false. Both scenarios satisfy all constraints, so the truth of \"Kartier does not have a long trunk\" is not determined. Hence the conclusion is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1003
+    },
+    {
+      "step": 4,
+      "context": "Kartier does not have good memory.\nKartier eats less.\nKartier does not weigh lightly.\nKartier either lives alone or leads a herd, but not both.\nFor all x, if x is experienced or x has good memory, then x leads the herd.\nIf Kartier either eats less or weighs lightly, but not both, then Kartier is small.\nFor all x, x is experienced or x is young.\nIf Kartier is young and Kartier is small, then Kartier has a short trunk.\nEither Kartier has a long trunk or Kartier has a short trunk, but not both.\nFor all x, if x does not lead a herd, then x is not experienced and x does not have good memory.\nIf Kartier is young, then if Kartier is small, then Kartier has a short trunk.\nFor all x, if x is not experienced, then x is young.\nKartier is not young.\nFor all x, if x is not young and x is small, then x does not have a short trunk.\nKartier is an exception.\nFor all x, if x is an exception and x is special, then x has a short trunk.\nKartier is not special.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From EatsLess and not weighing lightly we get Small(K). Fact \u00acYoung(K) together with Small(K) triggers rule 14, yielding \u00acShortTrunk(K). The exclusive-or rule states that exactly one of LongTrunk(K) and ShortTrunk(K) holds, so with ShortTrunk false, LongTrunk must be true. Hence the statement 'Kartier does not have a long trunk' is contradicted by the derived facts; the context entails the opposite. Therefore the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1429
+    },
+    {
+      "step": 5,
+      "context": "Kartier eats less.\nKartier does not weigh lightly.\nKartier does not have good memory.\nKartier either lives alone or leads a herd, but not both.\nFor all x, if x is experienced or x has good memory, then x leads the herd.\nIf Kartier either eats less or weighs lightly, but not both, then Kartier is small.\nFor all x, x is experienced or x is young.\nIf Kartier is young and Kartier is small, then Kartier has a short trunk.\nEither Kartier has a long trunk or Kartier has a short trunk, but not both.\nFor all x, if x does not lead a herd, then x is not experienced and x does not have good memory.\nIf Kartier is young, then if Kartier is small, then Kartier has a short trunk.\nFor all x, if x is not experienced, then x is young.\nKartier is not young.\nFor all x, if x is not young and x is small, then x does not have a short trunk.\nKartier is an exception.\nFor all x, if x is an exception and x is special, then x has a short trunk.\nKartier is not special.\nKartier is experienced.\nKartier leads a herd.\nKartier does not live alone.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From EatsLess and not weighing lightly we infer Small(K). The premise \u00acYoung(K) together with Small(K) triggers the rule that \u00acShortTrunk(K). The exclusive-or rule states that exactly one of LongTrunk(K) and ShortTrunk(K) holds; since ShortTrunk(K) is false, LongTrunk(K) must be true. Therefore the statement 'Kartier does not have a long trunk' is not entailed (in fact its negation is entailed).",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1842
+    },
+    {
+      "step": 6,
+      "context": "Kartier eats less.\nKartier does not weigh lightly.\nKartier does not have good memory.\nKartier either lives alone or leads a herd, but not both.\nFor all x, if x is experienced or x has good memory, then x leads the herd.\nIf Kartier either eats less or weighs lightly, but not both, then Kartier is small.\nFor all x, x is experienced or x is young.\nIf Kartier is young and Kartier is small, then Kartier has a short trunk.\nEither Kartier has a long trunk or Kartier has a short trunk, but not both.\nFor all x, if x does not lead a herd, then x is not experienced and x does not have good memory.\nIf Kartier is young, then if Kartier is small, then Kartier has a short trunk.\nFor all x, if x is not experienced, then x is young.\nKartier is not young.\nFor all x, if x is not young and x is small, then x does not have a short trunk.\nKartier is an exception.\nFor all x, if x is an exception and x is special, then x has a short trunk.\nKartier is not special.\nKartier is experienced.\nKartier leads a herd.\nKartier does not live alone.\nFor all x, if x is not young, then x is experienced.\nFor all x, if x is not young, then if x is small, then x does not have a short trunk.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "EatsLess true and not weigh lightly satisfy the exclusive-or condition, so Small(K) holds. Fact \u00acYoung(K) together with Small(K) triggers the rule (\u00acYoung \u2227 Small \u2192 \u00acShortTrunk), giving \u00acShortTrunk(K). The exclusive-or axiom (LongTrunk(K) XOR ShortTrunk(K)) then forces LongTrunk(K) to be true, because ShortTrunk(K) is false. Hence the statement 'Kartier does not have a long trunk' (\u00acLongTrunk(K)) is contradicted by the derivable facts, so it is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2272
+    },
+    {
+      "step": 7,
+      "context": "Kartier eats less.\nKartier does not weigh lightly.\nKartier does not have good memory.\nKartier either lives alone or leads a herd, but not both.\nFor all x, if x is experienced or x has good memory, then x leads the herd.\nIf Kartier either eats less or weighs lightly, but not both, then Kartier is small.\nFor all x, x is experienced or x is young.\nIf Kartier is young and Kartier is small, then Kartier has a short trunk.\nEither Kartier has a long trunk or Kartier has a short trunk, but not both.\nFor all x, if x does not lead a herd, then x is not experienced and x does not have good memory.\nIf Kartier is young, then if Kartier is small, then Kartier has a short trunk.\nFor all x, if x is not experienced, then x is young.\nKartier is not young.\nKartier is an exception.\nFor all x, if x is an exception and x is special, then x has a short trunk.\nKartier is not special.\nKartier is experienced.\nKartier leads a herd.\nKartier does not live alone.\nFor all x, if x is not young, then x is experienced.\nFor all x, if x is not young and x is small, then x has a short trunk.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From eats less and not weigh lightly we get Small(K). The facts \u00acYoung(K) and Small(K) trigger two conflicting rules: one derives \u00acShortTrunk(K) and another derives ShortTrunk(K). Hence both ShortTrunk(K) and \u00acShortTrunk(K) are provable. The exclusive-or constraint (LongTrunk XOR ShortTrunk) together with these contradictory conclusions forces both LongTrunk(K) and \u00acLongTrunk(K) to be provable. Since the statement \u00acLongTrunk(K) is both provable and its negation is also provable, the context does not settle its truth definitively; the conclusion is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2763
+    }
+  ]
+}

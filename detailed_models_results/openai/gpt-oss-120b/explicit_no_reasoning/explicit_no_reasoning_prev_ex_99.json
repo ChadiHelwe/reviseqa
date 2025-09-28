@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 399,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Sweetstuff is tired.\nSweetstuff does not find a paddock.\nSweetstuff has a shiny coat.\nSweetstuff does not possess wisdom.\nSweetstuff grazes wild.\nIf Sweetstuff is tired and seeks shelter, then she will find a paddock.\nSweetstuff either seeks shelter or needs guidance.\nSweetstuff either craves alfalfa or needs guidance, but not both.\nIf Sweetstuff has a shiny coat, then she either possesses wisdom or is gentle (or both).\nIf Sweetstuff either grazes wild or craves alfalfa (but not both), then she eats clover.\nIf Sweetstuff is gentle, then she either loves hybanthus or eats clover, but not both.\nSweetstuff either loves hybanthus or ignores hybanthus, but not both.",
+      "question": "Does the context entail the conclusion 'Sweetstuff does not ignore hybanthus.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Sweetstuff either grazes wild or craves alfalfa, but not both, then she eats clover.\n\nAdded rules:\n- If Sweetstuff either grazes wild or craves alfalfa, but not both, then she does not eat clover.",
+      "question": "Does the context entail the conclusion 'Sweetstuff does not ignore hybanthus.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts we have Sweetstuff is tired, does not find a paddock, has a shiny coat, does not possess wisdom, and grazes wild. The rule 'shiny coat \u2192 (wisdom OR gentle)' together with the fact that she does not possess wisdom forces her to be gentle. The exclusive-or rules give two possible assignments for 'needs guidance', 'seeks shelter', and 'craves alfalfa'. The assignment where 'needs guidance' is true (and consequently 'seeks shelter' and 'craves alfalfa' are false) is the only one consistent with the fact that she does not find a paddock, because the rule 'tired \u2227 seeks shelter \u2192 find paddock' would otherwise contradict that fact. In this consistent scenario, 'craves alfalfa' is false, so the added rule '(grazes wild XOR craves alfalfa) \u2192 not eat clover' applies, giving \u00aceats clover. Since she is gentle, the rule 'gentle \u2192 (loves hybanthus XOR eats clover)' forces loves hybanthus to be true. Finally, the rule 'loves hybanthus XOR ignores hybanthus' then forces ignores hybanthus to be false. Hence the statement 'Sweetstuff does not ignore hybanthus' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 264
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- Sweetstuff either craves alfalfa or needs guidance, but not both.\n- Sweetstuff either loves hybanthus or ignores hybanthus, but not both.\n- If Sweetstuff either grazes wild or craves alfalfa, but not both, then she does not eat clover.\n\nAdded rules:\n- Either Sweetstuff craves alfalfa or needs guidance, and it is not the case that both Sweetstuff craves alfalfa and needs guidance.\n- If either Sweetstuff grazes wild or craves alfalfa, and it is not the case that both Sweetstuff grazes wild and craves alfalfa, then she does not eat clover.\n- Either Sweetstuff loves hybanthus or ignores hybanthus, and it is not the case that both Sweetstuff loves hybanthus and ignores hybanthus.\n\nAdded facts:\n- Sweetstuff needs guidance.\n- Sweetstuff does not crave alfalfa.\n- Sweetstuff does not seek shelter.\n- Sweetstuff is gentle.\n- Sweetstuff does not eat clover.\n- Sweetstuff loves hybanthus.",
+      "question": "Does the context entail the conclusion 'Sweetstuff does not ignore hybanthus.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes the exclusive-or rule stating that Sweetstuff either loves hybanthus or ignores hybanthus, and not both. A direct fact asserts that Sweetstuff loves hybanthus. Therefore, to satisfy the 'not both' part of the rule, Sweetstuff cannot also ignore hybanthus. Hence the statement 'Sweetstuff does not ignore hybanthus' follows logically from the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 638
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- If Sweetstuff loves hybanthus, then she does not ignore hybanthus.\n- If Sweetstuff ignores hybanthus, then she does not love hybanthus.",
+      "question": "Does the context entail the conclusion 'Sweetstuff does not ignore hybanthus.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The only information provided are two conditional rules: (1) loves hybanthus \u2192 not ignore hybanthus, and (2) ignores hybanthus \u2192 not love hybanthus. No facts are given about whether Sweetstuff loves or ignores hybanthus. Without a premise that Sweetstuff loves hybanthus (or any other fact that would force \u00acignore hybanthus), the conclusion cannot be derived. Likewise, there is no information that would force the opposite. Therefore the truth of 'Sweetstuff does not ignore hybanthus' is not determined by the context.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 989
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Sweetstuff loves hybanthus.\n\nAdded rules:\n- If Sweetstuff needs guidance, then she does not love hybanthus.",
+      "question": "Does the context entail the conclusion 'Sweetstuff does not ignore hybanthus.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context includes the exclusive-or rule that Sweetstuff either loves hybanthus or ignores hybanthus, but not both. The fact that Sweetstuff needs guidance is present, and the added rule 'If Sweetstuff needs guidance, then she does not love hybanthus' lets us infer \u00acloves hybanthus. By the exclusive-or, if she does not love hybanthus she must ignore hybanthus. Therefore Sweetstuff does ignore hybanthus, making the statement 'Sweetstuff does not ignore hybanthus' false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1196
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Sweetstuff needs guidance, then she does not love hybanthus.\n\nAdded rules:\n- If Sweetstuff is gentle, then she loves hybanthus.",
+      "question": "Does the context entail the conclusion 'Sweetstuff does not ignore hybanthus.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context contains the exclusive-or rule that Sweetstuff either loves hybanthus (L) or ignores hybanthus (I), but not both, along with the conditional rules L \u2192 \u00acI and I \u2192 \u00acL. It also includes the rule that if Sweetstuff is gentle, then she either loves hybanthus or eats clover, but not both. The facts state that Sweetstuff is gentle and does not eat clover. From the gentle rule, because she does not eat clover, she must love hybanthus (L is true). Given L is true, the rule L \u2192 \u00acI yields that Sweetstuff does not ignore hybanthus. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1404
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Sweetstuff is gentle, then she either loves hybanthus or eats clover, but not both.\n- Either Sweetstuff loves hybanthus or ignores hybanthus, and it is not the case that both Sweetstuff loves hybanthus and ignores hybanthus.\n- If Sweetstuff is gentle, then she loves hybanthus.\n\nAdded facts:\n- Sweetstuff ignores hybanthus.",
+      "question": "Does the context entail the conclusion 'Sweetstuff does not ignore hybanthus.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context explicitly includes the fact that Sweetstuff ignores hybanthus. No rules are present that would allow us to infer the opposite (that she does not ignore hybanthus). Therefore the conclusion 'Sweetstuff does not ignore hybanthus' is contradicted by the given fact and is not entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1650
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Sweetstuff ignores hybanthus.\n\nAdded rules:\n- If Sweetstuff has a shiny coat and is gentle, then she does not ignore hybanthus.",
+      "question": "Does the context entail the conclusion 'Sweetstuff does not ignore hybanthus.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The current context includes the explicit fact \"Sweetstuff ignores hybanthus.\" This fact directly contradicts the statement \"Sweetstuff does not ignore hybanthus.\" No rule in the context can override this fact, and the conditional rules only allow inference of \"not love hybanthus\" from \"ignores hybanthus,\" not the opposite. Therefore the conclusion \"Sweetstuff does not ignore hybanthus\" is not entailed; in fact it is refuted by the premises.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1869
+    }
+  ]
+}

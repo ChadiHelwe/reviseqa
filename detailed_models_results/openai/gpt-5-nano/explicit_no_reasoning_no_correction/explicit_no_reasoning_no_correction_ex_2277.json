@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.14285714285714285
   },
   "predictions": [
     {
@@ -26,9 +26,9 @@
       "step": 1,
       "context": "Removed facts:\n- Legend earns a heroic reputation.\n\nAdded facts:\n- Legend does not earn a heroic reputation.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "From the added/removed facts we know Legend does not earn a heroic reputation. To deduce 'Legend saves lives' we would need to establish that Legend is fearless and, by the exclusive-or in the fearless rule, choose the 'save lives' option. Fearlessness would require (confronts dangers) or (leads others) but not both. We can deduce 'leads others' from 'Legend either leads others or responds to a crisis' and 'Legend does not respond to a crisis,' but we do not have evidence that he does not confront dangers. Therefore the exclusive-or condition for fearlessness is not guaranteed, so fearless is not entailed. Without fearless, the rule that forces 'save lives' (given not earning heroic reputation) does not apply. Hence the conclusion 'Legend saves lives' is not entailed and remains uncertain.",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -41,89 +41,89 @@
       "step": 2,
       "context": "Added facts:\n- Legend does not stay strong.\n- Legend does not defend his territory.\n- Legend protects his herd.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "From the base facts, Legend does not respond to a crisis, so he leads others (Legend either leads others or responds to a crisis). Since Charges forward is true (from initial facts) and Legend protects his herd while not defending his territory, the rule 'If Legend confronts dangers, then he either protects his herd or charges forward (but not both)' implies that ConfrontsDangers cannot be true (would require XOR between ProtectsHerd and ChargesForward, which would fail with both true). Hence ConfrontsDangers is false, and Leads is true, so Legend is fearless (XOR of ConfrontsDangers and Leads is true). Fearless implies SaveLives XOR EarnHeroic. EarnHeroic is true (initial fact), so SaveLives must be false. Therefore the context does not entail 'Legend saves lives.'; in fact it entails that Legend does not save lives.",
       "correct": false,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 320
+      "token_count": 487
     },
     {
       "step": 3,
       "context": "Removed facts:\n- Legend does not earn a heroic reputation.\n\nAdded facts:\n- Legend earns a heroic reputation.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Added fact: Legend earns a heroic reputation. From the base facts, Legend leads others (since he does not respond to a crisis). The rule 'If Legend either confronts dangers or leads others (but not both), then he is fearless' could apply only if exactly one of (confronts dangers, leads others) is true; we have leads others true but lack info about confronts dangers, so fearless is not entailed. If fearless were true, then 'save lives' and 'earn heroic reputation' would be exclusive, implying SaveLives is false when EarnHeroic is true. Since fearless is not established, we cannot conclude SaveLives is true, nor that it is false. Therefore, 'Legend saves lives' is not entailed and remains uncertain.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 395
+      "token_count": 742
     },
     {
       "step": 4,
       "context": "Removed facts:\n- Legend earns a heroic reputation.\n\nAdded facts:\n- Legend does not earn a heroic reputation.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "From the base and added facts, Legend leads others (since he does not respond to a crisis). He also protects his herd and charges forward. For the rule 'If Legend confronts dangers, then he either protects his herd or charges forward (but not both)' to hold, ConfrontsDangers cannot be true because ProtectHerd and ChargesForward would both be true. Therefore ConfrontsDangers is false, and Leads is true, so Legend is fearless by the XOR rule 'Legend either confronts dangers or leads others (but not both)'. Given Added fact: Legend does not earn a heroic reputation (Heroic is false). The rule 'If Legend is fearless, then he can either save lives or earn a heroic reputation, but not both' translates to SaveLives XOR Heroic. With Heroic false, SaveLives must be true. Hence the context entails 'Legend saves lives.'",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 468
+      "token_count": 968
     },
     {
       "step": 5,
       "context": "Removed facts:\n- Legend does not earn a heroic reputation.\n\nAdded facts:\n- Legend earns a heroic reputation.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Heroic reputation is true. The rule linking SaveLives to Heroic requires Fearless, and Fearless requires (ConfrontsDangers XOR Leads). We only know that Legend either leads others or responds to a crisis, but we have no information to determine which, and there is no evidence about ConfrontsDangers. Therefore Fearless is not entailed, so SaveLives is not entailed. The conclusion 'Legend saves lives.' remains uncertain.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 541
+      "token_count": 1221
     },
     {
       "step": 6,
       "context": "Added facts:\n- Legend does not confront dangers.\n- Legend is fearless.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "From the added facts, Legend is fearless. The rule 'If Legend is fearless, then he can either save lives or earn a heroic reputation, but not both' gives an exclusive-or between SaveLives and EarnHeroic, but does not specify which one. The fact 'Legend does not confront dangers' does not interact with this XOR in a way that determines SaveLives. Therefore the conclusion 'Legend saves lives.' is not entailed, nor is its negation; it remains uncertain.",
       "correct": false,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 614
+      "token_count": 1384
     },
     {
       "step": 7,
       "context": "Removed rules:\n- If Legend is fearless, then he can either save lives or earn a heroic reputation, but not both.\n\nAdded rules:\n- If Legend is fearless, then he saves lives.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The context provides the rule 'If Legend is fearless, then he saves lives' but does not provide any fact that Legend is fearless. Without establishing fearless, we cannot entail 'Legend saves lives'. There is also no rule asserting 'not saves lives'. Therefore the conclusion remains uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 680
+      "token_count": 1546
     }
   ]
 }

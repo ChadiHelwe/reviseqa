@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 370,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Selena is artistic.\nSelena does not like crafting.\nSelena loves design.\nSelena does not carve figures.\nSelena does not produce masterpieces.\nSelena is an artist.\nSelena is creative.\nIf Selena is artistic, then she either enjoys building or likes crafting.\nIf Selena has talent, then she either loves design or enjoys building, but not both.\nIf Selena either carves figures or makes decorations (but not both), then she has talent.\nIf Selena makes decorations or works with wood, then she can produce masterpieces.\nIf Selena is an artist, then she is either dedicated or creative, but not both.\nSelena either works with wood or is a skilled craftswoman, which in her case, happens to be both.\nFor all humans, if someone is a skilled craftswoman, then they are either patient or dedicated (or both).",
+      "question": "Does the context entail the conclusion 'Selena is not patient.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- Selena works with wood if and only if she is not a skilled craftswoman.\n\nAdded facts:\n- Selena is a skilled craftswoman.\n- Selena does not make decorations.",
+      "question": "Does the context entail the conclusion 'Selena is not patient.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the added rule (works_with_wood \u2194 not skilled_craftswoman) and the fact that Selena is a skilled craftswoman, we infer that she does NOT work with wood. This contradicts the original statement that she both works with wood and is a skilled craftswoman, making the knowledge base inconsistent. However, the only rule linking skilled craftswoman to patience is: if someone is a skilled craftswoman then they are either patient or dedicated (or both). This yields a disjunction (patient \u2228 dedicated) but does not assert patient alone, nor its negation. No other rule derives \u00acpatient. Therefore, the conclusion 'Selena is not patient' cannot be proved true nor false from the (inconsistent) set of premises; its truth value remains indeterminate.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 285
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Selena is a skilled craftswoman.\n\nAdded rules:\n- If Selena is patient, then she makes decorations.",
+      "question": "Does the context entail the conclusion 'Selena is not patient.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From the fact that Selena is an artist and creative, and the rule that an artist is either dedicated or creative but not both, we infer that Selena is not dedicated. The original statement that Selena both works with wood and is a skilled craftswoman remains, so she is a skilled craftswoman. The rule for skilled craftswomen gives patient \u2228 dedicated. Since dedicated is false, we must have patient. Hence patient is entailed. The added rule patient \u2192 makes decorations then yields makes decorations, which together with the rule that makes decorations or works with wood implies can produce masterpieces, contradicting the fact that she does not produce masterpieces, but this inconsistency does not affect the derivation of patient. No rule derives \u00acpatient. Therefore the conclusion \"Selena is not patient\" is not entailed; its negation (Selena is patient) is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 540
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Selena is patient, then she makes decorations.\n\nAdded facts:\n- Selena does not work with wood.",
+      "question": "Does the context entail the conclusion 'Selena is not patient.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the original facts we have Selena works with wood, and from the added fact we also have Selena does not work with wood, creating a contradiction but no direct information about her being patient. The rule linking skilled craftswoman to patient (if skilled_craftswoman then patient or dedicated) cannot be used because the fact that Selena is a skilled craftswoman was explicitly removed, and the only way to obtain skilled_craftswoman would be via the equivalence rule works_with_wood \u2194 \u00acskilled_craftswoman, which only yields \u00acskilled_craftswoman from works_with_wood. Since we have \u00acskilled_craftswoman, the antecedent of the patient rule is false, so we cannot infer patient. No rule in the current knowledge base derives \u00acpatient either. Therefore, the statement 'Selena is not patient' is neither provably true nor provably false given the inconsistent but paraconsistent reasoning setup.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 796
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- Either Selena is not artistic, or she enjoys building, or she likes crafting.\n\nAdded facts:\n- Selena is a skilled craftswoman.\n- Selena is patient or dedicated.\n- Selena is not dedicated.",
+      "question": "Does the context entail the conclusion 'Selena is not patient.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the added fact 'Selena is patient or dedicated' together with the fact 'Selena is not dedicated', classical disjunctive syllogism yields that Selena is patient. No rule in the knowledge base derives \u00acpatient. Therefore the statement 'Selena is not patient' is not entailed (its negation is entailed).",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1067
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Selena is creative.\n- Selena is not dedicated.\n\nAdded rules:\n- If Selena is dedicated, then she is not patient.\n\nAdded facts:\n- Selena is dedicated.",
+      "question": "Does the context entail the conclusion 'Selena is not patient.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes the fact that Selena is dedicated and the rule that if Selena is dedicated then she is not patient. By modus ponens we infer \u00acpatient. No rule in the current knowledge base derives patient, so the statement 'Selena is not patient' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1236
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- Selena works with wood if and only if she is not a skilled craftswoman.\n\nAdded rules:\n- If Selena works with wood, then she is not a skilled craftswoman.\n- If Selena is not a skilled craftswoman, then she works with wood.\n- If Selena is a skilled craftswoman, then she is either patient or dedicated.\n\nAdded facts:\n- It is not the case that Selena is both dedicated and patient.\n- Selena is patient or dedicated or works with wood.",
+      "question": "Does the context entail the conclusion 'Selena is not patient.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The premises allow multiple consistent assignments. From the fact \u00ac(dedicated \u2227 patient) we know they cannot both be true, but either may be false. The disjunction (patient \u2228 dedicated \u2228 works_with_wood) can be satisfied in several ways: (i) patient true, dedicated false, works_with_wood false; (ii) dedicated true, patient false, works_with_wood false; (iii) works_with_wood true (implying not skilled_craftswoman) with patient and dedicated both false. All these satisfy the rules (including works_with_wood \u2194 \u00acskilled_craftswoman and skilled_craftswoman \u2192 patient \u2228 dedicated). Since there exists a model where patient is true and another where patient is false, the conclusion 'Selena is not patient' is not entailed nor contradicted. Hence its truth value is indeterminate.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1384
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Selena is patient, then she is not dedicated.",
+      "question": "Does the context entail the conclusion 'Selena is not patient.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The fact 'Selena is dedicated' combined with the rule 'If Selena is dedicated, then she is not patient' yields \u00acpatient. Additionally, the explicit statement \u00ac(dedicated \u2227 patient) together with the fact dedicated ensures patient cannot be true. No rule derives patient. Therefore 'Selena is not patient' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1724
+    }
+  ]
+}

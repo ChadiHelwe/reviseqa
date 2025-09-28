@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit",
+    "chain_index": 265,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Ramon values quality.\nRamon does not care about his community.\nRamon does not respect the seasons.\nRamon does not live off the land.\nRamon does not love nature.\nAll humans who support local producers value quality and care about their community.\nAnyone who respects the seasons or appreciates local food supports local producers.\nIf Ramon either appreciates local food or values a simple life (but not both), then he lives off the land.\nRamon values a simple life or embraces modern technology.\nRamon either preserves traditional practices or embraces modern technology, but not both.\nIf Ramon loves nature or practices sustainable farming (or both), then he preserves traditional practices.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Ramon values quality. Ramon does not care about his community.. All humans who support local producers value quality and care about their community.. Therefore, Ramon does not support local producers.. Ramon does not respect the seasons. Ramon does not support local producers.. Anyone who respects the seasons or appreciates local food supports local producers.. Therefore, Ramon does not appreciate local food.. Ramon does not appreciate local food. Ramon does not live off the land.. If Ramon either appreciates local food or values a simple life (but not both), then he lives off the land.. Therefore, Ramon does not value a simple life.. Ramon does not value a simple life.. Ramon values a simple life or embraces modern technology.. Therefore, Ramon embraces modern technology.. Ramon embraces modern technology.. Ramon either preserves traditional practices or embraces modern technology, but not both.. Therefore, Ramon does not preserve traditional practices.. Ramon does not love nature. Ramon does not preserve traditional practices.. If Ramon loves nature or practices sustainable farming (or both), then he preserves traditional practices.. Therefore, Ramon practices sustainable farming..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Ramon does not embrace modern technology.\n- Ramon appreciates local food.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the added facts we have \u00acEmbraceTech and AppLocal. Rule (10) (PreservesTraditional xor EmbraceTech) together with \u00acEmbraceTech yields PreservesTraditional. Rule (7) gives SupportLocal because AppLocal is true, and then rule (6) yields CareCommunity, contradicting the original \u00acCareCommunity but not affecting SustainableFarming. Rule (9) (SimpleLife or EmbraceTech) combined with \u00acEmbraceTech forces SimpleLife true. Rule (8) requires an exclusive-or between AppLocal and SimpleLife to infer LiveOffLand; since both are true, the condition fails, so we cannot infer LiveOffLand (and we already have \u00acLiveOffLand). The only rule involving SustainableFarming is (11): (LoveNature \u2228 SustainableFarming) \u2192 PreservesTraditional. We have PreservesTraditional true, but this implication does not allow us to infer its antecedent; we cannot conclude SustainableFarming nor its negation. Hence the conclusion is not entailed nor contradicted, making it uncertain.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 472
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Ramon does not care about his community.\n- Ramon does not love nature.\n\nAdded rules:\n- For all x, if x supports local producers, then x does not practice sustainable farming.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "In the current context we have the facts: Ramon values quality, does not respect the seasons, and does not live off the land. The facts that he does not care about his community and does not love nature have been removed. The added rule states that anyone who supports local producers does not practice sustainable farming. To derive that Ramon does not support local producers we would need either respect the seasons or appreciate local food, but we have no such facts. Consequently we cannot infer that he supports local producers, nor can we infer the opposite. No rule derives sustainable farming directly; the only rule involving sustainable farming is (LoveNature \u2228 SustainableFarming) \u2192 PreservesTraditional, which does not allow us to infer SustainableFarming from PreservesTraditional. Because we lack sufficient information to conclude either SustainableFarming or its negation, the truth of the statement is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 757
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x supports local producers, then x does not practice sustainable farming.\n\nAdded rules:\n- For all x, if x preserves traditional practices, then x practices sustainable farming.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Added fact AppreciatesLocalFood(Ramon) triggers rule (RespectSeasons \u2228 AppreciatesLocalFood) -> SupportsLocal, so SupportsLocal(Ramon) holds. Rule (SupportsLocal -> ValuesQuality \u2227 CareCommunity) gives CareCommunity(Ramon), contradicting the original \u00acCareCommunity but both can coexist. The fact \u00acEmbraceTech(Ramon) together with the exclusive-or rule (PreservesTraditional XOR EmbraceTech) forces PreservesTraditional(Ramon) to be true. The newly added rule PreservesTraditional -> SustainableFarming then yields SustainableFarming(Ramon). No rule derives \u00acSustainableFarming (the previously added rule for that was removed). Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1043
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Ramon does not embrace modern technology.\n\nAdded facts:\n- Ramon embraces modern technology.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the current facts we have: ValuesQuality, \u00acRespectSeasons, \u00acLivesOffLand, AppreciatesLocalFood, and EmbraceTech. Rule B gives SupportsLocal because AppreciatesLocalFood is true. Rule A then yields CareCommunity. Rule E (PreservesTraditional XOR EmbraceTech) with EmbraceTech true forces PreservesTraditional to be false. The added rule H (PreservesTraditional \u2192 SustainableFarming) cannot be applied because PreservesTraditional is false, and there is no other rule that derives SustainableFarming or its negation. Hence the statement 'Ramon practices sustainable farming' is not entailed nor contradicted, making it uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1296
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, if x supports local producers, then x values quality.\n- For all x, if x supports local producers, then x cares about their community.\n\nAdded facts:\n- Ramon does not preserve traditional practices.\n- Ramon supports local producers.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Current facts: Ramon values quality, does not respect the seasons, does not live off the land, appreciates local food, embraces modern technology, does not preserve traditional practices, and supports local producers. From supporting local producers we infer that Ramon values quality and cares about his community (rule added). The XOR rule between preserving traditional practices and embracing modern technology forces PreservesTraditional to be false, which matches the explicit fact. The rule PreservesTraditional \u2192 SustainableFarming cannot be applied because PreservesTraditional is false. No other rule derives SustainableFarming or its negation. Hence the statement 'Ramon practices sustainable farming' is neither entailed nor contradicted.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1522
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Ramon does not preserve traditional practices.\n- Ramon embraces modern technology.\n\nAdded facts:\n- Ramon preserves traditional practices.\n- Ramon does not embrace modern technology.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "In the final context we have the facts: Ramon supports local producers, preserves traditional practices, does not embrace modern technology, values quality, does not respect the seasons, and does not live off the land. From the rule \"SupportLocal \u2192 (values quality \u2227 cares about community)\" we infer that Ramon cares about his community. The rule \"PreservesTraditional OR embraces modern technology, but not both\" (XOR) is satisfied because PreserveTraditional is true and EmbraceTech is false. The added rule \"If someone preserves traditional practices then they practice sustainable farming\" applies, yielding that Ramon practices sustainable farming. No rule derives the negation of sustainable farming. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1780
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if x preserves traditional practices, then x practices sustainable farming.\n\nAdded rules:\n- For all x, if x preserves traditional practices, then x does not practice sustainable farming.",
+      "question": "Does the context entail the conclusion 'Ramon practices sustainable farming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "In the final context, we have the facts: Ramon supports local producers, preserves traditional practices, does not embrace modern technology, values quality, does not respect the seasons, does not live off the land, and appreciates local food. Rule 10 (PreservesTraditional XOR EmbraceTech) is satisfied (preserves true, embraces false). The added rule now is: PreservesTraditional -> \u00acSustainableFarming. Since PreservesTraditional is true, we can infer \u00acSustainableFarming(Ramon). No rule derives SustainableFarming, and we have a direct derivation of its negation. Hence the statement 'Ramon practices sustainable farming' is contradicted by the knowledge base.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2027
+    }
+  ]
+}

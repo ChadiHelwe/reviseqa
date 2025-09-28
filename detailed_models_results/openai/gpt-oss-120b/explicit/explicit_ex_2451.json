@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit",
+    "chain_index": 100,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Octavia listens actively.\nOctavia does not show compassion.\nOctavia does not enjoy learning.\nOctavia does not have empathy.\nOctavia studies hard.\nOctavia does not advance the medical field.\nOctavia does not make significant discoveries.\nOctavia improves lives.\nIf Octavia either listens actively or prioritizes patient care (but not both), then she shows compassion.\nEveryone enjoys learning or has curiosity.\nIf Octavia has empathy, then she either values human life or prioritizes patient care (but not both).\nIf Octavia has curiosity, then she values human life and is passionate about health.\nAnyone who studies hard and is passionate about health can pursue medical knowledge.\nIf Octavia pursues medical knowledge, then she is either dedicated to research or advances the medical field.",
+      "question": "Does the context entail the conclusion 'If Octavia is dedicated to research, then she will make significant discoveries and improve lives.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Octavia listens actively. Octavia does not show compassion.. If Octavia either listens actively or prioritizes patient care (but not both), then she shows compassion.. Therefore, Octavia prioritizes patient care.. Octavia does not enjoy learning.. Everyone enjoys learning or has curiosity.. Therefore, Octavia has curiosity.. Octavia does not have empathy. Octavia prioritizes patient care.. If Octavia has empathy, then she either values human life or prioritizes patient care (but not both).. Therefore, . Octavia has curiosity.. If Octavia has curiosity, then she values human life and is passionate about health.. Therefore, Octavia is passionate about health.. Octavia studies hard. Octavia is passionate about health.. Anyone who studies hard and is passionate about health can pursue medical knowledge.. Therefore, Octavia pursues medical knowledge.. Octavia pursues medical knowledge. Octavia does not advance the medical field.. If Octavia pursues medical knowledge, then she is either dedicated to research or advances the medical field.. Therefore, Octavia is dedicated to research.. Octavia is dedicated to research. Octavia does not make significant discoveries. Octavia improves lives.. . Therefore, If Octavia is dedicated to research, then she will make significant discoveries and improve lives..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Octavia has curiosity, then she values human life.\n- If Octavia has curiosity, then she is passionate about health.",
+      "question": "Does the context entail the conclusion 'If Octavia is dedicated to research, then she will make significant discoveries and improve lives.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts: Octavia does not enjoy learning, and everyone either enjoys learning or has curiosity, so Octavia must have curiosity. Curiosity implies she values human life and is passionate about health. She studies hard and is passionate about health, which by rule means she can pursue medical knowledge. Pursuing medical knowledge leads to being either dedicated to research or advancing the medical field; since Octavia does not advance the medical field, she must be dedicated to research. We also have the explicit fact that Octavia does not make significant discoveries, though she does improve lives. Therefore, the statement \"If Octavia is dedicated to research, then she will make significant discoveries and improve lives\" is false because the antecedent is true while the part about making significant discoveries is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 526
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x studies hard and x is passionate about health, then x can pursue medical knowledge.\n\nAdded rules:\n- For all x, if x studies hard, then if x is passionate about health then x can pursue medical knowledge.\n- If Octavia pursues medical knowledge, then she is dedicated to research.",
+      "question": "Does the context entail the conclusion 'If Octavia is dedicated to research, then she will make significant discoveries and improve lives.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Octavia studies hard and, via curiosity, is passionate about health, so she can pursue medical knowledge. The rule added states that if she pursues medical knowledge, she is dedicated to research. Hence Octavia is dedicated to research. However, the facts state that Octavia does not make significant discoveries, although she does improve lives. Since the consequent of the conditional requires both making significant discoveries and improving lives, the consequent is false (the discovery part fails). With a true antecedent and a false consequent, the implication is false. Therefore the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 772
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x studies hard, then if x is passionate about health then x can pursue medical knowledge.\n\nAdded rules:\n- If Octavia does not enjoy learning, then she has curiosity.\n- If Octavia is not dedicated to research, then she does not pursue medical knowledge.",
+      "question": "Does the context entail the conclusion 'If Octavia is dedicated to research, then she will make significant discoveries and improve lives.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the facts we know Octavia does not make significant discoveries (so the consequent of the conditional \"make significant discoveries and improve lives\" is false). However, the premises no longer provide a way to infer that Octavia is dedicated to research. The rule that would link dedication to pursuing medical knowledge is absent, and the only rule about dedication is that if she is not dedicated then she does not pursue medical knowledge. This does not prevent a model where Octavia is dedicated to research. Since it is possible (consistent with the premises) for Octavia to be dedicated to research while still not making significant discoveries, the conditional could be false. At the same time, a model where she is not dedicated would make the conditional vacuously true. Therefore the premises do not determine the truth of the conditional; the conclusion is not entailed nor contradicted.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1020
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- Octavia listens actively if and only if she prioritizes patient care.\n\nAdded facts:\n- Octavia has curiosity.",
+      "question": "Does the context entail the conclusion 'If Octavia is dedicated to research, then she will make significant discoveries and improve lives.'?",
+      "prediction": "{\n    \"reasoning\": \"From the fact that Octavia has curiosity (added) and the rule that curiosity implies she is passionate about health, together with the fact that she studies hard, we infer via the rule \\\"If Octavia studies hard, then if Octavia is passionate about health then Octavia can pursue medical knowledge\\\" that Octavia can pursue medical knowledge. The rule \\\"If Octavia pursues medical knowledge, then she is either dedicated to research or advances the medical field\\\" combined with the fact that she does not advance the medical field forces the conclusion that Octavia is dedicated to research. Therefore the antecedent of the conditional is true. The consequent requires both that Octavia makes significant discoveries and that she improves lives. We have the explicit fact that Octavia does not make significant discoveries, so the conjunction is false (even though she does improve lives). Hence the conditional \\\"If Octavia is dedicated to research, then she will make significant discoveries and improve lives\\\" is false. The context therefore entails that the statement is false.\\n    \\\"answer\\\": \\\"False\\\"\\n}",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1314
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Octavia has curiosity.\n\nRemoved rules:\n- Everyone enjoys learning or has curiosity.\n- If Octavia does not enjoy learning, then she has curiosity.\n\nAdded rules:\n- For all x, if x does not have curiosity, then x is not dedicated to research.",
+      "question": "Does the context entail the conclusion 'If Octavia is dedicated to research, then she will make significant discoveries and improve lives.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The facts give that Octavia does not make significant discoveries (so the consequent of the conditional is false) but do not allow us to determine whether Octavia is dedicated to research. The rules that could lead to her being dedicated (e.g., via pursuing medical knowledge) require her to have curiosity or be passionate about health, but curiosity is no longer given nor inferred, and no other rule provides passion. Additionally, the rule that lack of curiosity implies not dedicated cannot be applied because we cannot establish that she lacks curiosity. Hence the antecedent (dedicated to research) is indeterminate. Since the premises do not fix the truth of the antecedent, the conditional can be true in models where she is not dedicated and false in models where she is dedicated. Therefore the conclusion is not entailed nor contradicted: its status is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1626
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Octavia studies hard and Octavia is passionate about health, then she can pursue medical knowledge.\n- If Octavia does not have curiosity, then she is not dedicated to research.",
+      "question": "Does the context entail the conclusion 'If Octavia is dedicated to research, then she will make significant discoveries and improve lives.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The facts state that Octavia does not make significant discoveries, so the consequent of the conditional (making significant discoveries and improving lives) is false. To determine the truth of the conditional we must know whether the antecedent (Octavia is dedicated to research) is true. The only ways to infer dedication are: (1) if Octavia pursues medical knowledge, then she is dedicated (rule added); (2) if Octavia does not have curiosity, then she is not dedicated (universal rule). We have no fact that Octavia pursues medical knowledge, because that requires both studying hard (true) and being passionate about health, and we have no way to derive passion about health without the curiosity fact, which has been removed. We also cannot infer \u00acCuriosity, so we cannot apply the rule that would make her not dedicated. Hence the status of \"Octavia is dedicated to research\" is not determined by the premises. Since the antecedent is uncertain, the truth of the conditional is also uncertain. Therefore the context does not entail the conclusion.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1933
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Octavia does not enjoy learning.\n\nRemoved rules:\n- If Octavia does not enjoy learning, then she does not have curiosity.\n\nAdded facts:\n- Octavia has curiosity.",
+      "question": "Does the context entail the conclusion 'If Octavia is dedicated to research, then she will make significant discoveries and improve lives.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We have the fact that Octavia does not make significant discoveries, so the consequent (making significant discoveries and improving lives) is false (even though she does improve lives). The conditional will be true only if the antecedent (Octavia is dedicated to research) is false. From the facts we can infer: Octavia has curiosity, which by rule \"If Octavia has curiosity then she is passionate about health\" gives her passion; together with \"studies hard\" this gives \"can pursue medical knowledge\". However, there is no rule that turns \"can pursue\" into \"pursues\" medical knowledge, so we cannot infer that she actually pursues medical knowledge. The rule that would make her dedicated to research requires her to pursue medical knowledge, which we cannot establish. The only rule that could make her not dedicated requires lack of curiosity, which we do not have. Therefore the status of \"Octavia is dedicated to research\" is undetermined by the current context. Since the antecedent may be true or false, the conditional is not guaranteed true nor false. Hence the conclusion is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2269
+    }
+  ]
+}

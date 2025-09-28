@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.42857142857142855
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Gracelyn builds nests.\nGracelyn raises her young.\nGracelyn migrates seasonally.\nGracelyn either teaches hunting skills or builds nests, but not both.\nEvery bird that raises its young is either a parent or teaches hunting skills (or both).\nIf Gracelyn is a parent, then she either migrates seasonally or finds food, but not both.\nEvery bird either protects its territory or finds food.\nFor Gracelyn, either she protects her territory or she cares for others, but not both.\nEvery bird that forms strong bonds with others cares for them.\nFor all x, if x does not care for others, then x does not form strong bonds with others.\nFor all x, either x does not raise its young, or x is a parent, or x teaches hunting skills.",
       "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Gracelyn builds nests, so she cannot teach hunting. Since she raises her young, she must be a parent (as teaching is excluded). As a parent, she migrates, so she does not find food. Every bird must protect territory or find food; since she doesn't find food, she protects her territory. Since she protects territory, she cannot care for others (exclusive OR). The context states that forming strong bonds requires caring for others. Since Gracelyn does not care for others, she cannot form strong bonds.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
@@ -40,70 +40,70 @@
       "step": 2,
       "context": "Gracelyn builds nests.\nGracelyn raises her young.\nGracelyn migrates seasonally.\nEvery bird that raises its young is either a parent or teaches hunting skills (or both).\nIf Gracelyn is a parent, then she either migrates seasonally or finds food, but not both.\nEvery bird either protects its territory or finds food.\nFor Gracelyn, either she protects her territory or she cares for others, but not both.\nEvery bird that forms strong bonds with others cares for them.\nFor all x, if x does not care for others, then x does not form strong bonds with others.\nFor all x, either x does not raise its young, or x is a parent, or x teaches hunting skills.\nGracelyn is not a parent.\nGracelyn finds food.\nGracelyn does not protect her territory.\nFor all x, if x cares for others, then x forms strong bonds with them.",
       "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Gracelyn is not a parent, so she must teach hunting skills (since she raises her young and the disjunction requires a parent or teaching). Since she finds food and does not protect her territory, the exclusive OR implies she cares for others. The rule 'if x cares for others, then x forms strong bonds with them' applies, so Gracelyn forms strong bonds.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 453
+      "token_count": 1005
     },
     {
       "step": 3,
       "context": "Gracelyn builds nests.\nGracelyn raises her young.\nGracelyn migrates seasonally.\nEvery bird that raises its young is either a parent or teaches hunting skills (or both).\nIf Gracelyn is a parent, then she either migrates seasonally or finds food, but not both.\nEvery bird either protects its territory or finds food.\nFor Gracelyn, either she protects her territory or she cares for others, but not both.\nEvery bird that forms strong bonds with others cares for them.\nFor all x, if x does not care for others, then x does not form strong bonds with others.\nFor all x, either x does not raise its young, or x is a parent, or x teaches hunting skills.\nGracelyn is not a parent.\nGracelyn finds food.\nFor all x, if x cares for others, then x forms strong bonds with them.\nFor all x, if x migrates seasonally and x builds nests, then x protects its territory.",
       "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Gracelyn is not a parent, so to raise her young, she must teach hunting skills. She finds food (thus no territory protection required). However, the new rule 'if migrates and builds nests, then protects territory' contradicts the context (Gracelyn does both but does not protect). Despite this, the context explicitly states she does not protect territory, leading to her caring for others (by exclusive OR). Since caring for others entails forming strong bonds, the conclusion holds.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 703
+      "token_count": 2003
     },
     {
       "step": 4,
       "context": "Gracelyn builds nests.\nGracelyn raises her young.\nGracelyn migrates seasonally.\nEvery bird that raises its young is either a parent or teaches hunting skills (or both).\nIf Gracelyn is a parent, then she either migrates seasonally or finds food, but not both.\nEvery bird either protects its territory or finds food.\nFor Gracelyn, either she protects her territory or she cares for others, but not both.\nEvery bird that forms strong bonds with others cares for them.\nFor all x, if x does not care for others, then x does not form strong bonds with others.\nFor all x, either x does not raise its young, or x is a parent, or x teaches hunting skills.\nGracelyn is not a parent.\nGracelyn finds food.\nFor all x, if x cares for others, then x forms strong bonds with them.\nFor all x, if x migrates seasonally and x builds nests, then x protects its territory.\nFor all x, x forms strong bonds with others if and only if x cares for them.\nGracelyn protects her territory.\nGracelyn teaches hunting skills.",
       "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Gracelyn protects her territory (explicitly stated and enforced by the migration/building rule), which via her exclusive OR condition prevents her from caring for others. Since forming strong bonds is logically equivalent to caring for others (biconditional rule), she cannot form such bonds.",
+      "correct": true,
       "tags": [
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 965
+      "token_count": 3885
     },
     {
       "step": 5,
       "context": "Gracelyn builds nests.\nGracelyn raises her young.\nGracelyn migrates seasonally.\nEvery bird that raises its young is either a parent or teaches hunting skills (or both).\nIf Gracelyn is a parent, then Gracelyn migrates seasonally if and only if Gracelyn does not find food.\nEvery bird either protects its territory or finds food.\nFor Gracelyn, either she protects her territory or she cares for others, but not both.\nEvery bird that forms strong bonds with others cares for them.\nFor all x, if x does not care for others, then x does not form strong bonds with others.\nFor all x, either x does not raise its young, or x is a parent, or x teaches hunting skills.\nGracelyn is not a parent.\nGracelyn finds food.\nFor all x, if x cares for others, then x forms strong bonds with them.\nFor all x, if x migrates seasonally and x builds nests, then x protects its territory.\nFor all x, if x does not protect its territory, then it is not the case that x migrates seasonally and x builds nests.\nFor all x, x forms strong bonds with others if and only if x cares for them.\nGracelyn protects her territory.\nIt is not the case that it is not the case that Gracelyn protects her territory.\nGracelyn teaches hunting skills.",
       "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
-      "prediction": "ERROR",
+      "prediction": "",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "",
       "correct": false,
       "tags": [
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1260
+      "token_count": 5010
     },
     {
       "step": 6,
       "context": "Gracelyn builds nests.\nGracelyn raises her young.\nGracelyn migrates seasonally.\nEvery bird that raises its young is either a parent or teaches hunting skills (or both).\nIf Gracelyn is a parent, then Gracelyn migrates seasonally if and only if Gracelyn does not find food.\nEvery bird either protects its territory or finds food.\nFor Gracelyn, either she protects her territory or she cares for others, but not both.\nEvery bird that forms strong bonds with others cares for them.\nFor all x, if x does not care for others, then x does not form strong bonds with others.\nFor all x, either x does not raise its young, or x is a parent, or x teaches hunting skills.\nGracelyn is not a parent.\nGracelyn finds food.\nFor all x, if x cares for others, then x forms strong bonds with them.\nFor all x, x forms strong bonds with others if and only if x cares for them.\nGracelyn teaches hunting skills.\nGracelyn does not protect her territory.",
       "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
-      "prediction": "ERROR",
+      "prediction": "",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -111,21 +111,21 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1608
+      "token_count": 5338
     },
     {
       "step": 7,
       "context": "Gracelyn builds nests.\nGracelyn raises her young.\nGracelyn migrates seasonally.\nEvery bird that raises its young is either a parent or teaches hunting skills (or both).\nIf Gracelyn is a parent, then Gracelyn migrates seasonally if and only if Gracelyn does not find food.\nEvery bird either protects its territory or finds food.\nFor Gracelyn, either she protects her territory or she cares for others, but not both.\nEvery bird that forms strong bonds with others cares for them.\nFor all x, if x does not care for others, then x does not form strong bonds with others.\nFor all x, either x does not raise its young, or x is a parent, or x teaches hunting skills.\nGracelyn is not a parent.\nGracelyn finds food.\nFor all x, if x cares for others, then x forms strong bonds with them.\nFor all x, x forms strong bonds with others if and only if x cares for them.\nGracelyn teaches hunting skills.\nGracelyn does not protect her territory.\nFor all x, x does not form strong bonds with others if and only if x does not care for them.",
       "question": "Does the context entail the conclusion 'Gracelyn forms strong bonds with her fellow petrels.'?",
-      "prediction": "ERROR",
+      "prediction": "",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "",
       "correct": false,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 1889
+      "token_count": 5599
     }
   ]
 }

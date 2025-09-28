@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 112,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Paris supports entrepreneurship.\nParis does not drive progress.\nParis embraces diversity.\nParis does not flourish economically.\nParis does not host intellectual events.\nParis does not have landmarks.\nIf Paris either fosters innovation or supports entrepreneurship (but not both), then it drives progress.\nAny city that embraces diversity and attracts visionaries will flourish economically.\nIf a city thrives artistically and fosters innovation, then it attracts visionaries.\nParis either hosts intellectual events or is a tourist destination, but not both.\nIf Paris is a tourist destination, then it either has landmarks or preserves its history (but not both).\nIf a city inspires creativity, then it thrives artistically.\nIf Paris either preserves its history or is culturally enriching (but not both), then it inspires creativity.\nParis is either culturally enriching or culturally barren, but not both.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Paris is a tourist destination and Paris does not have landmarks, then Paris preserves its history.\n- If Paris either preserves its history or is culturally enriching, and it is not the case that Paris preserves its history and Paris is culturally enriching, then it inspires creativity.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From facts, H is false and the XOR (H or T) implies T is true. With T true and \u00acL, rule (T \u2227 \u00acL \u2192 preserves history) gives preserves history true (Hs). The XOR between preserves history and culturally enriching then forces culturally enriching false (C). Finally the XOR between culturally enriching and culturally barren forces culturally barren true (B). Thus the conclusion \u201cParis is culturally barren\u201d follows.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 270
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Paris either fosters innovation or supports entrepreneurship (but not both), then it drives progress.\n\nAdded rules:\n- If Paris preserves its history, then Paris is not culturally enriching.\n\nAdded facts:\n- Paris does not foster innovation.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given the facts and rules, we deduce that Paris is a tourist destination (since it does not host intellectual events and the rule forces the other option). With tourist destination true and \u201chas landmarks\u201d false, the rule \"tourist destination \u2192 either has landmarks or preserves history (exclusive)\" forces Paris to preserve its history. The added rule \"preserves history \u2192 not culturally enriching\" gives that Paris is not culturally enriching. The fact that Paris is either culturally enriching or culturally barren (exclusive) then forces Paris to be culturally barren. Thus the conclusion follows.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 460
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For any x, either x does not embrace diversity, or x does not attract visionaries, or x flourishes economically.\n\nAdded facts:\n- Paris is either culturally enriching or culturally barren.\n- It is not the case that Paris is both culturally enriching and culturally barren.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Using the facts and rules, we deduce T (tourist destination), H (preserves history) because T \u2227 \u00acL. From the added universal rule (\u00acD \u2228 \u00acV \u2228 E) and E false, we obtain \u00acV. The rule (H XOR CE) \u2192 inspires credibility (I_C) forces I_C only when CE is false. If CE were false, then I_C true, implying A true. Since F is forced true to avoid contradicting \u00acP, (A \u2227 F) would make V true, which contradicts \u00acV. Hence CE cannot be false, so CE must be true and CB false. Thus \u201cParis is culturally barren\u201d does not follow.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 668
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Paris does not have landmarks.\n\nAdded rules:\n- If Paris has landmarks, then Paris is culturally enriching.\n\nAdded facts:\n- Paris has landmarks.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the facts and rules we can deduce H is false, T is true, L is true, S is false, V is false, I is false, E is true, D is true, F is false, and P both true and false, yielding an inconsistent set. No rule forces either CE or CB to be true, nor does it force CB to be false (the exclusive-or between CE and CB merely links them). Thus the formula 'Paris is culturally barren' is neither provably true nor provably false under the given rules, so the entailment is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 911
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Paris has landmarks, then Paris is culturally enriching.\n\nAdded facts:\n- Paris has landmarks and Paris is not culturally enriching.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "With the facts {S= true, L=true, CE=false} and the remaining rules, we derive H=false (from S XOR L) and V=false (from \u00acD \u2228 \u00acV \u2228 E). Rule (H XOR CE) \u2192 I does not fire, so I remains undetermined. Rule I\u2192W is irrelevant. The exclusive-or rule \u201cParis is either culturally enriching or culturally barren, but not both\u201d combined with the fact CE=false forces CB=true. No rule forces CB to be false, and no inconsistency arises. Therefore \u2018Paris is culturally barren\u2019 follows.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1105
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- Either Paris hosts intellectual events or Paris is a tourist destination, and it is not the case that Paris hosts intellectual events and Paris is a tourist destination.\n- For any x, either x does not inspire creativity or x thrives artistically.\n\nAdded facts:\n- Paris is not culturally enriching.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The rule \"Paris is either culturally enriching or culturally barren, but not both\" is a strict exclusive\u2010or. The added fact states that Paris is not culturally enriching, so the only way to satisfy the exclusive\u2010or is that Paris is culturally barren. No rule in the context forces culturally barren to be false, nor is there any contradiction that would eliminate this possibility. Therefore the conclusion necessarily follows from the context.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1297
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Paris is a tourist destination and does not preserve its history, then it has landmarks.\n- For any x, if x does not thrive artistically, then x does not inspire creativity.\n\nAdded facts:\n- If Paris is culturally enriching, then Paris is not culturally barren.\n- If Paris is culturally barren, then Paris is not culturally enriching.\n- If Paris is culturally enriching, then Paris does not preserve its history.",
+      "question": "Does the context entail the conclusion 'Paris is culturally barren.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the added rules and facts, we first deduce that Paris is a tourist destination (since it does not host intellectual events and the exclusive rule forces T). The rule \"If Paris is a tourist destination and does not preserve its history, then it has landmarks\" together with the facts that Paris has no landmarks forces Paris to preserve its history. The rule \"If Paris preserves its history, then Paris is not culturally enriching\" (which is part of the added rules) then implies that Paris is not culturally enriching. The explicit rule \"Paris either culturally enriches or culturally barren, but not both\" therefore forces Paris to be culturally barren. No rule contradicts this, so the conclusion follows unequivocally.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1485
+    }
+  ]
+}

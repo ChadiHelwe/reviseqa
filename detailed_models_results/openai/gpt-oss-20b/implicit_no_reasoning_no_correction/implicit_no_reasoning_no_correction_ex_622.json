@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "implicit_no_reasoning_no_correction",
+    "chain_index": 289,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Tiger does not get dirty.\nTiger does not require bathing.\nTiger enjoys water.\nTiger does not feel refreshed.\nIf a dog plays outdoors, then it gets dirty.\nIf Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.\nIf a dog enjoys water and gets cleaned, then it will feel refreshed.\nIf Tiger goes hiking or needs attention, then he will get cleaned.\nIf a dog has ticks, then it needs attention.\nTiger either has ticks or gets regular grooming (or both).",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Tiger does not get dirty.\nTiger does not require bathing.\nTiger enjoys water.\nTiger does not feel refreshed.\nIf a dog plays outdoors, then it gets dirty.\nIf Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.\nIf a dog enjoys water and gets cleaned, then it will feel refreshed.\nIf Tiger goes hiking or needs attention, then he will get cleaned.\nIf a dog has ticks, then it needs attention.\nTiger either has ticks or gets regular grooming (or both).\nFor all x, if x does not get dirty, then x does not play outdoors.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "\n1. Facts: Tiger does not get dirty, does not require bathing, enjoys water, not refreshed.\n2. From rule \"For all x, if x does not get dirty, then x does not play outdoors\", Tiger does not play outdoors.\n3. Rule \"If Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.\" (exclusive or). \n   Contrapositive: If Tiger does not require bathing, then it is not the case that (Tiger plays outdoors xor Tiger goes hiking). \n   Since Tiger does not play outdoors, the only way for the XOR condition to be false is that Tiger does not go hiking. \n   Thus Tiger does not go hiking.\n4. Rule \"If Tiger goes hiking or needs attention, then he will get cleaned.\" \n   Because Tiger does not go hiking, and we have not yet determined if he needs attention.\n5. Rule \"If a dog has ticks, then it needs attention.\" (no rule giving needs attention directly). \n   Since we do not know ticks yet.\n6. Rule \"If Tiger enjoys water and gets cleaned, then it will feel refreshed.\" \n   Tiger enjoys water (given). He does not feel refreshed. For this implication to fail, one of the antecedents must be false. \n   Tiger enjoys water is true, so to avoid refreshed, Tiger must not get cleaned. Therefore Tiger does not get cleaned.\n7. Since Tiger does not get cleaned, the implication \"If Tiger goes hiking or needs attention, then he will get cleaned\" tells us that \n   the antecedent (goes hiking or needs attention) must be false, because the consequent is false. This implies Tiger does not go hiking (already known) and Tiger does not need attention.\n8. Since Tiger does not need attention, rule \"If a dog has ticks, then it needs attention\" allows us to conclude Tiger does not have ticks (because if he had ticks, he would need attention, contradicting the known false need attention).\n9. Final rule: \"Tiger either has ticks or gets regular grooming (or both).\"\n   Since Tiger does not have ticks, the disjunction forces Tiger to get regular grooming.\n10. Therefore the conclusion \"Tiger gets regular grooming\" is logically entailed by the facts and rules.\n\nThe conclusion follows necessarily from the given information.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 212
+    },
+    {
+      "step": 2,
+      "context": "Tiger does not get dirty.\nTiger does not require bathing.\nTiger enjoys water.\nIf a dog plays outdoors, then it gets dirty.\nIf Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.\nIf a dog enjoys water and gets cleaned, then it will feel refreshed.\nIf Tiger goes hiking or needs attention, then he will get cleaned.\nIf a dog has ticks, then it needs attention.\nTiger either has ticks or gets regular grooming (or both).\nFor all x, if x does not get dirty, then x does not play outdoors.\nTiger has ticks.\nFor all x, if x has ticks, then x does not get regular grooming.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. Facts: Tiger does not get dirty, does not require bathing, enjoys water. 2. Rules: All dirty -> play outdoors; Not dirty -> not play outdoors => Tiger does not play outdoors. 3. Tiger has ticks (explicit). Rule: If has ticks then needs attention \u2192 Tiger needs attention. 4. Rule: If Tiger goes hiking or needs attention, then he gets cleaned. Since needs attention is true, Tiger gets cleaned. 5. Rule: If a dog enjoys water and gets cleaned, then it feels refreshed (but not relevant). 6. Tiger either has ticks or gets regular grooming (or both). We already know Tiger has ticks, so the disjunction is satisfied regardless of grooming. 7. Rule: If a dog has ticks, then it does not get regular grooming. Applied to Tiger: has_ticks \u2192 \u00acgets_reg_grooming. Since Tiger has ticks, we derive \u00acgets_reg_grooming. 8. Therefore the statement \u201cTiger gets regular grooming\u201d is contradicted by the combined information; it is not entailed. So the correct answer is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 881
+    },
+    {
+      "step": 3,
+      "context": "Tiger does not get dirty.\nTiger does not require bathing.\nTiger enjoys water.\nIf a dog plays outdoors, then it gets dirty.\nIf Tiger plays outdoors and does not go hiking, then he requires bathing.\nIf Tiger does not play outdoors and goes hiking, then he requires bathing.\nIf a dog enjoys water and gets cleaned, then it will feel refreshed.\nIf Tiger goes hiking or needs attention, then he will get cleaned.\nIf a dog has ticks, then it needs attention.\nTiger either has ticks or gets regular grooming (or both).\nFor all x, either x gets dirty or x does not play outdoors.\nTiger has ticks.\nFor all x, if x has ticks, then x does not get regular grooming.\nTiger needs attention.\nTiger gets cleaned.\nTiger feels refreshed.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The facts state that Tiger has ticks. A rule says that any animal that has ticks does not get regular grooming. Therefore we can derive \u00ac(Tiger gets regular grooming). The conclusion \"Tiger gets regular grooming\" contradicts this derivation and cannot be entailed. No other rule in the context implies regular grooming for Tiger. Thus the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1292
+    },
+    {
+      "step": 4,
+      "context": "Tiger does not get dirty.\nTiger does not require bathing.\nTiger enjoys water.\nIf a dog plays outdoors, then it gets dirty.\nIf Tiger plays outdoors and does not go hiking, then he requires bathing.\nIf Tiger does not play outdoors and goes hiking, then he requires bathing.\nIf a dog enjoys water and gets cleaned, then it will feel refreshed.\nIf Tiger goes hiking or needs attention, then he will get cleaned.\nIf a dog has ticks, then it needs attention.\nTiger either has ticks or gets regular grooming (or both).\nFor all x, either x gets dirty or x does not play outdoors.\nTiger has ticks.\nFor all x, if x has ticks, then x does not get regular grooming.\nTiger needs attention.\nTiger gets cleaned.\nTiger feels refreshed.\nFor all x, if x does not get dirty, then x does not play outdoors.\nTiger either goes hiking or needs attention.\nIf Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context states that Tiger has ticks. One rule says that for any entity that has ticks, it does not get regular grooming. Therefore we can derive \u00ac(Tiger gets regular grooming). There is no rule that would override this conclusion or provide a disjunction that forces Tiger to have regular grooming regardless of the ticks condition. The rule \u2018Tiger either has ticks or gets regular grooming (or both)\u2019 is satisfied by Tiger having ticks, so it does not imply that Tiger must also get regular grooming. Because the derived \u00ac(Tiger gets regular grooming) contradicts the proposed conclusion, the context does not entail that Tiger gets regular grooming. Hence the correct answer is \u201cFalse.\u201d",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1573
+    },
+    {
+      "step": 5,
+      "context": "Tiger does not get dirty.\nTiger does not require bathing.\nTiger enjoys water.\nIf a dog plays outdoors, then it gets dirty.\nIf Tiger plays outdoors and does not go hiking, then he requires bathing.\nIf Tiger does not play outdoors and goes hiking, then he requires bathing.\nIf a dog enjoys water and gets cleaned, then it will feel refreshed.\nIf Tiger goes hiking or needs attention, then he will get cleaned.\nIf a dog has ticks, then it needs attention.\nTiger either has ticks or gets regular grooming (or both).\nFor all x, either x gets dirty or x does not play outdoors.\nFor all x, if x has ticks, then x does not get regular grooming.\nTiger needs attention.\nTiger gets cleaned.\nTiger feels refreshed.\nFor all x, if x does not get dirty, then x does not play outdoors.\nTiger either goes hiking or needs attention.\nIf Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.\nTiger does not have ticks.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The rule \"Tiger either has ticks or gets regular grooming (or both)\" with the fact \"Tiger does not have ticks\" forces the other part of the disjunction to hold: Tiger gets regular grooming. No other rule provides a counter\u2011fact, so the conclusion follows necessarily. Therefore it is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1963
+    },
+    {
+      "step": 6,
+      "context": "Tiger does not get dirty.\nTiger does not require bathing.\nTiger enjoys water.\nIf a dog plays outdoors, then it gets dirty.\nIf Tiger plays outdoors and does not go hiking, then he requires bathing.\nIf Tiger does not play outdoors and goes hiking, then he requires bathing.\nIf a dog enjoys water and gets cleaned, then it will feel refreshed.\nIf Tiger goes hiking or needs attention, then he will get cleaned.\nIf a dog has ticks, then it needs attention.\nTiger either has ticks or gets regular grooming (or both).\nFor all x, either x gets dirty or x does not play outdoors.\nFor all x, if x has ticks, then x does not get regular grooming.\nTiger needs attention.\nTiger gets cleaned.\nTiger feels refreshed.\nFor all x, if x does not get dirty, then x does not play outdoors.\nTiger either goes hiking or needs attention.\nIf Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.\nTiger does not have ticks.\nFor all x, if x gets regular grooming, then x does not have ticks.\nTiger gets regular grooming.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly includes the fact \"Tiger gets regular grooming.\" No rule in the context contradicts this fact. All other provided rules are consistent with Tiger having regular grooming (e.g., the rule \"If x gets regular grooming, then x does not have ticks\" aligns with the fact that Tiger does not have ticks). Therefore, the conclusion \"Tiger gets regular grooming.\" is directly entailed by the context.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2282
+    },
+    {
+      "step": 7,
+      "context": "Tiger does not get dirty.\nTiger does not require bathing.\nTiger enjoys water.\nIf a dog plays outdoors, then it gets dirty.\nIf Tiger plays outdoors and does not go hiking, then he requires bathing.\nIf Tiger does not play outdoors and goes hiking, then he requires bathing.\nIf a dog enjoys water and gets cleaned, then it will feel refreshed.\nIf Tiger goes hiking or needs attention, then he will get cleaned.\nIf a dog has ticks, then it needs attention.\nTiger either has ticks or gets regular grooming (or both).\nFor all x, either x gets dirty or x does not play outdoors.\nFor all x, if x has ticks, then x does not get regular grooming.\nTiger needs attention.\nTiger gets cleaned.\nTiger feels refreshed.\nFor all x, if x does not get dirty, then x does not play outdoors.\nTiger either goes hiking or needs attention.\nIf Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.\nTiger has ticks.\nFor all x, if x gets regular grooming, then x does not have ticks.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context states that Tiger has ticks, and it contains a rule: \"For all x, if x has ticks, then x does not get regular grooming.\" From this we can derive \u00ac(Tiger gets regular grooming). The rest of the facts and rules, including \"Tiger either has ticks or gets regular grooming (or both)\", are satisfied by Tiger having ticks alone, so no rule forces grooming. Therefore the conclusion \"Tiger gets regular grooming\" is contradicted by the given information and is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2644
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 230,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Brianna thinks outside the box.\nBrianna does not take risks.\nBrianna has good energy.\nBrianna is authentic.\nBrianna cannot inspire others.\nBrianna is not spontaneous.\nIf Brianna thinks outside the box, then she either takes risks or follows rules (or both).\nIf someone follows rules, they are not necessarily creative, and if someone is creative, they do not necessarily follow rules.\nIf Brianna makes people laugh, then she either has good energy or is authentic (but not both).\nAnyone who makes people laugh or is charismatic can inspire others.\nFor all humans, if someone is either entertaining or spontaneous, then they are charismatic.\nIf Brianna is either unpredictable or creative (but not both), then she is entertaining.",
+      "question": "Does the context entail the conclusion 'Brianna is unpredictable.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, x follows rules or x is creative, but not both.\n\nAdded rules:\n- For all x, x follows rules or x is creative.\n- For all x, it is not the case that x follows rules and x is creative.\n\nAdded facts:\n- Brianna does not make people laugh.\n- Brianna is not charismatic.\n- Brianna is not entertaining.",
+      "question": "Does the context entail the conclusion 'Brianna is unpredictable.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts, Brianna thinks outside the box and does not take risks. The conditional (if thinks outside the box then takes risks or follows rules) forces her to follow rules. The exclusive-or rule (follows rules XOR creative) then implies she is not creative. The rule (if unpredictable XOR creative then entertaining) simplifies to (if unpredictable then entertaining) because creative is false. Since we have the added fact that Brianna is not entertaining, the contrapositive gives not unpredictable. Therefore the conclusion 'Brianna is unpredictable' is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 259
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Brianna cannot inspire others.\n- Brianna is not charismatic.\n- Brianna is not entertaining.\n\nAdded rules:\n- If Brianna is entertaining, then she is unpredictable or creative, but not both.\n\nAdded facts:\n- Brianna is entertaining.",
+      "question": "Does the context entail the conclusion 'Brianna is unpredictable.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts, Brianna thinks outside the box and does not take risks. By the rule 'if thinks outside the box then takes risks or follows rules', the only way to satisfy this given she does not take risks is that she follows rules. The added universal rules state that for any x, x follows rules or x is creative, and it is not the case that x follows rules and x is creative. Thus follows rules true implies creative false for Brianna. The new rule 'if Brianna is entertaining then she is unpredictable or creative, but not both' together with her being entertaining (fact) gives an exclusive-or between unpredictable and creative. Since creative is false, unpredictable must be true. Hence the conclusion 'Brianna is unpredictable' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 505
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Brianna is unpredictable or creative, but not both, then she is entertaining.\n- If Brianna is entertaining, then she is unpredictable or creative, but not both.\n\nAdded rules:\n- Brianna is entertaining if and only if she is unpredictable or creative, but not both.\n\nAdded facts:\n- Brianna follows rules.",
+      "question": "Does the context entail the conclusion 'Brianna is unpredictable.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The universal rules give that Brianna follows rules and therefore is not creative. The biconditional states that Brianna is entertaining iff she is unpredictable XOR creative. Since creative is false, this simplifies to entertaining iff unpredictable. However, there is no fact or rule that currently establishes Brianna is entertaining (the previous fact that she was not entertaining was removed, and no rule derives entertaining from other properties). Likewise, there is no information establishing she is not entertaining. Hence we cannot infer either entertaining or unpredictable, nor their negations. Therefore the conclusion 'Brianna is unpredictable' is not entailed nor contradicted, making it uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 762
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all x, x follows rules if and only if x is not creative.\n\nAdded facts:\n- Brianna has good energy and Brianna is authentic.\n- Brianna is charismatic.\n- Brianna can inspire others.",
+      "question": "Does the context entail the conclusion 'Brianna is unpredictable.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the added rule that follows rules is equivalent to not creative, and the fact that Brianna follows rules, we infer that she is not creative. The biconditional earlier states that Brianna is entertaining iff she is unpredictable XOR creative. Since creative is false, this reduces to entertaining iff unpredictable. However, there is no fact or rule that establishes Brianna is entertaining, nor any rule that would derive unpredictable directly from her other properties (good energy, authentic, charismatic, can inspire). Therefore we cannot deduce that Brianna is unpredictable nor its negation. The conclusion is not entailed, making it uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1011
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- Brianna is entertaining if and only if (Brianna is unpredictable or Brianna is creative) and it is not the case that (Brianna is unpredictable and Brianna is creative).\n- For all x, x is creative if and only if x does not follow rules.\n- If Brianna makes people laugh or Brianna is charismatic, then Brianna can inspire others.\n- If Brianna is entertaining or Brianna is spontaneous, but not both, then Brianna is charismatic.\n\nAdded facts:\n- It is not the case that Brianna either has good energy or is authentic, but not both.\n- Brianna is charismatic.\n- Brianna can inspire others.",
+      "question": "Does the context entail the conclusion 'Brianna is unpredictable.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the earlier rule 'If Brianna thinks outside the box then she either takes risks or follows rules' together with the facts that Brianna thinks outside the box and does not take risks, we infer that Brianna follows rules. The added universal rule states that an individual is creative iff they do NOT follow rules, so Brianna is not creative. The biconditional 'Brianna is entertaining iff (Brianna is unpredictable or Brianna is creative) and not both' reduces, given that she is not creative, to 'Brianna is entertaining iff Brianna is unpredictable'. However, the current facts do not establish that Brianna is entertaining, nor do they establish that she is not entertaining. The other rules provide only sufficient conditions for charisma, not reverse implications. Therefore we cannot deduce either Brianna is unpredictable or that she is not unpredictable. The conclusion is not entailed nor contradicted, making it uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1251
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- Brianna is entertaining if and only if ((if Brianna is unpredictable then Brianna is not creative) and (if Brianna is creative then Brianna is not unpredictable)).\n\nAdded facts:\n- Brianna is not creative.",
+      "question": "Does the context entail the conclusion 'Brianna is unpredictable.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have the universal rule that follows_rules iff not creative, and the fact that Brianna follows rules, giving not creative. The newly added fact explicitly states Brianna is not creative. The new biconditional says: entertaining \u2194 [(unpredictable \u21d2 not creative) \u2227 (creative \u21d2 not unpredictable)]. Given not creative is true and creative is false, both implications are true, so the conjunction is true. Hence entertaining is true. The earlier biconditional (entertaining \u2194 (unpredictable XOR creative)) together with creative being false reduces to entertaining \u2194 unpredictable. Since entertaining is true, unpredictable must be true. Therefore the context entails that Brianna is unpredictable.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1647
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Brianna follows rules.\n- Brianna is not creative.\n\nAdded facts:\n- Brianna does not follow rules.",
+      "question": "Does the context entail the conclusion 'Brianna is unpredictable.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the added universal rule, 'for all x, x is creative iff not follow rules', and the fact that Brianna does not follow rules, we infer that Brianna is creative. The earlier biconditional 'Brianna is entertaining iff (Brianna is unpredictable or Brianna is creative) and not both' thus becomes 'entertaining iff (unpredictable XOR creative)'. Since creative is true, this simplifies to 'entertaining iff not unpredictable'. The later biconditional also simplifies to the same equivalence: entertaining iff not unpredictable. However, the current facts do not establish whether Brianna is entertaining (no rule derives entertaining from other known properties, and the rule linking entertaining to charisma is only one-way). Therefore we cannot determine the truth of entertaining, and consequently cannot determine whether Brianna is unpredictable. The conclusion is not entailed nor contradicted.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1900
+    }
+  ]
+}

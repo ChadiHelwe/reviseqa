@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 297,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Chick does not fluff her plumage.\nChick flaps her wings.\nChick feels threatened.\nChick protects her nest.\nChick does not avoid confrontation.\nChick is challenged.\nEvery chicken either fluffs its plumage or puffs out its feathers.\nFor Chick, either she puffs out her feathers or she lets out a loud squawk, but not both.\nIf Chick either flaps her wings or lets out a loud squawk (but not both), then she sounds an alarm.\nIf Chick feels threatened, then she either attacks predators or sounds an alarm (but not both).\nIf Chick either protects her nest or defends her flock (but not both), then she attacks predators.\nChick either stands her ground or avoids confrontation, but not both.\nIf Chick is challenged, then she is either timid or stands her ground, but not both.\nIf Chick defends her flock, then she is fearless.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Chick does not avoid confrontation.\n\nAdded rules:\n- If Chick is challenged, then she avoids confrontation.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the fact that Chick is challenged, we infer two things: (1) she avoids confrontation (by the added rule), and (2) she is either timid or stands her ground, but not both (by the original rule). The exclusive rule that Chick either stands her ground or avoids confrontation forces her to not stand her ground, leaving her timid. Thus Chick is timid. Fearlessness can only be derived if Chick defends her flock, but there is no information establishing that she defends the flock, nor any rule that rules it out. Therefore we cannot determine whether Chick is fearless. Since we have timid true and fearless undetermined, the statement \"Chick is either fearless or timid, but not both\" is not guaranteed true nor false; it remains uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 296
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Chick protects her nest.\n\nAdded rules:\n- If Chick is fearless, then she defends her flock.\n\nAdded facts:\n- Chick does not protect her nest.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the facts we have: Chick is challenged, does not avoid confrontation, and does not protect her nest. The exclusive rule that Chick either stands her ground or avoids confrontation forces stands_ground to be true (since avoids_confrontation is false). The challenged rule then gives that Chick is either timid or stands_ground, but not both; with stands_ground true, timid must be false. Fearlessness can only be inferred via the equivalence: Chick defends her flock if and only if she is fearless (original rule defends_flock \u2192 fearless and added rule fearless \u2192 defends_flock). No rule or fact establishes that Chick defends her flock, nor any rule that rules it out. Thus we cannot conclude whether Chick is fearless. Since timid is false and fearless is undetermined, the statement \"Chick is either fearless or timid, but not both\" cannot be confirmed nor refuted, making it uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 528
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Chick is challenged, then she avoids confrontation.\n\nAdded facts:\n- Chick avoids confrontation.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the fact that Chick is challenged and the rule that a challenged chicken is either timid or stands her ground (but not both), together with the exclusive rule that Chick either stands her ground or avoids confrontation, and the fact that Chick avoids confrontation, we infer that Chick does not stand her ground and therefore must be timid. Fearlessness is equivalent to defending the flock (by the original rule \"defends flock \u2192 fearless\" and the added rule \"fearless \u2192 defends flock\"). No rule or fact determines whether Chick defends the flock, so we cannot conclude whether she is fearless. Since we have proved Chick is timid but cannot determine if she is also fearless, the statement \"Chick is either fearless or timid, but not both\" cannot be confirmed nor refuted, making it uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 797
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Chick either protects her nest or defends her flock (but not both), then she attacks predators.\n\nAdded rules:\n- It is not the case that Chick either stands her ground or avoids confrontation, but not both.\n\nAdded facts:\n- Chick defends her flock.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have the fact 'Chick defends her flock'. From the original rule 'If Chick defends her flock then she is fearless' we infer Chick is fearless. Also the added rule 'If Chick is fearless then she defends her flock' makes the two properties equivalent, so fearless is firmly established. The fact 'Chick is challenged' together with the original exclusive rule 'If Chick is challenged then she is either timid or stands her ground, but not both' gives that at least one of timid or stands_ground holds and they cannot both hold. From the added contradictory constraints on 'stands_ground' and 'avoids_confrontation' we derive both stands_ground and avoids_confrontation (and also their negations), but importantly we have a direct derivation of \u00actimid (since the exclusive rule requires \u00ac(timid \u2227 stands_ground) and we have stands_ground true). No rule derives timid, so timid is false. Thus Chick is fearless and not timid, satisfying the exclusive-or 'fearless or timid, but not both'. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1033
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- It is not the case that Chick either stands her ground or avoids confrontation, but not both.\n\nAdded facts:\n- Chick either stands her ground or avoids confrontation, but not both.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have: Chick is challenged, avoids confrontation (fact), and the exclusive fact that she either stands her ground or avoids confrontation but not both. Since avoids is true, stands must be false. The original rule \"If Chick is challenged then she is either timid or stands her ground, but not both\" therefore forces timid to be true (because stands is false). Additionally, the fact \"Chick defends her flock\" together with the rule \"If Chick defends her flock then she is fearless\" gives that Chick is fearless. Thus both fearless and timid are true. The conclusion \"Chick is either fearless or timid, but not both\" asserts an exclusive-or, which is false when both properties hold. Hence the context does not entail the conclusion; it actually contradicts it.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1359
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Chick avoids confrontation.\n\nAdded facts:\n- Chick does not avoid confrontation.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the fact that Chick is challenged and the rule \"If Chick is challenged then she is either timid or stands her ground, but not both,\" we know one of timid or stands is true. The fact \"Chick either stands her ground or avoids confrontation, but not both\" together with \"Chick does not avoid confrontation\" forces stands to be true and timid to be false. Fearlessness can only be derived via the equivalence between being fearless and defending the flock, but there is no fact or rule establishing that Chick defends the flock, nor any rule giving its negation. Hence we cannot determine whether Chick is fearless. Since we have proved timid is false and cannot determine fearless, the exclusive-or statement \"Chick is either fearful or timid, but not both\" cannot be established as true or false. Therefore the conclusion is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1612
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Chick defends her flock.\n\nAdded rules:\n- If Chick defends her flock, then she is not fearless.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the fact that Chick is challenged and the rule that a challenged chicken is either timid or stands her ground (but not both), combined with the fact that Chick either stands her ground or avoids confrontation (exclusive-or) and the fact that Chick does not avoid confrontation, we infer that Chick stands her ground and therefore is not timid. Fearlessness can only be derived from defending the flock (original rule) or from the equivalence added earlier (fearful -> defends). However, the fact that Chick defends the flock was removed, and no rule now establishes that she defends the flock. The new rule states that if she defends the flock then she is not fearless, which does not give a positive indication of fearlessness. Consequently, we cannot determine whether Chick is fearless. Since timid is false and fearless is undetermined, the exclusive-or \"Chick is either fearless or timid, but not both\" cannot be proved true or false, making the conclusion uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1853
+    }
+  ]
+}

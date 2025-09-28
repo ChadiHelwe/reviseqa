@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit",
+    "chain_index": 59,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Girlfriend is a talented chef.\nGirlfriend does not work in a restaurant.\nGirlfriend hosts dinner parties.\nIf Girlfriend is a talented chef, then she either works in a restaurant or prefers homemade meals, but not both.\nIf Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both.\nGirlfriend either cooks for others or enjoys savory foods, but not both.\nGirlfriend either loves sweets or enjoys savory foods, but not both.\nGirlfriend either loves sweets or eats in moderation.\nEither GF has a big appetite or she eats in moderation, but not both.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Girlfriend is a talented chef. Girlfriend does not work in a restaurant.. If Girlfriend is a talented chef, then she either works in a restaurant or prefers homemade meals, but not both.. Therefore, Girlfriend prefers homemade meals.. Girlfriend hosts dinner parties. Girlfriend prefers homemade meals.. If Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both.. Therefore, Girlfriend does not cook for others.. Girlfriend does not cook for others.. Girlfriend either cooks for others or enjoys savory foods, but not both.. Therefore, Girlfriend enjoys savory foods.. Girlfriend enjoys savory foods.. Girlfriend either loves sweets or enjoys savory foods, but not both.. Therefore, Girlfriend does not love sweets.. Girlfriend does not love sweets.. Girlfriend either loves sweets or eats in moderation.. Therefore, Girlfriend eats in moderation.. Girlfriend eats in moderation.. Either GF has a big appetite or she eats in moderation, but not both.. Therefore, GF has a big appetite..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Either Girlfriend has a big appetite or she eats in moderation, but not both.\n\nAdded rules:\n- Either Girlfriend has a big appetite or she eats in moderation.\n- Either Girlfriend does not have a big appetite or she does not eat in moderation.\n\nAdded facts:\n- Girlfriend prefers homemade meals.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the talented chef rule and the fact she does not work in a restaurant, we infer she prefers homemade meals. She also hosts dinner parties. The conditional \"If she cooks for others then she either hosts dinner parties or prefers homemade meals, but not both\" combined with both hosting and preferring homemade meals being true forces that she does NOT cook for others. The exclusive-or rule \"Either cooks for others or enjoys savory foods, but not both\" then gives that she enjoys savory foods. The exclusive-or rule \"Either loves sweets or enjoys savory foods, but not both\" makes her not love sweets. The rule \"Either loves sweets or eats in moderation\" (inclusive OR) together with not loving sweets forces that she eats in moderation. The added pair of rules (A \u2228 M) and (\u00acA \u2228 \u00acM) together encode an exclusive-or between \"big appetite\" (A) and \"eats in moderation\" (M). Since M is true, A must be false. Therefore the conclusion \"GF has a big appetite\" is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 414
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both.\n\nAdded facts:\n- Girlfriend cooks for others.\n- Girlfriend does not eat in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the talented chef rule and the fact she does not work in a restaurant, we infer that GF prefers homemade meals. The exclusive-or rule 'cooks for others XOR enjoys savory foods' combined with the added fact that she cooks for others forces that she does NOT enjoy savory foods. The exclusive-or rule 'loves sweets XOR enjoys savory foods' then forces that she loves sweets (since she does not enjoy savory foods). The inclusive-or rule 'loves sweets OR eats in moderation' is satisfied by her loving sweets, and the added fact that she does NOT eat in moderation makes her moderation status false. The remaining exclusive-or rule 'big appetite XOR eats in moderation' thus requires that, because she does not eat in moderation, she must have a big appetite. Therefore the conclusion 'GF has a big appetite' follows.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 731
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Girlfriend does not eat in moderation.\n\nAdded facts:\n- Girlfriend does not cook for others.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "After all modifications, the knowledge base includes the exclusive-or constraints between big appetite (A) and eats in moderation (M): (A \u2228 M) and (\u00acA \u2228 \u00acM). No fact about M remains (the earlier \u00acM was removed) and there is no rule that can determine A or M uniquely. Therefore, both assignments (A true, M false) and (A false, M true) satisfy the remaining premises. Consequently, the statement \u2018GF has a big appetite\u2019 is not entailed nor contradicted; its truth is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 981
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- Either Girlfriend has a big appetite or she eats in moderation.\n- Either Girlfriend does not have a big appetite or she does not eat in moderation.\n\nAdded rules:\n- Either Girlfriend has a big appetite or she eats in moderation, but not both.\n\nAdded facts:\n- Girlfriend enjoys savory foods.\n- Girlfriend does not love sweets.\n- Girlfriend eats in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context includes the exclusive-or rule \"Either GF has a big appetite or she eats in moderation, but not both.\" The added fact states that GF eats in moderation is true. By the XOR, exactly one of the two can be true, so GF cannot have a big appetite. Therefore the statement \"GF has a big appetite\" is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1160
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Girlfriend eats in moderation.\n\nRemoved rules:\n- Girlfriend either loves sweets or eats in moderation.\n\nAdded rules:\n- Girlfriend does not love sweets and she does not eat in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes the exclusive-or rule \"Either GF has a big appetite or she eats in moderation, but not both.\" The added rule explicitly states that GF does not eat in moderation (\u00acM). With the XOR, exactly one of the two propositions must be true, so GF must have a big appetite (A). Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1365
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Girlfriend does not love sweets and she does not eat in moderation.\n\nAdded rules:\n- Girlfriend either loves sweets or eats in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The current context includes the XOR rule \"Either GF has a big appetite or she eats in moderation, but not both.\" The facts present are: GF enjoys savory foods and GF cooks for others (both true). The XOR rule \"Either GF either cooks for others or enjoys savory foods, but not both\" creates a contradiction, but it does not affect the appetite variables. From the XOR rule \"Either GF either loves sweets or enjoys savory foods, but not both\" and the fact that GF enjoys savory foods, we infer that GF does not love sweets. The newly added inclusive-or rule \"Girlfriend either loves sweets or eats in moderation\" together with \u00acloves sweets forces the conclusion that GF eats in moderation (M is true). Given the XOR between big appetite (A) and moderation (M), and knowing M is true, we must have A false. Therefore the statement \"GF has a big appetite\" is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1535
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- Girlfriend enjoys savory foods and she does not love sweets.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the fact that GF enjoys savory foods and the exclusive-or rule 'loves sweets XOR enjoys savory foods', we infer GF does not love sweets. The inclusive-or rule 'loves sweets OR eats in moderation' then forces that GF eats in moderation. The exclusive-or rule 'big appetite XOR eats in moderation' means exactly one of those can be true; since she eats in moderation, GF cannot have a big appetite. Hence the conclusion 'GF has a big appetite' is false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1811
+    }
+  ]
+}

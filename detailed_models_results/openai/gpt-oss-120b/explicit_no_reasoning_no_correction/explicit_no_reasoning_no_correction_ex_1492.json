@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 24,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Shelby does not let go of burdens.\nShelby does not live authentically.\nShelby takes time for reflection.\nShelby does not discover a new purpose.\nShelby takes risks.\nShelby does not achieve balance.\nAnyone who lets go of burdens or finds inner peace can live authentically.\nIf someone follows their heart and takes time for reflection, then they can find inner peace.\nShelby either makes bold decisions or follows her heart.\nIf Shelby makes bold decisions, then she either gains freedom or discovers a new purpose (or both).\nIf Shelby takes risks, then she either gains freedom or finds happiness (but not both).\nIf Shelby either feels fulfilled or achieves balance (but not both), then she finds happiness.\nIf someone finds creative expression, then they feel fulfilled.\nFor all humans, if they pursue their passion, then they find creative expression.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x does not find creative expression, then x does not pursue their passion.\n- For all x, if x does not feel fulfilled, then x does not find creative expression.\n- If Shelby makes bold decisions, then she gains freedom.\n- For all x, if x does not live authentically, then x does not let go of burdens and x does not find inner peace.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given \u00ac liveAuthentically, rule 4 yields \u00ac findInnerPeace. Since Shelby takes time for reflection, the rule (followHeart \u2227 reflection \u2192 findInnerPeace) forces \u00ac followHeart. The disjunction (Bold \u2228 followHeart) then gives Bold. From added rule, Bold \u2192 gainsFreedom, so gainsFreedom is true. Shelby takes risks, and the risk rule (XOR gainsFreedom, happiness) makes happiness false. To avoid contradiction with the happiness rule (fulfill XOR balance \u2192 happiness) and knowing \u00ac balance, we must have \u00ac feelFulfilled. The implication (creativeExpression \u2192 feelFulfilled) then forces \u00ac creativeExpression. Using added rule 1 (\u00ac creativeExpression \u2192 \u00ac pursuePassion) we infer \u00ac pursuePassion. Hence the conclusion 'Shelby pursues her passion' is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 287
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Shelby does not live authentically.\n\nAdded rules:\n- For all x, if x lives authentically, then x pursues their passion.\n\nAdded facts:\n- Shelby does not gain freedom.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The only rule that introduces 'pursues her passion' is the new one: if Shelby lives authentically then she pursues her passion. To use it we need to infer that Shelby lives authentically. Lives authentically can be derived from the original rule that if someone lets go of burdens or finds inner peace then they live authentically. Shelby does not let go of burdens (\u00acletGo), and there is no evidence that she finds inner peace. Inner peace could follow from 'follows her heart' together with reflection, but we only know Shelby takes time for reflection and that she either makes bold decisions or follows her heart; we cannot determine which disjunct holds. No other rule gives 'lives authentically'. Therefore we cannot prove that Shelby lives authentically, nor can we prove the negation of 'pursues her passion' (the only rule for a negative conclusion would be the contrapositive of the added rule, which is not allowed in forward reasoning). Consequently, the statement 'Shelby pursues her passion' is not entailed nor contradicted by the given facts and rules, making its truth uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 593
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Shelby makes bold decisions or Shelby follows her heart.\n\nAdded rules:\n- If Shelby finds happiness and Shelby does not achieve balance, then Shelby does not feel fulfilled.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From takesRisks and the XOR rule, together with the fact \u00acgainFreedom, we infer happiness. With happiness true and \u00acbalance, the added rule gives \u00acfeelFulfilled. From \u00acfeelFulfilled, the rule \u00acfeelFulfilled \u2192 \u00accreativeExpression yields \u00accreativeExpression. Then \u00accreativeExpression \u2192 \u00acpursuePassion gives \u00acpursuePassion. No rule derives pursuePassion. Hence the context entails that Shelby does NOT pursue her passion, making the conclusion false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 925
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x follows their heart and x takes time for reflection, then x finds inner peace.\n\nAdded rules:\n- For all x, if x does not find inner peace, then x does not follow their heart or x does not take time for reflection.\n- For all x, if x does not feel fulfilled, then x does not pursue their passion.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the fact that Shelby takes risks and the rule that taking risks implies exactly one of gaining freedom or happiness, together with the given fact \u00acgainFreedom we infer happiness. With happiness true and the fact \u00acbalance, the added rule (happiness \u2227 \u00acbalance) \u2192 \u00acfeelFulfilled gives \u00acfeelFulfilled. The rule \u00acfeelFulfilled \u2192 \u00accreativeExpression then yields \u00accreativeExpression, and the rule \u00accreativeExpression \u2192 \u00acpursuePassion (plus the separate rule \u00acfeelFulfilled \u2192 \u00acpursuePassion) yields \u00acpursuePassion. No rule can derive liveAuth or pursuePassion positively, so the context entails that Shelby does NOT pursue her passion. Hence the statement 'Shelby pursues her passion' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1112
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, if x pursues their passion, then x feels fulfilled.\n- For all x, if x lives authentically, then x feels fulfilled.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From takesRisks and the XOR rule (takesRisks \u2192 XOR(gainFreedom, happiness)) with the fact \u00acgainFreedom, we infer happiness. Together with the given \u00acbalance, rule (happiness \u2227 \u00acbalance) \u2192 \u00acfeelFulfilled yields \u00acfeelFulfilled. Rules \u00acfeelFulfilled \u2192 \u00accreativeExpression and \u00acfeelFulfilled \u2192 \u00acpursuePassion (both present) give \u00acpursuePassion. No rule can derive pursuePassion positively (it would require liveAuthentically, which cannot be established). Hence the negation of the conclusion is entailed, so the statement 'Shelby pursues her passion' is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1397
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Shelby finds happiness and Shelby does not achieve balance, then Shelby does not feel fulfilled.\n\nAdded facts:\n- Shelby follows her heart.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts we have 'Shelby follows her heart' and 'Shelby takes time for reflection'. The rule (\u00acfindInnerPeace \u2192 \u00acfollowHeart \u2228 \u00actakesReflection) together with the truth of both followHeart and takesReflection forces \u00acfindInnerPeace to be false, so we infer findInnerPeace. With findInnerPeace true, the rule (letGo \u2228 findInnerPeace) \u2192 liveAuthentically gives liveAuthentically. The added rule (liveAuthentically \u2192 pursues their passion) then yields that Shelby pursues her passion. No rule derives the negation of this statement, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1622
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if x lets go of burdens or x finds inner peace, then x lives authentically.\n- For all x, if x does not live authentically, then x does not let go of burdens and x does not find inner peace.\n\nAdded rules:\n- For all x, if x follows their heart and x takes time for reflection, then x does not live authentically.\n- For all x, if x does not live authentically, then x does not feel fulfilled.",
+      "question": "Does the context entail the conclusion 'Shelby pursues her passion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the fact that Shelby follows her heart and takes time for reflection, the added rule (followHeart \u2227 reflect) \u2192 \u00acliveAuthentically gives \u00acliveAuthentically. The rule \u00acliveAuthentically \u2192 \u00acfeelFulfilled then yields \u00acfeelFulfilled. An earlier added rule \u00acfeelFulfilled \u2192 \u00acpursuePassion allows us to infer \u00acpursuePassion. No rule derives pursuePassion positively (it would require liveAuthentically, which we have negated). Hence the context entails that Shelby does NOT pursue her passion, making the statement 'Shelby pursues her passion' false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1838
+    }
+  ]
+}

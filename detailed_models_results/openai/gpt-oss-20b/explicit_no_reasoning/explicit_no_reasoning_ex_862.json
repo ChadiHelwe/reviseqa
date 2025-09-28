@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 320,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Tripp embraces uncertainty.\nTripp does not live life on his own terms.\nTripp does not face challenges.\nTripp is not dedicated to his work.\nIf Tripp either seeks adventure or embraces uncertainty (but not both), then he lives life on his own terms.\nTripp seeks adventure or takes risks.\nAll impulsive humans take risks and face challenges.\nTripp is either impulsive or responsible, but not both.\nIf someone is passionate, then they are dedicated to their work.\nIf Tripp is responsible, then he will be cautious.\nTripp is either adventurous or cautious, but not both.\nIf Tripp is curious, then he is both passionate and adventurous.\nTripp is either curious or knowledgeable (or both).",
+      "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Tripp does not face challenges.\n- Tripp is not dedicated to his work.\n\nAdded rules:\n- For all x, if x is curious, then x is not knowledgeable.\n\nAdded facts:\n- Tripp is curious.",
+      "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added rule states that every curious entity is not knowledgeable. Since the fact \"Tripp is curious\" is given, we can conclude that Tripp is not knowledgeable. Therefore, the statement \"Tripp is knowledgeable\" is contradicted and not entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 251
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Tripp is curious.\n\nAdded rules:\n- If Tripp seeks adventure, then Tripp is not curious.",
+      "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We can derive that Tripp is responsible (from \"does not face challenges\" contradicting impulsive) \u2192 cautious. Since cautious is true, adventurous is false. However, we have no derivation for whether Tripp seeks adventure or takes risks, and the only rule linking curiosity to adventure is \"If Tripp seeks adventure, then Tripp is not curious.\" Without a proof of \"Tripp seeks adventure,\" we cannot conclude that Tripp is not curious. The disjunction \"Tripp is either curious or knowledgeable (or both)\" leaves both possibilities open. Thus the statement \"Tripp is knowledgeable\" is not entailed by the context, nor is it contradicted. Therefore the appropriate classification is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 395
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, if x is impulsive then x takes risks.\n- For all x, if x is impulsive then x faces challenges.\n- If Tripp is curious, then Tripp is passionate.\n- If Tripp is curious, then Tripp is adventurous.",
+      "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Starting with the facts: Tripp does not face challenges, Tripp does not live life on his own terms, Tripp embraces uncertainty, Tripp is either impulsive or responsible (but not both), Tripp seeks adventure or takes risks, Tripp is either adventurous or cautious (but not both), and Tripp is either curious or knowledgeable (or both). The new rules assert that for any x, if x is impulsive then x takes risks and faces challenges, and if Tripp is curious then he is passionate and adventurous. From the fact that Tripp does not face challenges and the rule that impulsive implies facing challenges, we infer Tripp cannot be impulsive. Using the exclusive \"impulsive or responsible\" rule, Tripp must be responsible. The rule that responsible entails cautious gives Tripp cautious. Because cautious is exclusive with adventurous, Tripp is not adventurous. The rule that adventurous implies curious (via the derived rule \u201cif Tripp is curious then Tripp is adventurous\u201d) gives a contradiction if Tripp were curious: curiosity would force adventurous, but we already have not adventurous. Thus Tripp cannot be curious. Since Tripp is either curious or knowledgeable, and curiosity is ruled out, knowledge becomes true. No rule or fact about knowledge contradicts this, so the conclusion \"Tripp is knowledgeable\" is entailed by the context.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 605
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Tripp either seeks adventure or embraces uncertainty (but not both), then he lives life on his own terms.\n\nAdded rules:\n- If Tripp takes risks and faces challenges, then Tripp is curious.\n\nAdded facts:\n- Tripp is adventurous.",
+      "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "The context contains the rule that if someone is passionate then they are dedicated to their work (R11). Since the fact Tripp is not dedicated to his work (F4) is present, by applying the contrapositive of R11 we infer that Tripp is not passionate. We also have the rule that if Tripp is curious then he is passionate (R9). Using the contrapositive of this rule on the derived \u2018not passionate\u2019 we conclude that Tripp is not curious. The rule stating that Tripp is either curious or knowledgeable (R3) then lets us apply the classic disjunction elimination: from \u201cnot curious\u201d and \u201ccurious or knowledgeable\u201d we entail that Tripp must be knowledgeable. No other rule or fact contradicts this, so the statement 'Tripp is knowledgeable' is entailed by the context.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 996
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Tripp is adventurous.\n\nAdded rules:\n- If Tripp is cautious, then he is responsible.\n- If Tripp is responsible, then he seeks adventure.\n- If Tripp takes risks, then he faces challenges.\n\nAdded facts:\n- Tripp is not adventurous.",
+      "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We have the fact that Tripp is not adventurous. Rule R8 states that if Tripp is curious then he is adventurous. By the contrapositive of this implication, we can conclude that Tripp is not curious. Rule R9 tells us that Tripp is either curious or knowledgeable (or both). With the proven fact that he is not curious, the only way to satisfy this disjunction is that Tripp is knowledgeable. No rule or fact in the current context contradicts the conclusion that Tripp is knowledgeable, and all other statements (such as \u2018Tripp is not faced challenges\u2019 or the added rules about risks and caution) do not affect this deduction. Therefore, the context entails that Tripp is knowledgeable.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1280
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Tripp is not adventurous.\n\nAdded facts:\n- Tripp is impulsive.",
+      "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the final context we have the fact that Tripp is impulsive. By rule (impulsive \u2192 takes risks) and (impulsive \u2192 faces challenges) we conclude that Tripp takes risks and faces challenges. Rule (takes risks \u2227 faces challenges \u2192 curious) then yields that Tripp is curious. An earlier added rule states that (curious \u2192 not knowledgeable). Thus we can derive \u2018Tripp is not knowledgeable\u2019. No rule derivable from the remaining facts and rules gives knowledge to Tripp. Therefore the statement \u2018Tripp is knowledgeable\u2019 is contradicted by the context and not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1542
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- If Tripp is impulsive, then he takes risks and faces challenges.\n- If Tripp is curious, then he is both passionate and adventurous.\n- If Tripp is impulsive, then he is not responsible.\n- If Tripp is adventurous, then he is not cautious.\n- If Tripp is responsible, then he is not curious.",
+      "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "None of the added rules involve the property \u2018knowledgeable\u2019, and no other facts or derived statements provide knowledge or lack of knowledge about Tripp. Consequently, the statement \u2018Tripp is knowledgeable\u2019 cannot be entailed nor contradicted by the given context.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1741
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 263,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Gemma has a large wingspan.\nGemma does not travel far for food.\nGemma does not fly long distances.\nGemma does not hibernate during winter.\nGemma lives in caves.\nGemma has a specialized noseleaf.\nGemma has good navigation skills.\nFor all bats, if they have a large wingspan and migrate seasonally, then they travel far for food.\nIf Gemma either flies long distances or roosts in groups (but not both), then she migrates seasonally.\nGemma either roosts in groups or is nocturnal, but not both.\nIf Gemma is nocturnal, then she has both acute hearing and keen vision.\nGemma either hibernates during winter or has thick fur, but not both.\nIf Gemma lives in caves, then she either has large ears or thick fur (but not both).\nIf Gemma emits high frequency sounds, then she either has acute hearing or has a specialized noseleaf (but not both).\nEvery bat that can find food in darkness either has large ears or emits high frequency sounds (or both).\nFor all bats, if a bat has good navigation skills and uses echolocation, then it can find food in darkness.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Either Gemma roosts in groups or is nocturnal, but not both.\n- If Gemma is nocturnal, then she has both acute hearing and keen vision.\n\nAdded rules:\n- Either Gemma roosts in groups or she is nocturnal, and it is not the case that Gemma both roosts in groups and is nocturnal.\n- If it is not the case that Gemma has both acute hearing and keen vision, then she is not nocturnal.\n\nAdded facts:\n- Gemma does not roost in groups.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "First, from the added rules and facts we can derive that Gemma does not roost in groups, which, by the exclusive\u2011or rule, forces Gemma to be nocturnal. The contrapositive of the rule stating that if Gemma is not both hearing and vision then she is not nocturnal gives: \"If Gemma is nocturnal, then she has both acute hearing and keen vision.\" Thus Gemma must have acute hearing. Next, suppose she uses echolocation. Good navigation + use echolocation implies she can find food in darkness. In order to be able to find food in darkness, the rule that every bat that can find food in darkness must either have large ears or emit high\u2011frequency sounds requires Gemma to emit high\u2011frequency sounds (she cannot have large ears because she lives in caves, has thick fur, so rule 6 excludes large ears). Emitting high\u2011frequency sounds triggers the rule that she must either have acute hearing or a specialised noseleaf, but not both. Since she already has a specialised noseleaf, she would then lack acute hearing \u2013 contradicting the earlier conclusion that she has acute hearing. Therefore no model can satisfy all given facts and rules while having Gemma use echolocation. Consequently, the context actually entails that Gemma does *not* use echolocation, and the conclusion \"Gemma uses echolocation\" is false relative to the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 349
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Gemma does not fly long distances.\n\nAdded rules:\n- For all x, if x has a large wingspan and does not travel far for food, then x uses echolocation.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added rule states: for any entity x, if x has a large wingspan and does not travel far for food, then x uses echolocation. In the context we still have the facts that Gemma has a large wingspan and Gemma does not travel far for food. Therefore the antecedent holds for Gemma, and by modus ponens the conclusion that Gemma uses echolocation follows. No other facts or rules contradict this, so the statement is positively entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 788
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x has a large wingspan and does not travel far for food, then x uses echolocation.\n\nAdded facts:\n- Gemma does not have large ears.\n- Gemma does not emit high frequency sounds.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Gemma\u2019s facts and the remaining rules allow us to deduce that she cannot find food in darkness. The rule that every bat that has good navigation skills and uses echolocation can find food in darkness is a universal implication: (good_nav \u2227 uses_ech) \u21d2 can_find. Taking its contrapositive gives: not can_find \u21d2 not (good_nav \u2227 uses_ech). Because Gemma\u2019s good navigation skills are true, the falsity of the ability to find food in darkness forces the falsity of the use of echolocation. Thus the context actually entails that Gemma does *not* use echolocation, making the statement \u201cGemma uses echolocation\u201d false. No other rule or fact can override this deduction. Hence the conclusion is not supported.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 969
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- Every bat that can find food in darkness, either has large ears or emits high frequency sounds, or both.\n\nAdded rules:\n- If Gemma has acute hearing, then she uses echolocation.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The exclusive\u2011or rule that Gemma either roosts in groups or is nocturnal, together with the fact that she does not roost in groups, forces her to be nocturnal. The rule \u201cIf it is not the case that Gemma has both acute hearing and keen vision, then she is not nocturnal\u201d is the contrapositive of \u201cIf Gemma is nocturnal, then she has both acute hearing and keen vision.\u201d Hence from nocturnal we conclude that Gemma has acute hearing. With the newly added rule \u201cIf Gemma has acute hearing, then she uses echolocation,\u201d we can finally deduce that Gemma uses echolocation. No other rule contradicts this chain, so the conclusion is strictly entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1215
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If it is not the case that Gemma has both acute hearing and keen vision, then she is not nocturnal.\n\nAdded facts:\n- Gemma is nocturnal.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "In the current knowledge base the only rule that would yield \"Gemma uses echolocation\" is the rule \u201cIf Gemma has acute hearing, then she uses echolocation.\u201d  No rule or fact currently establishes that Gemma has acute hearing\u2014there is no rule providing hearing from the facts we have, and the contrapositive that would have linked nocturnality to hearing was removed.  Therefore the knowledge base does not entail that Gemma uses echolocation, nor does it entail the negation (you cannot prove she does not use echolocation using the remaining rules).  Thus the conclusion is not determined.\n",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1449
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Gemma does not migrate seasonally.\n- Gemma has acute hearing.\n- Gemma has keen vision.\n- Gemma has thick fur.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Gemma is given to have acute hearing as a fact. The context contains the explicit rule \u201cIf Gemma has acute hearing, then she uses echolocation.\u201d Since the antecedent holds, the consequent follows by modus ponens, guaranteeing that Gemma uses echolocation. None of the remaining rules or facts yield a negation of this conclusion, so no contradiction arises. Therefore the conclusion \u201cGemma uses echolocation\u201d is logically entailed by the context.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1654
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Gemma has acute hearing.\n\nRemoved rules:\n- If Gemma has acute hearing, then she uses echolocation.",
+      "question": "Does the context entail the conclusion 'Gemma uses echolocation.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "After the last modifications, the knowledge base still contains all the facts and rules that allow us to derive that Gemma has acute hearing (via the contrapositive of \"If it is not the case that Gemma has both acute hearing and keen vision, then she is not nocturnal\") but it no longer contains any rule that links acute hearing to the use of echolocation. Apart from that, there is no rule that forces or forbids her from using echolocation. Thus the statement \"Gemma uses echolocation\" is not entailed, nor is its negation contradicted by the remaining facts and rules. Hence the conclusion is uncertain.\n",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1842
+    }
+  ]
+}

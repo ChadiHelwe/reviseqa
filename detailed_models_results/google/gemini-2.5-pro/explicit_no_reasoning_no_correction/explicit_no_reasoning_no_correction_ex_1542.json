@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.2857142857142857
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Removed rules:\n- For all x, if x fights for rights and x supports local workers, then x can become a community leader.\n\nAdded rules:\n- For all x, if x fights for rights and x supports local workers, then x cannot become a community leader.",
       "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "1. From `Luz does not organize her community` and `Luz either fights for rights or organizes her community`, we can infer that `Luz fights for rights` must be true.\n2. We are given `Luz supports local workers` is true. We also just deduced `Luz fights for rights` is true.\n3. The new rule states: `if x fights for rights and x supports local workers, then x cannot become a community leader.` Since Luz meets both conditions in the premise, we can conclude that `Luz cannot become a community leader`.\n4. From `Luz recycles waste` and `Luz does not train others`, the condition `Luz either recycles waste or trains others (but not both)` is met (True XOR False = True). This implies `she improves livelihoods`.\n5. From `Luz improves livelihoods`, the condition `Anyone who builds networks or improves livelihoods can empower others` is met. This implies `Luz can empower others`.\n6. From `Luz does not create jobs` and `Luz can empower others`, the condition `If Luz either creates jobs or empowers others (but not both)` is met (False XOR True = True). This implies `she is resourceful`.\n7. From `Luz is resourceful`, the condition `If Luz is resourceful, then she is either a successful entrepreneur or a community leader, but not both` is met. This means exactly one of 'successful entrepreneur' or 'community leader' must be true.\n8. We already established in step 3 that `Luz cannot become a community leader`. Given the condition from step 7 (that she is one or the other, but not both), it must be the case that `Luz is a successful entrepreneur`.\n9. The conclusion asks if the context entails `Luz is not a successful entrepreneur`. Since our deduction proves `Luz is a successful entrepreneur`, the conclusion is false.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules"
@@ -41,24 +41,24 @@
       "step": 2,
       "context": "Removed rules:\n- For all x, if x fights for rights and x supports local workers, then x cannot become a community leader.\n\nAdded rules:\n- If Luz fights for rights and Luz supports local workers, then Luz can become a community leader.",
       "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "1. From `Luz recycles waste` (True) and `Luz does not train others` (False), the condition `Luz either recycles waste or trains others (but not both)` is met. This implies `Luz improves livelihoods`.\n2. From `Luz either fights for rights or organizes her community` and the fact `Luz does not organize her community`, we deduce `Luz fights for rights`.\n3. The rule `Anyone who builds networks or improves livelihoods can empower others` has a true premise because `Luz improves livelihoods` (from step 1). Therefore, `Luz can empower others`.\n4. From `Luz does not create jobs` (False) and `Luz can empower others` (True), the condition `If Luz either creates jobs or empowers others (but not both)` is met. This implies `Luz is resourceful`.\n5. From `Luz is resourceful`, the rule `If Luz is resourceful, then she is either a successful entrepreneur or a community leader, but not both` implies that `(Luz is a successful entrepreneur) XOR (Luz is a community leader)` must be true. This means exactly one of these titles applies to her.\n6. The added rule is `If Luz fights for rights and Luz supports local workers, then Luz can become a community leader`. We know from step 2 that `Luz fights for rights` is true, and it is given that `Luz supports local workers` is true. Therefore, the premise is true, and we conclude `Luz can become a community leader`.\n7. The statement `Luz can become a community leader` means that it is possible for her to be a community leader, but it does not mean she *is* a community leader. It also does not mean she *is not* one.\n8. Let's consider the two possibilities allowed by the XOR statement from step 5:\n   - **Case A:** If Luz *is* a community leader (which is consistent with step 6, as she 'can become' one), then according to the XOR rule, she *is not* a successful entrepreneur. In this case, the conclusion `Luz is not a successful entrepreneur` is True.\n   - **Case B:** If Luz *is not* a community leader (which is also consistent with step 6, as 'can become' does not mean 'is'), then according to the XOR rule, she *is* a successful entrepreneur. In this case, the conclusion `Luz is not a successful entrepreneur` is False.\n9. Since both cases are possible given the context, we cannot definitively determine whether Luz is or is not a successful entrepreneur. Therefore, the conclusion is uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 387
+      "token_count": 806
     },
     {
       "step": 3,
       "context": "Removed rules:\n- If Luz either recycles waste or trains others, but not both, then she improves livelihoods.\n\nAdded rules:\n- If Luz does not improve livelihoods, then Luz recycling waste is equivalent to Luz training others.\n\nAdded facts:\n- Luz either recycles waste or trains others, but not both.\n- Luz does not build networks.",
       "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "1. We are given the new rule `If Luz does not improve livelihoods, then Luz recycling waste is equivalent to Luz training others`. Let's analyze the second part: `Luz recycling waste is equivalent to Luz training others`. This means they must have the same truth value. However, the context states `Luz recycles waste` (True) and `Luz does not train others` (False). Since they have different truth values, the statement `Luz recycling waste is equivalent to Luz training others` is False.\n2. The rule can now be simplified to `If Luz does not improve livelihoods, then False`. For a conditional statement to be true, if the conclusion is false, the premise must also be false. Therefore, `Luz does not improve livelihoods` must be false, which means `Luz improves livelihoods` is True.\n3. We have the rule `Anyone who builds networks or improves livelihoods can empower others`. We are given `Luz does not build networks` (False) but we just deduced `Luz improves livelihoods` (True). Since the 'or' condition is met (False or True = True), the conclusion is that `Luz can empower others`.\n4. Now consider the rule `If Luz either creates jobs or empowers others (but not both), then she is resourceful`. We know `Luz does not create jobs` (False) and we just deduced `Luz can empower others` (True). The condition `either...or...but not both` (an XOR operation) is met (False XOR True = True). Therefore, `Luz is resourceful`.\n5. From the rule `If Luz is resourceful, then she is either a successful entrepreneur or a community leader, but not both`, and the fact that Luz is resourceful, we conclude that `Luz is either a successful entrepreneur or a community leader, but not both` (SE XOR CL).\n6. Let's determine if Luz can be a community leader. From `Luz either fights for rights or organizes her community` and `Luz does not organize her community`, we deduce `Luz fights for rights`. The rule is `If someone fights for rights and supports local workers, then they can become a community leader`. Since Luz fights for rights and supports local workers, we conclude `Luz can become a community leader`.\n7. The phrase `can become a community leader` means it's a possibility, not a certainty. Luz *could be* a community leader, or she *could not be* a community leader.\n8. Combining steps 5 and 7, we have two possibilities:\n- Possibility A: Luz *is* a community leader. Because of the 'but not both' rule, she would then *not* be a successful entrepreneur. In this case, the conclusion is True.\n- Possibility B: Luz *is not* a community leader (which is compatible with 'can become'). Because of the 'either/or' part of the rule, she would then *be* a successful entrepreneur. In this case, the conclusion is False.\n9. Since both outcomes are possible based on the context, we cannot definitively determine whether Luz is not a successful entrepreneur. The conclusion is therefore uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -66,31 +66,31 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 492
+      "token_count": 1498
     },
     {
       "step": 4,
       "context": "Removed facts:\n- Luz does not organize her community.\n\nAdded rules:\n- If Luz does not fight for rights, then Luz cannot become a community leader.\n\nAdded facts:\n- Luz organizes her community.\n- Luz does not fight for rights.",
       "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "1. From the rule `If Luz does not improve livelihoods, then Luz recycling waste is equivalent to Luz training others.` we analyze the conclusion. We know `Luz recycles waste` (True) and `Luz does not train others` (so `Luz trains others` is False). Therefore `Luz recycling waste is equivalent to Luz training others` is False. For a conditional statement 'If P then Q' to be true when Q is false, P must also be false. Thus, `Luz does not improve livelihoods` is false, which means `Luz improves livelihoods` must be True.\n2. From the rule `Anyone who builds networks or improves livelihoods can empower others`, we know `Luz does not build networks` (False) and we just deduced `Luz improves livelihoods` (True). Since the 'or' condition is met, we can conclude that `Luz can empower others`.\n3. From the rule `If Luz either creates jobs or empowers others (but not both), then she is resourceful`, we know `Luz does not create jobs` (False) and `Luz can empower others` (True). The 'either/or but not both' (XOR) condition is met. Therefore, `Luz is resourceful`.\n4. From the rule `If Luz is resourceful, then she is either a successful entrepreneur or a community leader, but not both`, and the fact Luz is resourceful, we know that exactly one of 'successful entrepreneur' or 'community leader' must be true for Luz.\n5. We are given the new fact `Luz does not fight for rights` and the new rule `If Luz does not fight for rights, then Luz cannot become a community leader`. Since the premise is true, the conclusion must be true. Therefore, `Luz cannot become a community leader`. This means the statement 'Luz is a community leader' is False.\n6. Combining steps 4 and 5: We know Luz is either a successful entrepreneur or a community leader, but not both. We also know she is not a community leader. Therefore, she MUST be a successful entrepreneur.\n7. The question asks if the conclusion 'Luz is not a successful entrepreneur' is entailed by the context. Since our deduction shows that 'Luz is a successful entrepreneur' must be true, the conclusion in the question is false.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 618
+      "token_count": 2313
     },
     {
       "step": 5,
       "context": "Removed facts:\n- Luz does not fight for rights.\n\nRemoved rules:\n- If Luz does not improve livelihoods, then Luz recycling waste is equivalent to Luz training others.\n- If Luz does not fight for rights, then Luz cannot become a community leader.\n\nAdded rules:\n- If it is not the case that Luz recycling waste is equivalent to Luz training others, then she improves livelihoods.\n\nAdded facts:\n- Luz fights for rights.",
       "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "1. The new rule is `If it is not the case that Luz recycling waste is equivalent to Luz training others, then she improves livelihoods`. We are given that `Luz recycles waste` (True) and `Luz does not train others` (meaning Luz trains others is False). Since they have different truth values, the statement `Luz recycling waste is equivalent to Luz training others` is False. The premise of the rule `it is not the case that...` is therefore True, which means the conclusion `she improves livelihoods` must be True.\n2. From the rule `Anyone who builds networks or improves livelihoods can empower others`, we know `Luz does not build networks` (False) and we just deduced `Luz improves livelihoods` (True). The 'or' condition is met, so we conclude that `Luz can empower others` is True.\n3. From the rule `If Luz either creates jobs or empowers others (but not both), then she is resourceful`, we know `Luz does not create jobs` (False) and `Luz can empower others` (True). The 'either/or but not both' (XOR) condition is met, so we conclude that `Luz is resourceful` is True.\n4. From the rule `If Luz is resourceful, then she is either a successful entrepreneur or a community leader, but not both`, we know that exactly one of these two statements must be true for Luz: 'Luz is a successful entrepreneur' or 'Luz is a community leader'.\n5. From the rule `If someone fights for rights and supports local workers, then they can become a community leader`, and the given facts that `Luz fights for rights` and `Luz supports local workers`, we conclude that `Luz can become a community leader`.\n6. The statement 'Luz can become a community leader' means it is a possibility, not a certainty. It does not force her to be a community leader, nor does it prevent her from being one.\n7. This leaves two possibilities allowed by the context:\n   - Case A: Luz *is* a community leader. Based on the rule from step 4 (`either/or but not both`), this would mean she *is not* a successful entrepreneur. In this case, the question's conclusion is True.\n   - Case B: Luz *is not* a community leader. Based on the rule from step 4, this would mean she *is* a successful entrepreneur. In this case, the question's conclusion is False.\n8. Since both cases are consistent with the provided context and they lead to opposite answers for the question, we cannot definitively determine whether Luz is not a successful entrepreneur. Therefore, the conclusion is uncertain.",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -99,15 +99,15 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 722
+      "token_count": 2923
     },
     {
       "step": 6,
       "context": "Removed rules:\n- If Luz fights for rights and Luz supports local workers, then Luz can become a community leader.\n- If it is not the case that Luz recycling waste is equivalent to Luz training others, then she improves livelihoods.\n\nAdded rules:\n- If Luz cannot become a community leader, then either Luz does not fight for rights or Luz does not support local workers.\n- If Luz either recycles waste or trains others, but not both, then she improves livelihoods.\n\nAdded facts:\n- It is not the case that Luz recycling waste is equivalent to Luz training others.\n- Luz fights for rights and Luz supports local workers.",
       "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "1. The rule `If Luz either recycles waste or trains others (but not both), then she improves livelihoods` is applied. The context states `Luz recycles waste` (True) and `Luz does not train others` (False). The 'either/or but not both' (XOR) condition is met (True XOR False = True). Therefore, we conclude `Luz improves livelihoods`.\n\n2. The rule `Anyone who builds networks or improves livelihoods can empower others` is applied. We know `Luz does not build networks` (False) but we just deduced `Luz improves livelihoods` (True). Since the 'or' condition is met (False OR True = True), we conclude `Luz can empower others`.\n\n3. The rule `If Luz either creates jobs or empowers others (but not both), then she is resourceful` is applied. We know `Luz does not create jobs` (False) and `Luz can empower others` (True). The 'either/or but not both' (XOR) condition is met (False XOR True = True). Therefore, we conclude `Luz is resourceful`.\n\n4. The rule `If Luz is resourceful, then she is either a successful entrepreneur or a community leader, but not both` is applied. Since `Luz is resourceful` is true, we know that exactly one of the following is true for Luz: she is a successful entrepreneur, or she is a community leader.\n\n5. We analyze the rule `If Luz cannot become a community leader, then either Luz does not fight for rights or Luz does not support local workers`. Let's look at the second part of this rule: `either Luz does not fight for rights or Luz does not support local workers`. We are given that `Luz fights for rights` (making the first part False) and `Luz supports local workers` (making the second part False). So, the entire disjunction `False or False` is False. For an 'If P, then Q' statement to be true when Q is False, P must also be False. Thus, the premise `Luz cannot become a community leader` must be False. This means the statement `Luz can become a community leader` is True.\n\n6. The fact that `Luz can become a community leader` means it is a possibility, not a certainty. It does not force her to be a community leader.\n\n7. From step 4, we know that Luz is *either* a successful entrepreneur *or* a community leader. From step 6, we know she *can be* a community leader. This leaves two open possibilities:\n    a) Luz *is* a community leader. If so, by the rule in step 4, she *is not* a successful entrepreneur. In this case, the conclusion is True.\n    b) Luz *is not* a community leader (which is consistent with 'can be'). If so, by the rule in step 4, she *is* a successful entrepreneur. In this case, the conclusion is False.\n\n8. Since both outcomes are possible given the context, we cannot definitively determine whether 'Luz is not a successful entrepreneur' is true or false. The conclusion is uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -115,15 +115,15 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 864
+      "token_count": 3649
     },
     {
       "step": 7,
       "context": "Removed rules:\n- Luz either fights for rights or organizes her community.\n\nAdded rules:\n- If Luz does not fight for rights, then Luz organizes her community.\n\nAdded facts:\n- Luz recycles waste and Luz does not train others.",
       "question": "Does the context entail the conclusion 'Luz is not a successful entrepreneur.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "1. From the rule `If Luz either recycles waste or trains others (but not both), then she improves livelihoods` and the facts `Luz recycles waste` (True) and `Luz does not train others` (False), the premise `True XOR False` is met. Therefore, we conclude `Luz improves livelihoods`.\n\n2. From the rule `Anyone who builds networks or improves livelihoods can empower others`, we know `Luz does not build networks` (False) but `Luz improves livelihoods` is True (from step 1). The 'or' condition `False OR True` is met, so we conclude `Luz can empower others`.\n\n3. From the rule `If Luz either creates jobs or empowers others (but not both), then she is resourceful`, we know `Luz does not create jobs` (False) and `Luz can empower others` is True (from step 2). The premise `False XOR True` is met, so we conclude `Luz is resourceful`.\n\n4. From the rule `If Luz is resourceful, then she is either a successful entrepreneur or a community leader, but not both`, and knowing `Luz is resourceful`, we conclude that exactly one of 'successful entrepreneur' or 'community leader' is true for Luz.\n\n5. We analyze the rule `If Luz cannot become a community leader, then either Luz does not fight for rights or Luz does not support local workers`. We are given the fact `Luz fights for rights and Luz supports local workers`, which means the conclusion of this rule (`either Luz does not fight for rights or Luz does not support local workers`) is False. For a conditional statement 'If P then Q' to be true when Q is False, P must also be False. Therefore, the premise `Luz cannot become a community leader` must be False, which means `Luz can become a community leader` is True.\n\n6. The statement `Luz can become a community leader` establishes a possibility, not a certainty. It does not force her to be a community leader, nor does it prevent it. \n\n7. This leaves us with two possibilities based on step 4:\n   - Possibility A: Luz *is* a community leader. This is consistent with her being able to become one. By the rule in step 4, she would then *not* be a successful entrepreneur. In this scenario, the conclusion `Luz is not a successful entrepreneur.` is True.\n   - Possibility B: Luz *is not* a community leader. This is also consistent with her being able to become one. By the rule in step 4, she would then *be* a successful entrepreneur. In this scenario, the conclusion `Luz is not a successful entrepreneur.` is False.\n\n8. Since both possibilities are valid based on the given context, we cannot definitively determine whether the conclusion is true or false. Therefore, the answer is Uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -131,7 +131,7 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1046
+      "token_count": 4528
     }
   ]
 }

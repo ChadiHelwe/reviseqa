@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.8571428571428571
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Removed facts:\n- Legend earns a heroic reputation.\n\nAdded facts:\n- Legend does not earn a heroic reputation.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's formalize the facts:\n1. Noble instincts (NI)\n2. Not guide others (~GO)\n3. Keeps vigilant (KV)\n4. Not respond to a crisis (~RC)\n5. Charges forward (CF)\n6. Not earns a heroic reputation (~EHR)\n7. (Stays strong (SS) AND NI) -> GO\n8. (Defends territory (DT) AND KV) -> SS\n9. Leads others (LO) OR RC\n10. DT XOR Protects herd (PH)\n11. Confronts dangers (CD) -> (PH XOR CF)\n12. (CD XOR LO) -> Fearless (F)\n13. F -> (Saves lives (SL) XOR EHR)\n\nLet's deduce step-by-step:\n- From (2) ~GO and (7) (SS & NI) -> GO, we can use Modus Tollens to conclude ~(SS & NI). This is equivalent to ~SS OR ~NI.\n- From (1) we know NI is true. Therefore, ~SS must be true. (Legend does not stay strong).\n- From ~SS and (8) (DT & KV) -> SS, we can again use Modus Tollens to conclude ~(DT & KV). This is equivalent to ~DT OR ~KV.\n- From (3) we know KV is true. Therefore, ~DT must be true. (Legend does not defend his territory).\n- From ~DT and (10) DT XOR PH, we know that for the exclusive OR to be true when one part is false, the other must be true. So, PH is true. (Legend protects his herd).\n- From (11) CD -> (PH XOR CF). We know from the previous step that PH is true, and from premise (5) that CF is true. The exclusive OR of two true statements (PH XOR CF) is false. So, the rule becomes CD -> False. This implies that CD must be false. (Legend does not confront dangers).\n- From (9) LO OR RC, and premise (4) ~RC, we can conclude that LO must be true. (Legend leads others).\n- From (12) (CD XOR LO) -> F. We just deduced ~CD and LO. The exclusive OR of a false statement and a true statement is true. So, (CD XOR LO) is true. By Modus Ponens, F must be true. (Legend is fearless).\n- From (13) F -> (SL XOR EHR), and our deduction that F is true, we conclude by Modus Ponens that (SL XOR EHR) is true.\n- This means one of SL or EHR is true, but not both. From the added fact (6), we know ~EHR is true.\n- For (SL XOR EHR) to be true when EHR is false, SL must be true.\n- Therefore, the conclusion 'Legend saves lives' is entailed by the context.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_facts"
@@ -41,89 +41,89 @@
       "step": 2,
       "context": "Added facts:\n- Legend does not stay strong.\n- Legend does not defend his territory.\n- Legend protects his herd.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "Let's formalize the context. We start with the original set of facts and add the new ones. The relevant facts are:\n- Legend does not respond to a crisis (~RC).\n- Legend charges forward (CF).\n- Legend earns a heroic reputation (EHR).\n- Legend protects his herd (PH). (Added fact)\n- Legend either leads others or responds to a crisis (LO v RC).\n- If Legend confronts dangers, then he either protects his herd or charges forward (but not both) (CD -> (PH \u2295 CF)).\n- If Legend either confronts dangers or leads others (but not both), then he is fearless ((CD \u2295 LO) -> F).\n- If Legend is fearless, then he can either save lives or earn a heroic reputation, but not both (F -> (SL \u2295 EHR)).\n\nLet's deduce the outcome:\n1. From `LO v RC` and `~RC`, we can conclude `LO` (Legend leads others) by disjunctive syllogism.\n2. We have the facts `PH` and `CF`. The exclusive OR (XOR, \u2295) of two true statements is false. So, `(PH \u2295 CF)` is false.\n3. The rule `CD -> (PH \u2295 CF)` becomes `CD -> False`. By modus tollens, this means `~CD` (Legend does not confront dangers) must be true.\n4. Now consider the rule `(CD \u2295 LO) -> F`. We have `~CD` (false) and `LO` (true). The XOR of a false and a true statement is true. So, `(CD \u2295 LO)` is true.\n5. By modus ponens, since `(CD \u2295 LO)` is true, `F` (Legend is fearless) must be true.\n6. Now consider the rule `F -> (SL \u2295 EHR)`. Since we've deduced `F` is true, it follows by modus ponens that `(SL \u2295 EHR)` is true.\n7. `(SL \u2295 EHR)` being true means that exactly one of `SL` (saves lives) and `EHR` (earns a heroic reputation) is true.\n8. The original context states `Legend earns a heroic reputation`, so `EHR` is true.\n9. Since `EHR` is true and `(SL \u2295 EHR)` is true, `SL` must be false.\n10. Therefore, the conclusion 'Legend saves lives' is false.",
       "correct": false,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 320
+      "token_count": 958
     },
     {
       "step": 3,
       "context": "Removed facts:\n- Legend does not earn a heroic reputation.\n\nAdded facts:\n- Legend earns a heroic reputation.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's formalize the facts and rules:\nFacts:\n1. Noble instincts (NI)\n2. Not guide others (~GO)\n3. Keeps vigilant (KV)\n4. Not respond to a crisis (~RC)\n5. Charges forward (CF)\n6. Earns a heroic reputation (EHR) - This is the key added fact.\n\nRules:\n7. (Stays strong (SS) AND NI) -> GO\n8. (Defends territory (DT) AND KV) -> SS\n9. Leads others (LO) OR RC\n10. DT XOR Protects herd (PH)\n11. Confronts dangers (CD) -> (PH XOR CF)\n12. (CD XOR LO) -> Fearless (F)\n13. F -> (Saves lives (SL) XOR EHR)\n\nNow, let's deduce:\n- From ~GO (fact 2) and rule (7), we can infer by Modus Tollens that ~(SS & NI). Since NI (fact 1) is true, it must be that ~SS is true (Legend does not stay strong).\n- From ~SS and rule (8), we infer by Modus Tollens that ~(DT & KV). Since KV (fact 3) is true, it must be that ~DT is true (Legend does not defend his territory).\n- From ~DT and rule (10), an exclusive OR requires one true and one false part. Thus, PH must be true (Legend protects his herd).\n- Now we look at rule (11): CD -> (PH XOR CF). We know PH is true (from the previous step) and CF is true (from fact 5). A True XOR True statement is False. So the rule is CD -> False. By Modus Tollens, we must conclude ~CD (Legend does not confront dangers).\n- From rule (9) LO OR RC, and fact (4) ~RC, we conclude LO is true (Legend leads others).\n- Now we look at rule (12): (CD XOR LO) -> F. We have ~CD (which means CD is False) and LO (which is True). A False XOR True statement is True. So the premise of the implication is true. By Modus Ponens, F must be true (Legend is fearless).\n- Finally, we use rule (13): F -> (SL XOR EHR). We know F is true, so by Modus Ponens, (SL XOR EHR) must be true.\n- This means that exactly one of 'Saves lives' (SL) and 'Earns a heroic reputation' (EHR) is true.\n- From the added fact (6), we know that 'Legend earns a heroic reputation' (EHR) is true.\n- Since EHR is true, and the XOR statement (SL XOR EHR) must hold, it logically follows that 'Saves lives' (SL) must be false.\n- Therefore, the context entails that the conclusion 'Legend saves lives.' is false.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 395
+      "token_count": 1579
     },
     {
       "step": 4,
       "context": "Removed facts:\n- Legend earns a heroic reputation.\n\nAdded facts:\n- Legend does not earn a heroic reputation.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's break down the information step-by-step using logical deduction.\n\n1.  **Premises (Facts & Rules):**\n    *   Facts: Noble instincts (NI), Not guide others (~GO), Keeps vigilant (KV), Not respond to a crisis (~RC), Charges forward (CF), Not earns a heroic reputation (~EHR).\n    *   Rule 1: (Stays strong (SS) AND NI) -> GO\n    *   Rule 2: (Defends territory (DT) AND KV) -> SS\n    *   Rule 3: Leads others (LO) OR RC\n    *   Rule 4: DT XOR Protects herd (PH)\n    *   Rule 5: Confronts dangers (CD) -> (PH XOR CF)\n    *   Rule 6: (CD XOR LO) -> Fearless (F)\n    *   Rule 7: F -> (Saves lives (SL) XOR EHR)\n\n2.  We know `~GO` (doesn't guide others) and `NI` (has noble instincts). From Rule 1 `(SS & NI) -> GO`, we can use Modus Tollens to conclude `~(SS & NI)`. Since NI is true, this means `~SS` must be true. (Legend does not stay strong).\n\n3.  We now know `~SS`, and we have the fact `KV` (keeps vigilant). From Rule 2 `(DT & KV) -> SS`, we can again use Modus Tollens to conclude `~(DT & KV)`. Since KV is true, this means `~DT` must be true. (Legend does not defend his territory).\n\n4.  From Rule 4 `DT XOR PH` and our deduction that `~DT` is true, we know that for the exclusive OR to be true, `PH` must be true. (Legend protects his herd).\n\n5.  From Rule 5 `CD -> (PH XOR CF)`, we can evaluate the consequence `(PH XOR CF)`. We just deduced `PH` is true, and we have the fact that `CF` (charges forward) is true. `True XOR True` evaluates to `False`. So the rule simplifies to `CD -> False`. By Modus Tollens, `~CD` must be true. (Legend does not confront dangers).\n\n6.  From Rule 3 `LO OR RC` and the fact `~RC` (does not respond to a crisis), we can conclude `LO` is true. (Legend leads others).\n\n7.  From Rule 6 `(CD XOR LO) -> F`, we can evaluate the premise. We deduced `~CD` (False) and `LO` (True). `False XOR True` evaluates to `True`. Therefore, by Modus Ponens, `F` must be true. (Legend is fearless).\n\n8.  From Rule 7 `F -> (SL XOR EHR)`, and our deduction that `F` is true, we can conclude that `(SL XOR EHR)` must be true. This means exactly one of 'Saves lives' or 'Earns a heroic reputation' is true.\n\n9.  We are given the added fact that `~EHR` (Legend does not earn a heroic reputation).\n\n10. Since `(SL XOR EHR)` is true and `EHR` is false, it must be the case that `SL` is true.\n\nTherefore, the context entails the conclusion 'Legend saves lives.'",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 468
+      "token_count": 2296
     },
     {
       "step": 5,
       "context": "Removed facts:\n- Legend does not earn a heroic reputation.\n\nAdded facts:\n- Legend earns a heroic reputation.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's formalize the facts and rules:\nFacts:\n1. Noble instincts (NI)\n2. Not guide others (~GO)\n3. Keeps vigilant (KV)\n4. Not respond to a crisis (~RC)\n5. Charges forward (CF)\n6. Earns a heroic reputation (EHR)\n\nRules:\n7. (Stays strong (SS) AND NI) -> GO\n8. (Defends territory (DT) AND KV) -> SS\n9. Leads others (LO) OR RC\n10. DT XOR Protects herd (PH)\n11. Confronts dangers (CD) -> (PH XOR CF)\n12. (CD XOR LO) -> Fearless (F)\n13. F -> (Saves lives (SL) XOR EHR)\n\nNow, let's deduce:\n- From ~GO (fact 2) and rule (7) `(SS & NI) -> GO`, by Modus Tollens, we can infer `~(SS & NI)`. Since NI (fact 1) is true, it must be that `~SS` is true (Legend does not stay strong).\n- From `~SS` and rule (8) `(DT & KV) -> SS`, by Modus Tollens, we can infer `~(DT & KV)`. Since KV (fact 3) is true, it must be that `~DT` is true (Legend does not defend his territory).\n- From `~DT` and rule (10) `DT XOR PH`, for the exclusive OR to be true when one part is false, the other must be true. So, `PH` must be true (Legend protects his herd).\n- From rule (9) `LO OR RC`, and fact (4) `~RC`, we conclude by disjunctive syllogism that `LO` is true (Legend leads others).\n- Let's examine rule (11) `CD -> (PH XOR CF)`. We know `PH` is true and `CF` (fact 5) is true. `True XOR True` is `False`. So the rule becomes `CD -> False`. By Modus Tollens, we must conclude `~CD` (Legend does not confront dangers).\n- Now we look at rule (12) `(CD XOR LO) -> F`. We have `~CD` (False) and `LO` (True). `False XOR True` is `True`. So the premise is true. By Modus Ponens, `F` must be true (Legend is fearless).\n- Finally, from rule (13) `F -> (SL XOR EHR)` and our deduction that `F` is true, by Modus Ponens, `(SL XOR EHR)` must be true.\n- This means that exactly one of 'Saves lives' (SL) and 'Earns a heroic reputation' (EHR) is true.\n- From the added fact (6), we know that `EHR` is true.\n- Since `EHR` is true and `(SL XOR EHR)` is true, it logically follows that `SL` must be false.\n- Therefore, the context entails the conclusion 'Legend saves lives.' is false.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 541
+      "token_count": 3125
     },
     {
       "step": 6,
       "context": "Added facts:\n- Legend does not confront dangers.\n- Legend is fearless.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's formalize the relevant facts and rules from the context.\n1.  **Fact (original):** Legend earns a heroic reputation (EHR).\n2.  **Fact (added):** Legend is fearless (F).\n3.  **Rule:** If Legend is fearless, then he can either save lives or earn a heroic reputation, but not both. This translates to the logical rule: `F -> (Saves Lives (SL) XOR Earns a heroic reputation (EHR))`.\n\nNow, let's use these pieces to deduce the answer.\n*   We are given as a fact that Legend is fearless (`F` is true).\n*   According to the rule `F -> (SL XOR EHR)`, since the premise `F` is true, the conclusion `(SL XOR EHR)` must also be true (this is Modus Ponens).\n*   The statement `(SL XOR EHR)` means that exactly one of its components is true. Either Legend saves lives, or he earns a heroic reputation, but not both.\n*   We are also given from the original context that Legend earns a heroic reputation (`EHR` is true).\n*   Since `EHR` is true, and we know that `(SL XOR EHR)` is true, it must be the case that `SL` is false.\n*   Therefore, the context entails that 'Legend saves lives' is false.",
+      "correct": true,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 614
+      "token_count": 3883
     },
     {
       "step": 7,
       "context": "Removed rules:\n- If Legend is fearless, then he can either save lives or earn a heroic reputation, but not both.\n\nAdded rules:\n- If Legend is fearless, then he saves lives.",
       "question": "Does the context entail the conclusion 'Legend saves lives.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's perform a step-by-step deduction based on the modified context.\n\n1.  **Original Facts:** Noble instincts (NI), Not guide others (~GO), Keeps vigilant (KV), Not respond to a crisis (~RC), Charges forward (CF), Earns a heroic reputation (EHR).\n2.  **Original Rules (relevant):**\n    *   (Stays strong (SS) AND NI) -> GO\n    *   (Defends territory (DT) AND KV) -> SS\n    *   Leads others (LO) OR RC\n    *   DT XOR Protects herd (PH)\n    *   Confronts dangers (CD) -> (PH XOR CF)\n    *   (CD XOR LO) -> Fearless (F)\n3.  **Added Rule:** If Legend is fearless, then he saves lives (F -> SL).\n\n**Deduction Process:**\n\n1.  We have the fact `~GO` and the rule `(SS & NI) -> GO`. By Modus Tollens, we can infer `~(SS & NI)`. Since we know `NI` is a fact, it must be that `~SS` is true (Legend does not stay strong).\n2.  We now know `~SS`. From the rule `(DT & KV) -> SS` and the fact `KV`, we can again use Modus Tollens to infer `~(DT & KV)`. Since `KV` is true, it must be that `~DT` is true (Legend does not defend his territory).\n3.  From the rule `DT XOR PH` and our deduction that `DT` is false, it follows that `PH` must be true (Legend protects his herd).\n4.  From the rule `LO OR RC` and the fact `~RC`, it follows that `LO` must be true (Legend leads others).\n5.  Now consider the rule `CD -> (PH XOR CF)`. We've deduced `PH` is true, and we have the fact `CF` is true. `True XOR True` is `False`. So the rule becomes `CD -> False`. By Modus Tollens, `~CD` must be true (Legend does not confront dangers).\n6.  Now consider the rule `(CD XOR LO) -> F`. We have deduced `~CD` (so CD is false) and `LO` (which is true). `False XOR True` is `True`. Therefore, the premise of this rule is true.\n7.  By Modus Ponens on `(CD XOR LO) -> F`, since the premise is true, the conclusion `F` must be true. (Legend is fearless).\n8.  Finally, we use the newly added rule: `F -> SL`. Since we have proven `F` is true, we can conclude by Modus Ponens that `SL` is true.\n\nTherefore, the context entails the conclusion 'Legend saves lives.'",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 680
+      "token_count": 4247
     }
   ]
 }

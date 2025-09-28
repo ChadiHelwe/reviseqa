@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 276,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Angie supports local businesses.\nAngie works independently.\nAngie does not pursue her personal interests.\nIf Angie joins community groups or supports local businesses, then she participates in local events.\nAngie either participates in local events or volunteers her time, but not both.\nAngie volunteers her time or donates to charity.\nIf someone donates to charity, then they help others.\nAngie either loves cooking or works independently, but not both.\nAngie either builds a community through her bakery or pursues her personal interests, but not both.\nIf Angie shares her passion, then she loves cooking and helps others.\nIf Angie attracts customers, then she shares her passion and builds a community.\nIf Angie perfects a bread recipe, then she attracts customers.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Angie works independently.\n\nAdded rules:\n- If Angie loves cooking and helps others, then she shares her passion.\n- If Angie shares her passion and builds a community, then she attracts customers.\n- If Angie attracts customers, then she perfects a bread recipe.\n\nAdded facts:\n- Angie does not work independently.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the exclusive-or statements and the fact that Angie does not work independently, we infer that Angie loves cooking. From other rules we know she builds a community. However, to derive that she shares her passion (and thus attracts customers and perfects a bread recipe) we would need that she helps others, which would follow from donating to charity. The context only states that Angie volunteers her time or donates to charity, and we have derived that she does not volunteer her time, but this does not guarantee she donates (the 'or' is inclusive). Therefore we cannot conclude that she helps others, shares her passion, attracts customers, or perfects a bread recipe. Likewise, there is no rule that would force her not to perfect a bread recipe. Hence the statement 'Angie did not perfect a bread recipe' is not entailed nor contradicted by the context\u2014it remains uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 258
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Angie does not pursue her personal interests.\n\nAdded facts:\n- Angie pursues her personal interests.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Using the exclusive-or constraints and facts: (1) Since Angie does not work independently, the XOR (loves cooking XOR works independently) forces loves cooking to be true. (2) Angie pursues personal interests, so the XOR (builds community XOR pursues personal interests) forces builds community to be false. (3) Supporting local businesses triggers participation in local events (R1). XOR (participates XOR volunteers) then makes volunteering false. The inclusive-or (volunteer OR donate) forces donation to be true. Donation implies helps others (R2). With loves cooking and helps others, the bidirectional rule (R4) yields shares passion true. Since builds community is false, the rule (shares passion AND builds community -> attracts customers) does not fire, so we cannot infer attracts customers. However, the reverse rule (attracts customers -> shares passion AND builds community) together with builds community being false shows that attracts customers cannot be true, otherwise it would contradict the XOR. Therefore, attracts customers is false. The equivalence rules (perfects bread -> attracts customers) and (attracts customers -> perfects bread) imply perfects bread is also false. Hence Angie did not perfect a bread recipe is logically entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 555
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Angie pursues her personal interests.\n\nAdded facts:\n- Angie does not pursue her personal interests.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Using the XOR constraints and facts: (1) Angie does not work independently, so by the XOR (loves cooking XOR works independently) she must love cooking. (2) Angie does not pursue personal interests, so by the XOR (builds community XOR pursues personal interests) she must build a community. (3) Supporting local businesses triggers participation in local events; the XOR (participates XOR volunteers) then forces volunteering to be false. (4) Since volunteering is false, the inclusive-or (volunteers OR donates) forces donating to be true, which implies she helps others. (5) With love for cooking and helping others, the rule (loves cooking AND helps others -> shares passion) gives her sharing her passion. (6) Sharing passion together with building a community yields attracting customers. (7) Attracting customers, via the added rule, yields perfecting a bread recipe. Hence the context actually entails that Angie perfects a bread recipe, so the statement that she did not perfect a bread recipe is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 879
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x donates to charity, then x helps others.\n\nAdded facts:\n- Angie donates to charity and Angie does not help others.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts we have: Angie supports local businesses, so by the rule \"if supports local businesses then participates in local events\" she participates in local events. The XOR rule that she either participates or volunteers then forces that she does NOT volunteer. The inclusive-or rule that she either volunteers or donates then, together with the fact that she volunteers is false, forces that she donates to charity (which is already a fact). The XOR rule that she either loves cooking or works independently, combined with the fact that she does NOT work independently, gives that she loves cooking. The XOR rule that she either builds a community or pursues personal interests, together with the fact that she does NOT pursue personal interests, yields that she builds a community. We also have the explicit facts that she donates to charity and that she does NOT help others.  \n\nIf Angie perfects a bread recipe, then by the original rule (perfect => attracts) she would attract customers. By the rule (attracts => shares passion and builds community) she would share her passion (and indeed already builds a community). By the rule (shares passion => loves cooking and helps others) she would help others. This contradicts the explicit fact that Angie does NOT help others. Therefore any model in which Angie perfects a bread recipe would be inconsistent with the given facts and constraints. Consequently, in every model satisfying the facts and rules, Angie cannot perfect a bread recipe. Hence the statement \"Angie did not perfect a bread recipe\" is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1165
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Angie donates to charity and Angie does not help others.\n\nAdded rules:\n- Either Angie does not donate to charity, or Angie helps others.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have: supports local businesses \u21d2 participates in local events (E). The XOR between participating and volunteering forces volunteering (V) to be false. The inclusive OR between volunteering and donating forces donating (D) to be true. The rule that donating implies helping others gives H true. The XOR between loves cooking (C) and works independently (W) with W true forces C false. The XOR between building a community (B) and pursuing personal interests (P) with \u00acP forces B true. Since SHP \u21d2 C \u2227 H and C is false, SHP must be false. Then A \u21d2 SHP \u2227 B forces A false because SHP is false. Finally, perfecting a bread recipe (PBR) \u21d2 A forces PBR false. Hence, Angie did not perfect a bread recipe is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1561
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Angie does not pursue her personal interests.\n\nAdded facts:\n- Angie pursues her personal interests.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts we have: supports local businesses, does not work independently, and pursues personal interests. XOR constraints give loves cooking (true) and builds community (false). Supports local businesses triggers participation in local events, which via XOR forces volunteering false. The inclusive-or then forces donating true, and the rule (donate -> helps) gives helps true. loves cooking and helps together trigger shares passion. Since builds community is false, the rule (shares passion & builds community -> attracts customers) does not fire, so we cannot derive attracts customers. However, if attracts customers were true, the original rule would require builds community true, conflicting with the XOR; thus attracts customers must be false. The original rule (perfects bread -> attracts customers) together with its contrapositive (\u00acattracts -> \u00acperfects) implies that perfecting a bread recipe is false. Therefore the conclusion 'Angie did not perfect a bread recipe' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1813
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Angie pursues her personal interests.\n\nAdded facts:\n- Angie does not pursue her personal interests.",
+      "question": "Does the context entail the conclusion 'Angie did not perfect a bread recipe.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have: supports local businesses (S) is true, and 'Angie does not work independently' (\u00acW_i) is true. The XOR rule (loves cooking XOR works independently) forces loves cooking (L) to be true. The XOR rule (builds community XOR pursues personal interests) together with the fact that Angie pursues personal interests (P) forces builds community (B) to be false. The rule that supporting local businesses implies participating in local events gives participation (E) true. The XOR between participating and volunteering forces volunteering (V) to be false, and the inclusive-or (volunteer OR donate) then forces donation (D) to be true. The rule (\u00acD \u2228 helps) (i.e., D \u2192 helps) therefore forces helps others (H) to be true. With L and H true, the added rule (L \u2227 H \u2192 shares passion) yields shares passion (C) true. Since B is false, the rule (C \u2227 B \u2192 attracts customers) does not fire, so we cannot infer attracts customers (A). Moreover, if A were true, the original rule (A \u2192 C \u2227 B) would make B true, contradicting the XOR that B is false. Hence A must be false. The original and added rules give equivalence between perfecting a bread recipe (R) and attracting customers (A): R \u2192 A and A \u2192 R. Since A is false, R must also be false. Therefore the statement 'Angie did not perfect a bread recipe' is logically entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2079
+    }
+  ]
+}

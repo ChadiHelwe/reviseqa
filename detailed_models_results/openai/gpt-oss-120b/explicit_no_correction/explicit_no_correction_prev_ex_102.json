@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_correction",
+    "chain_index": 335,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Elisabeth does not earn recognition.\nElisabeth researches migratory patterns.\nElisabeth protects habitats.\nElisabeth does not save species.\nAny ornithologist who understands bird behavior or recognizes songs can earn recognition.\nEvery ornithologist who researches migratory patterns either understands bird behavior or is dedicated (or both).\nIf an ornithologist admires nature and protects habitats, then they save species.\nIf Elisabeth is dedicated, then she has expert knowledge and publishes research.\nEvery ornithologist either admires nature or loves birds.\nIf Elisabeth loves birds, then she studies larks.\nElisabeth is either respected for her work or publishes research on bird species, but not both.\nIf Elisabeth either studies larks or studies eagles (but not both), then she is respected.",
+      "question": "Does the context entail the conclusion 'Elisabeth does not study eagles.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Elisabeth does not earn recognition.. Any ornithologist who understands bird behavior or recognizes songs can earn recognition.. Therefore, Elisabeth does not understand bird behavior.. Elisabeth researches migratory patterns. Elisabeth does not understand bird behavior.. Every ornithologist who researches migratory patterns either understands bird behavior or is dedicated (or both).. Therefore, Elisabeth is dedicated.. Elisabeth protects habitats. Elisabeth does not save species.. If an ornithologist admires nature and protects habitats, then they save species.. Therefore, Elisabeth does not admire nature.. Elisabeth is dedicated.. If Elisabeth is dedicated, then she has expert knowledge and publishes research.. Therefore, Elisabeth publishes research.. Elisabeth does not admire nature.. Every ornithologist either admires nature or loves birds.. Therefore, Elisabeth loves birds.. Elisabeth loves birds.. If Elisabeth loves birds, then she studies larks.. Therefore, Elisabeth studies larks.. Elisabeth publishes research.. Elisabeth is either respected for her work or publishes research on bird species, but not both.. Therefore, Elisabeth is not respected.. Elisabeth studies larks. Elisabeth is not respected.. If Elisabeth either studies larks or studies eagles (but not both), then she is respected.. Therefore, Elisabeth does not study eagles..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- If Elisabeth loves birds, then she studies larks.\n\nAdded facts:\n- If Elisabeth loves birds, then she does not study larks.",
+      "question": "Does the context entail the conclusion 'Elisabeth does not study eagles.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From 'Elisabeth does not earn recognition' and the rule that earning recognition requires understanding bird behavior or recognizing songs, we infer she does not understand bird behavior. Her researching migratory patterns forces her to be dedicated (by the rule linking research to understanding or dedication). Dedicated implies she publishes research. She also protects habitats but does not save species; given the rule that admiring nature plus protecting habitats leads to saving species, she must not admire nature. Since every ornithologist either admires nature or loves birds, she must love birds. The added rule states that loving birds entails she does NOT study larks. The exclusive-or rule (studies larks XOR studies eagles) implies that if she were to study eagles (and not larks), she would be respected. However, she is not respected because she publishes research and the exclusivity rule (either respected or publishes, not both) holds. Therefore the antecedent of the exclusive-or rule must be false. Given she does not study larks, the only way for the exclusive-or to be false is that she also does not study eagles. Hence, the conclusion 'Elisabeth does not study eagles' follows from the context.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 538
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Elisabeth is dedicated, then she has expert knowledge and publishes research.\n- If Elisabeth loves birds, then she does not study larks.\n- If Elisabeth either studies larks or studies eagles, but not both, then she is respected.\n\nAdded rules:\n- If Elisabeth loves birds, then she studies larks.\n- If Elisabeth is dedicated, then she has expert knowledge and she does not publish research.\n- If Elisabeth either studies larks or studies eagles, but not both, then she is not respected.",
+      "question": "Does the context entail the conclusion 'Elisabeth does not study eagles.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the facts we infer that Elisabeth loves birds, which (by the added rule) makes her study larks. The exclusive-or rule now says that if she studies exactly one of larks or eagles, then she is not respected. The other rule says she must be either respected or publish, but not both. Different consistent assignments are possible: (a) if she is dedicated, she does not publish, becomes respected, and then must also study eagles (to make the exclusive-or false); (b) if she is not dedicated, she can publish, be not respected, and not study eagles (making the exclusive-or true). Both assignments satisfy all rules, so the statement that she does not study eagles is not forced by the context. Hence the conclusion is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 868
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x researches migratory patterns, then x understands bird behavior or x is dedicated.\n- For all x, if x admires nature and x protects habitats, then x saves species.\n- Either Elisabeth is respected for her work or she publishes research, but not both.\n\nAdded rules:\n- For all x, either if x researches migratory patterns then x understands bird behavior, or if x researches migratory patterns then x is dedicated.\n- For all x, if x admires nature, then if x protects habitats then x saves species.\n- Either Elisabeth is respected for her work or she publishes research, and it is not the case that Elisabeth is respected for her work and she publishes research.\n\nAdded facts:\n- Elisabeth either admires nature or she loves birds.",
+      "question": "Does the context entail the conclusion 'Elisabeth does not study eagles.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the fact that Elisabeth does not earn recognition and the rule that any ornithologist who understands bird behavior or recognizes songs can earn recognition, we infer that Elisabeth does not understand bird behavior (\u00acU). She researches migratory patterns (R). The added rule states that for any x, either (R \u2192 U) or (R \u2192 D) holds. Since R is true and \u00acU, the disjunction forces D (dedicated) to be true. Dedicated implies she does NOT publish research, so Pub = false. The XOR rule about respect and publishing (either respected or publishes, not both) then forces Elisabeth to be respected (Res = true). The rule that if Elisabeth either studies larks or studies eagles, but not both, then she is not respected, contrapositively gives Res \u2192 \u00ac(K XOR E), i.e., K and E must have the same truth value. The added fact that Elisabeth either admires nature or loves birds, combined with the rule that admiring nature together with protecting habitats would make her save species (which she does not), forces her not to admire nature. Hence she loves birds (L = true). The rule that loving birds makes her study larks gives K = true. Since K and E must match and K is true, E must also be true. Therefore Elisabeth does study eagles. Hence the statement 'Elisabeth does not study eagles' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1194
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Elisabeth either studies larks or studies eagles, but not both, then she is not respected.\n\nAdded rules:\n- If Elisabeth researches migratory patterns, then she does not study eagles.",
+      "question": "Does the context entail the conclusion 'Elisabeth does not study eagles.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The fact that Elisabeth researches migratory patterns is still present in the context. The added rule states that if Elisabeth researches migratory patterns, then she does not study eagles. Therefore, from the fact and the rule we can directly infer that Elisabeth does not study eagles. No other rule in the current context contradicts this inference, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1710
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Elisabeth studies eagles, then she does not research migratory patterns.\n- For all x, either x does not understand bird behavior and x does not recognize songs, or x earns recognition.\n- For all x, either x does not research migratory patterns, or x understands bird behavior, or x is dedicated.\n- If Elisabeth does not study larks, then she does not love birds.\n- For all x, either x does not admire nature, or x does not protect habitats, or x saves species.\n\nAdded facts:\n- Either Elisabeth researches migratory patterns, or Elisabeth does not research migratory patterns.\n- Elisabeth does not study eagles.",
+      "question": "Does the context entail the conclusion 'Elisabeth does not study eagles.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly includes the fact 'Elisabeth does not study eagles.' This statement is directly given as a premise. No rule in the context forces a contradictory conclusion that she studies eagles. Therefore, in every model that satisfies the premises, the statement 'Elisabeth does not study eagles' holds. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1887
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Elisabeth either understands bird behavior or is dedicated.",
+      "question": "Does the context entail the conclusion 'Elisabeth does not study eagles.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The only information provided is that Elisabeth either understands bird behavior or is dedicated. There are no rules or additional facts linking either of these properties to studying eagles. Consequently, we cannot determine whether Elisabeth studies eagles or not from the given context. The conclusion is neither provably true nor provably false, making it uncertain.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2151
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Elisabeth does not study eagles.\n\nRemoved rules:\n- If Elisabeth researches migratory patterns, then she does not study eagles.\n- If Elisabeth studies eagles, then she does not research migratory patterns.\n\nAdded rules:\n- If Elisabeth researches migratory patterns, then she studies eagles.",
+      "question": "Does the context entail the conclusion 'Elisabeth does not study eagles.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The fact that Elisabeth researches migratory patterns is still present. The added rule states that if she researches migratory patterns then she studies eagles. By modus ponens we infer that Elisabeth studies eagles. No rule or fact in the current context states that she does not study eagles. Hence the statement 'Elisabeth does not study eagles' is contradicted by the context, not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2284
+    }
+  ]
+}

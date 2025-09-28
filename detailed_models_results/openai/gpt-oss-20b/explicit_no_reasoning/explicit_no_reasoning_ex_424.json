@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 262,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Arjun does not meet deadlines.\nArjun has a strong work ethic.\nArjun takes calculated risks.\nArjun coordinates tasks.\nArjun does not inspire his teams.\nArjun either meets deadlines or completes projects ahead of schedule, but not both.\nIf Arjun has a strong work ethic, then he either achieves success or takes calculated risks, but not both.\nIf Arjun coordinates tasks and manages teams, then he will achieve success.\nArjun manages teams or demonstrates leadership.\nEveryone who demonstrates leadership either mentors others or inspires their teams (or both).\nIf Arjun is an effective leader, then he can either complete projects ahead of schedule or mentor others, but not both.",
+      "question": "Does the context entail the conclusion 'Arjun is an effective leader.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Arjun completes projects ahead of schedule and mentors others, then Arjun is not an effective leader.\n\nAdded facts:\n- Arjun completes projects ahead of schedule.",
+      "question": "Does the context entail the conclusion 'Arjun is an effective leader.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context forces Arjun to both complete projects ahead of schedule (given) and mentor others (inferred: he does not manage teams \u2192 must demonstrate leadership \u2192 must mentor because he does not inspire). The rule states that an effective leader can either complete projects ahead of schedule *or* mentor others, but not both. Since Arjun satisfies both, he cannot be an effective leader per the rules. Therefore the conclusion that Arjun is an effective leader is not entailed, and in fact is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 241
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- Arjun manages teams or demonstrates leadership.\n- If Arjun has a strong work ethic, then he either achieves success or takes calculated risks, but not both.\n\nAdded rules:\n- If Arjun has a strong work ethic, then he either achieves success or takes calculated risks.\n- If Arjun completes projects ahead of schedule and does not mentor others, then Arjun is an effective leader.\n\nAdded facts:\n- Arjun manages teams.\n- Arjun does not mentor others.",
+      "question": "Does the context entail the conclusion 'Arjun is an effective leader.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "All facts from the context are present: Arjun completes projects ahead of schedule (A), does not mentor others (\u00acN), manages teams (T), coordinates tasks (C), has a strong work ethic (W), takes calculated risks (R), does not meet deadlines (\u00acM), and does not inspire his teams (\u00acI). The rules that remain (after the specified removals) are: 1) W \u2192 (S \u2228 R). 2) C \u2227 T \u2192 S. 3) Either \u2018meets deadlines\u2019 or \u2018completes projects ahead of schedule\u2019 but not both (exclusive OR). 4) If Arjun is an effective leader (E) then E \u2192 (A \u2295 N). 5) A \u2227 N \u2192 \u00acE. 6) A \u2227 \u00acN \u2192 E. Using the facts, rule 1 gives no new information; rule 2 yields S (success); rule 3, combined with \u00acM, forces A (already true). Rule 6 has its antecedent satisfied (A true and \u00acN true), so it derives E. With E true, rule 4\u2019s consequent (A \u2295 N) is satisfied because A is true and N is false. Rule 5\u2019s antecedent is false, so it imposes no restriction. Therefore, every model satisfying the given facts and rules must have E true. Hence the conclusion \u2018Arjun is an effective leader\u2019 is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 425
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- Arjun is an effective leader if and only if Arjun completes projects ahead of schedule and Arjun does not mentor others.\n\nAdded facts:\n- Arjun achieves success.\n- Arjun does not demonstrate leadership.",
+      "question": "Does the context entail the conclusion 'Arjun is an effective leader.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The only explicit rule about making Arjun an effective leader is the biconditional: \u2018Arjun is an effective leader \u21d4 (Arjun completes projects ahead of schedule \u2227 Arjun does not mentor others)\u2019.  We are given that Arjun achieves success and that he does not demonstrate leadership, but we have no information about whether he completes projects ahead of schedule or whether he mentors others.  Without knowledge of the two conjuncts in the biconditional, we cannot determine whether the antecedent holds, and therefore we cannot establish that the conclusion \u2018Arjun is an effective leader\u2019 follows from the given facts and rule.  Hence the conclusion is not entailed; its truth remains uncertain.  Because we cannot rule it out or guarantee it, the appropriate choice is \u2018Uncertain\u2019.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 865
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Arjun does not mentor others.\n\nRemoved rules:\n- If Arjun completes projects ahead of schedule and does not mentor others, then Arjun is an effective leader.\n- Arjun is an effective leader if and only if Arjun completes projects ahead of schedule and Arjun does not mentor others.\n\nAdded facts:\n- Arjun mentors others.",
+      "question": "Does the context entail the conclusion 'Arjun is an effective leader.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The remaining rules do not provide a sufficient condition for Arjun to be an effective leader. The only rule that could imply effectiveness was removed, and no other rule gives a consequence that forces the \u2018effective leader\u2019 conclusion. While Arjun mentors others, this alone, together with the remaining rules, does not entail that he is an effective leader, nor does it rule out that possibility. Therefore the entailed conclusion is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1118
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Arjun is an effective leader, then he can either complete projects ahead of schedule or mentor others, but not both.\n- If Arjun completes projects ahead of schedule and mentors others, then Arjun is not an effective leader.\n\nAdded rules:\n- If Arjun achieves success, then Arjun is an effective leader.",
+      "question": "Does the context entail the conclusion 'Arjun is an effective leader.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added rule states: if Arjun achieves success, then Arjun is an effective leader. The fact \u201cArjun achieves success\u201d persists in the context (it was not removed). Thus the antecedent of the implication is satisfied, rendering the consequent true. Therefore the conclusion that \u2018Arjun is an effective leader\u2019 is logically entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1336
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Arjun achieves success.\n\nRemoved rules:\n- If Arjun coordinates tasks and manages teams, then he will achieve success.\n\nAdded rules:\n- If Arjun mentors others, then Arjun is not an effective leader.",
+      "question": "Does the context entail the conclusion 'Arjun is an effective leader.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given that the fact \u2018Arjun mentors others\u2019 is still present and the added rule states that if Arjun mentors others, then Arjun is not an effective leader, we can infer \u00ac(Arjun is an effective leader). No remaining rule provides a sufficient condition for Arjun to be an effective leader. Thus the conclusion \u2018Arjun is an effective leader\u2019 is not supported and is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1539
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Arjun is an effective leader, then he does not mentor others.\n\nAdded facts:\n- Arjun meets deadlines or completes projects ahead of schedule.\n- It is not the case that Arjun both meets deadlines and completes projects ahead of schedule.\n- Arjun achieves success or takes calculated risks.",
+      "question": "Does the context entail the conclusion 'Arjun is an effective leader.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The context does not provide any sufficient condition or rule that forces the statement \u2018Arjun is an effective leader.\u2019 The only rule involving an effective leader is a one\u2011way implication to not mentoring others, and no facts about mentoring are given. Therefore we cannot entail the conclusion; it remains uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1730
+    }
+  ]
+}

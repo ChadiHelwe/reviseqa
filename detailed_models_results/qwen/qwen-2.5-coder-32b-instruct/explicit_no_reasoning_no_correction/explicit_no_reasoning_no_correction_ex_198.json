@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.5714285714285714
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Removed rules:\n- Either Girlfriend has a big appetite or she eats in moderation, but not both.\n\nAdded rules:\n- Either Girlfriend has a big appetite or she eats in moderation.\n- Either Girlfriend does not have a big appetite or she does not eat in moderation.\n\nAdded facts:\n- Girlfriend prefers homemade meals.",
       "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Combining the two new rules (A \u2228 M and \u00acA \u2228 \u00acM) enforces an exclusive or between having a big appetite (A) and eating in moderation (M). From the added fact 'prefers homemade meals' and other deductions, it follows that GF must eat in moderation (M = true). Since M is true, the exclusive or requires A (big appetite) to be false to satisfy both new rules.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
@@ -42,55 +42,55 @@
       "step": 2,
       "context": "Removed rules:\n- If Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both.\n\nAdded facts:\n- Girlfriend cooks for others.\n- Girlfriend does not eat in moderation.",
       "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "The new facts added (GF cooks for others and does not eat in moderation) combined with the remaining rule (A \u2228 M) require that if she does not eat in moderation (M = false), then the disjunction (A \u2228 M) necessitates A (big appetite) = true. The exclusive or rules (A \u2228 M and \u00acA \u2228 \u00acM) are still active, and with M = false, A must be true.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 340
+      "token_count": 2790
     },
     {
       "step": 3,
       "context": "Removed facts:\n- Girlfriend does not eat in moderation.\n\nAdded facts:\n- Girlfriend does not cook for others.",
       "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "The added fact that GF does not cook for others leads to the chain: (3) GF must enjoy savory foods, (4) GF does not love sweets, and (5) GF must eat in moderation (M = true). With the remaining rules (A \u2228 M and \u00acA \u2228 \u00acM), if M is true, then \u00acA must be true (from \u00acA \u2228 \u00acM). This makes A = false, so GF does not have a big appetite.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 435
+      "token_count": 4260
     },
     {
       "step": 4,
       "context": "Removed rules:\n- Either Girlfriend has a big appetite or she eats in moderation.\n- Either Girlfriend does not have a big appetite or she does not eat in moderation.\n\nAdded rules:\n- Either Girlfriend has a big appetite or she eats in moderation, but not both.\n\nAdded facts:\n- Girlfriend enjoys savory foods.\n- Girlfriend does not love sweets.\n- Girlfriend eats in moderation.",
       "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "The new rule states an exclusive or (A XOR M). Since GF eats in moderation (M = true), the XOR requires A (big appetite) to be false. This directly leads to the conclusion that GF does not have a big appetite.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 510
+      "token_count": 5485
     },
     {
       "step": 5,
       "context": "Removed facts:\n- Girlfriend eats in moderation.\n\nRemoved rules:\n- Girlfriend either loves sweets or eats in moderation.\n\nAdded rules:\n- Girlfriend does not love sweets and she does not eat in moderation.",
       "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The current context explicitly states that the GF does not eat in moderation (M = false) and does not love sweets (\u00acL). However, the rules that previously linked M to A (the XOR rules) have been removed. With no remaining rules connecting A (big appetite) to other variables, the value of A cannot be determined from the given information.",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -98,36 +98,36 @@
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 638
+      "token_count": 6137
     },
     {
       "step": 6,
       "context": "Removed facts:\n- Girlfriend does not love sweets and she does not eat in moderation.\n\nAdded rules:\n- Girlfriend either loves sweets or eats in moderation.",
       "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The added rule (L \u2228 M) requires GF to either love sweets (L) or eat in moderation (M). From the existing rules, GF must enjoy savory (S = true) and thus L = false, forcing M = true. However, the rules linking M to A (the XOR rules) have been removed, and no other rules connect A to M. Thus, A (big appetite) is not determined by the current context.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 730
+      "token_count": 8332
     },
     {
       "step": 7,
       "context": "Added facts:\n- Girlfriend enjoys savory foods and she does not love sweets.",
       "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The context explicitly states that GF enjoys savory foods (S = true) and does not love sweets (L = false), which, per the existing rules (L XOR S), confirms L = false. From another rule (L \u2228 M), M (eats in moderation) must be true. However, the XOR rules between big appetite (A) and moderation (M) have been removed, and no other rules link A to M. Thus, A's truth value cannot be determined.",
       "correct": false,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 813
+      "token_count": 9673
     }
   ]
 }

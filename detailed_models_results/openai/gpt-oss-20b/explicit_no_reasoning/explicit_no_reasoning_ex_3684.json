@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 201,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Parker does not make audiences laugh.\nParker is not a confident orator.\nParker listens actively.\nParker does not speak from the heart.\nParker cannot inspire others.\nParker does not give motivational talks.\nParker does not move audiences to tears.\nIf Parker either makes audiences laugh or receives standing ovations (but not both), then he is a confident orator.\nParker either listens actively or connects with people, but not both.\nAnyone who is charismatic or speaks from the heart can connect with people.\nAnyone who has global recognition or is charismatic can inspire others.\nIf Parker writes best sellers, then he either gives motivational talks or has global recognition (or both).\nParker is either an inspiring speaker or a writer of best sellers, but not both.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Anyone who has global recognition or is charismatic can inspire others.\n\nAdded rules:\n- If Parker listens actively, then he has global recognition.\n- If Parker either gives motivational talks or has global recognition, then he writes best sellers.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "1. Parker listens actively (A) \u2192 by added rule, has global recognition (G). \n2. Since G is true, by added rule (M \u2228 G) \u2192 W, Parker writes best sellers (W). \n3. Rule S XOR W forces S to be false. \n4. Conclusion\u2019s antecedent (S) is always false, so the implication S \u2192 (T \u2228 SOV) is vacuously true in every model consistent with the premises, hence the conclusion is entailed. \nTherefore the answer is True.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 277
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Parker either gives motivational talks or has global recognition, then he writes best sellers.\n\nAdded facts:\n- Parker does not write best sellers.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The premises after removing the rule and adding the fact are:\n- Parker does not write best\u2011sellers (\u00acW).\n- Parker is either an inspiring speaker or a writer, but not both \u21d2 by \u00acW, Parker is an inspiring speaker (S).\\n- Parker does not move audiences to tears (\u00acT).\\n- No rule links S to standing\u2011ovations (SOV).\\nTherefore we can build a model that satisfies all premises with SOV false. In this model, S is true and T \u2228 SOV is false, so the implication S \u2192 (T \u2228 SOV) is false. Hence the conclusion is not entailed by the context.\nThe correct answer is \"False\".",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 500
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, if x does not connect with people, then x is not charismatic and x does not speak from the heart.\n- If Parker does not give motivational talks and Parker does not have global recognition, then Parker does not write best sellers.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have \u00acL, \u00acC, A, \u00acH, \u00acI, \u00acM, \u00acT. The added rules give:\n1. \u00acCP \u2192 \u00acC \u2227 \u00acH. Since A is true and A\u202fXOR\u202fCP, CP is false, yielding \u00acC.\n2. (GR\u202f\u2228\u202fC) \u2192 I. With C false and I false, we deduce GR is false.\n3. W \u2192 (M\u202f\u2228\u202fGR). With GR false, W \u2192 M.\n4. (\u00acM\u202f\u2227\u202f\u00acGR) \u2192 \u00acW. Here \u00acGR true, so \u00acM \u2192 \u00acW; since \u00acM is a fact, \u00acW follows, implying W is false.\n5. S\u202fXOR\u202fW. With W false, S must be true. Thus the premise forces S to be true.\n6. (L\u202fXOR\u202fSOV) \u2192 C. But C is false, so the antecedent must be false. With \u00acL, the only way for L\u202fXOR\u202fSOV to be false is SOV false.\nNow the conclusion we test is S \u2192 (T\u202f\u2228\u202fSOV). T is false, so the consequent reduces to SOV. Since S is forced to be true while SOV is forced to be false, the implication S\u202f\u2192\u202fSOV is false in the context. Therefore the conclusion does not follow from the premises. The correct answer is \"False\".",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 741
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Parker does not make audiences laugh.\n\nAdded rules:\n- If Parker is an inspiring speaker, then he makes audiences laugh.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "After removal and addition, the remaining facts are:\n- Parker is not a confident orator (\u00acCOr).\n- Parker listens actively (L).\n- Parker does not speak from the heart (\u00acH).\n- Parker cannot inspire others (\u00acI).\n- Parker does not give motivational talks (\u00acM).\n- Parker does not move audiences to tears (\u00acT).\n\nRules: 1) (L \u2295 SOV) \u2192 COr. 2) (L \u2295 CP). 3) (C \u2228 H) \u2192 CP. 4) (G \u2228 C) \u2192 I. 5) W \u2192 (M \u2228 G). 6) S \u2295 W. 7) S \u2192 L. 8) Added rule: S \u2192 L is already included.\n\nFrom (L \u2295 CP) with L true, CP must be false. Since CP is false and H is false, rule (C \u2228 H) \u2192 CP forces C to be false. With C false, rule (G \u2228 C) \u2192 I gives G \u2192 I. Because I is false, G cannot be true, so G false.\n\nRule (L \u2295 SOV) \u2192 COr: since COr is false and L is true, the antecedent must be false to avoid a true\u2192false implication. For the XOR with L true, being false requires SOV to be true. Thus SOV is forced true.\n\nThe conclusion to test is S \u2192 (T \u2228 SOV). Since T is false and SOV is true, the consequent (T \u2228 SOV) is always true. Therefore the implication holds in every model consistent with the premises, i.e., the conclusion is entailed.\n\nThus the correct answer is True.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1186
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Parker is an inspiring speaker.\n- Parker receives standing ovations.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context contains the facts that Parker is an inspiring speaker and that Parker receives standing ovations. Therefore, for any model satisfying the context, the antecedent of the implication is true and the consequent is also true (since he receives standing ovations). Hence the implication holds in every model, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1648
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Parker receives standing ovations.\n\nRemoved rules:\n- If Parker is an inspiring speaker, then he makes audiences laugh.\n\nAdded rules:\n- If Parker is an inspiring speaker, then he does not make audiences laugh.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "After the edits the remaining facts are\n- \u00acL (does not laugh)\n- \u00acCOr (not confident orator)\n- Lis (listens actively)\n- \u00acH (does not speak from heart)\n- \u00acI (cannot inspire)\n- \u00acM (does not give motivational talks)\n- \u00acT (does not move to tears)\n\nThe rules that still apply are:\n1. (L XOR SOV) \u2192 COr.\n2. Lis XOR CP.\n3. (C \u2228 H) \u2192 CP.\n4. (G \u2228 C) \u2192 I.\n5. W \u2192 (M \u2228 G).\n6. S XOR W.\n7. S \u2192 \u00acL.  (added rule)\n\nThe removed facts/rules do not affect the above.\n\n1. From rule 2: Lis true \u2192 CP false.\n2. From rule 3 with CP false we get C false and H false (since \u00acH already).\n3. Rule 4 with C false forces G false (otherwise I would be true). Because I is false.\n4. Rule 5: If W were true, then (M \u2228 G) must be true. With M false, G must be true, contradicting G false from step\u202f3. Hence W is false.\n5. Rule 6 (S XOR W) with W false gives S true. So S is forced true in every model.\n6. Rule 1: with L false, (L XOR SOV) is true exactly when SOV is true. Since COr is false, the implication would be false if SOV were true. Thus SOV must be false.\n\nWe now have the unique consistent model: S=true, SOV=false, T=false. The conclusion requires S \u2192 (T \u2228 SOV). With S true and both T and SOV false, the consequent is false, making the implication false.\n\nSince the premises allow a model where the conclusion is false, the conclusion is not entailed.\n\nTherefore the answer is \"False\".",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1790
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Parker is an inspiring speaker, then he does not make audiences laugh.\n\nAdded facts:\n- Parker makes audiences laugh.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The facts give us:\u202f\u00acL,\u202f\u00acCOr,\u202fLIS,\u202f\u00acH,\u202f\u00acI,\u202f\u00acM,\u202f\u00acT, and the added fact\u202fL (Parker makes audiences laugh).  The rules are: (1) (L\u00a0XOR\u00a0SOV)\u00a0\u2192\u00a0COr, (2) LIS\u00a0XOR\u00a0CP, (3) (C\u00a0\u2228\u00a0H)\u00a0\u2192\u00a0CP, (4) (G\u00a0\u2228\u00a0C)\u00a0\u2192\u00a0I, (5) W\u00a0\u2192\u00a0(M\u00a0\u2228\u00a0G), (6) S\u00a0XOR\u00a0W, and (7) the removed rule is gone.  \n\nFrom (6) and (5)\u202f\u2013\u202fW would force G by (5) and that would force I by (4), contradicting the fact \u00acI.  Hence W cannot hold, so S must hold.  Thus the antecedent of the queried implication is true in every model.  \n\nTo satisfy rule\u202f(1) we need the antecedent (L\u00a0XOR\u00a0SOV) to be false because COr is false by fact.  Since L is true, that forces SOV to be true.  Consequently the consequent T\u202f\u2228\u202fSOV is true (SOV is true).  No model that satisfies all facts and rules can have SOV false, so in every model the implication S\u202f\u2192\u202f(T\u202f\u2228\u202fSOV) holds. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2337
+    }
+  ]
+}

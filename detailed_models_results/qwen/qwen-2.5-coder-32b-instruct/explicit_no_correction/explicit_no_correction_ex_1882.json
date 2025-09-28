@@ -6,7 +6,7 @@
     "include_reasoning": true,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.7142857142857143
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Added rules:\n- If Amaia conducts independent study, then she will become an expert if and only if she does not gain practical experience.\n- Amaia explores archives if and only if she does not visit museums.\n\nAdded facts:\n- Amaia is not uninterested in history.\n- Amaia is not inspired by history.",
       "question": "Does the context entail the conclusion 'Amaia is either inspired by history or uninterested in history, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Amaia is not uninterested in history (given) and not inspired by history (given). The conclusion 'Amaia is either inspired by history or uninterested in history, but not both' requires exactly one of these to be true. Since neither is true, the conclusion fails. Existing rules confirm she visits museums (via \u00acexplore archives), leading to her enjoying fiction via the museum rule, which excludes inspiration by history. She is interested in history (\u00acuninterested) but not inspired by it. Thus, the conclusion is directly contradicted.",
+      "correct": true,
       "tags": [
         "added_rules",
         "added_facts"
@@ -41,9 +41,9 @@
       "step": 2,
       "context": "Removed facts:\n- Amaia is not uninterested in history.\n\nRemoved rules:\n- Anyone who is uninterested in history either ignores cultural landmarks or dismisses historical significance (or both).\n\nAdded rules:\n- If Amaia draws from experience, then she is uninterested in history.\n- If Amaia is not inspired by history and Amaia is not uninterested in history, then Amaia is inspired by history if and only if she is uninterested in history.",
       "question": "Does the context entail the conclusion 'Amaia is either inspired by history or uninterested in history, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Amaia draws from experience, so via the added rule, she is uninterested in history. She is not inspired by history (from the museum/enjoys fiction rule). Thus, she is uninterested (True) and not inspired (True). The conclusion 'inspired or uninterested but not both' requires exactly one (XOR). Since she is uninterested but not inspired, the XOR is satisfied (True).",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -51,82 +51,82 @@
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 921
+      "token_count": 1748
     },
     {
       "step": 3,
       "context": "Removed rules:\n- If Amaia draws from experience, then she is uninterested in history.\n\nAdded rules:\n- If Amaia develops creative projects, then she is uninterested in history.",
       "question": "Does the context entail the conclusion 'Amaia is either inspired by history or uninterested in history, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Amaia develops creative projects (from prior deductions), so via the new rule, she is uninterested in history. She is not inspired by history (from the museum/enjoys fiction rule). Thus, she is uninterested (True) and not inspired (True). The exclusive OR 'inspired or uninterested but not both' requires one to be true and the other false. Since she is uninterested but not inspired, the XOR is satisfied (True).",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 1084
+      "token_count": 3693
     },
     {
       "step": 4,
       "context": "Added rules:\n- If Amaia is not uninterested in history, then she does not develop creative projects.\n\nAdded facts:\n- Amaia develops creative projects.",
       "question": "Does the context entail the conclusion 'Amaia is either inspired by history or uninterested in history, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Amaia develops creative projects (given). The rule 'If Amaia is not uninterested in history, then she does not develop creative projects' implies that if she developed creative projects, she **is** uninterested in history. Thus, Amaia is uninterested in history. From earlier deductions, Amaia is not inspired by history (via the museum/enjoys fiction rule). The exclusive OR 'inspired or uninterested but not both' is satisfied since she is uninterested (True) and not inspired (False).",
+      "correct": true,
       "tags": [
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1189
+      "token_count": 4716
     },
     {
       "step": 5,
       "context": "Removed rules:\n- If Amaia develops creative projects, then she is uninterested in history.\n- If Amaia is not uninterested in history, then she does not develop creative projects.\n\nAdded rules:\n- If Amaia develops creative projects, then she is not uninterested in history.",
       "question": "Does the context entail the conclusion 'Amaia is either inspired by history or uninterested in history, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Amaia develops creative projects, and the rule now states that this implies she is **not** uninterested in history. From previous deductions, she visits museums (due to preserved 'explore archives or visit museums' rule) and enjoys fiction, making her **not inspired by history**. The conclusion requires 'inspired OR uninterested but not both'. Since both are false (uninterested: False; inspired: False), the exclusive OR is false. Hence, the conclusion is not entailed.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 1288
+      "token_count": 5666
     },
     {
       "step": 6,
       "context": "Removed rules:\n- Amaia either analyzes primary sources or develops creative projects, but not both.\n\nAdded facts:\n- Amaia analyzes primary sources or develops creative projects.\n- It is not the case that Amaia analyzes primary sources and develops creative projects.",
       "question": "Does the context entail the conclusion 'Amaia is either inspired by history or uninterested in history, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Amaia develops creative projects and is not analyzing primary sources (from the added 'or' fact). Earlier steps confirm she is not inspired by history (via museum/enjoys fiction rule). The current context lacks direct rules linking her uninterested status to her actions, and prior rules affecting this have been removed (e.g., the 'uninterested' rule). With no basis to determine if she is uninterested in history, the conclusion about an exclusive OR (inspired or uninterested) remains undetermined.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1414
+      "token_count": 6555
     },
     {
       "step": 7,
       "context": "Removed rules:\n- If Amaia develops creative projects, then she is not uninterested in history.\n\nAdded rules:\n- If Amaia develops creative projects, then she is uninterested in history.",
       "question": "Does the context entail the conclusion 'Amaia is either inspired by history or uninterested in history, but not both.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Amaia develops creative projects (established via prior context), so via the added rule, she is **uninterested in history**. From earlier steps, she is not inspired by history (via the 'visits museums/enjoys fiction' rule). The conclusion requires an exclusive OR (inspired or uninterested but not both). Since she is uninterested (True) and not inspired (False), exactly one is true, satisfying the condition.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 1532
+      "token_count": 9908
     }
   ]
 }

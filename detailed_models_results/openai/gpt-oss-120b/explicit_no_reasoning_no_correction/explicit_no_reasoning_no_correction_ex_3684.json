@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 201,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Parker does not make audiences laugh.\nParker is not a confident orator.\nParker listens actively.\nParker does not speak from the heart.\nParker cannot inspire others.\nParker does not give motivational talks.\nParker does not move audiences to tears.\nIf Parker either makes audiences laugh or receives standing ovations (but not both), then he is a confident orator.\nParker either listens actively or connects with people, but not both.\nAnyone who is charismatic or speaks from the heart can connect with people.\nAnyone who has global recognition or is charismatic can inspire others.\nIf Parker writes best sellers, then he either gives motivational talks or has global recognition (or both).\nParker is either an inspiring speaker or a writer of best sellers, but not both.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Anyone who has global recognition or is charismatic can inspire others.\n\nAdded rules:\n- If Parker listens actively, then he has global recognition.\n- If Parker either gives motivational talks or has global recognition, then he writes best sellers.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts, Parker listens actively (A). The added rule A \u2192 global recognition gives Parker global recognition. Then the added rule (motivational talks OR global recognition) \u2192 writes best sellers gives Parker writes best sellers (W). The exclusive statement \"Parker is either an inspiring speaker or a writer of best sellers, but not both\" forces Parker not to be an inspiring speaker (\u00acIS). Since IS is false in every model consistent with the context, the conditional \"If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations\" has a false antecedent and is therefore vacuously true. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 277
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Parker either gives motivational talks or has global recognition, then he writes best sellers.\n\nAdded facts:\n- Parker does not write best sellers.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts, Parker listens actively (A) and does not write best sellers (\u00acW). The rule A \u2192 global recognition gives Parker global recognition. The exclusive statement \"Parker is either an inspiring speaker or a writer of best sellers, but not both\" together with \u00acW forces Parker to be an inspiring speaker (ISp). The exclusive A XOR connect forces Parker not to connect with people. The rule (L XOR S) \u2192 confident-orator together with the fact that Parker does not make audiences laugh (\u00acL) and is not a confident orator (\u00acC) forces the standing\u2011ovation variable S to be false, otherwise the antecedent would be true and would imply C, contradicting \u00acC. Parker also does not move audiences to tears (\u00acT). Hence, with ISp true, the consequent \"moves audiences to tears or receives standing ovations\" is false (both T and S are false). Therefore the conditional \"If Parker is an inspiring speaker then (T or S)\" is false. The conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 527
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, if x does not connect with people, then x is not charismatic and x does not speak from the heart.\n- If Parker does not give motivational talks and Parker does not have global recognition, then Parker does not write best sellers.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have \u00acL, \u00acC, A, \u00acH, \u00acI, \u00acM, \u00acT and \u00acW. The added rule A \u2192 Glob gives Glob. Rule2 (A XOR Conn) forces Conn to be false. The universal rule \u00acConn \u2192 \u00acChar \u2227 \u00acH confirms Char is false (already \u00acH). Rule1 (L XOR S \u2192 C) simplifies to S \u2192 C because L is false; with \u00acC this forces S to be false. Rule6 (IS XOR W) together with \u00acW forces IS to be true. Thus IS is true while both T and S are false. Consequently the conditional IS \u2192 (T \u2228 S) has a true antecedent and a false consequent, making it false. Hence the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 841
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Parker does not make audiences laugh.\n\nAdded rules:\n- If Parker is an inspiring speaker, then he makes audiences laugh.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given the facts A, \u00acC, \u00acH, \u00acI, \u00acM, \u00acT, \u00acW and the rules, we derive: From A XOR Conn and A true, Conn is false. The universal rule \u00acConn \u2192 (\u00acChar \u2227 \u00acH) gives \u00acChar. The rule A \u2192 Glob gives Glob true. Rule IS XOR W with \u00acW forces IS true. The added rule IS \u2192 L gives L true. Rule (L XOR S) \u2192 C with C false forces the antecedent L XOR S to be false, so with L true we must have S true. Hence S is true. Since T is false but S is true, the disjunction T \u2228 S is true. Therefore whenever IS holds (it does), the consequent (T \u2228 S) is true, making the conditional IS \u2192 (T \u2228 S) true in every model. Thus the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1124
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Parker is an inspiring speaker.\n- Parker receives standing ovations.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly states that Parker is an inspiring speaker (IS) and that he receives standing ovations (S). Therefore the antecedent of the conditional is true and the consequent (T \u2228 S) is also true because S is true. Since every model that satisfies the context must make the consequent true, the conditional IS \u2192 (T \u2228 S) holds in all such models. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1405
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Parker receives standing ovations.\n\nRemoved rules:\n- If Parker is an inspiring speaker, then he makes audiences laugh.\n\nAdded rules:\n- If Parker is an inspiring speaker, then he does not make audiences laugh.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have IS true, \u00acC, A, \u00acH, \u00acI, \u00acM, \u00acT, \u00acW. The rule (L XOR S) \u2192 C together with \u00acC forces the antecedent to be false, so L and S must have the same truth value. The added rule IS \u2192 \u00acL gives \u00acL, thus L is false and consequently S is also false. Since \u00acT is given, both T and S are false, making the disjunction (T \u2228 S) false. With IS true and the consequent false, the conditional IS \u2192 (T \u2228 S) is false in every model compatible with the context. Hence the conclusion is not entailed; it is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1575
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Parker is an inspiring speaker, then he does not make audiences laugh.\n\nAdded facts:\n- Parker makes audiences laugh.",
+      "question": "Does the context entail the conclusion 'If Parker is an inspiring speaker, then he either moves audiences to tears or receives standing ovations (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The current facts include IS (inspiring speaker) and L (makes audiences laugh). Rule (L XOR S) -> C together with \u00acC forces the antecedent (L XOR S) to be false, so L and S must have the same truth value. Since L is true, S must also be true. Fact \u00acT gives T false, but S true makes the disjunction (T \u2228 S) true. With IS true, the conditional IS -> (T \u2228 S) is true in every model that satisfies the context. (Even though the set of premises is inconsistent, in classical logic any statement is entailed from an inconsistent set, so the conditional holds.) Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1835
+    }
+  ]
+}

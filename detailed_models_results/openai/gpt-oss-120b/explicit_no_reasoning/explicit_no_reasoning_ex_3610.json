@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 185,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kartier lives alone.\nKartier does not have good memory.\nKartier eats less.\nKartier does not weigh lightly.\nKartier either lives alone or leads a herd, but not both.\nAny elephant that is experienced or has good memory can lead the herd.\nIf Kartier either eats less or weighs lightly (but not both), then he is small.\nEvery elephant is either experienced or young.\nIf Kartier is young and small, then he has a short trunk.\nEither Kartier has a long trunk or a short trunk, but not both.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x does not lead a herd, then x is not experienced and x does not have good memory.\n- If Kartier is young, then if Kartier is small, then Kartier has a short trunk.\n\nAdded facts:\n- Kartier does not lead a herd.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the added fact that Kartier does not lead a herd and the universal rule (\u00aclead -> \u00acexperienced \u2227 \u00acgoodMemory), we infer Kartier is not experienced. Rule 8 requires each elephant to be experienced or young; since Kartier is not experienced, he must be young. Rule 7 applies because Kartier eats less and does not weigh lightly, satisfying the exclusive-or condition, so Kartier is small. With Kartier both young and small, rule 9 gives that Kartier has a short trunk. Rule 10 states that Kartier has either a long trunk or a short trunk, but not both; having a short trunk therefore entails he does not have a long trunk. Hence the conclusion 'Kartier does not have a long trunk' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 224
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- For all x, if x is not experienced, then x is young.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the fact that Kartier does not lead a herd and the rule \u00aclead -> \u00acexperienced \u2227 \u00acgoodMemory, we infer Kartier is not experienced. The newly added rule \u00acexperienced -> young gives that Kartier is young. The original XOR condition (eats less true, does not weigh lightly) makes Kartier small. With Kartier both young and small, the rule 'if young and small then short trunk' (and its equivalent conditional form) yields that Kartier has a short trunk. The exclusive-or rule stating Kartier has either a long trunk or a short trunk, but not both, combined with the derived short trunk, forces that Kartier does not have a long trunk. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 499
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Kartier lives alone.\n- Kartier does not lead a herd.\n\nAdded rules:\n- For all x, if x is not young and x is small, then x does not have a short trunk.\n\nAdded facts:\n- Kartier is not young.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We have the facts: Kartier eats less, does not weigh lightly, and is not young. From the XOR condition (eats less XOR weighs lightly) we infer Kartier is small. Using the added rule (\u00acyoung \u2227 small) -> \u00acshort trunk, we derive that Kartier does not have a short trunk. The original exclusive-or rule states that Kartier has either a long trunk or a short trunk, but not both. Since short trunk is false, the exclusive-or forces the long trunk to be true. Therefore the statement 'Kartier does not have a long trunk' is false in this context.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 720
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all x, if x is an exception and x is special, then x has a short trunk.\n\nAdded facts:\n- Kartier is an exception.\n- Kartier is not special.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context contains the fact that Kartier is not young and, through the rule (\u00acyoung \u2227 small) \u2192 \u00acshort, we infer that Kartier does not have a short trunk (since Kartier is also small, derived from the XOR condition on eating less and not weighing lightly). The exclusive-or rule stating that Kartier has either a long trunk or a short trunk, but not both, then forces the long trunk to be true because the short trunk is false. Therefore the statement 'Kartier does not have a long trunk' is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 953
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Kartier is experienced.\n- Kartier leads a herd.\n- Kartier does not live alone.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We retain the original facts that Kartier eats less and does not weigh lightly, which satisfy the exclusive-or condition, so Kartier is small. The fact added earlier that Kartier is not young remains. With not young and small, the rule \"if not young and small then not short trunk\" gives that Kartier does not have a short trunk. The exclusive-or rule stating \"either long trunk or short trunk, but not both\" then forces Kartier to have a long trunk (since short trunk is false). Therefore the statement 'Kartier does not have a long trunk' is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1163
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, if x is not young, then x is experienced.\n- For all x, if x is not young, then if x is small, then x does not have a short trunk.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have: Kartier eats less and does not weigh lightly, satisfying the exclusive-or condition, so Kartier is small. We also have the fact that Kartier is not young. The newly added universal rule states that if an elephant is not young and small then it does not have a short trunk; thus we infer \u00acshort. The original exclusive-or rule for trunks says Kartier has either a long trunk or a short trunk, but not both. Since short trunk is false, the long trunk must be true. Therefore the statement 'Kartier does not have a long trunk' is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1364
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if x is not young and x is small, then x does not have a short trunk.\n- For all x, if x is not young, then if x is small, then x does not have a short trunk.\n\nAdded rules:\n- For all x, if x is not young and x is small, then x has a short trunk.",
+      "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the original facts, Kartier eats less and does not weigh lightly, satisfying the exclusive-or condition, so Kartier is small. The fact \"Kartier is not young\" is given. With the currently active rule \"If not young and small then short trunk\", we infer that Kartier has a short trunk. The original exclusive-or rule states that Kartier has either a long trunk or a short trunk, but not both; since the short trunk is true, the long trunk must be false. Therefore the statement \"Kartier does not have a long trunk\" is entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1590
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 307,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Erik experiences failure.\nErik has a supportive network.\nErik is highly motivated.\nErik faces challenges.\nErik either experiences failure or achieves success, but not both.\nErik either benefits from counseling or has a supportive network, but not both.\nAnyone who struggles with self-destruction would benefit from counseling.\nAll highly motivated individuals are dedicated and take risks.\nAll dedicated individuals have a passion and face challenges.\nIf someone needs support to thrive and has a passion, then they can achieve success.\nFor all humans, if they struggle with self-destruction or have fragile relationships (or both), then they need support to thrive.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Erik either experiences failure or achieves success, but not both.\n\nRemoved rules:\n- For all x, if x needs support to thrive and x has a passion, then x can achieve success.\n- For all x, if x struggles with self-destruction or x has fragile relationships, then x needs support to thrive.\n\nAdded rules:\n- For all x, if x achieves success, then x needs support to thrive and x has a passion.\n- For all x, x needs support to thrive if and only if x struggles with self-destruction or x has fragile relationships.\n\nAdded facts:\n- Erik achieves success.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Erik achieves success, so by the added rule he needs support to thrive. The biconditional then gives that (struggles self-destruction OR fragile relationships) holds. Since Erik has a supportive network, the exclusive rule says he does NOT benefit from counseling. The rule 'Anyone who struggles with self-destruction would benefit from counseling' means if Erik struggled with self-destruction he would benefit from counseling, which would contradict the exclusive rule. Therefore Erik cannot struggle with self-destruction, so the disjunction forces fragile relationships to be true. Hence the claim that Erik does not have fragile relationships is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 233
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Erik either benefits from counseling or has a supportive network, but not both.\n\nAdded rules:\n- For all x, if x is highly motivated then x has a passion.\n- For all x, not x needs support to thrive if and only if not x struggles with self-destruction and not x has fragile relationships.\n\nAdded facts:\n- Erik either benefits from counseling or has a supportive network.\n- It is not the case that Erik benefits from counseling and Erik has a supportive network.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the original facts Erik experiences failure and the exclusive rule that he either experiences failure or achieves success, we infer Erik does not achieve success. Erik is highly motivated, which via the added rule gives him a passion. Rule 9 states that if someone needs support to thrive and has a passion then they can achieve success. Since Erik does not achieve success yet has passion, the contrapositive yields that Erik does NOT need support to thrive. The added equivalence (\u00acneeds_support \u2194 \u00acstruggle_self_destruction \u2227 \u00acfragile_relationships) then implies both that Erik does not struggle with self-destruction and that Erik does not have fragile relationships. Hence the statement 'Erik does not have fragile relationships' follows logically from the context.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 533
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x achieves success, then x needs support to thrive and x has a passion.\n\nAdded rules:\n- For all x, if x achieves success, then it is not the case that x needs support to thrive and x has a passion.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Erik achieves success (fact). The added rule states that if someone achieves success, then they do NOT need support to thrive and they have a passion. Hence Erik does NOT need support to thrive. The added equivalence says that not needing support to thrive is equivalent to both not struggling with self-destruction and not having fragile relationships. Therefore from Erik's lack of need for support we infer that Erik does not have fragile relationships. Thus the conclusion follows.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 831
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x is highly motivated, then x is dedicated and x takes risks.\n- For all x, if x is dedicated, then x has a passion and x faces challenges.\n- For all x, if x achieves success, then it is not the case that x needs support to thrive and x has a passion.\n\nAdded rules:\n- For all x, if x is highly motivated, then x is dedicated.\n- For all x, if x is highly motivated, then x takes risks.\n- For all x, if x is dedicated, then x has a passion.\n- For all x, if x is dedicated, then x faces challenges.\n- For all x, if x achieves success, then x does not need support to thrive or x does not have a passion.\n\nAdded facts:\n- Erik does not benefit from counseling.\n- Erik has a passion.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the fact that Erik experiences failure and the exclusive-or rule that he either experiences failure or achieves success (but not both), we infer Erik does not achieve success. The rule 'Anyone who struggles with self-destruction would benefit from counseling' together with the fact that Erik does not benefit from counseling yields, via modus tollens, that Erik does not struggle with self-destruction. The rule 'If someone needs support to thrive and has a passion, then they can achieve success' combined with Erik's known passion and the derived \u00acsuccess (from failure) gives \u00ac(needs support \u2227 passion). Since passion is true, we infer that Erik does not need support to thrive. The biconditional rule (\u00acneeds_support \u2194 \u00acstruggle_self_destruction \u2227 \u00acfragile_relationships) then tells us that \u00acneeds_support implies both \u00acstruggle_self_destruction and \u00acfragile_relationships. Hence Erik does not have fragile relationships. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1027
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, if x needs support to thrive, then x struggles with self-destruction or x has fragile relationships.\n- For all x, if x struggles with self-destruction or x has fragile relationships, then x needs support to thrive.\n- For all x, if not x needs support to thrive, then not x struggles with self-destruction and not x has fragile relationships.\n- For all x, if not x struggles with self-destruction and not x has fragile relationships, then not x needs support to thrive.\n- For all x, if x achieves success, then it is not the case that x needs support to thrive and x has a passion.\n\nAdded facts:\n- Erik does not benefit from counseling or Erik does not have a supportive network.\n- Erik is dedicated.\n- Erik does not struggle with self-destruction.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the original facts Erik experiences failure and the exclusive-or that he either experiences failure or achieves success, we infer Erik does not achieve success. Erik is dedicated, so by earlier rules he has a passion. The rule 'If someone needs support to thrive and has a passion, then they can achieve success' together with the fact that Erik does not achieve success and does have a passion yields that Erik does not need support to thrive. The added equivalence (\u00acNeedsSupport \u2192 \u00acStruggleSD \u2227 \u00acFragileRel) then gives that Erik does not have fragile relationships. Hence the conclusion follows.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1454
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, if not x benefits from counseling, then not x struggles with self-destruction.\n\nAdded facts:\n- Erik takes risks.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The only new rule links not benefiting from counseling to not struggling with self-destruction, and the only new fact is that Erik takes risks. Neither of these provides information about Erik's fragile relationships, and no existing rule in this isolated context connects taking risks or the given rule to fragile relationships. Therefore, we cannot conclude whether Erik does or does not have fragile relationships.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1795
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if x achieves success, then x does not need support to thrive or x does not have a passion.\n- For all x, if x achieves success, then it is not the case that x needs support to thrive and x has a passion.\n\nAdded rules:\n- For all x, if x achieves success and x has a passion, then x needs support to thrive.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Erik achieves success (fact) and has a passion (fact). By the added rule, success combined with passion implies Erik needs support to thrive. The equivalence rules state that if someone needs support, then they either struggle with self-destruction or have fragile relationships. Erik is known not to struggle with self-destruction, so the disjunction forces that he has fragile relationships. Therefore the statement 'Erik does not have fragile relationships' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1951
+    }
+  ]
+}

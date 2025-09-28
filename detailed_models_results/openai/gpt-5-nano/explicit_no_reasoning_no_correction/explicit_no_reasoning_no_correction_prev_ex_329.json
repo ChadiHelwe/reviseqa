@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.2857142857142857
   },
   "predictions": [
     {
@@ -26,9 +26,9 @@
       "step": 1,
       "context": "Added rules:\n- For all x, either x is not a quaint town, or x has community events.\n- For all x, either x is not a quaint town, or x retains its charm.\n\nAdded facts:\n- Charming has hotels or Charming offers accommodations.",
       "question": "Does the context entail the conclusion 'Charming retains its charm.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The added rules 'either not quaint town or retains charm' and 'either not quaint town or has community events' do not fix Charming's quaint status. Since Charming is either scenic or quaint town (but not both), the KB allows a model where Charming is scenic (not quaint town), keeping retains charm undetermined, and a model where Charming is quaint town, which, by the rule, forces retains charm. Therefore, 'Charming retains its charm' is not entailed and not contradicted.",
       "correct": false,
       "tags": [
         "added_rules",
@@ -41,83 +41,83 @@
       "step": 2,
       "context": "Added facts:\n- Charming has hotels.\n- Charming is not scenic.",
       "question": "Does the context entail the conclusion 'Charming retains its charm.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "From the context, Charming is not scenic. If we assume the rule that Charming is either scenic or a quaint town, but not both, then Charming must be a quaint town. Then the rule 'If a place is a quaint town, then it has community events and retains its charm' applies, so Charming retains its charm. There is no contradicting information provided.",
+      "correct": true,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 371
+      "token_count": 468
     },
     {
       "step": 3,
       "context": "Removed rules:\n- For all x, if x is a quaint town, then x has community events and x retains its charm.\n- For all x, either x is not a quaint town, or x retains its charm.\n\nAdded rules:\n- For all x, if x is a quaint town, then x does not retain its charm.",
       "question": "Does the context entail the conclusion 'Charming retains its charm.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The context only adds a rule that quaint towns do not retain charm, but provides no fact about whether Charming is a quaint town. Without knowing Charming is quaint town (or not), we cannot derive 'Charming retains its charm' or its negation. Therefore the conclusion is not entailed and not contradicted, i.e., uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 440
+      "token_count": 604
     },
     {
       "step": 4,
       "context": "Added rules:\n- For all x, if x retains its charm, then x is not a quaint town.\n\nAdded facts:\n- Charming is a quaint town.",
       "question": "Does the context entail the conclusion 'Charming retains its charm.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let R be 'Charming retains its charm' and K be 'Charming is a quaint town'. The rule is R -> \u00acK. Given K is true, by contrapositive K -> \u00acR, so \u00acR holds. Therefore Charming does not retain its charm, i.e., the conclusion 'Charming retains its charm' is contradicted by the context.",
+      "correct": true,
       "tags": [
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 561
+      "token_count": 785
     },
     {
       "step": 5,
       "context": "Removed rules:\n- For all x, if x is a quaint town, then x does not retain its charm.\n- For all x, if x retains its charm, then x is not a quaint town.\n\nAdded rules:\n- For all x, if x is beloved, then x retains its charm.",
       "question": "Does the context entail the conclusion 'Charming retains its charm.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The only rule that could imply retaining charm is 'if x is beloved then x retains its charm', but there is no fact that Charming is beloved, nor any rule deriving beloved from other properties. No rule asserts 'Charming does not retain its charm'. Therefore the conclusion is not entailed and not contradicted, i.e., Uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 647
+      "token_count": 936
     },
     {
       "step": 6,
       "context": "Removed rules:\n- For all x, if x is beloved, then x retains its charm.\n\nAdded rules:\n- If Charming is a quaint town, then Charming does not retain its charm.",
       "question": "Does the context entail the conclusion 'Charming retains its charm.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The context only has a rule that if Charming is a quaint town, then Charming does not retain its charm. There is no fact stating Charming is a quaint town, so neither 'Charming retains its charm' nor its negation is entailed. Therefore the conclusion is uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 761
+      "token_count": 1110
     },
     {
       "step": 7,
       "context": "Removed rules:\n- For all x, if x is popular, then x has hotels or x offers accommodations.\n\nAdded rules:\n- For all x, if x is popular and x does not have hotels, then x offers accommodations.\n- If Charming retains its charm, then Charming is not a quaint town.\n\nAdded facts:\n- Charming has community events.",
       "question": "Does the context entail the conclusion 'Charming retains its charm.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The context only states that Charming has community events and includes a rule: If Charming retains its charm, then Charming is not a quaint town. There is no fact that Charming retains its charm or that Charming is a quaint town, and no rule to derive either. Therefore whether Charming retains its charm is not entailed or contradicted by the context.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -125,7 +125,7 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 854
+      "token_count": 1252
     }
   ]
 }

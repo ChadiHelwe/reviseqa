@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.2857142857142857
   },
   "predictions": [
     {
@@ -26,9 +26,9 @@
       "step": 1,
       "context": "Removed facts:\n- Holland does not stay motivated.\n\nAdded rules:\n- If Holland has artistic talent, then she will take a chance.",
       "question": "Does the context entail the conclusion 'Holland does not take a chance.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The only rule about taking a chance is 'If Holland has artistic talent, then she will take a chance.' There is no information about whether Holland has artistic talent, nor any rule implying 'not taking a chance.' Therefore the conclusion 'Holland does not take a chance' is not entailed (nor contradicted) by the given context.",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -41,70 +41,41 @@
       "step": 2,
       "context": "Removed rules:\n- If Holland has artistic talent, then she will take a chance.\n\nAdded rules:\n- Either Holland does not have artistic talent, or she takes a chance.\n- If Holland pursues her passion and Holland is not willing to face criticism, then Holland has artistic talent.\n\nAdded facts:\n- Holland has artistic talent.",
       "question": "Does the context entail the conclusion 'Holland does not take a chance.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "From 'Holland has artistic talent' and the rule 'Either Holland does not have artistic talent, or she takes a chance', the first disjunct is false, so the second must be true; hence Holland takes a chance. No rule entails 'not take a chance', so the conclusion 'Holland does not take a chance' is not entailed and is contradicted by the derived fact.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 341
+      "token_count": 406
     },
     {
       "step": 3,
       "context": "Removed facts:\n- Holland has artistic talent.\n\nRemoved rules:\n- If Holland pursues her passion, then she is either talented or willing to face criticism, but not both.\n- If Holland pursues her passion and Holland is not willing to face criticism, then Holland has artistic talent.\n\nAdded rules:\n- If Holland does not have artistic talent, then she will not take a chance.\n- Holland pursues her passion and is not willing to face criticism, and Holland does not have artistic talent.",
       "question": "Does the context entail the conclusion 'Holland does not take a chance.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "The added fact asserts Holland does not have artistic talent. There is a rule 'If Holland does not have artistic talent, then she will not take a chance.' Therefore Holland does not take a chance is entailed. There are no rules that imply taking a chance from the given information, so no conflict arises.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 462
+      "token_count": 603
     },
     {
       "step": 4,
       "context": "Added rules:\n- If Holland has artistic talent, then she will take a chance.\n- If Holland takes a chance, then she has artistic talent.",
       "question": "Does the context entail the conclusion 'Holland does not take a chance.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
-      "tags": [
-        "added_rules"
-      ],
-      "is_demonstration": false,
-      "token_count": 616
-    },
-    {
-      "step": 5,
-      "context": "Removed facts:\n- Holland pursues her passion and is not willing to face criticism, and Holland does not have artistic talent.\n\nAdded rules:\n- For all x, if x pursues her passion and x gains recognition and x is not willing to face criticism, then x has artistic talent.",
-      "question": "Does the context entail the conclusion 'Holland does not take a chance.'?",
-      "prediction": "ERROR",
-      "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
-      "tags": [
-        "removed_facts",
-        "added_rules"
-      ],
-      "is_demonstration": false,
-      "token_count": 701
-    },
-    {
-      "step": 6,
-      "context": "Added rules:\n- Holland has artistic talent if and only if she takes a chance.\n- If Holland does not take a chance, then she does not have artistic talent.",
-      "question": "Does the context entail the conclusion 'Holland does not take a chance.'?",
-      "prediction": "ERROR",
-      "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The only rules are 'If Holland has artistic talent, then she will take a chance' and 'If Holland takes a chance, then she has artistic talent.' Without any facts about whether Holland has artistic talent or whether she takes a chance, we cannot derive either 'takes a chance' or 'not take a chance.' Therefore the conclusion 'Holland does not take a chance' is not entailed, nor contradicted, by the given context.",
       "correct": false,
       "tags": [
         "added_rules"
@@ -113,19 +84,48 @@
       "token_count": 814
     },
     {
+      "step": 5,
+      "context": "Removed facts:\n- Holland pursues her passion and is not willing to face criticism, and Holland does not have artistic talent.\n\nAdded rules:\n- For all x, if x pursues her passion and x gains recognition and x is not willing to face criticism, then x has artistic talent.",
+      "question": "Does the context entail the conclusion 'Holland does not take a chance.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The only rule in play states: for all x, if x pursues her passion and x gains recognition and x is not willing to face criticism, then x has artistic talent. Since the facts about pursuing passion, gaining recognition, and not willing to face criticism have been removed, we cannot derive that Holland has artistic talent. There is no rule connecting artistic talent or the absence thereof to 'not take a chance.' Therefore, whether Holland does not take a chance is not entailed by the context (and there is no contradiction either), so the conclusion is Uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 985
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- Holland has artistic talent if and only if she takes a chance.\n- If Holland does not take a chance, then she does not have artistic talent.",
+      "question": "Does the context entail the conclusion 'Holland does not take a chance.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Holland has artistic talent iff she takes a chance (talent <-> takes a chance) and 'If Holland does not take a chance, then she does not have artistic talent' is given. From these, not having artistic talent does not imply not taking a chance (the contrapositive would give talent -> takes a chance, which is already present). There are no rules or facts forcing 'not take a chance'. Therefore, the conclusion 'Holland does not take a chance.' is not entailed, nor contradicted.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1210
+    },
+    {
       "step": 7,
       "context": "Removed rules:\n- For all x, if x pursues her passion and x gains recognition and x is not willing to face criticism, then x has artistic talent.\n\nAdded rules:\n- For all x, if x overcomes fear, then x does not have artistic talent.",
       "question": "Does the context entail the conclusion 'Holland does not take a chance.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The only added rule is 'For all x, if x overcomes fear, then x does not have artistic talent.' There are no facts about Holland overcoming fear, nor any rule linking taking a chance to fear or artistic talent. Therefore we cannot derive 'Holland does not take a chance,' nor its negation from the given context. The conclusion remains undetermined.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 903
+      "token_count": 1401
     }
   ]
 }

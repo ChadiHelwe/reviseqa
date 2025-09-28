@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.5714285714285714
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Added rules:\n- If Janelle does not contribute to her field, then she advances knowledge if and only if she publishes papers.\n- If Janelle is a dedicated researcher and does not advance knowledge, then she is a brilliant scientist.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Janelle conducts experiments and collects data (so does not publish papers). Being passionate about botany makes her a dedicated researcher. Since she does not contribute to her field, the added rule 14 implies she does not advance knowledge. Rule 15 then forces her to be a brilliant scientist. Rule 13 requires a brilliant scientist to make a groundbreaking discovery or receive recognition. She does not gain acclaim and must not receive recognition (per rule 10 and absence of an award). Thus, she must make a groundbreaking discovery.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
@@ -40,10 +40,10 @@
       "step": 2,
       "context": "Removed facts:\n- Janelle does not gain acclaim.\n\nRemoved rules:\n- If Janelle is a brilliant scientist, then she either makes a groundbreaking discovery or receives recognition (or both).\n\nAdded rules:\n- If Janelle is a brilliant scientist, then she receives recognition and does not make a groundbreaking discovery.\n\nAdded facts:\n- Janelle gains acclaim.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Janelle gains acclaim, and with her being a brilliant scientist (via deduction from dedicated researcher status and rule 15), the new rule directly states she receives recognition and does not make a groundbreaking discovery. This contradicts the previous context dependency chain, explicitly negating the discovery.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "removed_rules",
@@ -51,30 +51,30 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 398
+      "token_count": 2662
     },
     {
       "step": 3,
       "context": "Removed facts:\n- Janelle is passionate about botany.\n\nAdded rules:\n- If Janelle receives recognition, then she makes a groundbreaking discovery.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "Removing Janelle's passion for botany removes the basis (rule 9) for labeling her a dedicated researcher, which is necessary to apply rule 12 or 15 to infer brilliance. From her remaining facts and rules, we deduce she does not advance knowledge or receive recognition. The new rule (receives recognition \u2192 discovery) is inapplicable (no recognition), and no other path to the discovery conclusion exists. Thus, the discovery status is undetermined.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 527
+      "token_count": 3859
     },
     {
       "step": 4,
       "context": "Removed rules:\n- If Janelle is a brilliant scientist, then she receives recognition and does not make a groundbreaking discovery.\n\nAdded rules:\n- If Janelle is a brilliant scientist, then she receives recognition.\n- If Janelle is a brilliant scientist, then she does not make a groundbreaking discovery.\n\nAdded facts:\n- Janelle receives recognition.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "Janelle's status as a brilliant scientist cannot be established due to the removal of her passion for botany (preventing classification as a dedicated researcher via rule 9). While she receives recognition, this alone does not trigger rule 19 ('brilliant \u2192 no discovery') without confirming she is a brilliant scientist. Since the path to brilliance (rule 15) is blocked, the discovery status remains undetermined.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -82,15 +82,15 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 613
+      "token_count": 5813
     },
     {
       "step": 5,
       "context": "Removed rules:\n- If Janelle receives recognition, then she makes a groundbreaking discovery.\n\nAdded rules:\n- If Janelle is a dedicated researcher, then she is a brilliant scientist.\n\nAdded facts:\n- Janelle does not publish papers.\n- Janelle does not advance knowledge.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The added rule ('if dedicated researcher \u2192 brilliant scientist') requires establishing Janelle as a dedicated researcher. With the removal of the passion for botany (prior source of 'dedicated' status via rule 9) and no alternative path to dedicated researcher status in the current context, her brilliance and subsequent discovery status remain undetermined despite being a non-advancer and non-publisher.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -98,36 +98,36 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 740
+      "token_count": 9130
     },
     {
       "step": 6,
       "context": "Removed rules:\n- If Janelle does not make a groundbreaking discovery, then she does not receive recognition.\n\nAdded rules:\n- If Janelle conducts experiments and collects data, then she is passionate about botany.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Janelle conducts experiments and collects data, which now triggers the added rule making her passionate about botany. This restores rule 9\u2019s inference that she is a dedicated researcher, leading to brilliance via added rule 15 and subsequent rule 19 stating brilliant scientists do not make discoveries. Recognition is valid without the removed contradiction rule, confirming the conclusion.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 854
+      "token_count": 11042
     },
     {
       "step": 7,
       "context": "Added rules:\n- If Janelle is not a brilliant scientist, then she is not a dedicated researcher.\n- If Janelle makes a groundbreaking discovery, then she is not a brilliant scientist.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Janelle is a dedicated researcher (from prior steps, restored via 'conducts experiments \u2192 passionate \u2192 dedicated'). The added rule 'not brilliant \u2192 not dedicated' (contrapositive implies 'dedicated \u2192 brilliant') confirms she is a brilliant scientist. Rule 'discovery \u2192 not brilliant' and her brilliance (from prior steps) force the conclusion that she does not make a discovery via contradiction.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 953
+      "token_count": 12017
     }
   ]
 }

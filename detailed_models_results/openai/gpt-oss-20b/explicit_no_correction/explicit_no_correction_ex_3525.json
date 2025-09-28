@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_correction",
+    "chain_index": 170,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kora avoids social contacts.\nKora hides from others.\nKora has a weak immune system.\nKora does not need medical attention.\nKora does not suffer from parasites.\nKora has an injury.\nKora loses her fur.\nIf Kora either avoids social contacts or hides from others (but not both), then she becomes isolated.\nFor all foxes, if they have a weak immune system and require care, then they need medical attention.\nAny fox that is disabled or suffers from parasites requires care.\nIf Kora has an injury, then she is either disabled or regains strength, but not both.\nFor Kora, either she experiences pain or she regains strength, but not both at the same time.\nIf Kora shows symptoms of illness, then she becomes isolated and experiences pain.\nIf Kora either shows symptoms of illness or loses her fur (but not both), then she receives proper treatment.\nFor all foxes, if they receive proper treatment, then they recover from mange.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Kora avoids social contacts. Kora hides from others.. If Kora either avoids social contacts or hides from others (but not both), then she becomes isolated.. Therefore, . Kora has a weak immune system. Kora does not need medical attention.. For all foxes, if they have a weak immune system and require care, then they need medical attention.. Therefore, Kora does not require care.. Kora does not suffer from parasites. Kora does not require care.. Any fox that is disabled or suffers from parasites requires care.. Therefore, Kora is not disabled.. Kora has an injury. Kora is not disabled.. If Kora has an injury, then she is either disabled or regains strength, but not both.. Therefore, Kora regains strength.. Kora regains strength.. For Kora, either she experiences pain or she regains strength, but not both at the same time.. Therefore, Kora does not experience pain.. Kora does not experience pain.. If Kora shows symptoms of illness, then she becomes isolated and experiences pain.. Therefore, Kora does not show symptoms of illness.. Kora does not show symptoms of illness. Kora loses her fur.. If Kora either shows symptoms of illness or loses her fur (but not both), then she receives proper treatment.. Therefore, Kora receives proper treatment.. Kora receives proper treatment.. For all foxes, if they receive proper treatment, then they recover from mange.. Therefore, Kora recovers from mange..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Kora either shows symptoms of illness or loses her fur (but not both), then she receives proper treatment.\n\nAdded rules:\n- For all foxes, if they do not receive proper treatment, then they do not recover from mange.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The remaining facts and rules do not establish whether Kora receives proper treatment.  The rule that would grant treatment based on losing her fur or showing illness was removed, and no other rule guarantees treatment for Kora.  The equivalence rules ('treatment \u2192 recover' and '\u00actreatment \u2192 \u00acrecover') only allow conclusions if we know whether treatment is received or not, which we cannot determine from the given information.  Therefore, we cannot entail that Kora recovers from mange, nor that she does not recover. The truth of the conclusion is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 615
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Kora either shows symptoms of illness or loses her fur (but not both), then she does not receive proper treatment.\n\nAdded rules:\n- If Kora either shows symptoms of illness or loses her fur (but not both), then she receives proper treatment.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Starting from the facts, Kora loses her fur. She does not show symptoms of illness because that would entail pain (via the rule \"If Kora shows symptoms of illness, then she experiences pain\"), but pain cannot occur because Kora regains strength (from the injury rule \"If Kora has an injury, then she is either disabled or regains strength, but not both\") and the rule \"For Kora, either she experiences pain or she regains strength, but not both\" forces her to have pain only if she does not regain strength. Consequently, she must be in the \"regains strength\" branch and cannot experience pain, ruling out symptoms of illness. Thus the exclusive\u2011or condition \"either shows symptoms of illness or loses her fur (but not both)\" is satisfied (loses fur true, symptoms false). The rule added to the context\u2014\"If Kora either shows symptoms of illness or loses her fur (but not both), then she receives proper treatment\"\u2014applies, giving her proper treatment. Finally, the rule \"For all foxes, if they receive proper treatment, then they recover from mange\" yields that Kora recovers from mange. No removed rule contradicts this reasoning, so the conclusion is logically entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 823
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Kora has an injury.\n\nAdded rules:\n- If Kora shows symptoms of illness, then she does not receive proper treatment.\n\nAdded facts:\n- Kora does not have an injury.\n- Kora shows symptoms of illness.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "In the current context, we have the facts that Kora shows symptoms of illness and does not have an injury.  The rule \u201cIf Kora shows symptoms of illness, then she does not receive proper treatment\u201d is present, while the previously existent rule \u201cIf Kora either shows symptoms of illness or loses her fur (but not both), then she receives proper treatment\u201d remains.  Thus the knowledge base yields a contradiction: Kora both does and does not receive proper treatment.  The only rule that mediates recovery is \u201cIf a fox receives proper treatment, then it recovers from mange.\u201d  Since this rule requires proper treatment, the contradictory situation gives no definitive truth value for treatment, and hence no definitive truth value for recovery.  No rule forces recovery when treatment is absent.  Therefore the conclusion \u201cKora recovers from mange\u201d cannot be logically entailed from the context, nor is its negation entail\u00aded.  The correct classification is necessarily uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1178
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all foxes, if they do not recover from mange, then they do not receive proper treatment.\n- If Kora receives proper treatment, then she does not show symptoms of illness.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The current context supplies only two rules but no facts about Kora's health status, treatment, or recovery.  Without any premises indicating that Kora receives proper treatment, shows symptoms, or recovers from mange, the statement \u2018Kora recovers from mange\u2019 is neither provable nor refutable from the given information.  Therefore it is an uncertain conclusion.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1469
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Kora shows symptoms of illness, then she does not receive proper treatment.\n- If Kora receives proper treatment, then she does not show symptoms of illness.\n\nAdded rules:\n- If Kora shows symptoms of illness, then she receives proper treatment.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Kora shows symptoms of illness is stated as a fact. The current context contains the rule \"If Kora shows symptoms of illness, then she receives proper treatment.\" Hence Kora receives proper treatment. The rule \"For all foxes, if they receive proper treatment, then they recover from mange.\" applies to all foxes, including Kora; therefore Kora recovers from mange is a logical consequence of the given facts and rules. No rule in the current context contradicts this conclusion, so it is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1627
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- Any fox that is disabled or suffers from parasites requires care.\n\nAdded rules:\n- For all foxes, if they do not require care, then they are neither disabled nor suffer from parasites.\n\nAdded facts:\n- Kora becomes isolated.\n- Kora experiences pain.\n- Kora does not regain strength.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The updated context provides only the facts that Kora becomes isolated, experiences pain, and does not regain strength, together with the rule that if a fox does not require care then it is neither disabled nor parasitic. There is no information about Kora receiving proper treatment or showing symptoms of illness. The rule \"For all foxes, if they receive proper treatment, then they recover from mange\" cannot be applied because the antecedent is unknown. No rule forces Kora either to receive or not receive proper treatment, nor does it directly assert recovery or its negation. Consequently, the conclusion \"Kora recovers from mange\" is not entailed by the context, nor is its negation. The truth of the statement remains uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1829
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Kora shows symptoms of illness, then she receives proper treatment.\n\nAdded rules:\n- If Kora shows symptoms of illness, then she does not receive proper treatment.",
+      "question": "Does the context entail the conclusion 'Kora recovers from mange.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "In the final context the only rule that can produce treatment is \"if Kora shows symptoms of illness, then she receives proper treatment\", but there is no fact that Kora shows symptoms. The rules \"receives proper treatment \u2192 recovers from mange\" and \"not receive \u2192 not recover\" and \"not recover \u2192 not receive\" only allow us to infer recovery or its negation when we know from earlier reasoning whether Kora receives treatment. No such inference can be derived from the remaining facts and rules. Therefore the status of \"Kora recovers from mange\" cannot be determined: it is neither provable nor refutable. The conclusion is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2086
+    }
+  ]
+}

@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.2857142857142857
   },
   "predictions": [
     {
@@ -26,9 +26,9 @@
       "step": 1,
       "context": "Removed rules:\n- If Owen either values local ingredients or explores new recipes (but not both), then he is an innovative chef.\n\nAdded rules:\n- Either Owen values local ingredients or Owen explores new recipes, but not both.\n- If Owen practices sustainability, then he does not create unique cuisine.",
       "question": "Does the context entail the conclusion 'Owen does not create unique cuisine.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "From the added rules, we have: (1) an exclusive or between values local ingredients and explores new recipes, and (2) if Owen practices sustainability, then he does not create unique cuisine. None of these rules establish that Owen practices sustainability, nor do they establish the negation. Therefore the conclusion 'Owen does not create unique cuisine' is not entailed (and its negation is also not entailed).",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -41,24 +41,24 @@
       "step": 2,
       "context": "Removed rules:\n- If Owen appreciates seasonal produce and values local ingredients, then he cooks with creativity.\n- If Owen practices sustainability, then he does not create unique cuisine.\n\nAdded facts:\n- Owen does not explore new recipes.",
       "question": "Does the context entail the conclusion 'Owen does not create unique cuisine.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "From the added fact Owen does not explore new recipes and the existing exclusive-or rule (Owen either loves wild mushrooms or explores new recipes, but not both), we deduce Owen loves wild mushrooms. This implies he is passionate about foraging, which, per the rule, leads to Owen creating unique cuisine (and practicing sustainability). The rule that would make sustainability imply not creating unique cuisine was removed, so we cannot derive the negation. Therefore the context entails Owen creating unique cuisine, not the conclusion that he does not create unique cuisine; hence the conclusion is not entailed (and is contradicted).",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 386
+      "token_count": 468
     },
     {
       "step": 3,
       "context": "Removed facts:\n- Owen does not explore new recipes.\n\nAdded rules:\n- For all x, if x explores new recipes and x practices sustainability, then x does not create unique cuisine.\n\nAdded facts:\n- Owen explores new recipes.",
       "question": "Does the context entail the conclusion 'Owen does not create unique cuisine.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The only rule that could yield 'Owen does not create unique cuisine' requires both 'Owen explores new recipes' and 'Owen practices sustainability'. We have 'Owen explores new recipes' as a fact, but there is no fact or rule establishing that Owen practices sustainability. Without that, the conditional does not apply, so we cannot entail the conclusion. There is also no rule deriving that Owen creates unique cuisine, so the status is uncertain.",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -66,15 +66,15 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 487
+      "token_count": 686
     },
     {
       "step": 4,
       "context": "Removed facts:\n- Owen does not conserve resources.\n\nRemoved rules:\n- Either Owen loves wild mushrooms or Owen explores new recipes, but not both.\n- For all x, if x explores new recipes and x practices sustainability, then x does not create unique cuisine.\n\nAdded facts:\n- Owen loves wild mushrooms.",
       "question": "Does the context entail the conclusion 'Owen does not create unique cuisine.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The current context only states that Owen loves wild mushrooms. The previous XOR rule and the sustainability implies not creating unique cuisine rule have been removed, and there are no other rules linking love of wild mushrooms to either creating or not creating unique cuisine. Therefore, the conclusion 'Owen does not create unique cuisine' is neither entailed nor contradicted, making it uncertain.",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -82,46 +82,46 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 588
+      "token_count": 874
     },
     {
       "step": 5,
       "context": "Removed facts:\n- Owen loves wild mushrooms.\n\nAdded rules:\n- For all x, if x appreciates seasonal produce and x does not cook with creativity, then x respects nature.\n- For all x, if x respects nature, then x does not create unique cuisine.",
       "question": "Does the context entail the conclusion 'Owen does not create unique cuisine.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The only rules connect 'not create unique cuisine' to 'respects nature'. To get 'respects nature' we would need both 'appreciates seasonal produce' and 'not cook with creativity'. There are no facts about Owen meeting those conditions, so we cannot entail the conclusion. There is also no rule directly asserting Owen creates or does not create unique cuisine beyond what would come from 'respects nature', which we cannot establish. Hence the conclusion is not entailed and not contradicted (uncertain).",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 704
+      "token_count": 1059
     },
     {
       "step": 6,
       "context": "Removed rules:\n- For all x, if x appreciates seasonal produce and x does not cook with creativity, then x respects nature.\n- For all x, if x respects nature, then x does not create unique cuisine.\n- If Owen is passionate about foraging, then he creates unique cuisine and practices sustainability.\n\nAdded rules:\n- For all x, either x does not appreciate seasonal produce, or x cooks with creativity, or x respects nature.\n- For all x, either x does not respect nature, or x does not create unique cuisine.\n- If Owen is passionate about foraging, then he creates unique cuisine.\n- If Owen is passionate about foraging, then he practices sustainability.\n\nAdded facts:\n- Owen respects nature.\n- Owen is not an innovative chef.\n- Owen does not value local ingredients.",
       "question": "Does the context entail the conclusion 'Owen does not create unique cuisine.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Owen respects nature is given. The rule 'For all x, either x does not respect nature, or x does not create unique cuisine' means that if someone respects nature, then they do not create unique cuisine. Since Owen respects nature, we deduce that Owen does not create unique cuisine. There is no fact or rule asserting that Owen creates unique cuisine without the foraging condition, which is not given here, so no contradiction arises. Therefore the conclusion is entailed.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 813
+      "token_count": 1268
     },
     {
       "step": 7,
       "context": "Removed facts:\n- Owen respects nature.\n\nRemoved rules:\n- For all x, either x does not appreciate seasonal produce, or x cooks with creativity, or x respects nature.\n\nAdded rules:\n- If Owen learns from the environment and Owen appreciates seasonal produce, then he loves wild mushrooms.",
       "question": "Does the context entail the conclusion 'Owen does not create unique cuisine.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "There are no rules or facts in the current context that connect Owen's learning from the environment or appreciation of seasonal produce to whether he creates unique cuisine. The only rule adds a condition for loving wild mushrooms, which does not mention unique cuisine. The prior rule that could derive 'does not create unique cuisine' from respecting nature has been removed. Therefore, the conclusion 'Owen does not create unique cuisine' is not entailed, nor is its negation entailed.",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -129,7 +129,7 @@
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 1031
+      "token_count": 1577
     }
   ]
 }

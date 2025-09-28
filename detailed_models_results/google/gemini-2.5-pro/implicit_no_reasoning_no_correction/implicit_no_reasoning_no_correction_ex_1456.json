@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.42857142857142855
+    "final_accuracy": 1.0
   },
   "predictions": [
     {
@@ -28,7 +28,7 @@
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
       "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "Let's formalize the propositions and follow the chain of deductions:\n\nPropositions:\n- CE: Janelle conducts experiments (True)\n- CD: Janelle collects data (True)\n- PB: Janelle is passionate about botany (True)\n- MW: Janelle is meticulous in her work (True)\n- GA: Janelle gains acclaim (False)\n- DA: Janelle deserves an award (False)\n- CF: Janelle contributes to her field (False)\n- PP: Janelle publishes papers\n- DR: Janelle is a dedicated researcher\n- AK: Janelle advances knowledge\n- BS: Janelle is a brilliant scientist\n- RR: Janelle receives recognition\n- GD: Janelle makes a groundbreaking discovery\n\nRules:\n1.  CE -> (PP XOR CD)\n2.  PB -> (DR AND MW)\n3.  (RR XOR GA) -> DA\n4.  (AK XOR PP) -> CF\n5.  DR -> (AK OR BS)\n6.  BS -> (GD OR RR)\n7.  \u00acCF -> (AK <-> PP)\n8.  (DR AND \u00acAK) -> BS\n\nDeductions:\n1.  From rule 2 (PB -> (DR AND MW)) and the fact that PB is true, we deduce that DR is true (Janelle is a dedicated researcher).\n2.  From rule 1 (CE -> (PP XOR CD)) and the facts that CE is true and CD is true, (PP XOR CD) must be true. Since CD is true, for the exclusive OR to be true, PP must be false (Janelle does not publish papers).\n3.  From rule 7 (\u00acCF -> (AK <-> PP)) and the facts that \u00acCF is true and PP is false, we can deduce that AK must also be false (Janelle does not advance knowledge). This is because (AK <-> PP) means AK and PP must have the same truth value.\n4.  From rule 8 ((DR AND \u00acAK) -> BS), we have deduced that DR is true (step 1) and AK is false (step 3). Therefore, the premise (DR AND \u00acAK) is true. This means the conclusion, BS, must be true (Janelle is a brilliant scientist).\n5.  From rule 3 ((RR XOR GA) -> DA), by contraposition, we have \u00acDA -> \u00ac(RR XOR GA). We are given that DA is false, so \u00acDA is true. This means \u00ac(RR XOR GA) is true, which is logically equivalent to (RR <-> GA). Since we are given GA is false, RR must also be false (Janelle does not receive recognition).\n6.  From rule 6 (BS -> (GD OR RR)), we know from step 4 that BS is true. Therefore, the conclusion (GD OR RR) must be true. From step 5, we know that RR is false. For the statement (GD OR False) to be true, GD must be true.\n\nTherefore, it is logically entailed that Janelle makes a groundbreaking discovery.",
+      "reasoning": "1. We are given that Janelle conducts experiments (CE) and collects data (CD). The rule 'If Janelle conducts experiments, then she either publishes papers (PP) or collects data (CD), but not both' is CE -> (PP XOR CD). Since CE and CD are true, for the XOR to be true, PP must be false. So, Janelle does not publish papers (~PP).\n2. We are given that Janelle does not contribute to her field (~CF). The rule 'If Janelle does not contribute to her field, then she advances knowledge (AK) if and only if she publishes papers (PP)' is ~CF -> (AK <-> PP). Since ~CF is true, AK is equivalent to PP. As we know ~PP, we can conclude ~AK (Janelle does not advance knowledge).\n3. We are given that Janelle is passionate about botany (PB). The rule 'If Janelle is passionate about botany, then she is a dedicated researcher (DR) and meticulous in her work' (PB -> (DR AND MW)) means she is a dedicated researcher (DR).\n4. Now consider the rule 'If Janelle is a dedicated researcher and does not advance knowledge, then she is a brilliant scientist' ((DR AND ~AK) -> BS). We have established DR (from point 3) and ~AK (from point 2). Therefore, the premise (DR AND ~AK) is true, and we can conclude that she is a brilliant scientist (BS).\n5. We are given Janelle does not deserve an award (~DA) and does not gain acclaim (~GA). The rule 'If Janelle either receives recognition (RR) or gains acclaim (GA) (but not both), then she deserves an award' is (RR XOR GA) -> DA. By contraposition, ~DA -> ~(RR XOR GA). Since ~DA is true, ~(RR XOR GA) is true, which is logically equivalent to (RR <-> GA). As we know ~GA, we must also conclude ~RR (Janelle does not receive recognition).\n6. Finally, the rule 'If Janelle is a brilliant scientist, then she either makes a groundbreaking discovery (GD) or receives recognition (RR) (or both)' is BS -> (GD OR RR). We established she is a brilliant scientist (BS) in point 4. Therefore, (GD OR RR) must be true. Since we established she does not receive recognition (~RR) in point 5, the only way for (GD OR RR) to be true is if GD is true. Thus, Janelle makes a groundbreaking discovery.",
       "correct": true,
       "tags": [
         "added_rules"
@@ -42,7 +42,7 @@
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
       "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "Let's formalize the propositions and follow the chain of deductions:\n\nPropositions:\n- CE: Janelle conducts experiments (True)\n- CD: Janelle collects data (True)\n- PB: Janelle is passionate about botany (True)\n- MW: Janelle is meticulous in her work (True)\n- DA: Janelle deserves an award (False, given 'does not deserve')\n- CF: Janelle contributes to her field (False, given 'does not contribute')\n- GA: Janelle gains acclaim (True)\n- PP: Janelle publishes papers\n- DR: Janelle is a dedicated researcher\n- AK: Janelle advances knowledge\n- BS: Janelle is a brilliant scientist\n- RR: Janelle receives recognition\n- GD: Janelle makes a groundbreaking discovery\n\nRules:\n1.  CE -> (PP XOR CD)\n2.  PB -> (DR AND MW)\n3.  (RR XOR GA) -> DA\n4.  (AK XOR PP) -> CF\n5.  DR -> (AK OR BS)\n6.  BS -> (RR AND \u00acGD)\n7.  \u00acCF -> (AK <-> PP)\n8.  (DR AND \u00acAK) -> BS\n\nDeductions:\n1.  From rule 2 (PB -> (DR AND MW)) and the fact that PB is true, we deduce that DR is true (Janelle is a dedicated researcher).\n2.  From rule 1 (CE -> (PP XOR CD)) and the facts that CE is true and CD is true, (PP XOR CD) must be true. Since CD is true, for the exclusive OR to be true, PP must be false (Janelle does not publish papers).\n3.  From rule 7 (\u00acCF -> (AK <-> PP)) and the facts that \u00acCF is true and PP is false, we can deduce that AK must also be false (Janelle does not advance knowledge). This is because (AK <-> PP) means AK and PP must have the same truth value.\n4.  From rule 8 ((DR AND \u00acAK) -> BS), we have deduced that DR is true (step 1) and AK is false (step 3). Therefore, the premise (DR AND \u00acAK) is true. This means the conclusion, BS, must be true (Janelle is a brilliant scientist).\n5.  From rule 6 (BS -> (RR AND \u00acGD)), we know from step 4 that BS is true. Therefore, the conclusion (RR AND \u00acGD) must be true. This means that both RR is true (she receives recognition) AND \u00acGD is true (she does not make a groundbreaking discovery).\n\nConclusion: The context entails that 'Janelle does not make a groundbreaking discovery' is true. Therefore, the conclusion 'Janelle makes a groundbreaking discovery' is false.",
+      "reasoning": "1. **Initial Facts**: We are given that Janelle conducts experiments (CE), collects data (CD), is passionate about botany (PB), does not deserve an award (~DA), does not contribute to her field (~CF), and gains acclaim (GA).\n2. **Paper Publication**: From the rule 'If Janelle conducts experiments, then she either publishes papers (PP) or collects data (CD), but not both' (CE -> (PP XOR CD)). Since CE is true and CD is true, for the XOR to be true, PP must be false. So, Janelle does not publish papers (~PP).\n3. **Advancing Knowledge**: From the rule 'If Janelle does not contribute to her field, then she advances knowledge (AK) if and only if she publishes papers (PP)' (~CF -> (AK <-> PP)). We know ~CF is true, so AK must be equivalent to PP. Since ~PP is true (from step 2), we can conclude ~AK (Janelle does not advance knowledge).\n4. **Dedicated Researcher**: From the rule 'If Janelle is passionate about botany, then she is a dedicated researcher (DR) and meticulous in her work' (PB -> (DR AND MW)). We know PB is true, so we can conclude Janelle is a dedicated researcher (DR).\n5. **Brilliant Scientist**: From the rule 'If Janelle is a dedicated researcher and does not advance knowledge, then she is a brilliant scientist' ((DR AND ~AK) -> BS). We know DR is true (from step 4) and ~AK is true (from step 3). Therefore, the premise (DR AND ~AK) is true, which means the conclusion must be true. So, Janelle is a brilliant scientist (BS).\n6. **Groundbreaking Discovery**: From the rule 'If Janelle is a brilliant scientist, then she receives recognition (RR) and does not make a groundbreaking discovery (~GD)' (BS -> (RR AND ~GD)). We know BS is true (from step 5). Therefore, the conclusion (RR AND ~GD) must be true. This means both 'Janelle receives recognition' (RR) and 'Janelle does not make a groundbreaking discovery' (~GD) are true.\n7. **Contradiction Check**: Let's check for contradictions. We are given 'Janelle gains acclaim' (GA) and 'Janelle does not deserve an award' (~DA). We derived 'Janelle receives recognition' (RR). The rule is '(RR XOR GA) -> DA'. Since RR is true and GA is true, (RR XOR GA) is false. The implication 'False -> ~DA' is true, so there is no contradiction here.\n8. **Conclusion**: From step 6, we have definitively concluded that 'Janelle does not make a groundbreaking discovery' (~GD). Therefore, the statement 'Janelle makes a groundbreaking discovery' is false.",
       "correct": true,
       "tags": [
         "removed_facts",
@@ -51,7 +51,7 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1270
+      "token_count": 1141
     },
     {
       "step": 3,
@@ -59,75 +59,75 @@
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
       "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "Let's formalize the propositions and follow the chain of deductions:\n\nPropositions:\n- CE: Janelle conducts experiments (True)\n- CD: Janelle collects data (True)\n- MW: Janelle is meticulous in her work (True)\n- DA: Janelle deserves an award (False, given 'does not deserve')\n- CF: Janelle contributes to her field (False, given 'does not contribute')\n- GA: Janelle gains acclaim (True)\n- PP: Janelle publishes papers\n- PB: Janelle is passionate about botany\n- DR: Janelle is a dedicated researcher\n- AK: Janelle advances knowledge\n- BS: Janelle is a brilliant scientist\n- RR: Janelle receives recognition\n- GD: Janelle makes a groundbreaking discovery\n\nRules from the context:\n1.  CE -> (PP XOR CD)\n2.  PB -> (DR AND MW)\n3.  (RR XOR GA) -> DA\n4.  (AK XOR PP) -> CF\n5.  DR -> (AK OR BS)\n6.  BS -> (RR AND \u00acGD)\n7.  \u00acCF -> (AK <-> PP)\n8.  (DR AND \u00acAK) -> BS\n9.  RR -> GD\n\nDeductions:\n1.  We are given that 'Janelle does not deserve an award' (\u00acDA is True) and 'Janelle gains acclaim' (GA is True).\n2.  Consider the rule: 'If Janelle either receives recognition or gains acclaim (but not both), then she deserves an award.' This translates to: (RR XOR GA) -> DA.\n3.  By contraposition, if she does not deserve an award (\u00acDA), then it is not the case that she either receives recognition or gains acclaim but not both (\u00ac(RR XOR GA)).\n4.  Since \u00acDA is true, we conclude that \u00ac(RR XOR GA) is true. This is logically equivalent to (RR <-> GA), meaning RR and GA must have the same truth value.\n5.  We are given that GA is True. Therefore, RR must also be True (Janelle receives recognition).\n6.  Now consider the rule: 'If Janelle receives recognition, then she makes a groundbreaking discovery.' This translates to: RR -> GD.\n7.  From step 5, we have deduced that RR is True. Since the premise of the implication (RR -> GD) is true, the conclusion must also be true.\n8.  Therefore, GD is True. The context entails that Janelle makes a groundbreaking discovery.\n\nAll other statements in the context are consistent with this conclusion. For example, from RR (True) and GD (True), Rule 6 (BS -> (RR AND \u00acGD)) becomes BS -> (True AND False), which is BS -> False. This forces BS to be False. This does not create a contradiction elsewhere.",
+      "reasoning": "1. We are given 'Janelle does not deserve an award' (~DA) and 'Janelle gains acclaim' (GA).\n2. We are given the rule 'If Janelle either receives recognition (RR) or gains acclaim (GA) (but not both), then she deserves an award.' This can be written as (RR XOR GA) -> DA.\n3. By contraposition, the inverse of this rule is also true: ~DA -> ~(RR XOR GA).\n4. Since ~DA is true, we can conclude that ~(RR XOR GA) is true. The negation of an exclusive OR, ~(A XOR B), is equivalent to A being equivalent to B (A <-> B). Therefore, RR and GA must have the same truth value.\n5. We are given that GA is true, so RR must also be true. This means 'Janelle receives recognition' is true.\n6. We are given the rule 'If Janelle receives recognition, then she makes a groundbreaking discovery.' This can be written as RR -> GD.\n7. Since we have deduced that RR is true, it follows from this rule that GD must also be true.\n8. Therefore, the conclusion 'Janelle makes a groundbreaking discovery' is entailed by the context.",
       "correct": true,
       "tags": [
         "removed_facts",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 2187
+      "token_count": 2057
     },
     {
       "step": 4,
       "context": "Janelle conducts experiments.\nJanelle collects data.\nJanelle is meticulous in her work.\nJanelle does not deserve an award.\nJanelle does not contribute to her field.\nIf Janelle conducts experiments, then she either publishes papers or collects data, but not both.\nIf Janelle is passionate about botany, then she is a dedicated researcher and meticulous in her work.\nIf Janelle either receives recognition or gains acclaim (but not both), then she deserves an award.\nIf Janelle either advances knowledge or publishes papers (but not both), then she contributes to her field.\nIf Janelle is a dedicated researcher, then she either advances knowledge or is a brilliant scientist (or both).\nIf Janelle is a brilliant scientist, then she receives recognition.\nIf Janelle is a brilliant scientist, then she does not make a groundbreaking discovery.\nIf Janelle does not contribute to her field, then she advances knowledge if and only if she publishes papers.\nIf Janelle is a dedicated researcher and does not advance knowledge, then she is a brilliant scientist.\nJanelle gains acclaim.\nIf Janelle receives recognition, then she makes a groundbreaking discovery.\nJanelle receives recognition.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "The context provides two key statements that lead directly to the conclusion. First, it states as a fact that 'Janelle receives recognition.' (RR). Second, it provides the conditional rule 'If Janelle receives recognition, then she makes a groundbreaking discovery.' (RR -> GD). According to the rules of logic (specifically, Modus Ponens), if we know that the premise (RR) is true, and the rule (RR -> GD) is also true, then the conclusion (GD) must be true. Since both the premise and the rule are given in the context, it necessarily follows that Janelle makes a groundbreaking discovery. While there are many other statements, they do not contradict this direct line of reasoning. For instance, the rule 'If Janelle is a brilliant scientist, then she does not make a groundbreaking discovery' (BS -> ~GD) would only create a contradiction if we could prove Janelle is a brilliant scientist (BS). However, we cannot prove she is a brilliant scientist from the given information, so this path does not lead to a contradiction.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 3122
+      "token_count": 2616
     },
     {
       "step": 5,
       "context": "Janelle conducts experiments.\nJanelle collects data.\nJanelle is meticulous in her work.\nJanelle does not deserve an award.\nJanelle does not contribute to her field.\nIf Janelle conducts experiments, then she either publishes papers or collects data, but not both.\nIf Janelle is passionate about botany, then she is a dedicated researcher and meticulous in her work.\nIf Janelle either receives recognition or gains acclaim (but not both), then she deserves an award.\nIf Janelle either advances knowledge or publishes papers (but not both), then she contributes to her field.\nIf Janelle is a dedicated researcher, then she either advances knowledge or is a brilliant scientist (or both).\nIf Janelle is a brilliant scientist, then she receives recognition.\nIf Janelle is a brilliant scientist, then she does not make a groundbreaking discovery.\nIf Janelle does not contribute to her field, then she advances knowledge if and only if she publishes papers.\nIf Janelle is a dedicated researcher and does not advance knowledge, then she is a brilliant scientist.\nJanelle gains acclaim.\nIf Janelle does not make a groundbreaking discovery, then she does not receive recognition.\nJanelle receives recognition.\nJanelle does not publish papers.\nJanelle does not advance knowledge.\nIf Janelle is a dedicated researcher, then she is a brilliant scientist.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "The context provides two crucial statements: 1. 'Janelle receives recognition.' (RR is true). 2. 'If Janelle does not make a groundbreaking discovery, then she does not receive recognition.' (~GD -> ~RR). The second statement is a conditional rule. Its logical contrapositive must also be true, which is: 'If Janelle receives recognition, then she makes a groundbreaking discovery.' (RR -> GD). Since the context explicitly states that the premise of this rule, 'Janelle receives recognition', is true, the conclusion, 'Janelle makes a groundbreaking discovery', must necessarily follow. The other statements in the context do not contradict this direct line of reasoning.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 3427
+      "token_count": 3143
     },
     {
       "step": 6,
       "context": "Janelle conducts experiments.\nJanelle collects data.\nJanelle is meticulous in her work.\nJanelle does not deserve an award.\nJanelle does not contribute to her field.\nIf Janelle conducts experiments, then she either publishes papers or collects data, but not both.\nIf Janelle is passionate about botany, then she is a dedicated researcher and meticulous in her work.\nIf Janelle either receives recognition or gains acclaim (but not both), then she deserves an award.\nIf Janelle either advances knowledge or publishes papers (but not both), then she contributes to her field.\nIf Janelle is a dedicated researcher, then she either advances knowledge or is a brilliant scientist (or both).\nIf Janelle is a brilliant scientist, then she receives recognition.\nIf Janelle is a brilliant scientist, then she does not make a groundbreaking discovery.\nIf Janelle does not contribute to her field, then she advances knowledge if and only if she publishes papers.\nIf Janelle is a dedicated researcher and does not advance knowledge, then she is a brilliant scientist.\nJanelle gains acclaim.\nJanelle receives recognition.\nJanelle does not publish papers.\nJanelle does not advance knowledge.\nIf Janelle is a dedicated researcher, then she is a brilliant scientist.\nIf Janelle conducts experiments and collects data, then she is passionate about botany.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "1. We are given the fact 'Janelle conducts experiments' (CE) and 'Janelle collects data' (CD).\n2. We are given the rule 'If Janelle conducts experiments and collects data, then she is passionate about botany' ((CE AND CD) -> PB).\n3. Since both CE and CD are true, we can conclude that 'Janelle is passionate about botany' (PB) is true.\n4. We are given the rule 'If Janelle is passionate about botany, then she is a dedicated researcher and meticulous in her work' (PB -> (DR AND MW)).\n5. Since PB is true, we can conclude that 'Janelle is a dedicated researcher' (DR) is true.\n6. We are given the rule 'If Janelle is a dedicated researcher, then she is a brilliant scientist' (DR -> BS).\n7. Since DR is true, we can conclude that 'Janelle is a brilliant scientist' (BS) is true.\n8. We are given the rule 'If Janelle is a brilliant scientist, then she does not make a groundbreaking discovery' (BS -> ~GD).\n9. Since we have concluded that Janelle is a brilliant scientist (BS is true), it follows that 'Janelle does not make a groundbreaking discovery' (~GD) must be true.\n10. Therefore, the conclusion 'Janelle makes a groundbreaking discovery' is false.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 3768
+      "token_count": 3627
     },
     {
       "step": 7,
       "context": "Janelle conducts experiments.\nJanelle collects data.\nJanelle is meticulous in her work.\nJanelle does not deserve an award.\nJanelle does not contribute to her field.\nIf Janelle conducts experiments, then she either publishes papers or collects data, but not both.\nIf Janelle is passionate about botany, then she is a dedicated researcher and meticulous in her work.\nIf Janelle either receives recognition or gains acclaim (but not both), then she deserves an award.\nIf Janelle either advances knowledge or publishes papers (but not both), then she contributes to her field.\nIf Janelle is a dedicated researcher, then she either advances knowledge or is a brilliant scientist (or both).\nIf Janelle is a brilliant scientist, then she receives recognition.\nIf Janelle is a brilliant scientist, then she does not make a groundbreaking discovery.\nIf Janelle does not contribute to her field, then she advances knowledge if and only if she publishes papers.\nIf Janelle is a dedicated researcher and does not advance knowledge, then she is a brilliant scientist.\nJanelle gains acclaim.\nJanelle receives recognition.\nJanelle does not publish papers.\nJanelle does not advance knowledge.\nIf Janelle is a dedicated researcher, then she is a brilliant scientist.\nIf Janelle conducts experiments and collects data, then she is passionate about botany.\nIf Janelle is not a brilliant scientist, then she is not a dedicated researcher.\nIf Janelle makes a groundbreaking discovery, then she is not a brilliant scientist.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "1. We are given the facts that Janelle conducts experiments (CE) and collects data (CD).\n2. We are given the rule 'If Janelle conducts experiments and collects data, then she is passionate about botany' ((CE AND CD) -> PB).\n3. Since both CE and CD are true, we can deduce that Janelle is passionate about botany (PB).\n4. We are given the rule 'If Janelle is passionate about botany, then she is a dedicated researcher...' (PB -> DR).\n5. Since PB is true (from step 3), we can deduce that Janelle is a dedicated researcher (DR).\n6. We are given the rule 'If Janelle is a dedicated researcher, then she is a brilliant scientist' (DR -> BS).\n7. Since DR is true (from step 5), we can deduce that Janelle is a brilliant scientist (BS).\n8. We are given the rule 'If Janelle is a brilliant scientist, then she does not make a groundbreaking discovery' (BS -> ~GD).\n9. Since we have deduced that Janelle is a brilliant scientist (BS is true in step 7), it necessarily follows that she does not make a groundbreaking discovery (~GD).\n10. Therefore, the conclusion 'Janelle makes a groundbreaking discovery' is false.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 4109
+      "token_count": 4278
     }
   ]
 }

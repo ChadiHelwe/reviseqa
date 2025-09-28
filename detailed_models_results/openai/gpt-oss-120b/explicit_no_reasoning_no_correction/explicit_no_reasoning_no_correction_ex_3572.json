@@ -1,0 +1,135 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 178,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Dove is not culturally significant.\nDove is highly acclaimed.\nDove is not expensive.\nDove is either influential or culturally significant.\nIf Dove is influential, then it is both widely read and highly acclaimed.\nDove is either a first edition or widely read, but not both.\nDove is either a first edition or rare (or both).\nIf Dove is highly sought after, then it is expensive.\nFor all books, if a book is rare, then it is either historically valuable or highly sought after (or both).",
+      "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, either x is not rare, or x is historically valuable, or x is highly sought after.\n\nAdded facts:\n- Dove is influential.\n- Dove is widely read.\n- Dove is not a first edition.\n- Dove is rare.",
+      "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the rule \"For all x, either not rare, or historically valuable, or highly sought after\" we get that if an entity is rare then it must be historically valuable or highly sought after (or both). The facts state that Dove is rare, so we can infer the disjunction HistorallyValuable(Dove) \u2228 HighlySoughtAfter(Dove). However, there is no further rule that lets us determine which disjunct holds. The rule \"If Dove is highly sought after then it is expensive\" together with the fact \"Dove is not expensive\" does not allow us to infer the negation of HighlySoughtAfter (contraposition is not used in these forward\u2011chaining entailment tasks). Hence we cannot conclude that Dove is historically valuable, nor can we conclude that she is not historically valuable. The conclusion is therefore not entailed nor contradicted: it is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 211
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Dove is rare.\n\nRemoved rules:\n- Dove is either a first edition or rare (or both).\n\nAdded rules:\n- For all x, if x is not rare, then x is not historically valuable.\n\nAdded facts:\n- Dove is not rare.",
+      "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added rule states that for any entity, if it is not rare then it is not historically valuable. The facts include that Dove is not rare. Applying the rule to Dove yields the conclusion that Dove is not historically valuable. Therefore the statement 'Dove is historically valuable' is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 497
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Dove is not rare.\n\nRemoved rules:\n- For all x, if x is not rare, then x is not historically valuable.\n\nAdded rules:\n- For all x, x is not rare if and only if x is not historically valuable.\n\nAdded facts:\n- If Dove is widely read, then it is rare.",
+      "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the fact that Dove is either influential or culturally significant and the fact that Dove is not culturally significant, we infer that Dove is influential. Influential implies Dove is widely read. The added rule says that if Dove is widely read then Dove is rare, so we infer Dove is rare. The rule for all books states that if a book is rare then it is either historically valuable or highly sought after (or both). Hence we obtain the disjunction historically valuable(Dove) \u2228 highly sought after(Dove). No further rule allows us to determine which disjunct holds: the equivalence not rare \u2194 not historically valuable does not apply because Dove is rare, and the rule linking highly sought after to expensive cannot be contraposed to eliminate the highly sought after possibility. Therefore we cannot conclude that Dove is historically valuable nor its negation. The conclusion is not entailed and not contradicted; it is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 661
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Dove is widely read, then it is rare.\n\nAdded rules:\n- If Dove is influential, then it is not rare.",
+      "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the retained fact that Dove is widely read and the added rule 'If Dove is widely read, then it is rare', we infer that Dove is rare. The universal rule for all books then gives the disjunction: historically valuable(Dove) \u2228 highly sought after(Dove). The added equivalence 'not rare iff not historically valuable' does not allow us to derive historically valuable from rare (it only connects the negatives). No other rule lets us decide between the two disjuncts, and we cannot use contrapositive reasoning to eliminate 'highly sought after'. Therefore we cannot determine whether Dove is historically valuable nor its negation. The conclusion is not entailed nor contradicted, so it is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 960
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Dove is not a first edition, then it is widely read.\n\nAdded facts:\n- Dove is not highly sought after.",
+      "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The current context includes the fact that Dove is influential. The added rule states that if Dove is influential, then it is not rare (I \u2192 \u00acR). Therefore we can infer \u00acR (Dove is not rare). The equivalence rule \"For all x, x is not rare if and only if x is not historically valuable\" gives both directions; from \u00acR we infer \u00ac historically valuable (\u00acHV). Hence the statement \"Dove is historically valuable\" is contradicted by the context. Therefore the conclusion does not follow; it is false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1183
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- Dove is either a first edition or widely read, but not both.\n- For all x, x is not rare if and only if x is not historically valuable.\n\nAdded rules:\n- Dove is either a first edition or widely read (or both).\n- It is not the case that Dove is both a first edition and widely read.\n- For all x, x is rare if and only if x is historically valuable.\n\nAdded facts:\n- Dove is widely read and highly acclaimed.",
+      "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have: Dove is not culturally significant and Dove is either influential or culturally significant, so Dove must be influential. Influential implies Dove is widely read (and highly acclaimed, which is also given). The added rules state that Dove is either a first edition or widely read (or both) and that it is not the case that Dove is both a first edition and widely read. Since we know Dove is widely read, these together imply Dove is not a first edition. The original rule that Dove is either a first edition or rare (or both) then forces Dove to be rare (because it is not a first edition). The newly added equivalence states that for any x, x is rare if and only if x is historically valuable. Hence Dove being rare entails that Dove is historically valuable. Therefore the conclusion 'Dove is historically valuable' is entailed by the context.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1371
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- If Dove is not culturally significant, then it is influential.\n- If Dove is rare, then it is historically valuable.\n- If Dove is historically valuable, then it is rare.\n- Dove is not rare.",
+      "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The context provides only the implications: not culturally significant \u2192 influential, rare \u2192 historically valuable, historically valuable \u2192 rare, and the fact that Dove is not rare. From \"historically valuable \u2192 rare\" we cannot infer the contrapositive, so the fact \"Dove is not rare\" does not allow us to conclude \"Dove is not historically valuable\". Likewise, the other rules do not give any way to derive \"Dove is historically valuable\". Hence the conclusion is neither entailed nor contradicted; it is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1697
+    }
+  ]
+}

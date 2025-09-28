@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.42857142857142855
+    "final_accuracy": 0.8571428571428571
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Chana develops strategic thinking.\nChana does not pursue excellence.\nChana drives innovation.\nChana sets goals.\nChana does not stay motivated.\nChana does not overcome adversity.\nChana either develops strategic thinking or fosters collaboration, but not both.\nIf Chana mentors her peers, then she either pursues excellence or fosters collaboration (but not both).\nIf Chana either mentors her peers or drives innovation (but not both), then she leads by example.\nIf Chana either sets goals or pursues her passion (but not both), then she stays motivated.\nChana either inspires others or leads by example, but not both.\nEveryone who pursues their passion is either determined or overcomes adversity (or both).\nIf Chana is determined, then she can either achieve recognition or inspire others, but not both.\nIf Chana pursues her passion, then she is either determined or overcomes adversity, or both.\nEither Chana is not determined, or she either achieves recognition or inspires others, but not both.\nChana does not foster collaboration.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "Uncertain",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "There are two consistent possibilities. If Chana pursues her passion, she must be determined, which via the given rules leads to Chana achieving recognition. However, it is also consistent to suppose Chana does not pursue her passion; then not determined can satisfy the disjunction 'Either not determined, or (recognition or inspires others, but not both)' and nothing forces recognition to be true. Since the conclusion is true in some models but false in others, the context does not entail it. Therefore the answer is Uncertain.",
-      "correct": false,
+      "reasoning": "From the facts: C is not fostering collaboration, and S xor C; since C is false, S is true. I is true and M implies (E xor C); with \u00acE this forces M to be false. Since I is true and M is false, M xor I is true, which by the rule M xor I -> L gives L (leads by example) true. From R xor L, and L true, R must be false. G is true and \u00acA true; the rule (G xor P) -> M would force M if G xor P were true, but M is false, so G xor P must be false, hence P is true. Then P -> (D or A) with \u00acA implies D is true. D -> (Rec xor R); with R false, Rec is true. Therefore, Chana achieves recognition is entailed.",
+      "correct": true,
       "tags": [
         "added_rules",
         "added_facts"
@@ -43,13 +43,13 @@
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
       "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "From the facts we have Chana pursues her passion (17) and does not overcome adversity (6), which by rule 14 implies she is determined. With determined, rule 13 says she can either achieve recognition or inspire others, but not both. If we suppose she inspires others, then by rule 11 (inspir es or leads by example, but not both) leads by example would be false, while rule 9 plus drives innovation (true) would force leads by example true (given exclusive-or with mentoring). This yields a contradiction. Therefore inspires cannot be true, so recognition must be true. Hence the context entails Chana achieves recognition.",
+      "reasoning": "From P (pursues her passion) and \u00acO (does not overcome adversity) we get D (determined). D -> (Rec xor Insp). Also \u00acF and the M -> (E xor F) rule with \u00acE forces M false; I is true so M xor I is true, hence L true, and Inspires false via Inspires xor L. Therefore Rec xor Insp reduces to Rec, so Rec is true. Thus Chana achieves recognition is entailed.",
       "correct": true,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 633
+      "token_count": 704
     },
     {
       "step": 3,
@@ -57,7 +57,7 @@
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
       "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "From the context: Chana pursues her passion (P). Everyone who pursues their passion is either determined or overcomes adversity (or both); Chana does not overcome adversity, so Chana is determined (D). If Chana is determined, then she can either achieve recognition or inspire others, but not both (D -> (R XOR I)). Since Chana drives innovation (I) is true, R XOR I must be true, which with I true implies R is false. The line 'Chana either mentors her peers or drives innovation if and only if she leads by example' can be interpreted as (M XOR I) \u2194 L. Given M (mentors) is true and I is true, M XOR I is false, hence L is false. The line 'Chana either inspires others or leads by example, but not both' yields I XOR L; with I true and L false, this is satisfied. The key result is R must be false, so 'Chana achieves recognition' is not entailed; its negation is entailed. Therefore the conclusion is false.",
+      "reasoning": "From the facts: Chana pursues her passion (P) and does not overcome adversity (\u00acO). P implies (D or O or both); since \u00acO, D must be true. D implies Rec xor Insp (one of Rec or Insp is true, but not both). Also, Chana mentors her peers (M_p) and drives innovation (I) are both true; the rule states Chana either mentors her peers or drives innovation if and only if she leads by example, which under the common XOR interpretation means L is false because (M_p XOR I) is false (both are true). With L false, the rule Inspires xor L forces Inspires to be true. Now Rec xor Insp must hold with Inspires true, so Rec must be false. Therefore Chana does not achieve recognition, so the statement is not entailed and is in fact contradicted by the context.",
       "correct": true,
       "tags": [
         "removed_rules",
@@ -65,7 +65,7 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1030
+      "token_count": 1064
     },
     {
       "step": 4,
@@ -73,7 +73,7 @@
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
       "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "From the context: Chana pursues her passion, so she is determined. If determined, she can either achieve recognition or inspire others, but not both, giving R XOR I. Also, Chana leads by example is stated, and Chana either inspires others or leads by example, but not both yields I XOR L. With L true, I must be false. Therefore R XOR I reduces to R, so Chana achieves recognition. There is no rule provided that asserts not R, so the conclusion is entailed.",
+      "reasoning": "From the facts: Chana pursues her passion is true, and there is a rule that if she pursues her passion then she is determined, so Det is true. Also, Chana leads by example is true, and there is a rule that either inspires others or leads by example, but not both, so Inspires is false. There is a rule that if Chana is determined, then she can either achieve recognition or inspire others, but not both, i.e., Det -> Rec xor Insp. Since Inspires is false, Rec xor Insp reduces to Rec, hence Rec is true. Therefore, Chana achieves recognition is entailed.",
       "correct": true,
       "tags": [
         "removed_rules",
@@ -81,7 +81,7 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1519
+      "token_count": 1511
     },
     {
       "step": 5,
@@ -89,43 +89,43 @@
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
       "prediction": "True",
       "correct_answer": "False",
-      "reasoning": "From the context: Chana pursues her passion, so she is determined (rule: If Chana pursues her passion then she is determined). Determined implies (R XOR I) (rule: If Chana is determined, then she can either achieve recognition or inspire others, but not both). Also, Chana mentors her peers (M) and, via (M or D) iff leads by example (L) and since Chana both mentors her peers and drives innovation, (M or D) is true; thus L is true. From 'inspired by others or leads by example, but not both' (I XOR L), with L true, I must be false. Therefore R XOR I reduces to R (since I is false). Hence R is true, so Chana achieves recognition. Additionally, the XOR condition from the D-based rule aligns with R being true. Therefore the context entails 'Chana achieves recognition.'",
+      "reasoning": "From the facts: Chana pursues her passion (P) is true, and P -> Det, so Chana is determined. Chana leads by example (L) is true. The rule 'Either not determined or Rec or Insp (exactly one)' means (\u00acDet) OR (Rec XOR Insp) must hold; since Det is true, Rec XOR Insp must be true. The rule 'Inspires or leads by example, but not both' implies Inspires is false (because L is true). Therefore Rec XOR Insp reduces to Rec, so Rec is true. Hence Chana achieves recognition is entailed.",
       "correct": false,
       "tags": [
         "removed_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1869
+      "token_count": 1886
     },
     {
       "step": 6,
       "context": "Chana develops strategic thinking.\nChana does not pursue excellence.\nChana drives innovation.\nChana sets goals.\nChana does not stay motivated.\nChana does not overcome adversity.\nChana either develops strategic thinking or fosters collaboration, but not both.\nIf Chana either mentors her peers or drives innovation (but not both), then she leads by example.\nEither it is not the case that Chana either mentors her peers or drives innovation (but not both), or she leads by example.\nIf Chana either sets goals or pursues her passion (but not both), then she stays motivated.\nEither it is not the case that Chana either sets goals or pursues her passion (but not both), or she stays motivated.\nChana either inspires others or leads by example, but not both.\nIf Chana is determined, then she can either achieve recognition or inspire others, but not both.\nEither Chana is not determined, or she either achieves recognition or inspires others, but not both.\nChana does not foster collaboration.\nChana pursues her passion.\nChana mentors her peers.\nChana either mentors her peers or drives innovation if and only if she leads by example.\nIf Chana pursues her passion then she is determined.\nIf Chana is not determined, then she does not pursue her passion.\nIt is not the case that Chana either sets goals or pursues her passion (but not both).\nIt is not the case that Chana either mentors her peers or drives innovation (but not both).",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "From the context, Chana pursues her passion (P) is true, so she is determined (Det) true. Also, Chana mentors her peers and drives innovation, so M_p and D are both true, making the statement 'Chana either mentors her peers or drives innovation (but not both)' false; hence the biconditional 'Chana either mentors her peers or drives innovation if and only if she leads by example' implies leads by example (L) is false. The rule 'Chana either inspires others or leads by example, but not both' then forces Inspires to be true. The rule 'If Chana is determined, then she can either achieve recognition or inspire others, but not both' yields Rec XOR Insp, and with Inspires true, Rec must be false. Therefore, the context entails not that Chana achieves recognition, i.e., it contradicts the conclusion. So the answer is False.",
+      "correct": true,
       "tags": [
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 2299
+      "token_count": 2250
     },
     {
       "step": 7,
       "context": "Chana develops strategic thinking.\nChana does not pursue excellence.\nChana drives innovation.\nChana sets goals.\nChana does not stay motivated.\nChana does not overcome adversity.\nChana either develops strategic thinking or fosters collaboration, but not both.\nIf Chana either mentors her peers or drives innovation (but not both), then she leads by example.\nEither it is not the case that Chana either mentors her peers or drives innovation (but not both), or she leads by example.\nIf Chana either sets goals or pursues her passion (but not both), then she stays motivated.\nEither it is not the case that Chana either sets goals or pursues her passion (but not both), or she stays motivated.\nChana either inspires others or leads by example, but not both.\nIf Chana is determined, then she can either achieve recognition or inspire others, but not both.\nEither Chana is not determined, or she either achieves recognition or inspires others, but not both.\nChana does not foster collaboration.\nChana pursues her passion.\nChana does not mentor her peers.\nChana either mentors her peers or drives innovation if and only if she leads by example.\nIf Chana pursues her passion then she is determined.\nIf Chana is not determined, then she does not pursue her passion.\nIt is not the case that Chana either sets goals or pursues her passion (but not both).",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Chana pursues her passion (P) is given, so from P -> Det we get Det. The context also states Chana leads by example (L) and Chana either inspires others or leads by example, but not both (I xor L); since L is true, Inspires (I) is false. Det implies Rec xor Insp (Rec or Insp but not both); with Insp false, Rec must be true. Therefore Chana achieves recognition is entailed.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 2659
+      "token_count": 2789
     }
   ]
 }

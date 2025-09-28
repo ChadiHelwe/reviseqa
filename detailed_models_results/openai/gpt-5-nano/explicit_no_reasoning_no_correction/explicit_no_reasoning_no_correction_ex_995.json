@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.2857142857142857
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Removed rules:\n- If Briar is inhospitable, then he is shunned by others and leads a solitary life.\n\nAdded rules:\n- If Briar is inhospitable, then he is not shunned by others.",
       "question": "Does the context entail the conclusion 'Briar is shunned by others.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "The added rule states: if Briar is inhospitable, then he is not shunned by others. Since Briar is inhospitable, we derive not shunned. There is no rule in the modified context that implies Briar is shunned. Therefore the conclusion 'Briar is shunned by others' is not entailed (indeed its negation is entailed).",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules"
@@ -41,39 +41,39 @@
       "step": 2,
       "context": "Removed rules:\n- If Briar is inhospitable, then he is not shunned by others.\n\nAdded rules:\n- If Briar is inhospitable, then he is shunned by others.",
       "question": "Does the context entail the conclusion 'Briar is shunned by others.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The context only provides a rule: If Briar is inhospitable, then he is shunned by others. It does not state that Briar is inhospitable, so shunned is not entailed. Without that fact, the conclusion could be true if Briar is inhospitable, but is not guaranteed by the given context.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 368
+      "token_count": 443
     },
     {
       "step": 3,
       "context": "Removed rules:\n- If Briar is inhospitable, then he is shunned by others.\n\nAdded rules:\n- If Briar is shunned by others, then he will become isolated.",
       "question": "Does the context entail the conclusion 'Briar is shunned by others.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The only related rule is 'If Briar is shunned by others, then he will become isolated,' which is a one-way implication from shunned to isolated. There is no rule that asserts Briar is shunned, nor a rule that asserts not shunned. Therefore, whether Briar is shunned by others is not entailed by the context; it could be true or false depending on facts not provided.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 465
+      "token_count": 605
     },
     {
       "step": 4,
       "context": "Removed facts:\n- Briar does not push away others.\n- Briar refuses help.\n\nAdded rules:\n- If Briar becomes isolated, then he is shunned by others.\n\nAdded facts:\n- Briar pushes away others.",
       "question": "Does the context entail the conclusion 'Briar is shunned by others.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The only rule relating to being shunned is: If Briar becomes isolated, then he is shunned by others. We have Briar pushes away others, but no rule that pushes away implies isolation, and there is no fact that Briar becomes isolated. Therefore, the context does not entail 'Briar is shunned by others', nor does it entail its negation.",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -81,50 +81,50 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 560
+      "token_count": 780
     },
     {
       "step": 5,
       "context": "Added facts:\n- It is not the case that Briar either becomes isolated or pushes away others, but not both.",
       "question": "Does the context entail the conclusion 'Briar is shunned by others.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The added fact says: not (A XOR B) where A = 'Briar becomes isolated' and B = 'Briar pushes away others'. This means either both A and B are true or both false. There is no rule or fact in this context connecting A or B to 'Briar is shunned by others'. Therefore the conclusion 'Briar is shunned by others' is not entailed, and its negation is also not entailed. So the answer is Uncertain.",
       "correct": false,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 662
+      "token_count": 955
     },
     {
       "step": 6,
       "context": "Removed facts:\n- Briar does not live alone.\n- It is not the case that Briar either becomes isolated or pushes away others, but not both.\n\nAdded facts:\n- Briar lives alone.\n- Briar either becomes isolated or pushes away others, but not both.",
       "question": "Does the context entail the conclusion 'Briar is shunned by others.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The context provides: Briar lives alone and exactly-one of (Briar becomes isolated, Briar pushes away others). There are no rules or facts linking being isolated, pushing away, or living alone to being shunned by others. Therefore whether Briar is shunned by others is not entailed, nor is its negation entailed.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 742
+      "token_count": 1135
     },
     {
       "step": 7,
       "context": "Added facts:\n- Briar does not become isolated.\n- Briar becomes isolated if and only if he is shunned by others.",
       "question": "Does the context entail the conclusion 'Briar is shunned by others.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "From 'Briar becomes isolated iff he is shunned by others' we have isolated <-> shunned. Given 'Briar does not become isolated', by the contrapositive of the biconditional we derive 'Briar is not shunned by others'. Therefore the conclusion 'Briar is shunned by others' is not entailed; in fact its negation is entailed.",
+      "correct": true,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 854
+      "token_count": 1313
     }
   ]
 }

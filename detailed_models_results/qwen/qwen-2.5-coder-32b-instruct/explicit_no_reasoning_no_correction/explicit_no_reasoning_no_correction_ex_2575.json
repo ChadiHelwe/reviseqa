@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.8571428571428571
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Removed rules:\n- For all x, if x is charismatic, then x is influential.\n\nAdded rules:\n- For all x, if x is not influential, then x is not charismatic.\n\nAdded facts:\n- Alliebear's personality is not inspiring.\n- Alliebear's personality is creative or Alliebear's personality is not creative.",
       "question": "Does the context entail the conclusion 'Alliebear is creative.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Assume Alliebear is creative. Since they are not outgoing (as established earlier), the condition 'outgoing or creative (but not both)' holds. This makes them charismatic. Charismatic implies influential, which requires inspiring. However, Alliebear is not inspiring (added fact). Contradiction. Thus, Alliebear cannot be creative.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
@@ -42,54 +42,54 @@
       "step": 2,
       "context": "Removed rules:\n- For all x, if x is not influential, then x is not charismatic.\n\nAdded rules:\n- For all x, if x is engaging, then x is expressive.\n\nAdded facts:\n- Alliebear's personality is outgoing if and only if Alliebear's personality is creative.",
       "question": "Does the context entail the conclusion 'Alliebear is creative.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Assume Alliebear is creative. Since outgoing \u2261 creative (bi-conditional fact), they would also be outgoing. Outgoing implies captivating, which implies engaging. But engaging requires expressiveness (new rule), and Alliebear is not expressive. Contradiction. Thus, Alliebear cannot be creative.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 376
+      "token_count": 2166
     },
     {
       "step": 3,
       "context": "Added rules:\n- For all x, if x is engaging, then x is spontaneous.",
       "question": "Does the context entail the conclusion 'Alliebear is creative.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Alliebear is not expressive. If Alliebear were engaging, they'd need to be expressive (from added rule) and spontaneous (recently added rule). Contradiction. Thus, Alliebear is not engaging. If Alliebear were outgoing, captivating (from earlier rule) would imply engaging (another earlier rule). Contradiction. So Alliebear is not outgoing. Given outgoing \u2194 creative (added fact), creativity is also false.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 490
+      "token_count": 3260
     },
     {
       "step": 4,
       "context": "Removed facts:\n- Alliebear's personality is not expressive.\n\nAdded rules:\n- If Alliebear's personality is adventurous, then it is outgoing.",
       "question": "Does the context entail the conclusion 'Alliebear is creative.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Alliebear is adventurous, so by the new rule, they are outgoing. Since outgoing \u2194 creative (added fact in earlier problem), Alliebear must be creative. The removal of 'not expressive' eliminates prior contradictions about expressiveness from engagement chains.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 561
+      "token_count": 4432
     },
     {
       "step": 5,
       "context": "Removed rules:\n- If Alliebear's personality is authentic, then it is uplifting or inspiring, and it is not the case that it is both uplifting and inspiring.\n\nAdded rules:\n- If Alliebear's personality is authentic, then it is either uplifting or inspiring, but not both.\n- Alliebear's personality is not outgoing if and only if Alliebear's personality is not creative.\n\nAdded facts:\n- It is not the case that Alliebear's personality is either outgoing or creative (but not both).",
       "question": "Does the context entail the conclusion 'Alliebear is creative.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "Outgoing \u2194 creative is enforced by the added rule and fact. Alliebear's authentic status guarantees 'uplifting or inspiring, but not both', but this doesn\u2019t resolve outgoing/creative status. Without additional rules tying traits (e.g., adventurous \u2192 outgoing), we cannot determine outgoing/creative status. Thus, the conclusion is uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -97,35 +97,35 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 645
+      "token_count": 5323
     },
     {
       "step": 6,
       "context": "Added rules:\n- If Alliebear's personality is adventurous, then it is creative.",
       "question": "Does the context entail the conclusion 'Alliebear is creative.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Alliebear is adventurous (given in first context). The new rule 'adventurous \u2192 creative' directly implies creativity. No remaining contradictions or uncertainties exist in this chain.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 804
+      "token_count": 8023
     },
     {
       "step": 7,
       "context": "Added rules:\n- If Alliebear's personality is not creative, then it is not adventurous.",
       "question": "Does the context entail the conclusion 'Alliebear is creative.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "The rule 'not creative \u2192 not adventurous' (contrapositive of 'adventurous \u2192 creative') applies. Alliebear is adventurous (given). Thus, Alliebear cannot be non-creative (as that would negate adventurousness). Therefore, Alliebear must be creative.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 875
+      "token_count": 8447
     }
   ]
 }

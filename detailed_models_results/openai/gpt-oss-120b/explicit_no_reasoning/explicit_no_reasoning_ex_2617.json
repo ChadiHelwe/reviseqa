@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 128,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Autumn visits a garden.\nAutumn does not pollinate plants.\nAutumn does not nourish flowers.\nAutumn is not visually stunning.\nEvery butterfly that visits a garden either spreads pollen or pollinates plants (or both).\nIf a butterfly has a delicate pattern and spreads pollen, then it nourishes flowers.\nAny butterfly that has vibrant wings or a delicate pattern is visually stunning.\nAutumn either has mottled color or has vibrant wings.\nAll butterflies with mottled color blend into their environment.\nAutumn either has camouflage or blends into her environment, but not both.\nAutumn either has camouflage or unique wings, but not both.\nEvery butterfly that has unique wings attracts attention.",
+      "question": "Does the context entail the conclusion 'Autumn attracts attention.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Any butterfly that has vibrant wings or a delicate pattern is visually stunning.\n\nAdded rules:\n- Every butterfly that attracts attention has unique wings.\n- If Autumn has vibrant wings, then she does not blend into her environment.\n\nAdded facts:\n- Autumn either has vibrant wings or has a delicate pattern.",
+      "question": "Does the context entail the conclusion 'Autumn attracts attention.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts, Autumn visits a garden, does not pollinate plants, and does not nourish flowers. Visiting a garden requires spreading pollen or pollinating plants; since she does not pollinate, she must spread pollen. The rule (If delicate pattern and spreads pollen then nourishes flowers) together with 'does not nourish flowers' forces Autumn not to have a delicate pattern. The added fact 'Autumn either has vibrant wings or has a delicate pattern' (inclusive) then forces Autumn to have vibrant wings. Vibrant wings imply (by the added rule) she does not blend into her environment. The rule 'All butterflies with mottled color blend into their environment' combined with the fact that she does not blend forces Autumn not to have mottled color. The exclusive statements give: (camouflage xor blends) and (camouflage xor unique wings). Since she does not blend, she must have camouflage; then, by the exclusive camouflage/unique-wings clause, she cannot have unique wings. Unique wings are equivalent to attracting attention (original rule and added converse). Therefore Autumn does not have unique wings, so she does not attract attention. Hence the conclusion 'Autumn attracts attention' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 243
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Autumn either has camouflage or blends into her environment, but not both.\n- Autumn either has camouflage or unique wings, but not both.\n\nAdded rules:\n- Every butterfly that has unique wings attracts attention, and every butterfly that attracts attention has unique wings.\n\nAdded facts:\n- Autumn either has camouflage or blends into her environment.\n- It is not the case that Autumn has both camouflage and blends into her environment.\n- Autumn either has camouflage or unique wings.\n- It is not the case that Autumn has both camouflage and unique wings.\n- Autumn either has mottled color, or has vibrant wings, or has a delicate pattern.",
+      "question": "Does the context entail the conclusion 'Autumn attracts attention.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the facts, Autumn visits a garden and does not pollinate, so by the visit rule she must spread pollen. She also does not nourish flowers. The rule (delicate pattern \u2227 spreads pollen) \u2192 nourishes flowers together with spreads true and not nourishes forces that Autumn does not have a delicate pattern. The inclusive OR stating she has mottled color, vibrant wings, or a delicate pattern together with the fact that she lacks a delicate pattern leaves mottled color or vibrant wings. The rule (vibrant wings \u2228 delicate pattern) \u2192 visually stunning and the fact that Autumn is not visually stunning together imply she does not have vibrant wings. Hence she must have mottled color. The rule mottled color \u2192 blends into the environment gives that Autumn blends. The exclusive statements then give that she does not have camouflage, and because camouflage exclusive-or unique wings holds, she must have unique wings. The added equivalence between unique wings and attracting attention yields that Autumn attracts attention. Therefore the conclusion is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 598
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, if x visits a garden and x does not pollinate plants, then x spreads pollen.\n- For all x, if x does not nourish flowers, then it is not the case that x has a delicate pattern and spreads pollen.",
+      "question": "Does the context entail the conclusion 'Autumn attracts attention.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the facts: Autumn visits a garden and does not pollinate plants, so by the added rule she spreads pollen. She does not nourish flowers, and the added rule implies she cannot both have a delicate pattern and spread pollen; since she spreads pollen, she must not have a delicate pattern. The fact that Autumn is not visually stunning together with the rule that vibrant wings or a delicate pattern imply visual stunning shows she also does not have vibrant wings. From the statement that Autumn either has mottled color or vibrant wings, she must have mottled color. Mottled color leads to blending into the environment. The exclusive statements then give that Autumn does not have camouflage (since she blends) and, because she lacks camouflage, she must have unique wings. Unique wings imply attracting attention. Therefore, the conclusion 'Autumn attracts attention' is entailed.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 976
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If a butterfly has a delicate pattern and spreads pollen, then it nourishes flowers.\n- For all x, if x does not nourish flowers, then it is not the case that x has a delicate pattern and spreads pollen.\n\nAdded rules:\n- Every butterfly that spreads pollen has mottled color.",
+      "question": "Does the context entail the conclusion 'Autumn attracts attention.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Autumn visits a garden and does not pollinate plants, so by the added rule she spreads pollen. The newly added rule states that any butterfly that spreads pollen has mottled color, therefore Autumn has mottled color. By the original rule, mottled color implies Autumn blends into her environment. The exclusive statement that Autumn either has camouflage or blends, but not both, forces that Autumn does not have camouflage. The other exclusive statement that Autumn either has camouflage or unique wings, but not both, then forces Autumn to have unique wings. The original rule (and its added converse) links unique wings with attracting attention, so Autumn attracts attention. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1270
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, either x does not visit a garden, or x spreads pollen, or x pollinates plants.\n- Either Autumn does not have camouflage, or she does not blend into her environment.\n- Either Autumn does not have camouflage, or she does not have unique wings.\n- Either Autumn does not have vibrant wings, or she does not blend into her environment.",
+      "question": "Does the context entail the conclusion 'Autumn attracts attention.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts Autumn visits a garden and does not pollinate plants, so by the rule (visits garden \u2227 not pollinate) \u2192 spreads pollen, Autumn spreads pollen. Since Autumn does not nourish flowers, the rule (not nourish) \u2192 \u00ac(delicate pattern \u2227 spreads) tells us Autumn cannot have a delicate pattern (she does spread pollen). The rule that any butterfly with vibrant wings or a delicate pattern is visually stunning together with the fact Autumn is not visually stunning forces Autumn to lack both vibrant wings and a delicate pattern. The inclusive OR stating Autumn has mottled color, vibrant wings, or a delicate pattern then forces mottled color to be true. Mottled color \u21d2 blends into the environment, so Autumn blends. The exclusive statements that Autumn either has camouflage or blends, but not both, then give that Autumn does not have camouflage (since she blends). The other exclusive statement that Autumn either has camouflage or unique wings, but not both, forces Autumn to have unique wings. The rule that every butterfly with unique wings attracts attention (and its converse) gives that Autumn attracts attention. All additional constraints (e.g., if camouflage then not blend, if camouflage then not unique wings, if vibrant wings then not blend) are satisfied and do not alter this derivation. Thus the conclusion 'Autumn attracts attention' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1538
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, if x visits a garden and x does not pollinate plants, then x has mottled color.",
+      "question": "Does the context entail the conclusion 'Autumn attracts attention.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts Autumn visits a garden and does not pollinate plants. By the rule (visits garden \u2227 \u00acpollinate) \u2192 spreads pollen, Autumn spreads pollen. The rule (spreads pollen) \u2192 mottled color gives Autumn mottled color. All butterflies with mottled color blend into their environment, so Autumn blends. The XOR facts state that Autumn either has camouflage or blends, not both; since she blends, she cannot have camouflage. The other XOR facts state that Autumn either has camouflage or unique wings, not both; without camouflage she must have unique wings. The rule (unique wings) \u2194 (attracts attention) then yields that Autumn attracts attention. All added constraints (e.g., \u00accamouflage \u2228 \u00acblend, \u00accamouflage \u2228 \u00acunique, \u00acvibrant \u2228 \u00acblend) are satisfied and do not conflict with this derivation. Therefore the conclusion 'Autumn attracts attention' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1955
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Every butterfly that visits a garden either spreads pollen or pollinates plants (or both).\n- For all x, either x does not visit a garden, or x spreads pollen, or x pollinates plants.\n- For all x, if x visits a garden and x does not pollinate plants, then x spreads pollen.\n- For all x, if x visits a garden and x does not pollinate plants, then x has mottled color.\n\nAdded rules:\n- For all x, if x visits a garden and x does not pollinate plants, then x does not have mottled color.",
+      "question": "Does the context entail the conclusion 'Autumn attracts attention.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the facts Autumn visits a garden and does not pollinate plants. The added rule (visits garden \u2227 \u00acpollinate) \u2192 \u00acmottled color gives that Autumn does not have mottled color. The inclusive OR fact (mottled color \u2228 vibrant wings \u2228 delicate pattern) then forces Autumn to have either vibrant wings or a delicate pattern (or both). No remaining rules connect these properties to camouflage, blending, or unique wings. The exclusive facts state that Autumn either has camouflage or blends (but not both), and either has camouflage or unique wings (but not both). These constraints allow two consistent possibilities: (i) Autumn has camouflage (thus does not blend and does not have unique wings) or (ii) Autumn does not have camouflage, therefore blends and has unique wings. Both possibilities satisfy all rules, and there is no rule that forces one over the other. Since the presence of unique wings (and thus attracting attention) is not determined, the conclusion \u2018Autumn attracts attention\u2019 cannot be entailed nor refuted. Hence the correct classification is Uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2241
+    }
+  ]
+}

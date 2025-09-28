@@ -6,7 +6,7 @@
     "include_reasoning": true,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.5714285714285714
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Added rules:\n- For all x, either x is not rare, or x is historically valuable, or x is highly sought after.\n\nAdded facts:\n- Dove is influential.\n- Dove is widely read.\n- Dove is not a first edition.\n- Dove is rare.",
       "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Dove is rare (given). The added rule states that for all rare books, they must be historically valuable or highly sought after. Since Dove is not expensive, and if highly sought after implies expensive (original context), Dove cannot be highly sought after (modus tollens). Therefore, to satisfy the added rule, Dove must be historically valuable.",
+      "correct": true,
       "tags": [
         "added_rules",
         "added_facts"
@@ -41,10 +41,10 @@
       "step": 2,
       "context": "Removed facts:\n- Dove is rare.\n\nRemoved rules:\n- Dove is either a first edition or rare (or both).\n\nAdded rules:\n- For all x, if x is not rare, then x is not historically valuable.\n\nAdded facts:\n- Dove is not rare.",
       "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "The added rule states that if a book is not rare, then it is not historically valuable. The added fact confirms Dove is not rare. Applying the rule to this fact directly leads to the conclusion that Dove is not historically valuable. Therefore, the conclusion 'Dove is historically valuable' is false.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "removed_rules",
@@ -52,15 +52,15 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 498
+      "token_count": 1128
     },
     {
       "step": 3,
       "context": "Removed facts:\n- Dove is not rare.\n\nRemoved rules:\n- For all x, if x is not rare, then x is not historically valuable.\n\nAdded rules:\n- For all x, x is not rare if and only if x is not historically valuable.\n\nAdded facts:\n- If Dove is widely read, then it is rare.",
       "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The added biconditional rule 'not rare iff not historically valuable' establishes that rarity and historical value are logically equivalent for Dove. The added fact 'if Dove is widely read, then it is rare' creates a conditional link. However, we lack explicit information about whether Dove is widely read. Without confirming this condition, the conclusion cannot be definitively determined. Thus, the conclusion is neither necessarily true nor false, leading to uncertainty.",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -69,45 +69,45 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 605
+      "token_count": 1557
     },
     {
       "step": 4,
       "context": "Removed rules:\n- If Dove is widely read, then it is rare.\n\nAdded rules:\n- If Dove is influential, then it is not rare.",
       "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The context states that 'if Dove is influential, then it is not rare' (new rule) and includes the biconditional 'not rare iff not historically valuable' (previous rule). From prior facts, we know Dove is influential (established earlier). This implies Dove is not rare via the new rule. Using the biconditional, 'not rare' entails 'not historically valuable.' However, prior facts also included 'Dove is rare' (creating a contradiction). Since the premises are inconsistent (Dove is both rare and not rare), the conclusion cannot be reliably determined. Thus, the answer is uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 725
+      "token_count": 2497
     },
     {
       "step": 5,
       "context": "Added rules:\n- If Dove is not a first edition, then it is widely read.\n\nAdded facts:\n- Dove is not highly sought after.",
       "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "The added fact 'Dove is not a first edition' with the rule 'if not a first edition, then widely read' entails that Dove is widely read. From prior facts, Dove is influential, so the rule 'if influential, then not rare' applies, making Dove not rare. The biconditional 'not rare iff not historically valuable' links rarity and historical value. Since Dove is not rare, it must be not historically valuable. The added fact 'Dove is not highly sought after' does not contradict this conclusion. Thus, the conclusion 'Dove is historically valuable' is false.",
+      "correct": true,
       "tags": [
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 808
+      "token_count": 5283
     },
     {
       "step": 6,
       "context": "Removed rules:\n- Dove is either a first edition or widely read, but not both.\n- For all x, x is not rare if and only if x is not historically valuable.\n\nAdded rules:\n- Dove is either a first edition or widely read (or both).\n- It is not the case that Dove is both a first edition and widely read.\n- For all x, x is rare if and only if x is historically valuable.\n\nAdded facts:\n- Dove is widely read and highly acclaimed.",
       "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The added biconditional rule 'x is rare if and only if x is historically valuable' directly links rarity and historical value for Dove. From the added facts, Dove is widely read. Since the context now specifies an exclusive OR (Dove is either a first edition or widely read, but not both), and Dove is widely read, it cannot be a first edition. However, no rule directly links being widely read to rarity. Without establishing whether Dove is rare, the biconditional cannot be applied to determine historical value. Thus, the conclusion is uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -115,21 +115,21 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 890
+      "token_count": 6207
     },
     {
       "step": 7,
       "context": "Added facts:\n- If Dove is not culturally significant, then it is influential.\n- If Dove is rare, then it is historically valuable.\n- If Dove is historically valuable, then it is rare.\n- Dove is not rare.",
       "question": "Does the context entail the conclusion 'Dove is historically valuable.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "The rules 'if rare then historically valuable' and 'if historically valuable then rare' form a biconditional (rare \u2194 historically valuable). The fact 'Dove is not rare' directly negates this, requiring 'not historically valuable' via contrapositive. Thus, the conclusion 'Dove is historically valuable' is false.",
+      "correct": true,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1043
+      "token_count": 7610
     }
   ]
 }

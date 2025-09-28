@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 108,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kasen gathers resources.\nKasen guards his nest.\nKasen does not have distinctive markings.\nKasen does not have strong instincts.\nKasen does not find shelter.\nKasen has keen senses.\nKasen thrives in the sewers.\nKasen cannot find food.\nKasen can avoid dangers.\nEvery rat that cares for others either gathers resources or guards its nest (or both).\nKasen either has distinctive markings or knows hidden paths, but not both.\nAll rats that protect their families have strong instincts and care for others.\nIf a rat navigates tunnels and knows hidden paths, then it can find shelter.\nIf Kasen either navigates tunnels or leads others (but not both), then he protects his family.\nIf Kasen has keen senses and can survive in harsh environments, then he can lead others.\nAny rat that thrives in the sewers is resourceful.\nAll street-savvy rats can find food and avoid dangers.",
+      "question": "Does the context entail the conclusion 'If Kasen is street savvy or resourceful, then he can survive in harsh environments.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Kasen does not find shelter.\n\nRemoved rules:\n- If Kasen has keen senses and can survive in harsh environments, then he can lead others.\n\nAdded rules:\n- Kasen has keen senses and can survive in harsh environments if and only if he can lead others.\n\nAdded facts:\n- Kasen navigates tunnels.",
+      "question": "Does the context entail the conclusion 'If Kasen is street savvy or resourceful, then he can survive in harsh environments.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the facts we infer Kasen is resourceful (thriving in sewers \u21d2 resourceful). Thus the antecedent 'street savvy or resourceful' is true. To entail the conditional we must also derive 'Kasen can survive in harsh environments'. The only rule linking survival is the biconditional: Kasen can lead others \u21d4 (Kasen has keen senses \u2227 can survive in harsh environments). We know Kasen has keen senses, but we have no information proving he can lead others, nor any rule giving survival directly. The rule about protecting the family does not allow us to deduce leads or survival because the exclusive-or condition depends on whether Kasen leads others, which is unknown. No rule derives a negation of survival either. Consequently we cannot conclude that Kasen can survive in harsh environments, nor can we conclude he cannot. Hence the conditional is not entailed nor contradicted \u2013 its truth is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 316
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Kasen knows hidden paths.",
+      "question": "Does the context entail the conclusion 'If Kasen is street savvy or resourceful, then he can survive in harsh environments.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "We can infer Kasen is resourceful (thriving in sewers \u21d2 resourceful), so the antecedent \"street savvy or resourceful\" is true. However, there is no rule that lets us derive \"Kasen can survive in harsh environments\". The only rule linking survival is the biconditional: Kasen can lead others \u2194 (Kasen has keen senses \u2227 can survive in harsh environments). We have keen senses, but we cannot prove that Kasen can lead others, nor can we prove he cannot. Therefore we cannot determine the truth of the consequent. Since the antecedent is true and the consequent is undetermined, the conditional is not entailed nor contradicted \u2013 its truth is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 636
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- If Kasen does not lead others, then he protects his family.\n- If Kasen leads others, then he can survive in harsh environments.\n\nAdded facts:\n- Kasen is resourceful.\n- Kasen finds shelter.",
+      "question": "Does the context entail the conclusion 'If Kasen is street savvy or resourceful, then he can survive in harsh environments.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The knowledge base now includes the fact that Kasen is resourceful, making the antecedent of the conditional (StreetSavvy(Kasen) \u2228 Resourceful(Kasen)) true. To satisfy the conditional we must also have Survive(Kasen) true in all models. From the added biconditional Leads \u2194 (Keen \u2227 Survive) and the fact Keen(Kasen), plus the rule that Leads \u2192 Survive, we can derive Survive if Leads holds. The exclusive-or rule (Navigate XOR Leads) \u2192 Protect together with the fact Navigate(Kasen) and the explicit fact that Kasen does not protect his family (implied by the contradiction with the \"strong instincts\" fact) forces Leads(Kasen) to be true, because otherwise the implication would be false. Leads true then yields Survive(Kasen) via the rule Leads \u2192 Survive. Hence Survive(Kasen) is entailed, so the conditional \"If Kasen is street savvy or resourceful, then he can survive in harsh environments\" is true in all models of the context. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 857
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- All rats that protect their families have strong instincts and care for others.\n\nAdded rules:\n- All rats that protect their families care for others.\n\nAdded facts:\n- Kasen does not lead others.",
+      "question": "Does the context entail the conclusion 'If Kasen is street savvy or resourceful, then he can survive in harsh environments.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The facts give Kasen is resourceful, so the antecedent (street\u2011savvy OR resourceful) is true. From the rules we have (Keen \u2227 Survive) \u2192 Leads and the explicit fact \u00acLeads. By modus tollens this yields \u00ac(Keen \u2227 Survive). Since Keen is true, we infer \u00acSurvive. Therefore the consequent (Survive) is false. With a true antecedent and a false consequent, the conditional \"If Kasen is street\u2011savvy or resourceful, then he can survive in harsh environments\" is false in all models, so the statement is not entailed; its negation is entailed. Hence the correct answer is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1200
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Kasen does not lead others.\n\nAdded rules:\n- Any rat that thrives in the sewers can survive in harsh environments.",
+      "question": "Does the context entail the conclusion 'If Kasen is street savvy or resourceful, then he can survive in harsh environments.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context contains the explicit fact that Kasen is resourceful, so the antecedent of the conditional (street\u2011savvy\u202for\u202fresourceful) is true. Additionally, a rule states that any rat that thrives in the sewers can survive in harsh environments, and Kasen is given as thriving in the sewers. Therefore Kasen can survive in harsh environments is also entailed. With both antecedent and consequent true in all models, the conditional \"If Kasen is street savvy or resourceful, then he can survive in harsh environments\" is necessarily true.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1452
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- Any rat that thrives in the sewers can survive in harsh environments.\n\nAdded rules:\n- Any rat that navigates tunnels does not lead others.",
+      "question": "Does the context entail the conclusion 'If Kasen is street savvy or resourceful, then he can survive in harsh environments.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context gives Kasen the fact that he is resourceful, making the antecedent (street\u2011savvy\u202for\u202fresourceful) true. From the rule \"any rat that navigates tunnels does not lead others\" and the fact that Kasen navigates tunnels, we infer \u00acleads(Kasen). The biconditional leads(Kasen) \u2194 (keen(Kasen) \u2227 survive(Kasen)) then yields \u00acsurvive(Kasen) (because keen is true). Hence the consequent \"can survive in harsh environments\" is false. With a true antecedent and a false consequent, the conditional is false in all models, so the conclusion is not entailed. Therefore the correct answer is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1663
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- Kasen does not lead others.\n- Kasen protects his family.\n- Kasen cares for others.",
+      "question": "Does the context entail the conclusion 'If Kasen is street savvy or resourceful, then he can survive in harsh environments.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The current KB includes the fact \u00acLeads(Kasen) and the biconditional (Keen \u2227 Survive) \u2194 Leads. Since Keen(Kasen) is true, this reduces to Survive \u2194 Leads. Hence \u00acLeads forces \u00acSurvive. We also have the fact Resourceful(Kasen), making the antecedent (street\u2011savvy OR resourceful) true. However, the consequent Survive(Kasen) is false in all models. Therefore the conditional \"If Kasen is street savvy or resourceful, then he can survive in harsh environments\" is false (its negation is entailed).",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1912
+    }
+  ]
+}

@@ -6,7 +6,7 @@
     "include_reasoning": true,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.2857142857142857
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Removed rules:\n- If Marcus has expertise, then he is either persistent or successful, but not both.\n- If Marcus is either dedicated or adventurous (but not both), then he is successful.\n\nAdded rules:\n- If Marcus has expertise, then he is not successful.\n- If Marcus is adventurous, then he is successful.\n\nAdded facts:\n- Marcus publishes papers.\n- Marcus does not seek knowledge.\n- Marcus does not conduct research.",
       "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Marcus does not conduct research. Marcus conducts research or has expertise. Therefore, Marcus has expertise. If Marcus has expertise, then he is not successful. Therefore, Marcus is not successful. If Marcus is adventurous, then he is successful. Therefore, Marcus is not adventurous (contrapositive).",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
@@ -42,9 +42,9 @@
       "step": 2,
       "context": "Removed facts:\n- Marcus does not conduct research.\n\nRemoved rules:\n- If Marcus conducts research, then he either publishes papers or teaches others, but not both.\n\nAdded rules:\n- If Marcus conducts research, then he is adventurous.\n- If Marcus has practical skills, then he is successful.",
       "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Marcus has practical skills. If Marcus has practical skills, then he is successful. Therefore, Marcus is successful. The only directly relevant rule for adventurousness is: if Marcus conducts research, then he is adventurous. Since the context no longer states whether Marcus conducts research and provides no other rules to determine this, we cannot conclusively derive 'Marcus is not adventurous.'",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -52,81 +52,81 @@
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 655
+      "token_count": 2104
     },
     {
       "step": 3,
       "context": "Removed facts:\n- Marcus does not seek knowledge.\n- Marcus has practical skills.\n\nAdded facts:\n- Marcus does not conduct research.",
       "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Marcus does not conduct research. Marcus conducts research or has expertise. Therefore, Marcus has expertise. If Marcus has expertise, then he is not successful. Therefore, Marcus is not successful. If Marcus is adventurous, then he is successful (from previous rule). Since Marcus is not successful, by contrapositive, he is not adventurous.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 765
+      "token_count": 3219
     },
     {
       "step": 4,
       "context": "Removed facts:\n- Marcus does not conduct research.\n\nAdded facts:\n- Marcus does not have expertise.",
       "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
-      "prediction": "ERROR",
+      "prediction": "C",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Marcus does not have expertise. The rule 'if Marcus has expertise, then he is not successful' is irrelevant here. Marcus has practical skills, which makes him successful (from prior added rule). The only direct rule about adventurousness is 'if Marcus conducts research, then he is adventurous.' Since Marcus's research status is unknown (previous fact 'does not conduct research' was removed), we cannot determine if he is adventurous. His success status via practical skills does not conflict with being adventurous (as the successful \u2192 adventurous relationship is one-way).",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 843
+      "token_count": 4674
     },
     {
       "step": 5,
       "context": "Added rules:\n- If Marcus is not adventurous, then he does not conduct research.",
       "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
-      "prediction": "ERROR",
+      "prediction": "B",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Marcus does not have expertise (added fact). The rule 'Marcus conducts research or has expertise' forces him to conduct research (since he lacks expertise). The new rule 'If Marcus is not adventurous, then he does not conduct research' (\u00acA \u2192 \u00acR) has contrapositive R \u2192 A. Since Marcus conducts research (R is true), he must be adventurous (A is true). Therefore, 'Marcus is not adventurous' is false.",
       "correct": false,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 915
+      "token_count": 5552
     },
     {
       "step": 6,
       "context": "Removed facts:\n- Marcus does not have expertise.\n\nAdded rules:\n- If Marcus conducts research, then he is dedicated.",
       "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
-      "prediction": "ERROR",
+      "prediction": "B",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "Marcus is successful (from practical skills). The rule 'if has expertise, then not successful' (E \u2192 \u00acS) and modus tollens (S \u2192 \u00acE) force \u00acE (he lacks expertise). From 'Marcus conducts research or has expertise' (R \u2228 E), \u00acE implies R (conducts research). The rule R \u2192 A (contrapositive of previous \u00acA \u2192 \u00acR) confirms he is adventurous. Therefore, 'Marcus is not adventurous' is false.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 984
+      "token_count": 6809
     },
     {
       "step": 7,
       "context": "Removed rules:\n- If Marcus conducts research, then he is dedicated.\n\nAdded rules:\n- If Marcus either publishes papers or teaches others, then he conducts research.",
       "question": "Does the context entail the conclusion 'Marcus is not adventurous.'?",
-      "prediction": "ERROR",
+      "prediction": "B",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Marcus publishes papers and teaches others, so he conducts research (from added rule). The rule 'If Marcus is not adventurous, then he does not conduct research' (\u00acA \u2192 \u00acR) has contrapositive R \u2192 A. Since Marcus conducts research (R is true), he must be adventurous (A is true). Therefore, 'Marcus is not adventurous' is false.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 1060
+      "token_count": 8966
     }
   ]
 }

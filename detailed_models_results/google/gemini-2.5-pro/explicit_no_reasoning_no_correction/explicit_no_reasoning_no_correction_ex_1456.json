@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.8571428571428571
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Added rules:\n- If Janelle does not contribute to her field, then she advances knowledge if and only if she publishes papers.\n- If Janelle is a dedicated researcher and does not advance knowledge, then she is a brilliant scientist.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "1. We are given that Janelle conducts experiments (`CE`) and collects data (`CD`). The rule `CE -> (PP XOR CD)` means that since she conducts experiments, she either publishes papers (`PP`) or collects data, but not both. Since she collects data (`CD` is true), she must not publish papers (`PP` is false).\n2. We are given Janelle is passionate about botany (`PB`). The rule `PB -> (DR AND MW)` implies she is a dedicated researcher (`DR`).\n3. We are given Janelle does not contribute to her field (`~CF`). The new rule `~CF -> (AK <-> PP)` means that `AK` (advances knowledge) is true if and only if `PP` is true. Since we deduced `PP` is false in step 1, it must be that `AK` is also false (she does not advance knowledge).\n4. We now know Janelle is a dedicated researcher (`DR` is true, from step 2) and does not advance knowledge (`AK` is false, from step 3). The new rule `(DR AND ~AK) -> BS` directly applies, allowing us to conclude she is a brilliant scientist (`BS`).\n5. We are given she does not deserve an award (`~DA`). By modus tollens on the rule `(RR XOR GA) -> DA`, we know `~(RR XOR GA)` is true. This is equivalent to `RR <-> GA`. Since we are given she does not gain acclaim (`~GA`), it must also be true that she does not receive recognition (`~RR`).\n6. We concluded in step 4 that she is a brilliant scientist (`BS`). The rule `BS -> (MGD OR RR)` means that she either makes a groundbreaking discovery (`MGD`) or receives recognition (`RR`), or both. Since we deduced in step 5 that she does not receive recognition (`~RR`), the only way for the conclusion `MGD OR RR` to be true is if `MGD` is true. Therefore, Janelle makes a groundbreaking discovery.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
@@ -40,10 +40,10 @@
       "step": 2,
       "context": "Removed facts:\n- Janelle does not gain acclaim.\n\nRemoved rules:\n- If Janelle is a brilliant scientist, then she either makes a groundbreaking discovery or receives recognition (or both).\n\nAdded rules:\n- If Janelle is a brilliant scientist, then she receives recognition and does not make a groundbreaking discovery.\n\nAdded facts:\n- Janelle gains acclaim.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "1. We are given that Janelle conducts experiments (`CE`) and collects data (`CD`). The rule `CE -> (PP XOR CD)` means that since she conducts experiments, she either publishes papers (`PP`) or collects data, but not both. As she collects data (`CD` is true), she must not publish papers (`PP` is false).\n2. We are given Janelle is passionate about botany (`PB`). The rule `PB -> (DR AND MW)` implies she is a dedicated researcher (`DR`).\n3. We are given Janelle does not contribute to her field (`~CF`). The rule `~CF -> (AK <-> PP)` means that she advances knowledge (`AK`) if and only if she publishes papers (`PP`). Since we deduced `PP` is false, it must be that `AK` is also false.\n4. We now know Janelle is a dedicated researcher (`DR` is true, from step 2) and does not advance knowledge (`AK` is false, from step 3). The rule `(DR AND ~AK) -> BS` directly applies, allowing us to conclude she is a brilliant scientist (`BS`).\n5. Since Janelle is a brilliant scientist (`BS` is true), we can apply the new rule `BS -> (RR AND ~MGD)`. This means she receives recognition (`RR`) AND does not make a groundbreaking discovery (`~MGD`).\n6. Therefore, the statement 'Janelle does not make a groundbreaking discovery' is entailed by the context. This directly contradicts the conclusion 'Janelle makes a groundbreaking discovery'.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "removed_rules",
@@ -51,46 +51,46 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 398
+      "token_count": 846
     },
     {
       "step": 3,
       "context": "Removed facts:\n- Janelle is passionate about botany.\n\nAdded rules:\n- If Janelle receives recognition, then she makes a groundbreaking discovery.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "1. We are given that Janelle gains acclaim (`GA`) and does not deserve an award (`~DA`).\n2. The rule `If Janelle either receives recognition or gains acclaim (but not both), then she deserves an award` can be written as `(RR XOR GA) -> DA`.\n3. By modus tollens, since the conclusion `DA` is false (`~DA`), the premise `(RR XOR GA)` must also be false. \n4. `~(RR XOR GA)` is logically equivalent to `RR <-> GA` (RR is true if and only if GA is true).\n5. Since we are given that Janelle gains acclaim (`GA` is true), we can conclude from `RR <-> GA` that she also receives recognition (`RR` is true).\n6. We have a newly added rule: `If Janelle receives recognition, then she makes a groundbreaking discovery`, which can be written as `RR -> MGD`.\n7. Since we deduced that `RR` is true (step 5), by modus ponens on this new rule, we must conclude that she makes a groundbreaking discovery (`MGD` is true).\n8. While there is another rule `If Janelle is a brilliant scientist, then she receives recognition and does not make a groundbreaking discovery` (`BS -> (RR AND ~MGD)`), which implies `BS -> ~MGD`, we cannot prove that Janelle is a brilliant scientist (`BS`). Proving `BS` requires proving she is a dedicated researcher (`DR`), but the fact that would establish this (`Janelle is passionate about botany`) has been removed. Since `BS` cannot be proven, this potential contradiction does not materialize. The chain of logic from `GA` and `~DA` to `RR` and then to `MGD` is sound and unopposed.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 527
+      "token_count": 1316
     },
     {
       "step": 4,
       "context": "Removed rules:\n- If Janelle is a brilliant scientist, then she receives recognition and does not make a groundbreaking discovery.\n\nAdded rules:\n- If Janelle is a brilliant scientist, then she receives recognition.\n- If Janelle is a brilliant scientist, then she does not make a groundbreaking discovery.\n\nAdded facts:\n- Janelle receives recognition.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "1. The context provides the fact 'Janelle receives recognition' (`RR`).\n2. The context also provides the rule 'If Janelle receives recognition, then she makes a groundbreaking discovery' (`RR -> MGD`).\n3. By modus ponens, from the given fact (`RR`) and the rule (`RR -> MGD`), we can directly conclude that 'Janelle makes a groundbreaking discovery' (`MGD`) is true.\n4. We check for potential contradictions. The rule 'If Janelle is a brilliant scientist, then she does not make a groundbreaking discovery' (`BS -> ~MGD`) seems to conflict. \n5. However, the ruleset implies Janelle is *not* a brilliant scientist (`~BS`). The rules `RR -> MGD`, `BS -> ~MGD`, and `BS -> RR` are only consistent if `BS` is false. (If `BS` were true, then `~MGD` would be true and `RR` would be true. But if `RR` is true, then `MGD` must be true from rule `RR -> MGD`, leading to a contradiction `MGD` and `~MGD`).\n6. Since `BS` can be proven false, its conditional rule (`BS -> ~MGD`) cannot be used to assert `~MGD`.\n7. Therefore, the initial conclusion `MGD` holds true and is uncontradicted.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 613
+      "token_count": 1800
     },
     {
       "step": 5,
       "context": "Removed rules:\n- If Janelle receives recognition, then she makes a groundbreaking discovery.\n\nAdded rules:\n- If Janelle is a dedicated researcher, then she is a brilliant scientist.\n\nAdded facts:\n- Janelle does not publish papers.\n- Janelle does not advance knowledge.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "1. The question asks whether we can conclude 'Janelle makes a groundbreaking discovery' (`MGD`).\n2. The only rule in the current context that mentions `MGD` is 'If Janelle is a brilliant scientist, then she does not make a groundbreaking discovery' (`BS -> ~MGD`). This means if we can prove Janelle is a brilliant scientist (`BS`), then the conclusion is definitively false. If we cannot prove she is a brilliant scientist, this rule doesn't tell us anything.\n3. To determine if Janelle is a brilliant scientist (`BS`), we look at the rules that conclude `BS`. We have a new rule: 'If Janelle is a dedicated researcher, then she is a brilliant scientist' (`DR -> BS`). There is also the rule `(DR AND ~AK) -> BS`.\n4. Both rules that could prove `BS` require first proving that 'Janelle is a dedicated researcher' (`DR`).\n5. The only rule that concludes `DR` is 'If Janelle is passionate about botany, then she is a dedicated researcher...' (`PB -> (DR AND MW)`).\n6. However, the fact 'Janelle is passionate about botany' (`PB`) was removed in a previous step and is not part of the current context. There are no other facts or rules that would allow us to conclude `DR`.\n7. Since we cannot determine whether Janelle is a dedicated researcher (`DR`), we cannot determine whether she is a brilliant scientist (`BS`).\n8. Because the truth value of `BS` is uncertain, we cannot use the rule `BS -> ~MGD` to make any definite conclusion about `MGD`.\n9. There are no other rules or facts that lead to a conclusion about `MGD`. Therefore, its truth value remains uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
@@ -98,36 +98,36 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 740
+      "token_count": 2236
     },
     {
       "step": 6,
       "context": "Removed rules:\n- If Janelle does not make a groundbreaking discovery, then she does not receive recognition.\n\nAdded rules:\n- If Janelle conducts experiments and collects data, then she is passionate about botany.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "1. The question asks whether we can entail the conclusion 'Janelle makes a groundbreaking discovery' (`MGD`). The only rule that concludes anything about `MGD` is 'If Janelle is a brilliant scientist, then she does not make a groundbreaking discovery' (`BS -> ~MGD`). If we can prove Janelle is a brilliant scientist (`BS`), then the conclusion `MGD` must be false.\n2. We can prove `BS` if we can prove she is a dedicated researcher (`DR`), due to the rule 'If Janelle is a dedicated researcher, then she is a brilliant scientist' (`DR -> BS`).\n3. We can prove she is a dedicated researcher (`DR`) if we can prove she is passionate about botany (`PB`), due to the rule 'If Janelle is passionate about botany, then she is a dedicated researcher and meticulous in her work' (`PB -> (DR AND MW)`).\n4. A new rule was added: 'If Janelle conducts experiments and collects data, then she is passionate about botany' (`(CE AND CD) -> PB`).\n5. The context includes the facts 'Janelle conducts experiments' (`CE`) and 'Janelle collects data' (`CD`).\n6. Because the premises `CE` and `CD` are both true, we can conclude from the rule in step 4 that 'Janelle is passionate about botany' (`PB`) is true.\n7. Since `PB` is true, we can use the rule from step 3 to conclude she is a dedicated researcher (`DR`).\n8. Since `DR` is true, we can use the rule from step 2 to conclude she is a brilliant scientist (`BS`).\n9. Finally, since `BS` is true, we can use the rule from step 1 (`BS -> ~MGD`) to conclude that 'Janelle does not make a groundbreaking discovery' (`~MGD`).\n10. Since we have proven that Janelle does NOT make a groundbreaking discovery, the conclusion 'Janelle makes a groundbreaking discovery' is false.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 854
+      "token_count": 2745
     },
     {
       "step": 7,
       "context": "Added rules:\n- If Janelle is not a brilliant scientist, then she is not a dedicated researcher.\n- If Janelle makes a groundbreaking discovery, then she is not a brilliant scientist.",
       "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "1. The context includes the facts 'Janelle conducts experiments' (`CE`) and 'Janelle collects data' (`CD`).\n2. The rule 'If Janelle conducts experiments and collects data, then she is passionate about botany' (`(CE AND CD) -> PB`) applies. Since both premises are true, we conclude that Janelle is passionate about botany (`PB`).\n3. The rule 'If Janelle is passionate about botany, then she is a dedicated researcher and meticulous in her work' (`PB -> (DR AND MW)`) applies. Since `PB` is true, we conclude that Janelle is a dedicated researcher (`DR`).\n4. The rule 'If Janelle is a dedicated researcher, then she is a brilliant scientist' (`DR -> BS`) applies. Since `DR` is true, we conclude that Janelle is a brilliant scientist (`BS`).\n5. The rule 'If Janelle is a brilliant scientist, then she does not make a groundbreaking discovery' (`BS -> ~MGD`) applies. Since we concluded Janelle is a brilliant scientist (`BS`), it must be true that she does not make a groundbreaking discovery (`~MGD`).\n6. The new rules added (`~BS -> ~DR` and `MGD -> ~BS`) are contrapositives of existing rules (`DR -> BS` and `BS -> ~MGD` respectively), so they reinforce this chain of logic but do not alter the outcome.\n7. Since the context entails that Janelle does *not* make a groundbreaking discovery, the conclusion 'Janelle makes a groundbreaking discovery' is false.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 953
+      "token_count": 3296
     }
   ]
 }

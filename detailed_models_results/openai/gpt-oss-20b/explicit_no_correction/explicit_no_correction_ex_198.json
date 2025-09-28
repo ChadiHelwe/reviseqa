@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_correction",
+    "chain_index": 59,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Girlfriend is a talented chef.\nGirlfriend does not work in a restaurant.\nGirlfriend hosts dinner parties.\nIf Girlfriend is a talented chef, then she either works in a restaurant or prefers homemade meals, but not both.\nIf Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both.\nGirlfriend either cooks for others or enjoys savory foods, but not both.\nGirlfriend either loves sweets or enjoys savory foods, but not both.\nGirlfriend either loves sweets or eats in moderation.\nEither GF has a big appetite or she eats in moderation, but not both.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Girlfriend is a talented chef. Girlfriend does not work in a restaurant.. If Girlfriend is a talented chef, then she either works in a restaurant or prefers homemade meals, but not both.. Therefore, Girlfriend prefers homemade meals.. Girlfriend hosts dinner parties. Girlfriend prefers homemade meals.. If Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both.. Therefore, Girlfriend does not cook for others.. Girlfriend does not cook for others.. Girlfriend either cooks for others or enjoys savory foods, but not both.. Therefore, Girlfriend enjoys savory foods.. Girlfriend enjoys savory foods.. Girlfriend either loves sweets or enjoys savory foods, but not both.. Therefore, Girlfriend does not love sweets.. Girlfriend does not love sweets.. Girlfriend either loves sweets or eats in moderation.. Therefore, Girlfriend eats in moderation.. Girlfriend eats in moderation.. Either GF has a big appetite or she eats in moderation, but not both.. Therefore, GF has a big appetite..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Either Girlfriend has a big appetite or she eats in moderation, but not both.\n\nAdded rules:\n- Either Girlfriend has a big appetite or she eats in moderation.\n- Either Girlfriend does not have a big appetite or she does not eat in moderation.\n\nAdded facts:\n- Girlfriend prefers homemade meals.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the context:\n- Fact: Girlfriend is a talented chef, does not work in a restaurant, hosts dinner parties, and now prefers homemade meals.\n- Rule: If she cooks for others \u2192 she hosts dinner parties or prefers homemade meals, but not both.\n  * Since she hosts dinner parties (true) and prefers homemade meals (true), the exclusive\u2010or condition fails. Therefore the antecedent must be false, so she does not cook for others (Co = false).\n- Exclusive\u2010or: Cooks for others \u2295 enjoys savory foods \u2192 Co = false implies she enjoys savory foods (S = true).\n- Exclusive\u2010or: loves sweets \u2295 enjoys savory foods \u2192 S = true forces loves sweets (Sw = false).\n- Exclusive\u2010or: loves sweets \u2295 eats in moderation \u2192 Sw = false forces eats in moderation (M = true).\n- New rule: either big appetite or eats in moderation (A \u2295 M) and either not big appetite or not eats in moderation (\u00acA \u2295 \u00acM) together enforce A \u2295 M. Since M = true, A must be false.\nThus the conclusion \u201cGF has a big appetite\u201d is not entailed; it is actually contradicted by the derived values.\n",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 414
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both.\n\nAdded facts:\n- Girlfriend cooks for others.\n- Girlfriend does not eat in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Let A = has big appetite, M = eats in moderation, C = cooks for others, H = hosts dinner parties, R = works in a restaurant, P = prefers homemade meals, T = talented chef, S = loves sweets, Sav = enjoys savory foods.\nFacts: T, \u00acR, H, C, \u00acM.\nRules (remaining):\n1. T \u2192 (R XOR P).\n3. C XOR Sav.\n4. S XOR Sav.\n5. S XOR M.\n6a. A XOR M.\n6b. \u00acA XOR \u00acM.\nFrom 1: T true \u21d2 (R XOR P) true.  R is false \u21d2 P true.\nFrom 3: C true \u21d2 Sav false.\nFrom 5: S XOR M.  M is false \u21d2 S true.\nFrom 4: S true \u21d2 Sav false (consistent).\nFrom 6a: A XOR M with M false \u21d2 A true.\nCheck 6b: \u00acA false, \u00acM true \u2192 XOR true. All constraints satisfied. Thus A must be true.\nTherefore the conclusion \u201cGF has a big appetite\u201d follows from the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 778
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Girlfriend does not eat in moderation.\n\nAdded facts:\n- Girlfriend does not cook for others.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Facts: T, \u00acR, H, P, \u00acC. Rules: 1 (T \u2192 R XOR P), 3 (C \u2192 H XOR P), 4 (S XOR Sav), 5 (S XOR M), 6a (A XOR M), 6b (\u00acA XOR \u00acM). Since R is false and P is true, rule\u202f1 is satisfied. Rule\u202f3 is vacuously true because \u00acC. Rules\u202f4 and\u202f5 together enforce S \u2260 M and S \u2260 Sav. Rules\u202f6a and 6b are equivalent to A \u2260 M. There is no additional information fixing the truth of M; consequently A can be either true (if M false) or false (if M true). Both assignments satisfy all rules and facts. Thus the context does not entail that GF has a big appetite, nor does it entail the contrary. The conclusion is undecided.\n",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1108
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- Either Girlfriend has a big appetite or she eats in moderation.\n- Either Girlfriend does not have a big appetite or she does not eat in moderation.\n\nAdded rules:\n- Either Girlfriend has a big appetite or she eats in moderation, but not both.\n\nAdded facts:\n- Girlfriend enjoys savory foods.\n- Girlfriend does not love sweets.\n- Girlfriend eats in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The current context contains the facts:\u202fT,\u202f\u00acR,\u202fH,\u202fP,\u202f\u00acC,\u202fSav,\u202f\u00acS,\u202fM. It has the rules:\u00b7If T \u2192 (R XOR P).\u2014Given T and P, this forces \u00acR, which is consistent.\u00b7C XOR Sav\u2014Since \u00acC holds, Sav must hold; it does.\u00b7S XOR Sav\u2014Since \u00acS and Sav, this holds.\u00b7S XOR M\u2014Since \u00acS and M, this holds.\u00b7A XOR M\u2014This is the only rule relating A. With M true, the XOR condition can only be satisfied by \u00acA \u2227 M, hence A must be false. No other rule constrains A, and there is no fact asserting A true. Therefore \u201cGF has a big appetite\u201d is contradicted, not entailed. Thus the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1365
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Girlfriend eats in moderation.\n\nRemoved rules:\n- Girlfriend either loves sweets or eats in moderation.\n\nAdded rules:\n- Girlfriend does not love sweets and she does not eat in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: T, \u00acR, H, P, \u00acC, Sav, \u00acS, \u00acM. Rules remaining: 1. T \u2192 (R XOR P). Holds because P true, R false. 3. C XOR Sav. Holds because \u00acC and Sav true. 4. S XOR Sav. Holds because Sav true \u21d2 S false (\u00acS). 6a. A XOR M. Since M false, exactly one of A or M must be true \u21d2 A must be true. No other rule involves A. Thus big appetite is forced true, satisfying all constraints. Therefore the conclusion \"GF has a big appetite\" follows.\n",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1672
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Girlfriend does not love sweets and she does not eat in moderation.\n\nAdded rules:\n- Girlfriend either loves sweets or eats in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "Starting from the original facts T, \u00acR, H, after all the modifications the remaining facts are T, \u00acR, H, C, P. All other facts (S, M, etc.) were removed and then re\u2011introduced as constraints.\n\nRules that remain:\n1. T \u2192 (R XOR P) \u2013 satisfied with P=true and R=false.\n2. C XOR Sav \u2013 with C=true, this forces Sav = false.\n3. S XOR Sav \u2013 with Sav=false, this forces S = true.\n4. S XOR M \u2013 with S=true this forces M = false.\n5. A XOR M \u2013 with M=false this forces A = true.\n\nThere are no other rules linking A. The only assignment that satisfies all rules is A = true. Hence the conclusion \u201cGF has a big appetite\u201d is entailed.\n",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1887
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- Girlfriend enjoys savory foods and she does not love sweets.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The final set of facts includes: T (talented chef), \u00acR (does not work in a restaurant), H (hosts dinner parties), P (prefers homemade meals), Sav (enjoys savory foods), \u00acS (does not love sweets). There are no facts about C, M or A. The rules still in play are:\n1. T \u2192 (R XOR P). With T true, R false, P true, this is satisfied.\n2. C \u2192 (H XOR P). This imposes no constraint because C is unknown.\n3. C XOR Sav. Since Sav is true, this forces C to be false.\n4. S XOR Sav. With S false and Sav true, the rule is satisfied.\n5. S XOR M. With S false, this forces M to be true.\n6. A XOR M. With M true, this forces A to be false.\nThere are no other constraints on A. Thus A (big appetite) is forced to be false. Therefore the statement \u201cGF has a big appetite\u201d is not entailed; it is contradicted by the context.\n",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2139
+    }
+  ]
+}

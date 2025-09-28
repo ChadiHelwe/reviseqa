@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_correction",
+    "chain_index": 289,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Tiger does not get dirty.\nTiger does not require bathing.\nTiger enjoys water.\nTiger does not feel refreshed.\nIf a dog plays outdoors, then it gets dirty.\nIf Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.\nIf a dog enjoys water and gets cleaned, then it will feel refreshed.\nIf Tiger goes hiking or needs attention, then he will get cleaned.\nIf a dog has ticks, then it needs attention.\nTiger either has ticks or gets regular grooming (or both).",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Tiger does not get dirty.. If a dog plays outdoors, then it gets dirty.. Therefore, Tiger does not play outdoors.. Tiger does not play outdoors. Tiger does not require bathing.. If Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.. Therefore, Tiger does not go hiking.. Tiger enjoys water. Tiger does not feel refreshed.. If a dog enjoys water and gets cleaned, then it will feel refreshed.. Therefore, Tiger does not get cleaned.. Tiger does not go hiking. Tiger does not get cleaned.. If Tiger goes hiking or needs attention, then he will get cleaned.. Therefore, Tiger does not need attention.. Tiger does not need attention.. If a dog has ticks, then it needs attention.. Therefore, Tiger does not have ticks.. Tiger does not have ticks.. Tiger either has ticks or gets regular grooming (or both).. Therefore, Tiger gets regular grooming..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.\n\nAdded rules:\n- For all x, if x does not get dirty, then x does not play outdoors.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the added rule and the fact that Tiger does not get dirty, we derive that Tiger does not play outdoors.\n\nTiger enjoys water, yet he does not feel refreshed.  By contraposing the rule that if a dog enjoys water and gets cleaned then it feels refreshed, we infer that Tiger does not get cleaned.\n\nSince Tiger does not get cleaned, by contraposing the rule that if Tiger goes hiking or needs attention then he will get cleaned, we deduce that Tiger does not go hiking and also does not need attention.\n\nThe rule \"If a dog has ticks then it needs attention\" contraposed gives: if Tiger does not need attention, then Tiger does not have ticks. Therefore Tiger does not have ticks.\n\nFinally, the final rule states \"Tiger either has ticks or gets regular grooming (or both).\"  Because Tiger does not have ticks, the only remaining possibility is that Tiger gets regular grooming.  Hence the statement \"Tiger gets regular grooming\" is logically entailed by the context.\n\nTherefore the conclusion is definitely true.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 392
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Tiger does not feel refreshed.\n\nAdded rules:\n- For all x, if x has ticks, then x does not get regular grooming.\n\nAdded facts:\n- Tiger has ticks.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The updated context includes the factual statement \"Tiger has ticks.\" It also includes the new rule: \"For all x, if x has ticks, then x does not get regular grooming.\" This rule directly applies to Tiger, yielding the inference \"Tiger does not get regular grooming.\" The original rule that \"Tiger either has ticks or gets regular grooming (or both)\" does not conflict with this inference; it merely allows the possibility of grooming even if Tiger has ticks, but the added rule explicitly prohibits grooming when ticks are present. Therefore, the context logically contradicts the claim that \"Tiger gets regular grooming,\" and thus this claim is not entailed. The conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 707
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.\n- For all x, if x does not get dirty, then x does not play outdoors.\n\nAdded rules:\n- If Tiger plays outdoors and does not go hiking, then he requires bathing.\n- If Tiger does not play outdoors and goes hiking, then he requires bathing.\n- For all x, either x gets dirty or x does not play outdoors.\n\nAdded facts:\n- Tiger needs attention.\n- Tiger gets cleaned.\n- Tiger feels refreshed.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The available facts are: Tiger needs attention, Tiger gets cleaned, Tiger feels refreshed, Tiger does not get dirty, Tiger does not require bathing, Tiger enjoys water, Tiger does not feel refreshed (originally) but is overridden by the new fact of refreshed. The rules present are: \n\u2022 If Tiger plays outdoors and does not go hiking then he requires bathing.\n\u2022 If Tiger does not play outdoors and goes hiking then he requires bathing.\n\u2022 For all x, either x gets dirty or x does not play outdoors.\n\u2022 If Tiger goes hiking or needs attention, then he will get cleaned.\n\u2022 If a dog enjoys water and gets cleaned, then it feels refreshed.\n\u2022 Tiger either has ticks or gets regular grooming (or both).\n\nFrom the rule \u201ceither gets dirty or not play outdoors\u201d and the fact that Tiger does not get dirty, we derive \u2018Tiger does not play outdoors\u2019. This does not affect grooming.\n\nWe have no rule that forces Tiger to have ticks, and we also have no new rule that forbids grooming. Thus the disjunction \u201chas ticks or gets grooming\u201d remains undecided: Tiger may or may not get grooming. None of the existing facts or rules uniquely imply that Tiger gets regular grooming.\n\nTherefore the conclusion \u2018Tiger gets regular grooming\u2019 is not entailed, nor contradicted by the context.\n\nSo the correct answer is Uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 933
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all x, if x does not get dirty, then x does not play outdoors.\n- If Tiger either plays outdoors or goes hiking (but not both), then he requires bathing.\n\nAdded facts:\n- Tiger either goes hiking or needs attention.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The context contains two rules and one fact.\n- Rule 1: If an entity does not get dirty, then it does not play outdoors.\n- Rule 2: If Tiger either plays outdoors or goes hiking (but not both), then Tiger requires bathing.\n- Fact: Tiger either goes hiking or needs attention.\n\nThere is no information about Tiger getting dirty, playing outdoors, bathing, having ticks, or grooming. The mention that Tiger either goes hiking or needs attention does not, by itself, determine whether Tiger is dirty or plays outdoors. Rule 1 provides no link to grooming. Rule 2 only says that if Tiger meets the condition (plays outdoors XOR goes hiking), he requires bathing; it does not entail grooming. No rule in the current context connects grooming with the stated facts or rules.\n\nTherefore the statement \"Tiger gets regular grooming\" cannot be logically inferred or denied from the given context \u2013 the truth value is undecided. The correct choice is Uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1375
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Tiger has ticks.\n\nAdded facts:\n- Tiger does not have ticks.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The only statement linking grooming to another property is the disjunction:\n\n\u2013 Tiger either has ticks or gets regular grooming (or both).\n\nSince the updated facts state that \"Tiger does not have ticks,\" the first disjunct is false.  For the disjunction to be true, the second disjunct must hold.  No rule in the current context states that Tiger cannot get regular grooming, nor does any rule infer the contrary.  Therefore the truth of the disjunction forces the conclusion that \"Tiger gets regular grooming.\"  Hence the conclusion is logically entailed.\n\nAnswer: True.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1673
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, if x gets regular grooming, then x does not have ticks.\n\nAdded facts:\n- Tiger gets regular grooming.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly contains the fact \"Tiger gets regular grooming.\" Since a fact is a direct assertion, the statement \"Tiger gets regular grooming\" is a logical consequence of the context. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1860
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Tiger gets regular grooming.\n\nAdded facts:\n- Tiger has ticks.",
+      "question": "Does the context entail the conclusion 'Tiger gets regular grooming.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The only information in the current context is that Tiger has ticks, while the fact that Tiger gets regular grooming has been removed. No rule in this context states that having ticks prevents or guarantees grooming. Therefore, from the given context we cannot conclude either that Tiger gets regular grooming or that he does not. The truth of the statement is undetermined.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1976
+    }
+  ]
+}

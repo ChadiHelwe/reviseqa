@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit",
+    "chain_index": 212,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kyro hides in vegetation.\nKyro climbs rocks.\nKyro does not feed on plankton.\nFor Kyro, either he hides in vegetation or burrows sand, but not both.\nIf Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.\nEvery mudskipper that explores the mudflats either walks on mud or feeds on plankton (or both).\nKyro either swims efficiently or walks on mud, but not both.\nKyro either breathes air or swims efficiently, but not both.\nAll mudskippers that can breathe air can survive out of water.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Kyro hides in vegetation.. For Kyro, either he hides in vegetation or burrows sand, but not both.. Therefore, Kyro does not burrow sand.. Kyro climbs rocks. Kyro does not burrow sand.. If Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.. Therefore, Kyro explores the mudflats.. Kyro explores the mudflats. Kyro does not feed on plankton.. Every mudskipper that explores the mudflats either walks on mud or feeds on plankton (or both).. Therefore, Kyro walks on mud.. Kyro walks on mud.. Kyro either swims efficiently or walks on mud, but not both.. Therefore, Kyro does not swim efficiently.. Kyro does not swim efficiently.. Kyro either breathes air or swims efficiently, but not both.. Therefore, Kyro can breathe air.. Kyro can breathe air.. All mudskippers that can breathe air can survive out of water.. Therefore, Kyro cannot survive out of water..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x explores the mudflats, then x either walks on mud or feeds on plankton.\n\nAdded rules:\n- For all x, if x explores the mudflats, then x does not walk on mud.\n- For all x, if x does not breathe air, then x cannot survive out of water.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Kyro hides in vegetation, so by the exclusive-or he does not burrow sand. He climbs rocks, and since he either climbs rocks or burrows sand (but not both), the conditional gives that Kyro explores the mudflats. The added rule states that any explorer of the mudflats does not walk on mud, so Kyro does not walk on mud. The exclusive-or 'swims efficiently or walks on mud' then forces Kyro to swim efficiently. The exclusive-or 'breathes air or swims efficiently' then forces Kyro not to breathe air. The added rule 'if does not breathe air then cannot survive out of water' applies, yielding that Kyro cannot survive out of water. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 448
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Kyro hides in vegetation.\n\nAdded facts:\n- Kyro burrows sand.\n- Kyro walks on mud.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The XOR rule 'hides in vegetation or burrows sand but not both' combined with the fact that Kyro burrows sand forces Kyro not to hide in vegetation. The XOR rule 'either climbs rocks or burrows sand but not both' has both antecedents true, so its condition is false and we cannot infer that Kyro explores the mudflats. The XOR 'swims efficiently or walks on mud but not both' together with the fact that Kyro walks on mud yields that Kyro does not swim efficiently. The XOR 'breathes air or swims efficiently but not both' then forces Kyro to breathe air (since he does not swim efficiently). The rule 'all mudskippers that can breathe air can survive out of water' therefore lets us conclude that Kyro can survive out of water. The added rule about 'if does not breathe air then cannot survive out of water' does not apply because Kyro does breathe air. Thus the conclusion 'Kyro cannot survive out of water' is not entailed; the opposite is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 722
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, x breathes air if and only if x can survive out of water.\n- For all x, if x walks on mud, then x does not explore the mudflats.\n\nAdded facts:\n- Kyro breathes air.\n- Kyro does not swim efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added fact that Kyro breathes air together with the biconditional rule (breathes air iff can survive out of water) directly entails that Kyro can survive out of water. Therefore the negated claim 'Kyro cannot survive out of water' is not entailed (indeed its opposite is entailed).",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1016
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Kyro walks on mud.\n- Kyro does not swim efficiently.\n- Kyro breathes air.\n\nAdded facts:\n- Kyro does not walk on mud.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Using the XOR rule (hides in vegetation XOR burrows sand) and the fact that Kyro burrows sand, we infer Kyro does not hide in vegetation. The XOR rule (climbs rocks XOR burrows sand) has both true, so its condition is false and we cannot infer that Kyro explores the mudflats. From the XOR rule (swims efficiently XOR walks on mud) and the fact that Kyro does not walk on mud, we infer that Kyro swims efficiently. The XOR rule (breathes air XOR swims efficiently) then forces Kyro not to breathe air. The added rule (if not breathe air then cannot survive out of water) gives Kyro cannot survive out of water. Additionally, the added biconditional (breathes air iff can survive out of water) together with Kyro not breathing air also entails that Kyro cannot survive out of water. No rule derives that Kyro can survive out of water. Therefore the conclusion 'Kyro cannot survive out of water' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1196
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, if x can survive out of water, then x breathes air.\n- For all x, it is not the case that x walks on mud and x explores the mudflats.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the fact that Kyro does not walk on mud and the rule that he either swims efficiently or walks on mud (but not both), we infer that Kyro swims efficiently. The rule that Kyro either breathes air or swims efficiently (but not both) then forces that Kyro does not breathe air. The added rule 'if not breathe air then cannot survive out of water' yields that Kyro cannot survive out of water. Additionally, the biconditional 'breathes air iff can survive out of water' together with Kyro not breathing air also entails that Kyro cannot survive out of water. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1496
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Kyro either swims efficiently or walks on mud, but not both.\n\nAdded facts:\n- Kyro does not swim efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the XOR rule between breathes air and swims efficiently and the fact that Kyro does not swim efficiently, we infer that Kyro breathes air. The rule that any creature that breathes air can survive out of water then gives that Kyro can survive out of water. The biconditional also confirms this. No rule derives that Kyro cannot survive out of water. Therefore the statement 'Kyro cannot survive out of water' is not entailed (its negation is entailed).",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1723
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Kyro does not swim efficiently.\n\nAdded facts:\n- Kyro swims efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The exclusive-or rule 'Kyro either breathes air or swims efficiently, but not both' combined with the fact that Kyro does not swim efficiently forces Kyro to breathe air. The rule 'All mudskippers that can breathe air can survive out of water' (and the biconditional breathes air iff can survive) then yields that Kyro can survive out of water. Therefore the statement that Kyro cannot survive out of water is not entailed; its opposite is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1904
+    }
+  ]
+}

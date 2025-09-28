@@ -6,7 +6,7 @@
     "include_reasoning": true,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.7142857142857143
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Added rules:\n- For all x, if x does not lead a herd, then x is not experienced and x does not have good memory.\n- If Kartier is young, then if Kartier is small, then Kartier has a short trunk.\n\nAdded facts:\n- Kartier does not lead a herd.",
       "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Kartier does not lead a herd (new fact). By the added rule, this means he is not experienced and does not have good memory. He already does not have good memory (context). Since he lives alone (context), he cannot lead a herd. By the same rule, if not leading, he\u2019s not experienced. Every elephant is experienced or young (context), so he is young. He eats less and does not weigh lightly (context), so is small. Now, the new rule states if Kartier is young and small, he has a short trunk. Thus, he has a short trunk. Since he can have only one trunk type, he does not have a long trunk.",
+      "correct": true,
       "tags": [
         "added_rules",
         "added_facts"
@@ -41,89 +41,89 @@
       "step": 2,
       "context": "Added rules:\n- For all x, if x is not experienced, then x is young.",
       "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Kartier lives alone (context), so he cannot lead a herd (mutually exclusive with living alone). From the original rule about leading a herd, contrapositive implies he is not experienced and does not have good memory (already stated in context). The new added rule states that if not experienced, he is young. Thus, Kartier is young. He eats less and does not weigh lightly (context), making him small. Since he is young and small, the rule 'if young and small \u2192 short trunk' applies. With a short trunk, the 'long or short, not both' rule confirms he does not have a long trunk.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 536
+      "token_count": 999
     },
     {
       "step": 3,
       "context": "Removed facts:\n- Kartier lives alone.\n- Kartier does not lead a herd.\n\nAdded rules:\n- For all x, if x is not young and x is small, then x does not have a short trunk.\n\nAdded facts:\n- Kartier is not young.",
       "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Kartier is not young (added fact) and eats less/does not weigh lightly \u2192 small (original rule). The new rule 'if not young and small \u2192 not short trunk' applies. Since he has only one trunk type and not short, he must have a long trunk. Thus, the conclusion '|K| does not have a long trunk' is false.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 612
+      "token_count": 2832
     },
     {
       "step": 4,
       "context": "Added rules:\n- For all x, if x is an exception and x is special, then x has a short trunk.\n\nAdded facts:\n- Kartier is an exception.\n- Kartier is not special.",
       "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The rule only applies if Kartier is both an exception and special. He is an exception but not special, making the antecedent false. No rule directly links his current attributes to trunk length. The long/trunk-exclusive rule exists but no info on his trunk type. Insufficient to determine if he has a long trunk.",
       "correct": false,
       "tags": [
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 724
+      "token_count": 3636
     },
     {
       "step": 5,
       "context": "Added facts:\n- Kartier is experienced.\n- Kartier leads a herd.\n- Kartier does not live alone.",
       "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Kartier is experienced and not young (since every elephant is experienced or young). He is small (from original context: eats less, not weighs lightly). The prior rule 'if not young and small \u2192 not short trunk' applies. Since he cannot have a short trunk and must have one type, he has a long trunk. Thus, the conclusion '|K| does not have a long trunk' is false.",
+      "correct": true,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 823
+      "token_count": 4117
     },
     {
       "step": 6,
       "context": "Added rules:\n- For all x, if x is not young, then x is experienced.\n- For all x, if x is not young, then if x is small, then x does not have a short trunk.",
       "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Kartier is experienced (added fact) and small (from original context: eats less, not weighs lightly). The first new rule 'if x is not young \u2192 x is experienced' is always true (since every elephant is experienced or young). His age (young/not young) cannot be determined from being experienced. The second rule 'if not young and small \u2192 no short trunk' requires knowing he is not young. Since age is undetermined, both scenarios (young/small \u2192 short trunk; not young/small \u2192 no short trunk) are possible. Thus, whether he has a long trunk is uncertain.",
       "correct": false,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 904
+      "token_count": 5917
     },
     {
       "step": 7,
       "context": "Removed rules:\n- For all x, if x is not young and x is small, then x does not have a short trunk.\n- For all x, if x is not young, then if x is small, then x does not have a short trunk.\n\nAdded rules:\n- For all x, if x is not young and x is small, then x has a short trunk.",
       "question": "Does the context entail the conclusion 'Kartier does not have a long trunk.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Kartier is small (original rule: eats less and not weighs lightly). Regardless of whether he is young or not young, both cases now mandate a short trunk: (1) If young and small \u2192 short trunk (original rule), (2) If not young and small \u2192 short trunk (new added rule). Since he has only one trunk type, he has a short trunk \u2192 does not have a long trunk. Thus, conclusion is entailed.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 1006
+      "token_count": 8118
     }
   ]
 }

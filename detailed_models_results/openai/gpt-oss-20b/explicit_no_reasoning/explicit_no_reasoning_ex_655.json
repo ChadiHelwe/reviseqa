@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 297,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Chick does not fluff her plumage.\nChick flaps her wings.\nChick feels threatened.\nChick protects her nest.\nChick does not avoid confrontation.\nChick is challenged.\nEvery chicken either fluffs its plumage or puffs out its feathers.\nFor Chick, either she puffs out her feathers or she lets out a loud squawk, but not both.\nIf Chick either flaps her wings or lets out a loud squawk (but not both), then she sounds an alarm.\nIf Chick feels threatened, then she either attacks predators or sounds an alarm (but not both).\nIf Chick either protects her nest or defends her flock (but not both), then she attacks predators.\nChick either stands her ground or avoids confrontation, but not both.\nIf Chick is challenged, then she is either timid or stands her ground, but not both.\nIf Chick defends her flock, then she is fearless.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Chick does not avoid confrontation.\n\nAdded rules:\n- If Chick is challenged, then she avoids confrontation.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "With the updated context, we have the fact Chick is challenged. Rule 15 gives Chick avoids confrontation, so Avoid=true. Rule 12 (StandGround XOR Avoid) forces StandGround=false. Rule 13 (Timid XOR StandGround) with StandGround=False yields Timid=true. No rule produces Fearless (Defend would produce Fearless, but Defend is forced false by rule 11 because Chick protects nest). Thus Chicken is timid and not fearless, so the exclusive statement \u2018either fearless or timid, but not both\u2019 is satisfied. Hence the conclusion is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 296
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Chick protects her nest.\n\nAdded rules:\n- If Chick is fearless, then she defends her flock.\n\nAdded facts:\n- Chick does not protect her nest.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "With the updated context, we derive that Chick stays on guard: From facts and rules we deduce that Chick does not fluff her plumage, thus she puffs out her feathers; by the exclusive rule for puff and squawk, Chick does not squawk. Since Chick flaps her wings, the condition for sounding an alarm is satisfied, giving Alarm=true. Because Chick feels threatened, either Attack or Alarm must be true, but not both; with Alarm=true we deduce Attack=false. The rule linking Protect xor Defend to Attack shows that Defend must be false (otherwise Attack would be true). Consequently Fearless is false, and by the rule Timid xor Stand triggered by being challenged and the fact that Chick does not avoid confrontation, we find Stand=true and hence Timid=false. Thus both Fearless and Timid are false, so the exclusive claim \u2018either fearless or timid, but not both\u2019 is not entailed by the context.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 485
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Chick is challenged, then she avoids confrontation.\n\nAdded facts:\n- Chick avoids confrontation.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "With the updated context, we have the facts Chick flaps wings, Chick feels threatened, Chick is challenged, Chick does not protect her nest, and newly added Chick avoids confrontation. The fact that Chick does not avoid confrontation has been removed. Rule \"If Chick is challenged then she either timid or stands her ground\" forces, together with rule \"Chick either stands her ground or avoids confrontation (but not both)\", that Chick\u2019s stand ground is false and therefore Timid is true.\n\nThe remaining uncertainty lies in the status of \"Fearless\". Rules are: (1) Defend \u2194 Fearless and (2) Defend \u2192 Attack and Attack \u2194 Alarm (from \"feels threatened\" rule). The rule that would have forced Defend (hence Fearless) is no longer present. Both assignments \u2013 Defend true (\u21d2 Fearless true) and Defend false (\u21d2 Fearless false) \u2013 lead to fully consistent models that satisfy all other constraints. Thus you can construct a model where Fearless is true and Timid is true (violating the exclusive \u201cbut not both\u201d part) and another model where Fearless is false and Timid is true (satisfying it).\n\nSince the conclusion \u201ceither fearless or timid, but not both\u201d can be true in some models and false in others, it is not entailed by the context. Therefore the correct answer is \u201cUncertain.\u201d",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 778
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Chick either protects her nest or defends her flock (but not both), then she attacks predators.\n\nAdded rules:\n- It is not the case that Chick either stands her ground or avoids confrontation, but not both.\n\nAdded facts:\n- Chick defends her flock.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The updated context gives the facts: chick does not fluff, flaps wings, feels threatened, defends her flock, protects her nest, and is challenged. From the rules we infer puff=true, squawk=false, alarm=true, attack=false, and fearless=true (defends flock \u2192 fearless). The new rule \u201cIt is not the case that Chick either stands her ground or avoids confrontation, but not both\u201d (\u00ac(Stand\u2295Avoid)) conflicts with the earlier rule \u201cChick either stands her ground or avoids confrontation, but not both\u201d (Stand\u2295Avoid). Together these impose the only two allowed assignments: (Stand=true, Avoid=true) or (Stand=false, Avoid=false). Using the rule \u201cIf Chick is challenged then she is either timid or stands her ground, but not both\u201d (Timid\u2295Stand) we find two consistent possibilities: (1) Stand=true, Avoid=true, Timid=false; (2) Stand=false, Avoid=false, Timid=true. In case (1) the conclusion \u2018fearless or timid, but not both\u2019 holds (fearless=true, timid=false). In case (2) it does not (both fearless and timid are true). Because the context allows a model where the conclusion is false, it is not logically entailed by the context. Therefore the correct answer is 'False'.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1160
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- It is not the case that Chick either stands her ground or avoids confrontation, but not both.\n\nAdded facts:\n- Chick either stands her ground or avoids confrontation, but not both.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "In the updated context the original facts remain: Chick does not fluff her plumage, flaps her wings, feels threatened, protects her nest, does not avoid confrontation, and is challenged.  The added fact enforces the exclusive relation between standing\u2011ground and avoidance: Stand \u2295 Avoid.  Since Chick does not avoid confrontation, Avoid is false, so Stand must be true.  The rule \"If Chick is challenged then she is either timid or stands her ground, but not both\" then forces Timid to be false (because Stand is true).  No rule derives Fearless (defending the flock is not a fact here).  Consequently both Fearless and Timid are false, so the statement \u201cChick is either fearless or timid, but not both\u201d is not satisfied and is not entailed by the context. Hence the correct answer is 'False'.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1561
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Chick avoids confrontation.\n\nAdded facts:\n- Chick does not avoid confrontation.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "With the given facts and rules, the only consistent model forces Chick\u2019s \u2018defend\u2019 property to be true (otherwise the attack\u2011predators rule would contradict the attack=false conclusion derived from the alarm rule).  Defend\u2192Fearless then makes Fearless true.  The rule \u2018Chick either stands her ground or avoids confrontation (but not both)\u2019 together with the fact \u2018Chick does not avoid confrontation\u2019 forces Stand=true and hence Timid=false.  Thus exactly one of (Fearless, Timid) is true, satisfying the exclusive statement.  No alternative model can make the statement false, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1844
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Chick defends her flock.\n\nAdded rules:\n- If Chick defends her flock, then she is not fearless.",
+      "question": "Does the context entail the conclusion 'Chick is either fearless or timid, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With the new rule \u2018If Chick defends her flock then she is not fearless\u2019 added to the existing rule \u2018If Chick defends her flock then she is fearless\u2019, the knowledge base becomes inconsistent.  The only way to satisfy the other rules would force a contradiction between \u2018Fearless\u2019 and \u2018not Fearless\u2019, making the set of premises unsatisfiable.  In an unsatisfiable knowledge base the conclusion \u2018Chick is either fearless or timid, but not both\u2019 is not guaranteed\u2014there is no model in which it can be evaluated\u2014so it is not entailed. Consequently the correct answer is that the conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2058
+    }
+  ]
+}

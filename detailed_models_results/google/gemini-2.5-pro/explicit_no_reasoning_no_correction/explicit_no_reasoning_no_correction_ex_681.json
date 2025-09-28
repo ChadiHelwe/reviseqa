@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.7142857142857143
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Added rules:\n- If Chana pursues her passion, then she is either determined or overcomes adversity, or both.\n- Either Chana is not determined, or she either achieves recognition or inspires others, but not both.\n\nAdded facts:\n- Chana does not foster collaboration.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's break down the given information into logical statements:\n1.  `develops strategic thinking` is True.\n2.  `pursues excellence` is False.\n3.  `drives innovation` is True.\n4.  `sets goals` is True.\n5.  `stays motivated` is False.\n6.  `overcomes adversity` is False.\n7.  `fosters collaboration` is False (given as an added fact).\n\nNow, let's use the rules to deduce more facts:\n\n*   From 'If Chana either sets goals or pursues her passion (but not both), then she stays motivated':\n    - The consequent, `stays motivated`, is False.\n    - Therefore, the antecedent, `sets goals XOR pursues her passion`, must be False (Modus Tollens).\n    - For an XOR to be false, both sides must have the same truth value.\n    - Since `sets goals` is True, `pursues her passion` must also be True.\n\n*   From 'If Chana pursues her passion, then she is either determined or overcomes adversity, or both':\n    - The antecedent, `pursues her passion`, is True.\n    - Therefore, the consequent, `determined OR overcomes adversity`, must be True (Modus Ponens).\n    - We know `overcomes adversity` is False.\n    - For the 'OR' statement to be true, `determined` must be True.\n\n*   From 'If Chana mentors her peers, then she either pursues excellence or fosters collaboration (but not both)':\n    - The consequent is `pursues excellence XOR fosters collaboration`.\n    - We know `pursues excellence` is False and `fosters collaboration` is False.\n    - `False XOR False` is False. So the consequent is False.\n    - Since the consequent is false, the antecedent, `mentors her peers`, must also be False (Modus Tollens).\n\n*   From 'If Chana either mentors her peers or drives innovation (but not both), then she leads by example':\n    - The antecedent is `mentors her peers XOR drives innovation`.\n    - We know `mentors her peers` is False and `drives innovation` is True.\n    - `False XOR True` is True. So the antecedent is True.\n    - Since the antecedent is true, the consequent, `leads by example`, must be True (Modus Ponens).\n\n*   From 'Chana either inspires others or leads by example, but not both':\n    - This is `inspires others XOR leads by example`.\n    - We know `leads by example` is True.\n    - For `inspires others XOR True` to be True, `inspires others` must be False.\n\n*   From 'Either Chana is not determined, or she either achieves recognition or inspires others, but not both' (which is equivalent to 'If Chana is determined, then she either achieves recognition or inspires others, but not both'):\n    - The antecedent, `determined`, is True.\n    - Therefore, the consequent, `achieves recognition XOR inspires others`, must be True (Modus Ponens).\n    - We know `inspires others` is False.\n    - For `achieves recognition XOR False` to be True, `achieves recognition` must be True.\n\nThus, the conclusion 'Chana achieves recognition' is necessarily true based on the context.",
+      "correct": true,
       "tags": [
         "added_rules",
         "added_facts"
@@ -41,91 +41,91 @@
       "step": 2,
       "context": "Added facts:\n- Chana pursues her passion.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's formalize the context and trace the logical deductions. We are given a set of initial facts and rules from the previous contexts, plus one new fact.\n\nInitial Facts:\n1.  `develops strategic thinking` = True\n2.  `pursues excellence` = False\n3.  `drives innovation` = True\n4.  `sets goals` = True\n5.  `stays motivated` = False\n6.  `overcomes adversity` = False\n7.  `fosters collaboration` = False\n8.  `pursues her passion` = True (new fact)\n\nRules:\n- R1: `develops strategic thinking` XOR `fosters collaboration`\n- R2: `mentors her peers` -> (`pursues excellence` XOR `fosters collaboration`)\n- R3: (`mentors her peers` XOR `drives innovation`) -> `leads by example`\n- R4: (`sets goals` XOR `pursues her passion`) -> `stays motivated`\n- R5: `inspires others` XOR `leads by example`\n- R6: If Chana pursues her passion, then she is either determined or overcomes adversity, or both. (`pursues her passion` -> `determined` OR `overcomes adversity`)\n- R7: Either Chana is not determined, or she either achieves recognition or inspires others, but not both. (Equivalent to: `determined` -> `achieves recognition` XOR `inspires others`)\n\nStep-by-step deduction:\n1.  From rule R6 (`pursues her passion` -> `determined` OR `overcomes adversity`): We are given that `pursues her passion` is True. Therefore, the consequent `determined` OR `overcomes adversity` must be True (Modus Ponens). We are also given that `overcomes adversity` is False. For the OR statement to be true, `determined` must be True.\n\n2.  From rule R2 (`mentors her peers` -> (`pursues excellence` XOR `fosters collaboration`)): We know `pursues excellence` is False and `fosters collaboration` is False. The expression `False XOR False` evaluates to False. So the rule becomes `mentors her peers` -> False. By Modus Tollens, `mentors her peers` must be False.\n\n3.  From rule R3 ((`mentors her peers` XOR `drives innovation`) -> `leads by example`): We just deduced `mentors her peers` is False. We are given `drives innovation` is True. The expression `False XOR True` evaluates to True. So the rule becomes `True -> leads by example`. By Modus Ponens, `leads by example` must be True.\n\n4.  From rule R5 (`inspires others` XOR `leads by example`): We just deduced `leads by example` is True. For the XOR statement to be true, the two terms must have different truth values. Therefore, `inspires others` must be False.\n\n5.  From rule R7 (`determined` -> `achieves recognition` XOR `inspires others`): In step 1, we deduced that `determined` is True. Therefore, the consequent `achieves recognition` XOR `inspires others` must be True (Modus Ponens). In step 4, we deduced that `inspires others` is False. For the expression `achieves recognition` XOR `False` to be True, `achieves recognition` must be True.\n\nSince we have logically derived that 'Chana achieves recognition' must be True, the conclusion is entailed by the context.",
+      "correct": true,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 379
+      "token_count": 1173
     },
     {
       "step": 3,
       "context": "Removed rules:\n- If Chana mentors her peers, then she either pursues excellence or fosters collaboration (but not both).\n\nAdded rules:\n- Chana either mentors her peers or drives innovation if and only if she leads by example.\n\nAdded facts:\n- Chana mentors her peers.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's formalize the facts and rules to trace the logical implications.\n\n**Initial Facts:**\n1.  `drives innovation` = True\n2.  `pursues her passion` = True\n3.  `overcomes adversity` = False\n4.  `mentors her peers` = True (new fact)\n\n**Relevant Rules:**\n1.  `pursues her passion` -> (`determined` OR `overcomes adversity`)  (Rule from the original context)\n2.  `Chana either mentors her peers or drives innovation if and only if she leads by example.` This is a biconditional. Given the pattern in previous problems where 'either/or' without '(or both)' implies exclusivity, we interpret this as: (`mentors her peers` XOR `drives innovation`) <=> `leads by example`.\n3.  `inspires others` XOR `leads by example` (Rule from the original context)\n4.  `determined` -> (`achieves recognition` XOR `inspires others`) (Rule from the original context)\n\n**Step-by-step Deduction:**\n\n1.  **Deduce `leads by example`:**\n    *   We use the new rule: (`mentors her peers` XOR `drives innovation`) <=> `leads by example`.\n    *   We are given `mentors her peers` = True and `drives innovation` = True.\n    *   `True XOR True` evaluates to `False`.\n    *   The rule becomes `False <=> leads by example`.\n    *   Therefore, `leads by example` must be `False`.\n\n2.  **Deduce `inspires others`:**\n    *   We use the rule: `inspires others` XOR `leads by example`.\n    *   This is a statement that is always true in the context.\n    *   We just deduced `leads by example` = False.\n    *   The statement becomes `inspires others XOR False`, which must be True.\n    *   For an XOR with False to be True, the other term must be True.\n    *   Therefore, `inspires others` must be `True`.\n\n3.  **Deduce `determined`:**\n    *   We use the rule: `pursues her passion` -> (`determined` OR `overcomes adversity`).\n    *   We are given `pursues her passion` = True.\n    *   By Modus Ponens, (`determined` OR `overcomes adversity`) must be True.\n    *   We are given `overcomes adversity` = False.\n    *   For the OR statement to be true, `determined` must be `True`.\n\n4.  **Deduce `achieves recognition`:**\n    *   We use the rule: `determined` -> (`achieves recognition` XOR `inspires others`).\n    *   We just deduced `determined` = True.\n    *   By Modus Ponens, (`achieves recognition` XOR `inspires others`) must be True.\n    *   We deduced in step 2 that `inspires others` = True.\n    *   The statement becomes `achieves recognition XOR True`, which must be True.\n    *   For an XOR with True to be True, the other term must be False.\n    *   Therefore, `achieves recognition` must be `False`.\n\nConclusion: The context entails that 'Chana achieves recognition' is False. The question asks if the context entails the conclusion 'Chana achieves recognition' (is True), which it does not. In fact, it entails the opposite.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 442
+      "token_count": 2047
     },
     {
       "step": 4,
       "context": "Removed rules:\n- Everyone who pursues their passion is either determined or overcomes adversity (or both).\n- If Chana pursues her passion, then she is either determined or overcomes adversity, or both.\n\nAdded rules:\n- If Chana pursues her passion then she is determined.\n\nAdded facts:\n- Chana leads by example.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's trace the logical deductions based on the current context. First, we identify the key facts and rules needed.\n\n**Relevant Facts:**\n1.  `pursues her passion` = True (This fact was established in a previous step and is not contradicted here. It can also be re-derived from `sets goals`=True, `stays motivated`=False, and the rule `(sets goals XOR pursues her passion) -> stays motivated`.)\n2.  `leads by example` = True (This is a newly added fact for this question.)\n\n**Relevant Rules:**\n1.  `inspires others` XOR `leads by example` (This is always true in the context.)\n2.  `If Chana pursues her passion then she is determined.` (This is a new rule: `pursues her passion` -> `determined`.)\n3.  `Either Chana is not determined, or she either achieves recognition or inspires others, but not both.` (This is equivalent to: `determined` -> (`achieves recognition` XOR `inspires others`).)\n\n**Step-by-step Deduction:**\n\n1.  We are given the fact that `leads by example` is True.\n2.  Using the rule `inspires others` XOR `leads by example`, and knowing `leads by example` is True, we can deduce that `inspires others` must be False for the exclusive OR statement to be true.\n3.  We know that `pursues her passion` is True. From the new rule `pursues her passion` -> `determined`, we can use Modus Ponens to deduce that `determined` is True.\n4.  Now we use the rule `determined` -> (`achieves recognition` XOR `inspires others`). Since we just deduced that `determined` is True, the consequent (`achieves recognition` XOR `inspires others`) must also be True.\n5.  We have two pieces of information: (`achieves recognition` XOR `inspires others`) is True, and (from step 2) `inspires others` is False.\n6.  Substituting the known value, we get `achieves recognition` XOR `False` is True.\n7.  For an exclusive OR statement to be true when one of its components is False, the other component must be True.\n8.  Therefore, `achieves recognition` must be True.\n\nThe context logically entails the conclusion.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 552
+      "token_count": 2969
     },
     {
       "step": 5,
       "context": "Removed facts:\n- Chana leads by example.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Let's trace the logical chain with the current context. \n\n1.  A fact from a previous step, which is still derivable from the base context, is that 'Chana pursues her passion' is True. \n2.  The current context includes the rule 'If Chana pursues her passion then she is determined.' Since we know she pursues her passion, we can deduce via Modus Ponens that 'Chana is determined' is True.\n3.  We use the rule 'Either Chana is not determined, or she either achieves recognition or inspires others, but not both', which is equivalent to 'If Chana is determined, then she either achieves recognition or inspires others (but not both)'. Since 'determined' is True, the consequent must be True. So, (`achieves recognition` XOR `inspires others`) is True. This means `achieves recognition` and `inspires others` have opposite truth values.\n4.  We use the rule 'Chana either inspires others or leads by example, but not both'. This means (`inspires others` XOR `leads by example`) is True. This implies `inspires others` and `leads by example` also have opposite truth values.\n5.  From steps 3 and 4, we can conclude that `achieves recognition` must have the same truth value as `leads by example`. To know if Chana achieves recognition, we must know if she leads by example.\n6.  The fact that 'Chana leads by example' was explicitly removed. We must check if its value can be derived from another rule, such as 'If Chana either mentors her peers or drives innovation (but not both), then she leads by example'.\n7.  The antecedent of this rule is (`mentors her peers` XOR `drives innovation`). We know `drives innovation` is True. However, the truth value of `mentors her peers` is unknown in the current context; no rule or fact determines it.\n8.  Let's consider both possibilities for `mentors her peers`:\n    *   Case 1: If `mentors her peers` is True, the antecedent becomes (`True` XOR `True`), which is False. The rule becomes 'If False, then leads by example'. This is always a true implication, regardless of whether `leads by example` is True or False. So we learn nothing about `leads by example` in this case. If `leads by example` is False, then `achieves recognition` is also False.\n    *   Case 2: If `mentors her peers` is False, the antecedent becomes (`False` XOR `True`), which is True. The rule becomes 'If True, then leads by example'. This means `leads by example` must be True. In this case, `achieves recognition` would be True.\n9.  Since there is a consistent scenario (Case 1) where `achieves recognition` can be False, the context does not entail the conclusion that 'Chana achieves recognition' is True. Since there is another consistent scenario (Case 2) where it is True, its falsehood is not entailed either. Therefore, the conclusion is uncertain.",
       "correct": false,
       "tags": [
         "removed_facts"
       ],
       "is_demonstration": false,
-      "token_count": 673
+      "token_count": 3632
     },
     {
       "step": 6,
       "context": "Added rules:\n- Either it is not the case that Chana either mentors her peers or drives innovation (but not both), or she leads by example.\n- Either it is not the case that Chana either sets goals or pursues her passion (but not both), or she stays motivated.\n- If Chana is not determined, then she does not pursue her passion.\n\nAdded facts:\n- It is not the case that Chana either sets goals or pursues her passion (but not both).\n- It is not the case that Chana either mentors her peers or drives innovation (but not both).",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "Let's break down the logic based on the current context.\n\n**Known Facts & Rules:**\n1.  `sets goals` = True (from original context)\n2.  `drives innovation` = True (from original context)\n3.  `It is not the case that Chana either sets goals or pursues her passion (but not both)` means `NOT (sets goals XOR pursues her passion)`. This implies `sets goals` and `pursues her passion` must have the same truth value.\n4.  `It is not the case that Chana either mentors her peers or drives innovation (but not both)` means `NOT (mentors her peers XOR drives innovation)`. This implies `mentors her peers` and `drives innovation` have the same truth value.\n5.  `If Chana is not determined, then she does not pursue her passion.` The contrapositive of this is `If Chana pursues her passion, then she is determined.` (`pursues her passion` -> `determined`).\n6.  `Either Chana is not determined, or she either achieves recognition or inspires others, but not both.` This is equivalent to `determined` -> (`achieves recognition` XOR `inspires others`).\n7.  `Chana either inspires others or leads by example, but not both.` (`inspires others` XOR `leads by example`).\n8.  `Either it is not the case that Chana either mentors her peers or drives innovation (but not both), or she leads by example.` This is equivalent to `(mentors her peers XOR drives innovation) -> leads by example`.\n\n**Step-by-step Deduction:**\n\n1.  From fact #3, since `sets goals` is True, `pursues her passion` must also be True.\n\n2.  From rule #5, since `pursues her passion` is True, we can deduce via Modus Ponens that `determined` is True.\n\n3.  From fact #4, since `drives innovation` is True, `mentors her peers` must also be True.\n\n4.  Now let's use rule #6: `determined` -> (`achieves recognition` XOR `inspires others`). Since we know `determined` is True (from step 2), the consequent must be true. So, `achieves recognition XOR inspires others` is True. This means `achieves recognition` and `inspires others` have opposite truth values.\n\n5.  Now let's use rule #7: `inspires others XOR leads by example` is True. This means `inspires others` and `leads by example` have opposite truth values.\n\n6.  By combining the results of steps 4 and 5, we can see that `achieves recognition` must have the same truth value as `leads by example`.\n\n7.  To find the value of `achieves recognition`, we must find the value of `leads by example`. We use rule #8: `(mentors her peers XOR drives innovation) -> leads by example`.\n    *   The antecedent is `mentors her peers XOR drives innovation`.\n    *   From step 3, `mentors her peers` is True. We are given `drives innovation` is True.\n    *   `True XOR True` evaluates to `False`.\n    *   The rule becomes `False -> leads by example`.\n    *   An implication with a false antecedent is always true, regardless of the truth value of the consequent (`leads by example`). This rule, therefore, gives us no information about whether `leads by example` is True or False.\n\n8.  Since the truth value of `leads by example` cannot be determined from the given context, and the truth value of `achieves recognition` depends directly on it, the truth value of `achieves recognition` is also uncertain.",
       "correct": false,
       "tags": [
         "added_rules",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 735
+      "token_count": 4381
     },
     {
       "step": 7,
       "context": "Removed facts:\n- Chana mentors her peers.\n- It is not the case that Chana either mentors her peers or drives innovation (but not both).\n\nAdded facts:\n- Chana does not mentor her peers.",
       "question": "Does the context entail the conclusion 'Chana achieves recognition.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Let's analyze the chain of logical deductions based on the current set of facts and rules.\n\n**Known Information:**\n*   **Facts from original context:** `sets goals` = True, `drives innovation` = True.\n*   **Fact added in a previous step:** `It is not the case that Chana either sets goals or pursues her passion (but not both)`, which means `NOT (sets goals XOR pursues her passion)` is True.\n*   **Fact added in this step:** `Chana does not mentor her peers`, so `mentors her peers` = False.\n*   **Relevant Rules:**\n    1.  `(mentors her peers XOR drives innovation) -> leads by example`.\n    2.  `inspires others XOR leads by example`.\n    3.  `If Chana pursues her passion, then she is determined` (`pursues her passion` -> `determined`).\n    4.  `determined -> (achieves recognition XOR inspires others)`.\n\n**Step-by-step Deduction:**\n\n1.  **Deduce `pursues her passion`:** The fact `NOT (sets goals XOR pursues her passion)` means that `sets goals` and `pursues her passion` must have the same truth value. Since `sets goals` is True, `pursues her passion` must also be True.\n\n2.  **Deduce `determined`:** We use the rule `pursues her passion -> determined`. Since `pursues her passion` is True (from step 1), we can conclude via Modus Ponens that `determined` is True.\n\n3.  **Deduce `leads by example`:** We use the rule `(mentors her peers XOR drives innovation) -> leads by example`. We know `mentors her peers` is False and `drives innovation` is True. The antecedent `False XOR True` evaluates to `True`. The rule becomes `True -> leads by example`. By Modus Ponens, `leads by example` must be True.\n\n4.  **Deduce `inspires others`:** We use the rule `inspires others XOR leads by example`. Since we know `leads by example` is True (from step 3), `inspires others` must be False for the exclusive OR to be true.\n\n5.  **Deduce `achieves recognition`:** We use the rule `determined -> (achieves recognition XOR inspires others)`. Since `determined` is True (from step 2), the consequent `achieves recognition XOR inspires others` must be True. We know `inspires others` is False (from step 4). The statement becomes `achieves recognition XOR False`, which must be True. For this to hold, `achieves recognition` must be True.\n\nTherefore, the context logically entails the conclusion that 'Chana achieves recognition' is True.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 908
+      "token_count": 5405
     }
   ]
 }

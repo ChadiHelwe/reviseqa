@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit",
+    "chain_index": 67,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Quinton has clear goals.\nQuinton does not achieve greatness.\nQuinton believes in himself.\nQuinton sets goals.\nQuinton thinks on his feet.\nQuinton is determined.\nIf someone has clear goals and stays focused, then they can achieve greatness.\nIf someone believes in themselves, then they will stay motivated.\nIf Quinton sets goals, then he either stays motivated or achieves success, but not both.\nQuinton either thinks on his feet or reacts fast, but not both.\nIf Quinton is determined, then he either stays focused or pushes his limits (but not both).\nIf Quinton either pushes his limits or trains hard (but not both), then he achieves success.\nQuinton either has quick reflexes or reacts fast.\nIf Quinton has quick reflexes and trains hard, then he can become a champion.",
+      "question": "Does the context entail the conclusion 'Quinton can become a champion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Quinton has clear goals. Quinton does not achieve greatness.. If someone has clear goals and stays focused, then they can achieve greatness.. Therefore, Quinton does not stay focused.. Quinton believes in himself.. If someone believes in themselves, then they will stay motivated.. Therefore, Quinton stays motivated.. Quinton sets goals. Quinton stays motivated.. If Quinton sets goals, then he either stays motivated or achieves success, but not both.. Therefore, Quinton does not achieve success.. Quinton thinks on his feet.. Quinton either thinks on his feet or reacts fast, but not both.. Therefore, Quinton does not react fast.. Quinton is determined. Quinton does not stay focused.. If Quinton is determined, then he either stays focused or pushes his limits (but not both).. Therefore, Quinton pushes his limits.. Quinton pushes his limits. Quinton does not achieve success.. If Quinton either pushes his limits or trains hard (but not both), then he achieves success.. Therefore, Quinton trains hard.. Quinton does not react fast.. Quinton either has quick reflexes or reacts fast.. Therefore, Quinton has quick reflexes.. Quinton has quick reflexes. Quinton trains hard.. If Quinton has quick reflexes and trains hard, then he can become a champion.. Therefore, Quinton can become a champion..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x does not stay motivated, then x does not believe in themselves.\n\nAdded facts:\n- Either Quinton has clear goals or Quinton does not have clear goals.",
+      "question": "Does the context entail the conclusion 'Quinton can become a champion.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the facts we infer that Quinton stays motivated (belief -> motivated) and, via the exclusive-or rule for sets goals, that he does not achieve success. From 'clear goals' and the rule linking clear goals and staying focused to achieving greatness, together with the fact that he does not achieve greatness, we infer he does not stay focused. The exclusive-or rule for being determined then gives that he pushes his limits. The exclusive-or rule for thinking on his feet gives that he does not react fast, and the exclusive-or rule for quick reflexes versus reacting fast gives that he has quick reflexes. However, there is no rule that derives that Quinton trains hard, nor a rule that denies it. Consequently we cannot establish both quick reflexes and trains hard, which are required for the champion rule. Therefore the conclusion 'Quinton can become a champion' is not entailed nor contradicted; it remains uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 548
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x believes in themselves, then x will stay motivated.\n\nAdded rules:\n- For all x, if x believes in themselves, then x will not stay motivated.\n- If Quinton pushes his limits, then he does not train hard.\n- For all x, if x does not have quick reflexes or x does not train hard, then x cannot become a champion.",
+      "question": "Does the context entail the conclusion 'Quinton can become a champion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have Quinton believes in himself. The added rule belief -> not stay motivated gives Quinton does NOT stay motivated. Using the rule (does not stay motivated) -> not believe yields a contradiction, but we keep the derived not stay motivated. Since Quinton sets goals, the exclusive-or rule (stays motivated XOR achieves success) forces stays motivated false, so achieves success true. Quinton thinks on his feet, so by the exclusive-or with reacts fast, reacts fast is false. The exclusive-or between quick reflexes and reacts fast then gives quick reflexes true. Quinton is determined, so the exclusive-or between stays focused and pushes limits forces exactly one true. If pushes limits were true, then by the rule pushes limits -> not train hard we get not train hard. This, together with quick reflexes true, triggers the rule (not quick reflexes OR not train hard) -> cannot become champion, yielding \u00acchampion. The alternative (pushes limits false, stays focused true) would, together with clear goals, trigger the rule (clear goals \u2227 stays focused) -> achieve greatness, contradicting the fact that Quinton does NOT achieve greatness. Hence the only consistent model has pushes limits true, stays focused false, and not train hard true, which entails that Quinton cannot become a champion. Therefore the statement 'Quinton can become a champion' is not entailed but contradicted.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 826
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, if x can become a champion, then x has quick reflexes and x trains hard.\n\nAdded facts:\n- Quinton does not react fast.\n- Quinton does not stay focused.\n- Quinton pushes his limits.\n- Quinton does not train hard.",
+      "question": "Does the context entail the conclusion 'Quinton can become a champion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the original rule 'Quinton either has quick reflexes or reacts fast, but not both' and the fact that Quinton does not react fast, we infer that Quinton has quick reflexes. The added facts state that Quinton does not train hard. Rule 11 says that if an individual does not have quick reflexes or does not train hard, then they cannot become a champion. Since Quinton does not train hard, the antecedent of this rule is satisfied, leading to the conclusion that Quinton cannot become a champion. Therefore, the statement 'Quinton can become a champion' is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1262
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Quinton does not train hard.\n\nRemoved rules:\n- If Quinton pushes his limits, then he does not train hard.\n\nAdded rules:\n- If Quinton pushes his limits, then he trains hard.",
+      "question": "Does the context entail the conclusion 'Quinton can become a champion.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the fact 'Quinton thinks on his feet' and the exclusive-or rule that he either thinks on his feet or reacts fast, we infer that Quinton does not react fast (consistent with the explicit fact). The exclusive-or rule that Quinton either has quick reflexes or reacts fast then forces Quinton to have quick reflexes. The fact 'Quinton pushes his limits' together with the added rule 'If Quinton pushes his limits then he trains hard' yields that Quinton trains hard. With both quick reflexes and trains hard true, the original rule 'If Quinton has quick reflexes and trains hard then he can become a champion' derives that Quinton can become a champion. No rule in the context derives the negation of champion, and the rule that would prevent champion (\u00acquickReflex \u2228 \u00actrainHard \u2192 \u00acchampion) does not fire because both quick reflexes and trains hard are true. Therefore the conclusion 'Quinton can become a champion' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1518
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Quinton either has quick reflexes or reacts fast.\n\nAdded rules:\n- If Quinton thinks on his feet, then he does not have quick reflexes.",
+      "question": "Does the context entail the conclusion 'Quinton can become a champion.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The fact that Quinton thinks on his feet combined with the rule 'If Quinton thinks on his feet, then he does not have quick reflexes' gives \u00acquick_reflexes. The fact that Quinton pushes his limits together with the rule 'If Quinton pushes his limits, then he trains hard' yields trains_hard. Rule 'If x does not have quick reflexes or x does not train hard, then x cannot become a champion' has its antecedent satisfied (\u00acquick_reflexes is true), so we infer \u00acchampion. Therefore the conclusion 'Quinton can become a champion' is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1834
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Quinton thinks on his feet, then he does not have quick reflexes.\n\nAdded rules:\n- For all x, if x has quick reflexes and x trains hard, then x can become a champion.",
+      "question": "Does the context entail the conclusion 'Quinton can become a champion.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the facts we have Quinton thinks on his feet, does not react fast, is determined, pushes his limits, does not stay focused, believes in himself, and sets goals. The exclusive-or rules give that thinking on feet forces not reacting fast (already true) and being determined with pushes limits forces not staying focused (already true). The rule \"If Quinton pushes his limits then he trains hard\" yields trains_hard. The rule \"If Quinton believes in himself then he will not stay motivated\" together with the rule \"If not stay motivated then not believe in themselves\" creates a contradiction with the belief fact, but does not affect quick reflexes. The rule \"If Quinton sets goals then exactly one of stays motivated and achieves success\" combined with the derived not stays motivated forces achieves success. However, there is no rule that derives that Quinton has quick reflexes, nor a rule that derives that he does not have quick reflexes (the earlier rule linking thinking on feet to not quick reflexes was removed). Therefore we cannot infer the antecedent (quick reflexes \u2227 trains hard) needed for the champion rule, nor can we infer its negation via the rule that if \u00acquick reflexes or \u00actrains hard then \u00acchampion, because we lack \u00acquick reflexes. Consequently the statement \"Quinton can become a champion\" is neither provably true nor provably false from the current context.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2068
+    },
+    {
+      "step": 7,
+      "context": "",
+      "question": "Does the context entail the conclusion 'Quinton can become a champion.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "No facts or rules are provided in the current context, so there is no information that allows us to infer whether Quinton can become a champion nor to infer its negation. Therefore the conclusion is not entailed nor contradicted.",
+      "correct": false,
+      "tags": [
+        "no_change"
+      ],
+      "is_demonstration": false,
+      "token_count": 2471
+    }
+  ]
+}

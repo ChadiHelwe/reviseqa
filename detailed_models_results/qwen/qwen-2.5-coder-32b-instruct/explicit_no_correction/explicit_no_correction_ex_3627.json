@@ -6,7 +6,7 @@
     "include_reasoning": true,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.0
+    "final_accuracy": 0.42857142857142855
   },
   "predictions": [
     {
@@ -26,10 +26,10 @@
       "step": 1,
       "context": "Added rules:\n- For all x, if x is impulsive and x is self-aware, then x is not an ineffective leader.\n\nAdded facts:\n- Damian is impulsive.",
       "question": "Does the context entail the conclusion 'Damian is an ineffective leader.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Damian is impulsive (added fact). Earlier reasoning established Damian is self-aware. The added rule states that if someone is both impulsive and self-aware, they are not an ineffective leader. Thus, since Damian meets both conditions, the conclusion 'Damian is an ineffective leader' is contradicted.",
+      "correct": true,
       "tags": [
         "added_rules",
         "added_facts"
@@ -41,67 +41,67 @@
       "step": 2,
       "context": "Removed rules:\n- For all x, if x lacks experience or is impulsive, then x makes mistakes.",
       "question": "Does the context entail the conclusion 'Damian is an ineffective leader.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Damian is impulsive (added fact) and self-aware (from previous reasoning). The rule 'If Damian is either impulsive or self-aware (but not both)...' is irrelevant here since both traits apply. The added rule explicitly states that if Damian is both impulsive and self-aware, he is NOT an ineffective leader. This directly negates the conclusion. The removal of other rules (e.g., about making mistakes) does not affect this chain of reasoning.",
+      "correct": true,
       "tags": [
         "removed_rules"
       ],
       "is_demonstration": false,
-      "token_count": 484
+      "token_count": 1123
     },
     {
       "step": 3,
       "context": "Added facts:\n- Damian listens to others.\n- Damian adapts to change.\n- Damian does not learn from failure.\n- Damian is self-aware.\n- Damian does not lack experience.\n- Damian does not value opinions.",
       "question": "Does the context entail the conclusion 'Damian is an ineffective leader.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The context provides that Damian is self-aware but does not include information about impulsiveness. A critical rule (removed in prior steps) linked impulsive traits to making mistakes, but this rule is no longer active. Since we cannot determine Damian's impulsiveness from the remaining facts, it is impossible to confirm whether he is \u2018impulsive or self-aware (but not both)\u2019, which is required for the rule that would make him an ineffective leader. Thus, the conclusion remains uncertain.",
       "correct": false,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 560
+      "token_count": 1769
     },
     {
       "step": 4,
       "context": "Removed rules:\n- For all x, if x is impulsive and x is self-aware, then x is not an ineffective leader.\n\nAdded rules:\n- For all x, if x is impulsive, then x learns from failure.",
       "question": "Does the context entail the conclusion 'Damian is an ineffective leader.'?",
-      "prediction": "ERROR",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Damian is self-aware (given). The new rule 'If x is impulsive, then x learns from failure' and the fact that Damian does not learn from failure allow us to infer he is not impulsive (via contrapositive). Thus, Damian is self-aware and not impulsive, satisfying the condition 'impulsive or self-aware (but not both)' which, per the active rule, makes him an ineffective leader. The removed rule (about being both impulsive and self-aware) no longer applies here.",
+      "correct": true,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 658
+      "token_count": 4426
     },
     {
       "step": 5,
       "context": "Removed rules:\n- For all x, if x is impulsive, then x learns from failure.\n\nAdded rules:\n- If it is not the case that Damian is either impulsive or self-aware, but not both, then Damian is not an ineffective leader.",
       "question": "Does the context entail the conclusion 'Damian is an ineffective leader.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The added rule states that if Damian is not in the state of being *either* impulsive *or* self-aware (but not both), then he is not an ineffective leader. Damian is confirmed to be self-aware (from prior facts), but his impulsiveness remains undetermined because no rule links impulsiveness to other traits (e.g., learning from failure). Thus, two scenarios exist: (1) If Damian is impulsive, he would be both (impulsive + self-aware), triggering the added rule\u2019s negation condition \u2192 he is *not* an ineffective leader. (2) If Damian is not impulsive, he satisfies the impulsive\u223cself-aware Xor condition \u2192 the prior rule still applies (making him an ineffective leader). Since impulsiveness cannot be resolved from the current context, the conclusion remains uncertain.",
       "correct": false,
       "tags": [
         "removed_rules",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 759
+      "token_count": 5485
     },
     {
       "step": 6,
       "context": "Removed facts:\n- Damian is self-aware.\n\nRemoved rules:\n- Damian learns from failure or is self-aware.\n- If it is not the case that Damian is either impulsive or self-aware, but not both, then Damian is not an ineffective leader.\n\nAdded facts:\n- Damian is not self-aware.",
       "question": "Does the context entail the conclusion 'Damian is an ineffective leader.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "ERROR",
+      "reasoning": "The context now states Damian is *not self-aware* (new fact), and key rules linking self-awareness/impulsivity to leadership effectiveness (e.g., the XOR rule) have been removed. Without any remaining rules that define under what conditions Damian becomes an ineffective leader, the conclusion cannot be drawn from the available facts. The lack of active logical dependencies (e.g., impulsivity, learning from failure, adaptability) to link to leadership effectiveness renders the conclusion uncertain.",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -109,15 +109,15 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 865
+      "token_count": 7219
     },
     {
       "step": 7,
       "context": "Removed facts:\n- Damian is not self-aware.\n\nAdded rules:\n- For all x, if x is an ineffective leader, then x is either impulsive or self-aware, but not both.\n\nAdded facts:\n- Damian is self-aware.",
       "question": "Does the context entail the conclusion 'Damian is an ineffective leader.'?",
-      "prediction": "ERROR",
+      "prediction": "Uncertain",
       "correct_answer": "False",
-      "reasoning": "ERROR",
+      "reasoning": "The new rule states that being an ineffective leader requires being either impulsive or self-aware, but not both. Damian is explicitly *self-aware*, satisfying one half of the XOR condition. However, the rule only establishes a *necessary condition* (ineffective leader \u2192 XOR), not a sufficient one (XOR \u2192 ineffective leader). Without additional rules linking self-awareness (or impulsiveness) to ineffective leadership, we cannot conclude Damian is an ineffective leader solely based on the XOR condition. Thus, the conclusion is not entailed.",
       "correct": false,
       "tags": [
         "removed_facts",
@@ -125,7 +125,7 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 980
+      "token_count": 7867
     }
   ]
 }

@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 384,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Shepherd does not provide cover for his team.\nShepherd does not destroy enemy positions.\nShepherd does not save lives.\nShepherd receives an award.\nShepherd does not earn respect.\nAny military person who uses a weapon either provides cover for their team or destroys enemy positions.\nShepherd either makes tactics or saves lives.\nFor Shepherd, either he uses a weapon or commands a unit, but not both at the same time.\nIf Shepherd commands a unit, then he either makes tactics or leads troops, but not both.\nIf a military person wins battles and receives an award, then they earn respect.\nIf Shepherd either leads troops or is strategic (but not both), then he wins battles.\nEvery military personnel is either brave or strategic (or both).",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x wins battles and receives an award, then x earns respect.\n\nAdded rules:\n- If Shepherd commands a unit, then he is not brave.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the rule 'Any military person who uses a weapon either provides cover for their team or destroys enemy positions' and the facts that Shepherd does not provide cover and does not destroy enemy positions, we infer via contrapositive that Shepherd does not use a weapon. The exclusive-or rule states Shepherd either uses a weapon or commands a unit, but not both; therefore, since he does not use a weapon, he must command a unit. The added rule 'If Shepherd commands a unit, then he is not brave' then yields that Shepherd is not brave. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 255
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- Either Shepherd uses a weapon or Shepherd commands a unit, but not both.\n\nAdded rules:\n- If Shepherd receives an award, then he is brave.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context states that Shepherd receives an award. The added rule says that if Shepherd receives an award, then he is brave. Therefore we can infer Shepherd is brave. No rule in the context yields that Shepherd is not brave. Hence the statement 'Shepherd is not brave' is not entailed (it is contradicted by the derived fact that Shepherd is brave).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 459
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- If Shepherd receives an award and commands a unit, then he is brave.\n- If either Shepherd leads troops or is strategic, but not both, then he wins battles.\n\nAdded facts:\n- Either Shepherd is brave or Shepherd commands a unit.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts that Shepherd does not provide cover and does not destroy enemy positions, and the rule that any military person who uses a weapon must provide cover or destroy enemy positions, we infer Shepherd does not use a weapon (contrapositive). The original exclusive-or rule (uses a weapon XOR commands a unit) then forces Shepherd to command a unit. Given the added rule that receiving an award together with commanding a unit implies bravery, and knowing Shepherd receives an award, we deduce Shepherd is brave. No rule derives that Shepherd is not brave, and we have a direct derivation of bravery, which contradicts the statement 'Shepherd is not brave'. Therefore the conclusion is not entailed (it is false).",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 615
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Shepherd receives an award, then he is brave.\n\nAdded rules:\n- If Shepherd receives an award, then he is not brave.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes the fact that Shepherd receives an award. The added rule states that if Shepherd receives an award, then he is not brave. By applying modus ponens, we infer that Shepherd is not brave. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 858
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Shepherd either makes tactics or saves lives.\n- For all x, either x is brave or x is strategic (or both).\n- If Shepherd commands a unit, then he is not brave.\n- Either Shepherd is brave or Shepherd commands a unit.\n- If Shepherd receives an award and commands a unit, then he is brave.\n\nAdded rules:\n- If Shepherd does not make tactics, then he saves lives.\n- For all x, if x is not strategic, then x is brave.\n- If Shepherd is brave, then he does not command a unit.\n- If Shepherd is not brave, then he commands a unit.\n- If Shepherd receives an award and commands a unit, then he makes tactics.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From the facts that Shepherd does not provide cover and does not destroy enemy positions, and the rule that any military person who uses a weapon must provide cover or destroy enemy positions, we infer Shepherd does not use a weapon. The exclusive-or rule (uses a weapon XOR commands a unit) then forces Shepherd to command a unit. With award true and command unit true, the added rule gives that Shepherd makes tactics. From the command\u2011unit rule we get (makes tactics XOR leads troops), so leads troops is false. Using the rule that if leads troops XOR is strategic then Shepherd wins battles, and the fact that Shepherd does not earn respect together with the rule that winning battles and receiving an award implies respect, we conclude Shepherd does not win battles. Therefore the XOR condition must be false, which forces Shepherd to be not strategic. The universal rule 'if not strategic then brave' then yields Shepherd is brave. The rule 'if brave then not command a unit' contradicts the earlier derived command\u2011unit fact, but nevertheless we have a derivation of Shepherd being brave and no derivation of Shepherd being not brave. Hence the statement 'Shepherd is not brave' is not entailed (it is contradicted by the derivable fact that Shepherd is brave).",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 987
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Shepherd receives an award, then he is not brave.\n\nAdded facts:\n- Shepherd is not strategic.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added fact states Shepherd is not strategic. Using the rule 'if x is not strategic then x is brave', we infer Shepherd is brave. No rule in the current context derives that Shepherd is not brave. Therefore the statement 'Shepherd is not brave' is not entailed (it is contradicted by the derived fact that Shepherd is brave).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1430
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x is not brave, then x is strategic.",
+      "question": "Does the context entail the conclusion 'Shepherd is not brave.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts that Shepherd does not provide cover and does not destroy enemy positions, combined with the rule that any military person who uses a weapon must provide cover or destroy enemy positions, we infer Shepherd does not use a weapon. The exclusive-or rule that Shepherd either uses a weapon or commands a unit then forces Shepherd to command a unit. With the fact that Shepherd receives an award and the rule that award + command unit implies Shepherd makes tactics, we derive that Shepherd makes tactics. The XOR rule for commands a unit then makes tactics or leads troops gives that Shepherd does not lead troops. The XOR condition for wins battles (leads troops xor strategic) is false since Shepherd is not strategic (added fact) and does not lead troops, so Shepherd does not win battles. The rule that not strategic implies brave gives Shepherd is brave (since Shepherd is not strategic). The added rule (if not brave then strategic) does not allow us to infer not brave, and the other rules only go from not brave to other conclusions. No rule derives Shepherd not brave, while we have derived Shepherd brave. Therefore the statement 'Shepherd is not brave' is not entailed (it is contradicted by the derived fact that he is brave).",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1574
+    }
+  ]
+}

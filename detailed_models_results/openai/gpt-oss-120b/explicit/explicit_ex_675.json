@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit",
+    "chain_index": 300,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Navy has advanced navigation.\nNavy is not efficient.\nNavy does not have multiple propellers.\nNavy is not maneuverable.\nThe Navy requires frequent maintenance.\nIf Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.\nIf Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.\nAll reliable ships have an experienced crew and a strong engine.\nNavy is either capable of pulling large cargo or requires frequent maintenance, but not both.\nIf Navy can handle rough seas or has a strong engine, then she can pull large cargo.\nIf Navy has a bullnose design, then she can handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Navy has advanced navigation. Navy is not efficient.. If Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.. Therefore, Navy has an experienced crew.. Navy does not have multiple propellers. Navy is not maneuverable.. If Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.. Therefore, Navy is not reliable.. Navy is not reliable. Navy has an experienced crew.. All reliable ships have an experienced crew and a strong engine.. Therefore, . The Navy requires frequent maintenance.. Navy is either capable of pulling large cargo or requires frequent maintenance, but not both.. Therefore, Navy cannot pull large cargo.. Navy cannot pull large cargo.. If Navy can handle rough seas or has a strong engine, then she can pull large cargo.. Therefore, Navy cannot handle rough seas.. Navy cannot handle rough seas.. If Navy has a bullnose design, then she can handle rough seas.. Therefore, Navy does not have a bullnose design..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Navy is either capable of pulling large cargo or requires frequent maintenance, but not both.\n\nAdded rules:\n- If Navy can pull large cargo then Navy has a bullnose design.\n\nAdded facts:\n- Navy has a strong engine.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the fact that Navy has advanced navigation and is not efficient, the XOR rule forces Navy to also have an experienced crew. The fact that Navy does not have multiple propellers and is not maneuverable, together with the XOR rule about multiple propellers and reliability, forces Navy to be not reliable. The presence of a strong engine (added fact) triggers the rule that if Navy can handle rough seas or has a strong engine then she can pull large cargo, so Navy can pull large cargo. The newly added rule states that if Navy can pull large cargo then she has a bullnose design, therefore Navy has a bullnose design. Hence the statement 'Navy does not have a bullnose design' is contradicted by the derived facts. Therefore the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 455
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Navy can pull large cargo then Navy has a bullnose design.\n\nAdded rules:\n- If Navy has a strong engine and is not reliable, then she cannot handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the XOR rule about advanced navigation and experienced crew, and the fact that Navy is not efficient while having advanced navigation, we infer that Navy must also have an experienced crew. From the XOR rule about multiple propellers and reliability, together with the facts that Navy lacks multiple propellers and is not maneuverable, we infer that Navy is not reliable. The added fact gives Navy a strong engine. Using the rule (strong engine AND not reliable) \u2192 not handle rough seas, we obtain that Navy cannot handle rough seas. The rule (strong engine) \u2192 pull large cargo gives that Navy can pull large cargo. However, the only rule connecting bullnose design to other properties is \"If Navy has a bullnose design, then she can handle rough seas.\" Since we have not handle rough seas, we cannot apply contraposition to conclude that Navy does not have a bullnose design (the reasoning system only allows forward inference). No other rule derives either bullnose design or its negation. Therefore the conclusion 'Navy does not have a bullnose design' is not entailed nor contradicted by the context.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 716
+    },
+    {
+      "step": 3,
+      "context": "Added facts:\n- Navy has an experienced crew.\n- Navy is not reliable.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Given the added facts, Navy has a strong engine and is not reliable. By the rule \"If Navy has a strong engine and is not reliable, then she cannot handle rough seas,\" we infer that Navy cannot handle rough seas. Another rule states \"If Navy has a bullnose design, then she can handle rough seas.\" The contrapositive of this implication yields that if Navy cannot handle rough seas, then she does not have a bullnose design. Therefore, the conclusion \"Navy does not have a bullnose design\" is entailed by the context.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1039
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Navy has a strong engine and is not reliable, then she cannot handle rough seas.\n\nAdded rules:\n- If Navy has a strong engine and is not reliable, then she can handle rough seas.\n- If Navy can handle rough seas, then she has a bullnose design.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The current facts include that Navy has an experienced crew and is not reliable, but there is no fact about a strong engine. The rule that would allow inferring that Navy can handle rough seas (strong engine AND not reliable \u2192 can handle rough seas) cannot be applied because we lack the strong engine fact. The rule that if Navy can handle rough seas then she has a bullnose design also cannot be triggered without first establishing that she can handle rough seas. No rule derives a bullnose design directly, nor is there any rule that infers the negation of a bullnose design. Therefore, the statement \"Navy does not have a bullnose design\" is neither provable nor disprovable from the given information, making it uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1242
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.\n\nAdded facts:\n- Navy can pull large cargo.\n- Navy has a bullnose design if and only if she can handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We have the fact that Navy has a strong engine (added earlier) and the fact that Navy is not reliable (added earlier). The rule \"If Navy has a strong engine and is not reliable, then she can handle rough seas\" therefore gives that Navy can handle rough seas. The added equivalence states that Navy has a bullnose design if and only if she can handle rough seas, so from the rough seas we infer that Navy has a bullnose design. Hence the statement \"Navy does not have a bullnose design\" is contradicted by the derived facts; its negation is entailed. Therefore the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1527
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Navy has a strong engine and is not reliable, then she can handle rough seas.\n\nAdded facts:\n- Navy has a strong engine and is not reliable, and she cannot handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The current knowledge includes a fact that Navy cannot handle rough seas and an equivalence stating that Navy has a bullnose design if and only if she can handle rough seas. This equivalence only allows forward inference (rough seas \u21d2 bullnose and bullnose \u21d2 rough seas). It does not permit deriving the negation of bullnose from the negation of rough seas. No other rule derives either a bullnose design or its negation. Therefore, the statement \"Navy does not have a bullnose design\" is neither provably true nor false from the given context.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1781
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Navy has a strong engine and is not reliable, and she cannot handle rough seas.\n\nAdded rules:\n- If Navy has a strong engine, then she can handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The current facts include that Navy has a strong engine. Rule k states that if Navy has a strong engine, then she can handle rough seas. Hence Navy can handle rough seas. The equivalence (and rule j) states that if Navy can handle rough seas, then she has a bullnose design. Therefore Navy has a bullnose design. Consequently, the statement 'Navy does not have a bullnose design' is contradicted by the derived facts, so it is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2014
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 216,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Aleena works hard.\nAleena does not gain recognition.\nAleena plays it safe.\nAleena does not have a good imagination.\nIf someone works hard and achieves success, then they gain recognition.\nAleena either experiments with styles or plays it safe, but not both.\nIf Aleena either experiments with styles or follows trends (but not both), then she achieves success.\nAleena either follows trends or thinks outside the box, but not both.\nAnyone who thinks outside the box or has a good imagination has creative talent.\nIf Aleena has creative talent, then she produces stunning work.",
+      "question": "Does the context entail the conclusion 'Aleena produces stunning work.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if it is not the case that x has creative talent, then x does not think outside the box and x does not have a good imagination.\n- If it is not the case that Aleena produces stunning work, then it is not the case that Aleena has creative talent.\n\nAdded facts:\n- It is not the case that Aleena experiments with styles.\n- It is not the case that Aleena follows trends.\n- Aleena thinks outside the box.\n- It is not the case that Aleena achieves success.",
+      "question": "Does the context entail the conclusion 'Aleena produces stunning work.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the added facts we have Aleena thinks outside the box. The original rule states that anyone who thinks outside the box (or has a good imagination) has creative talent, so Aleena has creative talent. Another original rule says that if Aleena has creative talent then she produces stunning work. Therefore, the conclusion 'Aleena produces stunning work' follows logically from the combined facts and rules. No rule or fact derives the negation of this conclusion, so the entailment is certain.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 222
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- For all x, either x does not think outside the box and x does not have a good imagination, or x has creative talent.\n\nAdded facts:\n- Either Aleena thinks outside the box or Aleena has a good imagination.\n- Either it is not the case that Aleena has creative talent or Aleena produces stunning work.",
+      "question": "Does the context entail the conclusion 'Aleena produces stunning work.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The universal rule states that for any entity x, either (\u00acthink_outside \u2227 \u00acgood_imagination) holds or x has creative talent. Applied to Aleena, this means (\u00acthink_outside \u2227 \u00acgood_imagination) \u2228 creative_talent is true. The added fact provides think_outside \u2228 good_imagination. If Aleena did not have creative talent, then the first disjunct of the universal rule would have to be true, i.e., both \u00acthink_outside and \u00acgood_imagination would hold, which would contradict the fact think_outside \u2228 good_imagination. Therefore, Aleena must have creative talent. The other added fact is \u00accreative_talent \u2228 produces_stunning. Since creative_talent is true, \u00accreative_talent is false, so for the disjunction to be true, produces_stunning must be true. Hence the conclusion 'Aleena produces stunning work' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 480
+    },
+    {
+      "step": 3,
+      "context": "Added facts:\n- Aleena experiments with styles if and only if Aleena follows trends.",
+      "question": "Does the context entail the conclusion 'Aleena produces stunning work.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the base facts we have Aleena works hard and does not gain recognition. Using the rule (works_hard \u2227 achieves_success) \u2192 gain_recognition and the fact that gain_recognition is false, we infer \u00acachieves_success. The added equivalence makes experiments_styles and follows_trends have the same truth value, and the exclusive-or constraints imply that either both are true (and Aleena plays safe and does not think outside the box) or both are false (and Aleena plays safe is true and she thinks outside the box). Since we have no information fixing which case holds, we cannot determine whether Aleena thinks outside the box. The rule (thinks_outside_box \u2228 good_imagination) \u2192 creative_talent therefore does not allow us to conclude creative_talent, because good_imagination is false and thinks_outside_box is undetermined. Without creative_talent we cannot apply the rule (creative_talent \u2192 produces_stunning_work). No rule or fact derives the negation of produces_stunning_work either. Hence the statement 'Aleena produces stunning work' is not entailed nor contradicted; its truth is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 789
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If either Aleena experiments with styles or Aleena follows trends (but not both), then Aleena achieves success.\n\nAdded rules:\n- Either it is not the case that Aleena experiments with styles, or Aleena follows trends, or Aleena achieves success.\n- Either it is not the case that Aleena follows trends, or Aleena experiments with styles, or Aleena achieves success.",
+      "question": "Does the context entail the conclusion 'Aleena produces stunning work.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The original exclusive-or constraints give E XOR P and T XOR O. From the original fact P (Aleena plays it safe) we infer \u00acE. From the later added fact O (Aleena thinks outside the box) and the constraint T XOR O we infer \u00acT. The later added equivalence E \u2194 T is consistent with \u00acE and \u00acT. The rule \"Anyone who thinks outside the box or has a good imagination has creative talent\" (O \u2228 I \u2192 C) combined with O being true yields creative talent C. The rule \"If Aleena has creative talent then she produces stunning work\" (C \u2192 P2) then yields the conclusion that Aleena produces stunning work. No rule or fact derives the negation of this conclusion, and the added disjunction rules (\u00acE \u2228 T \u2228 S) and (\u00acT \u2228 E \u2228 S) are satisfied without affecting the derivation. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1085
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If either Aleena thinks outside the box or Aleena has a good imagination, then Aleena has creative talent.",
+      "question": "Does the context entail the conclusion 'Aleena produces stunning work.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the added facts we have Aleena thinks outside the box (O) and does not have a good imagination (\u00acIM). The rule \"If either Aleena thinks outside the box or Aleena has a good imagination, then Aleena has creative talent\" gives creative talent (CT) because O is true. Another added fact states that either \u00acCT or Aleena produces stunning work (St). Since we have derived CT, the disjunction forces St to be true. No rule or fact forces \u00acSt. Therefore, the conclusion 'Aleena produces stunning work' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1408
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Either Aleena has creative talent or it is not the case that Aleena thinks outside the box.\n- Either Aleena has creative talent or it is not the case that Aleena has a good imagination.\n- Either Aleena follows trends or Aleena thinks outside the box.\n- It is not the case that Aleena follows trends and Aleena thinks outside the box.",
+      "question": "Does the context entail the conclusion 'Aleena produces stunning work.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The current facts give the constraints CT \u2228 \u00acO, CT \u2228 \u00acI, T \u2228 O and \u00ac(T \u2227 O). From \u00acI we get no information about CT. The clause CT \u2228 \u00acO only says that if CT is false then O must be false. The XOR between T and O allows a model where O is false and T is true, while CT is false. In that model the rule (O \u2228 I) \u2192 CT has a false antecedent, so CT does not have to be true. Since CT is not forced, the rule CT \u2192 produces stunning work does not force the conclusion either. Therefore the conclusion \"Aleena produces stunning work\" is not entailed nor contradicted; its truth is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1601
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- It is not the case that Aleena follows trends, and Aleena thinks outside the box.\n- It is not the case that Aleena experiments with styles, and Aleena plays it safe.",
+      "question": "Does the context entail the conclusion 'Aleena produces stunning work.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the added facts we have that Aleena thinks outside the box (O) and does not have a good imagination (\u00acI). The rule (thinks_outside_box \u2228 good_imagination) \u2192 creative_talent therefore gives Aleena creative talent (C). The original rule creative_talent \u2192 produces_stunning_work then yields that Aleena produces stunning work. No rule derives the negation of this conclusion, so the statement is entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1882
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 20,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Cutie is not gentle.\nCutie does not respond well to training.\nCutie has endurance.\nCutie does not excel at galloping.\nCutie either has a good temperament or is gentle, but it's not necessarily both.\nIf Cutie has a good temperament, then she either responds well to training or is spirited (or both).\nIf Cutie is spirited, then she either has endurance or agility (but not both).\nEvery horse that has strength excels at galloping.\nIf Cutie loves running, then she either has strength or agility (but not both).\nCutie either loves running or enjoys flowers (or both).",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Cutie has a good temperament.\n- Cutie is spirited.\n- Cutie does not have agility.\n- Cutie does not have strength.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We have the rule \"Cutie either loves running or enjoys flowers (or both)\" which gives (LovesRunning \u2228 EnjoyFlowers). The added fact set includes good temperament, spirited, no agility, no strength. From \"Spirited \u2192 (Endurance XOR Agility)\" and Endurance true (given elsewhere) and Agility false, XOR holds, so Spirited is consistent. We also have \"Good temperament \u2192 (RespondWellTraining \u2228 Spirited)\"; this is satisfied because Spirited is true. Now consider \"LovesRunning \u2192 (Strength XOR Agility)\". Since Strength is false and Agility is false, the consequent of this implication evaluates to false (they are not exclusive). Therefore, to keep the implication true, the antecedent must be false; thus \u00acLovesRunning. Since LovesRunning is false, the disjunction \"LovesRunning \u2228 EnjoyFlowers\" forces EnjoyFlowers to be true to satisfy the rule. Hence we can conclude that \"Cutie enjoys flowers\" holds. The proposed conclusion is \"Cutie does not enjoy flowers\", which is contradicted by the derived truth of EnjoyFlowers. Therefore the context does **not** entail the conclusion; it actually entails its negation.\n",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 235
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Cutie either loves running or enjoys flowers, or both.\n\nAdded facts:\n- Cutie does not love running and Cutie does not enjoy flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added fact explicitly states that Cutie does not enjoy flowers, so the conclusion is a direct consequence of the context. No other facts contradict this, and the removed disjunction no longer applies. Therefore, the context entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 566
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Cutie does not love running and Cutie does not enjoy flowers.\n\nAdded rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We cannot prove that Cutie does not enjoy flowers. The only new rule provides a sufficient condition for enjoying flowers (if she is spirited and endsurance which she has). She may or may not be spirited, so we cannot conclude she enjoys flowers. There is no rule or fact giving the negation. Therefore the context does not entail the conclusion, nor its contradiction, leaving the status uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 689
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers.\n\nAdded rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie does not enjoy flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added rule states that if Cutie is spirited and has endurance (both facts are true in the context), then Cutie does not enjoy flowers. No other rule or fact contradicts this conclusion, and the existing OR rule \"Cutie loves running or enjoys flowers (or both)\" does not force Cutie to enjoy flowers because the antecedent \"loves running\" could still hold. Therefore the context indeed entails the conclusion \"Cutie does not enjoy flowers.\"",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 850
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie does not enjoy flowers.\n\nAdded rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With the new rule \"If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers,\" and knowing that Cutie is spirited (implied by GoodTemperament \u2228 Gentle and \u00acGentle) and has endurance, the context entails that Cutie enjoys flowers. Thus the statement \"Cutie does not enjoy flowers\" is contradicted, not entailed. Therefore the correct answer is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1050
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie enjoys flowers.\n\nAdded rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie does not enjoy flowers.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added rule precisely states that if Cutie is spirited and has endurance, then Cutie does not enjoy flowers. From the context we have Cutie is spirited (via the good temperament and the rule that a good temperament implies spirited or responds well to training, and we know she does not respond well to training, so spirited holds) and Cutie has endurance (given). Therefore the antecedent of the rule is satisfied, which forces the consequent, \"Cutie does not enjoy flowers,\" to be true. No other rule or fact contradicts this conclusion, and the disjunction \"Cutie loves running or enjoys flowers (or both)\" can be satisfied by having Cutie love running, without violating any other constraints (the implication about loves running can be trivially satisfied by making the antecedent false, which is not required here because loves running can be true while the rule about loves running still holds if the consequent \"Strength XOR Agility\" is considered vacuously true when one or both are false; however, even if that were an issue, it would not prevent \"does not enjoy flowers\" from being entailed). Consequently, the context entails the conclusion that Cutie does not enjoy flowers.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1239
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Cutie is spirited and Cutie has endurance, then Cutie does not enjoy flowers.\n\nAdded rules:\n- If Cutie does not love running, then she enjoys flowers.\n\nAdded facts:\n- Cutie does not love running.",
+      "question": "Does the context entail the conclusion 'Cutie does not enjoy flowers.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "With the added rule \"If Cutie does not love running, then she enjoys flowers\" and the fact that Cutie does not love running, we can conclude that Cutie enjoys flowers. This directly contradicts the statement \"Cutie does not enjoy flowers.\" Consequently, the context does not entail that conclusion; it actually entails its negation. No other rule contradicts the enjoyment of flowers, so the status is clear.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1587
+    }
+  ]
+}

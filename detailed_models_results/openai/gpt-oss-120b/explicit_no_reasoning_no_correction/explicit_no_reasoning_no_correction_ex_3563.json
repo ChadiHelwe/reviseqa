@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 176,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Babe gets enough rest.\nBabe does not sing beautifully.\nBabe is a social bird.\nIf Babe stays healthy and gets enough rest, then she sings beautifully.\nIf a bird finds food, then it stays healthy.\nAny bird that follows its instinct or has good memory can find food.\nAll birds that migrate seasonally follow their instinct.\nBabe either defends her home or migrates seasonally, but not both.\nAny bird that defends its home is territorial.\nBabe is either territorial or forms a flock, but not both.\nIf Babe is a social bird, then she either forms a flock or has a mate, but not both.\nEvery bird that has a mate builds a nest.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Babe stays healthy and Babe gets enough rest, then she sings beautifully.\n\nAdded rules:\n- Either Babe does not stay healthy, or Babe does not get enough rest, or Babe sings beautifully.\n\nAdded facts:\n- Babe does not stay healthy.\n- Babe does not find food.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts: Babe is a social bird and does not stay healthy or find food. The rule that migrates -> follows instinct -> can find food conflicts with the fact that Babe does not find food, so Babe cannot migrate. Since 'defends or migrates' (exclusive) must hold, Babe defends her home, making her territorial. The exclusive rule 'territorial or forms a flock' then forces that she does not form a flock. As a social bird, she must either form a flock or have a mate, but not both; with no flock, she must have a mate. The rule 'every bird that has a mate builds a nest' therefore yields that Babe builds a nest. Hence the statement 'Babe does not build a nest' is contradicted by the derived information.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 246
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Babe is a social bird and Babe does not form a flock, then Babe has a mate.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From the facts we have: Babe is a social bird, gets enough rest, does not stay healthy, and does not find food. The rule that any bird that follows its instinct or has good memory can find food combined with the fact that migrating birds follow instinct implies that if Babe migrated she would find food, contradicting the fact she does not. Therefore Babe cannot migrate. By the exclusive \"defends home or migrates\" rule, Babe must defend her home, making her territorial. The exclusive \"territorial or forms a flock\" rule then forces that Babe does not form a flock. Given Babe is social and does not form a flock, the newly added rule (social & not form a flock \u2192 has a mate) gives that Babe has a mate. The original rule that any bird with a mate builds a nest then entails that Babe builds a nest. Hence the statement \"Babe does not build a nest\" is contradicted by the derived information.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 517
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Babe does not stay healthy.\n- Babe does not find food.\n\nRemoved rules:\n- If Babe is a social bird and Babe does not form a flock, then Babe has a mate.\n\nAdded rules:\n- For all x, if x builds a nest, then x has a mate.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have Babe is a social bird, gets enough rest, and does not sing beautifully. The disjunction rule (either not stay healthy, or not enough rest, or sings beautifully) together with known facts forces the conclusion that Babe does not stay healthy. However, this does not affect the exclusive alternatives concerning mate and flock. The rule for social birds states that Babe either forms a flock or has a mate, but not both. Another exclusive rule says Babe is either territorial or forms a flock, but not both. Both consistent scenarios exist:\n1. Babe forms a flock (no mate, not territorial). In this case, she does not build a nest (since builds_nest \u2194 has_mate). \n2. Babe has a mate (no flock, territorial). In this case, she builds a nest (has_mate \u2192 builds_nest and builds_nest \u2192 has_mate). Both scenarios satisfy all rules and facts, so we cannot determine definitively whether Babe builds a nest or not. Therefore the statement 'Babe does not build a nest' is not entailed nor contradicted; it is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 784
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- For all x, x has a mate if and only if x builds a nest.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have Babe gets enough rest, does not sing beautifully, and is a social bird. The clause (\u00acHealthy \u2228 \u00acR \u2228 singsBeautifully) together with R true and singsBeautifully false forces \u00acHealthy, so Babe is not healthy. If Babe migrated, migration would imply following instinct, finding food, and thus being healthy, contradicting \u00acHealthy; therefore Babe does not migrate. By the exclusive \"defends home or migrates\" rule, Babe must defend her home, making her territorial. The exclusive \"territorial or forms a flock\" rule then gives that Babe does not form a flock. Since she is social, the rule that a social bird either forms a flock or has a mate (but not both) forces her to have a mate. The added equivalence rule (has a mate iff builds a nest) then yields that Babe builds a nest. Therefore the claim \"Babe does not build a nest\" is contradicted by the derivation; the context does not entail it.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1126
+    },
+    {
+      "step": 5,
+      "context": "Added facts:\n- Babe either defends her home or migrates seasonally.\n- It is not the case that Babe both defends her home and migrates seasonally.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "Given the facts, Babe either defends her home (D) or migrates (M), but not both. If D is true, then by rule f she is territorial, which forces (by rule g) that she does not form a flock. Since she is social, rule h then forces her to have a mate, and the equivalence between having a mate and building a nest gives that she builds a nest. If instead M is true, then she follows instinct, finds food, and becomes healthy. In this case we can satisfy the exclusive choices by letting her form a flock (and thus not be territorial) which makes her have no mate, and by the equivalence she does not build a nest. Both scenarios satisfy all rules and facts, so both possibilities\u2014Babe building a nest and Babe not building a nest\u2014are consistent with the context. Therefore the conclusion \"Babe does not build a nest\" is not entailed nor contradicted; it is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1403
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- For all x, if x migrates seasonally, then x follows its instinct.\n\nAdded facts:\n- Babe migrates seasonally and Babe does not follow her instinct.\n- Babe is not territorial.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Facts: Babe migrates (Mig) and does not follow instinct (\u00acI). Also Babe is not territorial (\u00acT). From the exclusive rule that a bird is either territorial or forms a flock (but not both) and \u00acT, we infer that Babe forms a flock (Flock). Since Babe is social (S), the exclusive rule \"social bird => either forms a flock or has a mate (but not both)\" forces that she does not have a mate (\u00acMate). The added equivalence rule states that having a mate is equivalent to building a nest (Mate \u2194 Nest). From \u00acMate we infer \u00acNest. Therefore the conclusion \"Babe does not build a nest\" follows from the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1681
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x is not territorial, then x does not defend its home.\n- For all x, if x does not find food, then x does not follow its instinct and x does not have good memory.\n- For all x, if x does not stay healthy, then x does not find food.",
+      "question": "Does the context entail the conclusion 'Babe does not build a nest.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts we have: Babe migrates (M) and does not stay healthy (\u00acH). The rule \u00acH \u2192 \u00acF gives \u00acF, and we already have \u00acF. From \u00acF we get \u00acI and \u00acG. Babe is not territorial (\u00acT); using \u00acT \u2192 \u00acD we infer \u00acD. The exclusive rule that Babe either defends her home or migrates, but not both, together with M true confirms \u00acD. The rule D \u2192 T is satisfied vacuously. The exclusive rule that a bird is either territorial or forms a flock, but not both, combined with \u00acT forces Babe to form a flock (F). Since Babe is social (S), the rule S \u2192 (F xor Mate) forces \u00acMate (she cannot have a mate because she already forms a flock). The added equivalence (Mate \u2194 Nest) means that having a nest is equivalent to having a mate. From \u00acMate and the implication Nest \u2192 Mate we can infer \u00acNest (otherwise Nest would imply Mate, contradicting \u00acMate). Therefore the statement \"Babe does not build a nest\" follows from the context.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1923
+    }
+  ]
+}

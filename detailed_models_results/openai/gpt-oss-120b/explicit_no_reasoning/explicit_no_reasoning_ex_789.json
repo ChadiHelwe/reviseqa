@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 312,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Brady does not nurture success.\nBrady does not foster innovation.\nBrady is confident.\nBrady does not speak freely.\nBrady does not help improve skills.\nAnyone who develops potential or identifies talent can nurture success.\nIf Brady either fosters innovation or encourages growth (but not both), then he develops potential.\nIf Brady is sarcastic, then he is confident and speaks freely.\nBrady is either sarcastic or has a dry sense of humor, but not both.\nAnyone who is constructive in their criticism either encourages growth or helps improve skills (or both).\nBrady either has a dry sense of humor or is witty, but not both.",
+      "question": "Does the context entail the conclusion 'Brady is witty or constructive in his criticism (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x does not nurture success, then x does not develop potential and x does not identify talent.\n- For all x, if x does not encourage growth and x does not help improve skills, then x is not constructive in their criticism.",
+      "question": "Does the context entail the conclusion 'Brady is witty or constructive in his criticism (or both).'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the facts we infer \u00acSarcastic (because Sarcastic -> SpeakFreely, but Brady does not speak freely). The exclusive-or between Sarcastic and DryHumor then forces DryHumor true, and the exclusive-or between DryHumor and Witty forces \u00acWitty. Thus Witty is false. To satisfy the conclusion we would need ConstructiveCriticism true. We have \u00acHelpImproveSkills, but no information about EncourageGrowth, so we cannot apply the rule that would give \u00acConstructiveCriticism, nor any rule that yields ConstructiveCriticism. Therefore ConstructiveCriticism is undetermined, making the disjunction \"Witty or ConstructiveCriticism\" uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 242
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Brady is sarcastic, then he is confident and speaks freely.\n\nAdded rules:\n- Brady is sarcastic if and only if Brady is confident and Brady does not speak freely.",
+      "question": "Does the context entail the conclusion 'Brady is witty or constructive in his criticism (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added biconditional makes Brady sarcastic because he is confident and does not speak freely. The exclusive-or between sarcastic and dry humor forces dry humor to be false. The exclusive-or between dry humor and witty then forces witty to be true. Since witty is true, the disjunction \"witty or constructive in his criticism\" is satisfied, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 500
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Brady is sarcastic if and only if Brady is confident and Brady does not speak freely.\n\nAdded rules:\n- It is not the case that Brady is sarcastic if and only if Brady is confident and Brady does not speak freely.",
+      "question": "Does the context entail the conclusion 'Brady is witty or constructive in his criticism (or both).'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the base facts, Brady is confident and does not speak freely. The added rule states that the biconditional (Brady sarcastic \u2194 confident & not speak freely) is false, so since the right side is true, Brady must not be sarcastic. The exclusive-or between sarcastic and dry humor then forces Brady to have a dry sense of humor. The exclusive-or between dry humor and witty forces witty to be false. Thus witty is not true. For constructive criticism, we have Brady does not help improve skills, but no information about whether he encourages growth, so we cannot apply the rule that would make him not constructive, nor any rule that would make him constructive. Hence constructive criticism is undetermined. Since the conclusion 'witty or constructive' requires at least one of them true and witty is false while constructive is unknown, the entailment is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 691
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- It is not the case that Brady is sarcastic if and only if Brady is confident and Brady does not speak freely.\n\nAdded rules:\n- If Brady is confident and Brady does not speak freely, then Brady is sarcastic.",
+      "question": "Does the context entail the conclusion 'Brady is witty or constructive in his criticism (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Using the added rule, confident and not speaking freely imply Brady is sarcastic. The exclusive-or between sarcastic and dry humor forces dry humor to be false, and the exclusive-or between dry humor and witty forces witty to be true. Hence the disjunction 'witty or constructive in his criticism' is satisfied regardless of the status of constructive criticism. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 991
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Brady is confident and Brady does not speak freely, then Brady is sarcastic.\n\nAdded rules:\n- If Brady is confident and Brady does not speak freely, then Brady is not sarcastic.",
+      "question": "Does the context entail the conclusion 'Brady is witty or constructive in his criticism (or both).'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the facts confident and not speak freely, rule R11 gives not sarcastic. Exclusive-or (R4) then forces dry humor true, and exclusive-or (R6) with dry humor true forces witty false. Rule R7 (\u00acnurture_success) gives \u00acdevelop_potential. Since foster_innovation is false, the XOR condition in R2 reduces to encourages_growth; if encourages_growth were true, R2 would imply develop_potential, contradicting \u00acdevelop_potential. Hence encourages_growth must be false. With \u00acencourage_growth and \u00achelp_improve_skills (given), rule R8 yields \u00acconstructive. Therefore both witty and constructive are false, making the disjunction 'witty or constructive' false. The conclusion is not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1190
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Brady is confident and Brady does not speak freely, then Brady is not sarcastic.\n\nAdded rules:\n- If Brady is confident and Brady does not speak freely, then Brady is sarcastic.",
+      "question": "Does the context entail the conclusion 'Brady is witty or constructive in his criticism (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts confident and not speaking freely, rule (confident \u2227 \u00acspeak_freely) \u2192 sarcastic gives sarcastic true. The exclusive-or between sarcastic and dry humor forces dry humor false. The exclusive-or between dry humor and witty then forces witty true. Hence at least one disjunct (witty) is true in all models, making the statement \"witty or constructive\" entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1461
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x does not nurture success and x does not foster innovation, then x does not encourage growth.\n- If Brady fosters innovation and Brady does not encourage growth, then he develops potential.\n- If Brady does not foster innovation and Brady encourages growth, then he develops potential.",
+      "question": "Does the context entail the conclusion 'Brady is witty or constructive in his criticism (or both).'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts confident and not speaking freely, the rule (confident \u2227 \u00acspeak_freely) \u2192 sarcastic makes Brady sarcastic. The XOR between sarcastic and dry humor forces dry humor to be false, and the XOR between dry humor and witty then forces witty to be true. Hence the disjunction \"witty or constructive in his criticism\" is satisfied in every model, making the conclusion entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1661
+    }
+  ]
+}

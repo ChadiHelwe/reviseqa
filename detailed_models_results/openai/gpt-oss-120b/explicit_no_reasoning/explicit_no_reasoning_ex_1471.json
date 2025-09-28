@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 21,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jacqueline cannot create meaningful art.\nJacqueline lives in a rural area.\nJacqueline does not value community life.\nJacqueline does not practice stargazing.\nJacqueline does not miss wildlife encounters.\nIf Jacqueline values serenity or seeks solitude, then she can create meaningful art.\nIf Jacqueline lives in a rural area, then she either values community life or enjoys city amenities, but not both.\nIf Jacqueline either practices stargazing or enjoys the outdoors (but not both), then she values serenity.\nIf Jacqueline enjoys city amenities and prioritizes urban life, then she will miss wildlife encounters.\nFor Jacqueline, either she respects the environment or she prioritizes urban life, but not both.\nJacqueline enjoys the outdoors or appreciates nature.\nIf Jacqueline respects the environment, then she values traditions and finds inspiration in landscapes.",
+      "question": "Does the context entail the conclusion 'Jacqueline appreciates nature and finds inspiration in landscapes.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Jacqueline enjoys the outdoors or appreciates nature.\n\nAdded rules:\n- If Jacqueline finds inspiration in landscapes, then she does not appreciate nature.\n\nAdded facts:\n- Jacqueline enjoys the outdoors.",
+      "question": "Does the context entail the conclusion 'Jacqueline appreciates nature and finds inspiration in landscapes.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The knowledge base provides a rule: If Jacqueline finds inspiration in landscapes, then she does not appreciate nature. The conclusion asserts both that she finds inspiration in landscapes and that she appreciates nature, which directly contradicts this rule. There is no premise asserting either component, and the conjunction cannot be true given the rule. Therefore the conclusion is not entailed and is inconsistent with the premises, making it false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 280
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Jacqueline values serenity or seeks solitude, then she can create meaningful art.\n- If Jacqueline finds inspiration in landscapes, then she does not appreciate nature.\n\nAdded rules:\n- If Jacqueline values serenity, then she respects the environment.\n- If Jacqueline respects the environment, then she appreciates nature.",
+      "question": "Does the context entail the conclusion 'Jacqueline appreciates nature and finds inspiration in landscapes.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts, Jacqueline enjoys the outdoors and does not practice stargazing, satisfying the exclusive condition for the rule that yields values serenity. Thus she values serenity. The added rule then gives that values serenity implies respects the environment. With respects the environment, two rules apply: the newly added rule that respects environment implies appreciates nature, and the existing rule that respects environment yields finds inspiration in landscapes. Hence both components of the conclusion are derivable, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 448
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Jacqueline enjoys the outdoors.\n\nAdded rules:\n- If Jacqueline enjoys city amenities, then she prioritizes urban life.",
+      "question": "Does the context entail the conclusion 'Jacqueline appreciates nature and finds inspiration in landscapes.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The removal of the fact that Jacqueline enjoys the outdoors eliminates the trigger for the rule that would give her serenity, and thus she no longer gains respects the environment, appreciates nature, or finds inspiration in landscapes via those chains. While we can infer she enjoys city amenities (from living in a rural area and not valuing community life) and thus prioritizes urban life (by the new rule), the exclusive-or rule then forces that she does NOT respect the environment. Without respecting the environment we cannot infer either appreciation of nature or inspiration from landscapes. No rule derives the negation of those statements either, so the conclusion is not entailed nor contradicted. Hence the status is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 659
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Jacqueline lives in a rural area, then she either values community life or enjoys city amenities, but not both.\n\nAdded facts:\n- Jacqueline enjoys the outdoors.",
+      "question": "Does the context entail the conclusion 'Jacqueline appreciates nature and finds inspiration in landscapes.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the fact that Jacqueline enjoys the outdoors and does not practice stargazing, the exclusive-or condition of the rule \"If Jacqueline either practices stargazing or enjoys the outdoors (but not both), then she values serenity\" is satisfied, so she values serenity. The rule \"If Jacqueline values serenity, then she respects the environment\" gives that she respects the environment. From \"If Jacqueline respects the environment, then she finds inspiration in landscapes\" we infer she finds inspiration in landscapes. Also, the rule \"If Jacqueline respects the environment, then she appreciates nature\" yields that she appreciates nature. Both components of the conclusion are therefore derivable, so the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 871
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Jacqueline values serenity, then she respects the environment.\n\nAdded rules:\n- If Jacqueline appreciates nature, then she respects the environment.\n- If Jacqueline finds inspiration in landscapes, then she respects the environment.\n\nAdded facts:\n- Jacqueline enjoys city amenities.",
+      "question": "Does the context entail the conclusion 'Jacqueline appreciates nature and finds inspiration in landscapes.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We have the fact that Jacqueline enjoys the outdoors and does not practice stargazing, which via the exclusive\u2011or rule gives us that she values serenity. However, the rule that would have linked values serenity to respecting the environment has been removed. The only way to obtain \"appreciates nature\" and \"finds inspiration in landscapes\" is through respecting the environment (since respects\u202f\u2192\u202fappreciates nature and respects\u202f\u2192\u202ffinds inspiration). No rule currently allows us to infer that she respects the environment, nor any rule yields the negation of those statements. Therefore the conclusion cannot be derived nor refuted; its status is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1113
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Jacqueline enjoys city amenities and prioritizes urban life, then she will miss wildlife encounters.",
+      "question": "Does the context entail the conclusion 'Jacqueline appreciates nature and finds inspiration in landscapes.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the added fact Jacqueline enjoys the outdoors and the fact she does not practice stargazing, the exclusive\u2011or rule gives her values serenity. However the rule linking serenity to respecting the environment has been removed, so we cannot infer that she respects the environment. The exclusive\u2011or rule \"either respects the environment or prioritizes urban life, but not both\" together with the fact that she enjoys city amenities (which implies she prioritizes urban life) forces that she does NOT respect the environment. Since both \"appreciates nature\" and \"finds inspiration in landscapes\" are only derivable via respecting the environment (through the rules respects\u202f\u2192\u202fappreciates and respects\u202f\u2192\u202ffinds inspiration), and we have explicit evidence that she does not respect the environment, the conjunction cannot hold. Therefore the conclusion is not entailed and is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1372
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Jacqueline finds inspiration in landscapes, then she appreciates nature.\n- If Jacqueline appreciates nature, then she finds inspiration in landscapes.\n\nAdded facts:\n- Jacqueline values serenity.",
+      "question": "Does the context entail the conclusion 'Jacqueline appreciates nature and finds inspiration in landscapes.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We have the fact that Jacqueline values serenity, but the rule linking serenity to respecting the environment was removed, so we cannot infer she respects the environment. We do have the fact that she enjoys city amenities, which via a rule gives that she prioritizes urban life. The exclusive\u2011or rule then forces that she does NOT respect the environment. Since respect for the environment is the only source for deriving either \"appreciates nature\" or \"finds inspiration in landscapes\" (through respects\u202f\u2192\u202fappreciates and respects\u202f\u2192\u202finspiration), and we have no other rules that produce these predicates, we cannot infer them. There is also no rule yielding their negation. Hence the conclusion cannot be proven true or false from the current knowledge, making its status uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1642
+    }
+  ]
+}

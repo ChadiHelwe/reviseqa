@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 330,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Tomas has authority.\nTomas writes publications.\nTomas is not diligent.\nTomas has expertise.\nTomas does not do pioneering work.\nTomas does not transform the field of chemistry.\nTomas is not established in his field.\nTomas is precise in his work.\nAnyone who has authority or writes publications shares knowledge.\nTomas either shares knowledge or contributes to science, but not both.\nIf Tomas makes accurate measurements, then he is either diligent or has expertise (but not both).\nEveryone who is innovative either does pioneering work or transforms their field (or both).\nAnyone who makes accurate measurements or is highly respected contributes to science.\nIf Tomas is influential, then he is either established in his field or highly respected, but not both.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x does not do pioneering work and x does not transform the field of chemistry, then x is not innovative.\n- For all x, if x does not contribute to science, then x does not make accurate measurements and x is not highly respected.\n\nAdded facts:\n- Tomas shares knowledge and Tomas does not contribute to science.\n- Tomas has authority or Tomas is innovative.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We have precise(T) as a fact. From the added rules and facts we infer not innovative(T): since Tomas does not do pioneering work and does not transform the field, rule 15 gives not innovative. Also, Tomas does not contribute to science, so by rule 16 he is not highly respected, and we already have not established(T). Rule 14 says influential(T) implies (established XOR highly_respected). Both disjuncts are false, so the consequent is false; thus influential(T) must be false. Therefore both innovative and influential are false. The consequent of the conditional \"innovative XOR influential\" is false while the antecedent \"precise\" is true, making the whole conditional false. Hence the conclusion is false given the context.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 267
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Tomas shares knowledge.\n- Tomas does not make accurate measurements.\n- Tomas is not highly respected.\n- Tomas is not influential.\n- Tomas is not innovative.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context provides no information about whether Tomas is precise. It states that Tomas is not innovative and not influential. Therefore, the consequent (innovative XOR influential) is false. Since there is no rule linking precise to any other property, a model can assign 'precise' as true while keeping the other facts unchanged, making the antecedent true and the consequent false, which falsifies the conditional. Hence the conclusion is not entailed by the context.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 570
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Either Tomas is not influential, or he is either established in his field or highly respected, but not both.\n\nAdded facts:\n- Tomas is influential and it is not the case that he is either established in his field or highly respected, but not both.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The knowledge base now contains a contradiction: the rule states that if Tomas is influential then he must satisfy an exclusive-or between being established and being highly respected, yet the facts assert Tomas is influential while also asserting that this exclusive-or does NOT hold. Consequently the system is inconsistent. In such a situation we cannot reliably determine whether the conditional 'If precise then (innovative xor influential)' is entailed, because both the consequent (xor) and its negation are derivable. Therefore the entailment status is indeterminate.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 762
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Tomas is influential and it is not the case that he is either established in his field or highly respected, but not both.\n\nAdded rules:\n- Either Tomas is not influential, or he is either established in his field or highly respected, but not both.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context includes precise(T) as a fact, and also explicitly states not innovative(T) and not influential(T). Therefore the consequent of the conditional (innovative XOR influential) is false. Since the antecedent (precise) is true, the conditional 'If precise then (innovative XOR influential)' is false. Hence the conclusion is not entailed by the context.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 986
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Either Tomas is not influential, or he is either established in his field or highly respected, but not both.\n\nAdded facts:\n- Tomas is influential.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The premises include the fact that Tomas is precise. They also contain 'Tomas is not innovative' and both 'Tomas is influential' and 'Tomas is not influential' (the latter from earlier facts). In paraconsistent semantics, a statement is true if it can be derived, even if its negation is also derivable. Here, influential is provably true, and innovative is provably false (its negation is true). Therefore the exclusive-or (innovative OR influential, but NOT both) is true: exactly one of the two (influential) is true. Since the antecedent (precise) is also true, the conditional 'If precise then (innovative xor influential)' is true. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1182
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, x is innovative if and only if x does pioneering work or transforms the field of chemistry.\n- For all x, x contributes to science if and only if x makes accurate measurements or is highly respected.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context contains the fact that Tomas is precise. It also contains 'Tomas is influential' (and also 'Tomas is not influential', but the positive fact suffices to make the statement 'influential' true). It contains 'Tomas is not innovative' and no rule that can derive 'innovative' as true; thus innovative is false. Therefore exactly one of innovative or influential is true, making the exclusive-or true. With a true antecedent (precise) and a true consequent (innovative XOR influential), the conditional 'If precise then (innovative xor influential)' is true. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1434
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- For all x, if x does pioneering work or transforms the field of chemistry then x is innovative.\n- For all x, if x contributes to science, then x makes accurate measurements or is highly respected.",
+      "question": "Does the context entail the conclusion 'If Tomas is precise in his work, then he is either innovative or influential, but not both.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The facts include 'Tomas is precise in his work' and 'Tomas is influential'. The facts also include 'Tomas is not innovative'. From the rule that innovative is equivalent to doing pioneering work or transforming the field, and the facts that Tomas does not do pioneering work and does not transform the field, we cannot derive 'innovative'; instead we have its negation. Thus exactly one of the two predicates (innovative, influential) is true. Therefore the consequent 'innovative or influential, but not both' holds. Since both the antecedent (precise) and the consequent are provable, the conditional 'If precise then (innovative xor influential)' is provable. Hence the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1679
+    }
+  ]
+}

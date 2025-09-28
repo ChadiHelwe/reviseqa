@@ -6,7 +6,7 @@
     "include_reasoning": false,
     "include_correction": false,
     "total_steps": 8,
-    "final_accuracy": 0.42857142857142855
+    "final_accuracy": 0.8571428571428571
   },
   "predictions": [
     {
@@ -28,7 +28,7 @@
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
       "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "The context states 'Tripp is curious' and 'For all x, if x is curious, then x is not knowledgeable.' Therefore Tripp is not knowledgeable. Hence the conclusion 'Tripp is knowledgeable' is contradicted by the context and is not entailed.",
+      "reasoning": "From the facts, Tripp is curious. The rule 'For all x, if x is curious, then x is not knowledgeable' gives Tripp is not knowledgeable. There is no rule deriving knowledgeable, so the statement 'Tripp is knowledgeable' is not entailed (and is contradicted by the context).",
       "correct": true,
       "tags": [
         "removed_facts",
@@ -44,28 +44,28 @@
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
       "prediction": "Uncertain",
       "correct_answer": "True",
-      "reasoning": "The rule set includes 'Tripp is either curious or knowledgeable, or both' and 'If Tripp is curious, then Tripp is not knowledgeable.' This creates two consistent scenarios: (1) Tripp is curious and not knowledgeable; (2) Tripp is knowledgeable (and not curious). Both scenarios can satisfy all other statements (e.g., use 'seeks adventure' to accommodate the 'seeks adventure or takes risks' clause in the curious case, or assign appropriate values to satisfy other disjunctions). Since knowledge can be true in one model and false in another, the conclusion 'Tripp is knowledgeable' is not entailed.",
+      "reasoning": "The context includes 'Tripp is either curious or knowledgeable, or both' and 'For all x, if x is curious, then x is not knowledgeable.' This means: if Tripp is curious, he cannot be knowledgeable; but if he is not curious, there is no rule forcing not knowledgeable or knowledge either, besides potentially other unrelated constraints. Since 'Tripp seeks adventure or takes risks' does not force curiosity, there can be a model where Tripp is knowledgeable (not curious) and a model where Tripp is curious (not knowledgeable). Therefore the knowledge claim is neither entailed nor contradicted by the context.",
       "correct": false,
       "tags": [
         "removed_facts",
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 510
+      "token_count": 526
     },
     {
       "step": 3,
       "context": "Tripp embraces uncertainty.\nTripp does not live life on his own terms.\nIf Tripp either seeks adventure or embraces uncertainty (but not both), then he lives life on his own terms.\nTripp seeks adventure or takes risks.\nFor all x, if x is impulsive, then x takes risks and faces challenges.\nTripp is either impulsive or responsible, but not both.\nFor all x, if x is passionate, then x is dedicated to his work.\nIf Tripp is responsible, then he will be cautious.\nTripp is either adventurous or cautious, but not both.\nIf Tripp is curious, then he is both passionate and adventurous.\nTripp is either curious or knowledgeable, or both.\nFor all x, if x is curious, then x is not knowledgeable.\nIf Tripp seeks adventure, then Tripp is not curious.\nFor all x, if x is impulsive then x takes risks.\nFor all x, if x is impulsive then x faces challenges.\nIf Tripp is curious, then Tripp is passionate.\nIf Tripp is curious, then Tripp is adventurous.",
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
-      "prediction": "Uncertain",
+      "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "There are two consistent models: one where Tripp is curious (curious -> not knowledgeable), giving knowledge false; another where Tripp is not curious and knowledge holds to satisfy 'curious or knowledgeable, or both.' Since the context allows both knowledge and not-knowledge in different models, the statement 'Tripp is knowledgeable' is not entailed nor contradicted.",
-      "correct": false,
+      "reasoning": "1 and 2 together force that the XOR condition in 3 is false; since embraces uncertainty is true, to avoid making 3 trigger (which would imply Tripp lives life on his own terms contrary to 2), seeks adventure must also be true. From 13, if Tripp seeks adventure then Tripp is not curious. With 11 (curious or knowledgeable or both), not curious implies Tripp must be knowledgeable. 12 only applies if curious, which is false here, so there is no contradiction. Therefore, Tripp is knowledgeable is entailed.",
+      "correct": true,
       "tags": [
         "added_rules"
       ],
       "is_demonstration": false,
-      "token_count": 854
+      "token_count": 872
     },
     {
       "step": 4,
@@ -73,7 +73,7 @@
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
       "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "From the given rules: adventurous implies not cautious; thus not responsible (contraposition of 'If responsible then cautious'). Given 'either impulsive or responsible, but not both' and not responsible, Tripp is impulsive. Impulsive implies he takes risks and faces challenges. Then 'If Tripp takes risks and faces challenges, then Tripp is curious' yields curiosity. Curiosity entails not knowledgeable. Also 'Tripp is either curious or knowledgeable, or both' can be satisfied with curious; but curious makes not knowledgeable. Therefore Tripp is not knowledgeable; hence knowledge is not entailed.",
+      "reasoning": "Since 'Tripp is adventurous' and 'Tripp is either adventurous or cautious, but not both' hold, cautious must be false. With 'Tripp is either impulsive or responsible, but not both' this leaves impulsive true. Impulsive implies Tripp takes risks and faces challenges; hence Tripp is curious. From 'Tripp is curious' and 'For all x, if x is curious, then x is not knowledgeable' we get Tripp is not knowledgeable. Given 'Tripp is either curious or knowledgeable, or both', knowledge cannot hold. Therefore 'Tripp is knowledgeable' is not entailed (indeed contradicted) by the context.",
       "correct": true,
       "tags": [
         "removed_rules",
@@ -81,7 +81,7 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1193
+      "token_count": 1259
     },
     {
       "step": 5,
@@ -89,7 +89,7 @@
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
       "prediction": "True",
       "correct_answer": "True",
-      "reasoning": "From the given facts: Tripp is not adventurous. The XOR rule (adventurous or cautious, but not both) implies Tripp is cautious. Cautious implies responsible. Responsible implies he seeks adventure. If he seeks adventure, then he is not curious. The disjunction 'Tripp is either curious or knowledgeable, or both' must be satisfied; since curious is false, knowledgeable must be true. There is a separate rule 'if x is curious then x is not knowledgeable,' but it does not apply because curious is false. Therefore, 'Tripp is knowledgeable' is entailed.",
+      "reasoning": "From the given we have not adventurous, which with the XOR constraint implies cautious. Cautious implies responsible, which implies seeks adventure. Seeking adventure implies not curious. Since Tripp is either curious or knowledgeable or both, and he is not curious, he must be knowledgeable. No rule implies not knowledgeable, and K only activates if curious. Therefore Tripp is knowledgeable is entailed.",
       "correct": true,
       "tags": [
         "removed_facts",
@@ -97,36 +97,36 @@
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1575
+      "token_count": 1663
     },
     {
       "step": 6,
       "context": "Tripp embraces uncertainty.\nTripp does not live life on his own terms.\nTripp seeks adventure or takes risks.\nFor all x, if x is impulsive, then x takes risks and faces challenges.\nTripp is either impulsive or responsible, but not both.\nFor all x, if x is passionate, then x is dedicated to his work.\nIf Tripp is responsible, then he will be cautious.\nTripp is either adventurous or cautious, but not both.\nIf Tripp is curious, then he is both passionate and adventurous.\nTripp is either curious or knowledgeable, or both.\nFor all x, if x is curious, then x is not knowledgeable.\nIf Tripp seeks adventure, then Tripp is not curious.\nFor all x, if x is impulsive then x takes risks.\nFor all x, if x is impulsive then x faces challenges.\nIf Tripp is curious, then he is passionate.\nIf Tripp is curious, then he is adventurous.\nIf Tripp takes risks and faces challenges, then Tripp is curious.\nIf Tripp is cautious, then he is responsible.\nIf Tripp is responsible, then he seeks adventure.\nIf Tripp takes risks, then he faces challenges.\nTripp is impulsive.",
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Tripp is given as impulsive. The XOR rule (impulsive or responsible, but not both) makes him not responsible. Impulsive implies risks and facing challenges, which leads to Tripp being curious. The rule 'if x is curious then not knowledgeable' then implies Tripp is not knowledgeable. Since the context also states 'Tripp is either curious, knowledgeable, or both,' knowledge would be inconsistent with curiosity. Therefore, 'Tripp is knowledgeable' is not entailed and is contradicted by the context. Answer: False.",
+      "correct": true,
       "tags": [
         "removed_facts",
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 1990
+      "token_count": 2040
     },
     {
       "step": 7,
       "context": "Tripp embraces uncertainty.\nTripp does not live life on his own terms.\nTripp seeks adventure or takes risks.\nFor all x, if x is impulsive, then x takes risks and faces challenges.\nTripp is either impulsive or responsible, but not both.\nFor all x, if x is passionate, then x is dedicated to his work.\nIf Tripp is responsible, then he will be cautious.\nTripp is either adventurous or cautious, but not both.\nIf Tripp is curious, then he is both passionate and adventurous.\nTripp is either curious or knowledgeable, or both.\nFor all x, if x is curious, then x is not knowledgeable.\nIf Tripp seeks adventure, then Tripp is not curious.\nFor all x, if x is impulsive then x takes risks.\nFor all x, if x is impulsive then x faces challenges.\nIf Tripp is curious, then he is passionate.\nIf Tripp is curious, then he is adventurous.\nIf Tripp takes risks and faces challenges, then Tripp is curious.\nIf Tripp is cautious, then he is responsible.\nIf Tripp is responsible, then he seeks adventure.\nIf Tripp takes risks, then he faces challenges.\nTripp is impulsive.\nIf Tripp is impulsive, then he takes risks and faces challenges.\nIf Tripp is curious, then he is both passionate and adventurous.\nIf Tripp is impulsive, then he is not responsible.\nIf Tripp is adventurous, then he is not cautious.\nIf Tripp is responsible, then he is not curious.",
       "question": "Does the context entail the conclusion 'Tripp is knowledgeable.'?",
-      "prediction": "ERROR",
+      "prediction": "False",
       "correct_answer": "False",
-      "reasoning": "ERROR",
-      "correct": false,
+      "reasoning": "Tripp is impulsive (given) -> by R1 he takes risks and faces challenges. From these two, R12 yields that Tripp is curious. R6 then states that if someone is curious, they are not knowledgeable, so Tripp is not knowledgeable. There is no rule that derives knowledge in this context, and R5 merely allows for knowledge if curious is false, which is not the case here. Therefore, 'Tripp is knowledgeable' is contradicted by the context.",
+      "correct": true,
       "tags": [
         "added_facts"
       ],
       "is_demonstration": false,
-      "token_count": 2295
+      "token_count": 2451
     }
   ]
 }

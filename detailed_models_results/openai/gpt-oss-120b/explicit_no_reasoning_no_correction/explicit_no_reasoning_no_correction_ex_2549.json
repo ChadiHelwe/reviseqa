@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-120b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 119,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Dr. Dalia Hernandez does not develop theories.\nDalia collects samples.\nDr. Dalia Hernandez publishes research.\nDr. Dalia Hernandez teaches at a university.\nDr. Dalia Hernandez does not advance knowledge.\nDalia does not contribute to science.\nDalia explores microbiology.\nDr. Dalia Hernandez either develops theories or builds models, but not both.\nIf Dr. Dalia Hernandez collects samples, then she either designs experiments or builds models, but not both.\nIf Dr. Dalia Hernandez publishes research, then she either teaches at a university or investigates ecology, but not both.\nDr. Dalia Hernandez either analyzes data or designs experiments, but not both.\nFor all scientists, if they either conduct fieldwork or analyze data (but not both), then they advance knowledge.\nIf Dr. Dalia Hernandez either pursues a PhD or conducts fieldwork (but not both), then she contributes to science.\nIf Dr. Dalia Hernandez pursues a PhD, then she either explores microbiology or studies decomposition (but not both).\nDr. Dalia Hernandez either investigates ecology or studies synthesis.\nIf Dr. Dalia Hernandez either studies decomposition or studies synthesis (but not both), then she makes groundbreaking discoveries.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Dalia pursues a PhD and Dalia explores microbiology, then it is not the case that Dalia studies decomposition.\n- If Dalia publishes research and Dalia teaches at a university, then it is not the case that Dalia investigates ecology.\n- If Dalia collects samples and Dalia builds models, then it is not the case that Dalia designs experiments.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the given facts and rules we deduce: Dalia builds models (since she does not develop theories). Combined with collecting samples, rule C gives \u00acdesigns experiments. Rule 9 then confirms builds models. Rule 11 forces \u00acdesigns experiments \u2192 analyzes data. To satisfy the fact that she does not advance knowledge, the antecedent of rule 12 must be false, implying she also conducts fieldwork. Rule 13 with \u00accontribute to science forces both conducts fieldwork and pursues PhD to be true (making the XOR false). Rule 14 then gives \u00acstudies decomposition (consistent with rule A). Rule B, together with publishing research and teaching, yields \u00acinvestigates ecology, so by XOR (rule 15) she must study synthesis. Hence she studies synthesis and not decomposition, satisfying the XOR condition of rule 16, which yields that she makes groundbreaking discoveries. Therefore the statement that she does not make groundbreaking discoveries is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 353
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Dalia publishes research, then either Dalia teaches at a university or Dalia investigates ecology, but not both.\n- If Dalia publishes research and Dalia teaches at a university, then it is not the case that Dalia investigates ecology.\n\nAdded rules:\n- If Dalia publishes research and Dalia teaches at a university, then Dalia investigates ecology.\n- If Dalia investigates ecology, then it is not the case that Dalia studies synthesis.\n- If it is not the case that either Dalia studies decomposition or Dalia studies synthesis, but not both, then it is not the case that Dalia makes groundbreaking discoveries.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From facts and rules we infer: (1) \u00acdevelops_theories and XOR(develops_theories, builds_models) give builds_models. (2) collects_samples and XOR(designs_experiments, builds_models) force designs_experiments false. (3) XOR(analyzes_data, designs_experiments) gives analyzes_data true. (4) To avoid contradiction with \u00acadvance_knowledge, conduct_fieldwork must be true (otherwise XOR(conduct_fieldwork, analyzes_data) would hold and imply advance_knowledge). (5) XOR(pursues_PhD, conduct_fieldwork) \u2192 contributes_science together with \u00accontributes_science forces pursues_PhD true. (6) pursues_PhD and XOR(explores_microbiology, studies_decomposition) give studies_decomposition false (since explores_microbiology is true). (7) publishes and teaches are both true, and added rule (publishes \u2227 teaches \u2192 investigates_ecology) gives investigates_ecology true, which via added rule implies \u00acstudies_synthesis. (8) XOR(investigates_ecology, studies_synthesis) then forces studies_synthesis false. Thus both studies_decomposition and studies_synthesis are false, making XOR(studies_decomposition, studies_synthesis) false. The added rule \"if \u00acXOR(studies_decomposition, studies_synthesis) then \u00acmakes_gb_discoveries\" yields that Dalia does not make groundbreaking discoveries. Therefore the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 685
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Dalia investigates ecology, then it is not the case that Dalia studies synthesis.\n- If Dalia publishes research and Dalia teaches at a university, then Dalia investigates ecology.\n\nAdded rules:\n- If Dalia publishes research and Dalia teaches at a university, then Dalia studies synthesis.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acdevelops_theories and the XOR(Develops_theories, builds_models) rule we infer builds_models. Collects_samples together with the rule Collect -> XOR(designs_experiments, builds_models) forces designs_experiments false. The rule Collect \u2227 builds_models -> \u00acdesigns_experiments confirms this. XOR(analyzes_data, designs_experiments) then forces analyzes_data true. To keep \u00acadvances_knowledge consistent with the rule (XOR(conduct_fieldwork, analyzes_data) -> advances_knowledge), we set conduct_fieldwork true, making the XOR condition false, so the implication does not fire. With conduct_fieldwork true, the rule XOR(pursues_PhD, conduct_fieldwork) -> contributes_to_science would force contributes_to_science true if the XOR were true, contradicting \u00accontributes_to_science, so we set pursues_PhD true as well (making both true, XOR false). The rule pursues_PhD -> XOR(explores_microbiology, studies_decomposition) together with explores_microbiology true forces studies_decomposition false; the additional rule pursues_PhD \u2227 explores_microbiology -> \u00acstudies_decomposition also confirms this. The added rule publishes \u2227 teaches -> studies_synthesis makes studies_synthesis true, and the XOR(investigates_ecology, studies_synthesis) then forces investigates_ecology false. Finally, XOR(studies_decomposition, studies_synthesis) is true (false XOR true), so by the rule XOR(studies_decomposition, studies_synthesis) -> groundbreaking_discoveries we infer that Dalia makes groundbreaking discoveries. Hence the statement that she does not make groundbreaking discoveries is contradicted by the context.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1170
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If either Dalia pursues a PhD or Dalia conducts fieldwork, but not both, then Dalia contributes to science.\n\nAdded rules:\n- If it is not the case that Dalia contributes to science, then either Dalia pursues a PhD or Dalia conducts fieldwork, but not both.\n- If Dalia conducts fieldwork, then Dalia studies decomposition.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the facts and rules we infer: BuildsModels (due to \u00acDevelopsTheories and XOR), DesignsExperiments is false (CollectsSamples -> XOR), thus AnalyzesData is true (XOR with DesignsExperiments). To avoid contradicting \u00acAdvanceKnowledge, ConductFieldwork must also be true, which via a rule gives StudiesDecomposition. PursuesPhD must be false (otherwise XOR with ExploresMicrobiology would be violated). The rule \u00acContributeScience -> XOR(PursuesPhD, ConductFieldwork) is satisfied (false XOR true). PublishesResearch and TeachesUniversity together imply StudiesSynthesis, making InvestigatesEcology false (by the XOR rule). Hence both StudiesDecomposition and StudiesSynthesis are true, making XOR(StudiesDecomposition, StudiesSynthesis) false. The only rule that yields groundbreaking discoveries requires that XOR to be true, so it does not apply, and there is no rule deriving \u00acgroundbreaking discoveries. Therefore the statement \"Dr. Dalia Hernandez does not make groundbreaking discoveries\" is not entailed; its truth is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1631
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Dalia collects samples, then either Dalia designs experiments or Dalia builds models, but not both.\n- If Dalia collects samples and Dalia builds models, then it is not the case that Dalia designs experiments.\n\nAdded rules:\n- If Dalia collects samples, then Dalia designs experiments.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From \u00acDevelopsTheories and the XOR constraint we infer BuildsModels. CollectsSamples together with the new rule gives DesignsExperiments. XOR(AnalyzesData, DesignsExperiments) then forces AnalyzesData false. To keep the fact \u00acAdvanceKnowledge consistent with the rule XOR(ConductFieldwork, AnalyzesData) -> AdvanceKnowledge, ConductFieldwork must be false. \u00acContributeScience together with the rule \u00acContributeScience -> XOR(PursuesPhD, ConductFieldwork) forces PursuesPhD true. PursuesPhD implies XOR(ExploresMicrobiology, StudiesDecomposition); since ExploresMicrobiology is given true, StudiesDecomposition must be false. PublishesResearch and TeachesUniversity trigger the rule that yields StudiesSynthesis true, and the XOR(InvestigatesEcology, StudiesSynthesis) constraint then makes InvestigatesEcology false. Now XOR(StudiesDecomposition, StudiesSynthesis) is true (false XOR true), which by the rule XOR(StudiesDecomposition, StudiesSynthesis) -> GroundbreakingDiscoveries gives GroundbreakingDiscoveries true. Therefore the negated statement \u00acGroundbreakingDiscoveries is false. Hence the context does not entail that Dr. Dalia Hernandez does not make groundbreaking discoveries.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1991
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Dalia collects samples, then Dalia designs experiments.\n\nAdded rules:\n- If Dalia collects samples, then it is not the case that Dalia designs experiments.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Using the facts and current rules: CollectsSamples together with the rule CollectsSamples -> \u00acDesignsExperiments and the original XOR(DesignsExperiments, BuildsModels) forces DesignsExperiments false and BuildsModels true. XOR(AnalyzesData, DesignsExperiments) then gives AnalyzesData true. To satisfy the rule \u00acContributeScience -> XOR(PursuesPhD, ConductFieldwork) and the fact \u00acContributeScience, exactly one of PursuesPhD or ConductFieldwork must be true; because of the rule XOR(ConductFieldwork, AnalyzesData) -> AdvanceKnowledge and the fact \u00acAdvanceKnowledge, ConductFieldwork must be true (so the XOR is false, avoiding the implication). Hence StudiesDecomposition becomes true via ConductFieldwork -> StudiesDecomposition. From PublishesResearch and TeachesUniversity, the added rule yields StudiesSynthesis true, and XOR(InvestigatesEcology, StudiesSynthesis) forces InvestigatesEcology false. Thus both StudiesDecomposition and StudiesSynthesis are true, making XOR(StudiesDecomposition, StudiesSynthesis) false. The added rule \u00acXOR(StudiesDecomposition, StudiesSynthesis) -> \u00acGroundbreakingDiscoveries applies, giving \u00acGroundbreakingDiscoveries. No rule derives GroundbreakingDiscoveries, so the conclusion \u2018Dr. Dalia Hernandez does not make groundbreaking discoveries\u2019 is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2372
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if either x conducts fieldwork or x analyzes data, but not both, then x advances knowledge.\n\nAdded facts:\n- Dalia pursues a PhD.",
+      "question": "Does the context entail the conclusion 'Dr. Dalia Hernandez does not make groundbreaking discoveries.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the facts we have \u00acDevelopsTheories and the exclusive-or (DevelopsTheories, BuildsModels), so BuildsModels is true. CollectsSamples together with the rule CollectsSamples -> \u00acDesignsExperiments gives \u00acDesignsExperiments. The exclusive-or (AnalyzesData, DesignsExperiments) then forces AnalyzesData to be true. To satisfy the fact \u00acAdvanceKnowledge and the rule (XOR(ConductFieldwork, AnalyzesData) -> AdvanceKnowledge), ConductFieldwork must be true (otherwise the antecedent would be true and would imply AdvanceKnowledge). The added rule ConductFieldwork -> StudiesDecomposition yields StudiesDecomposition. The added rule \u00acContributeScience -> XOR(PursuesPhD, ConductFieldwork) together with the fact \u00acContributeScience forces exactly one of PursuesPhD or ConductFieldwork to be true; since ConductFieldwork is true, PursuesPhD must be false (the later added fact that PursuesPhD is true creates a contradiction, but the derivation of GroundbreakingDiscoveries does not depend on that part). From the facts PublishesResearch and TeachesUniversity, the rule PublishesResearch \u2227 TeachesUniversity -> StudiesSynthesis gives StudiesSynthesis. Thus both StudiesDecomposition and StudiesSynthesis are true, making XOR(StudiesDecomposition, StudiesSynthesis) false. The rule \u00acXOR(StudiesDecomposition, StudiesSynthesis) -> \u00acGroundbreakingDiscoveries therefore applies, allowing us to conclude \u00acGroundbreakingDiscoveries. No rule derives GroundbreakingDiscoveries, so the statement \"Dr. Dalia Hernandez does not make groundbreaking discoveries\" is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2751
+    }
+  ]
+}
