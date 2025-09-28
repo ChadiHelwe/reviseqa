@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit",
+    "chain_index": 104,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kelly follows traditional methods.\nKelly does not master traditional techniques.\nKelly engages with customers.\nKelly focuses on her community.\nKelly provides quality products.\nKelly either stands out from the competition or follows traditional methods, but not both.\nKelly either masters traditional techniques or develops new recipes, but not both.\nIf someone either creates unique products or develops new recipes (but not both), then they stand out from the competition.\nIf Kelly offers free samples, then she either creates unique products or engages with customers (but not both).\nKelly either focuses on her community or expands her business, but not both.\nIf someone provides quality products and builds brand recognition, then they can expand their business.\nIf Kelly either offers free samples or gains customer loyalty (but not both), then she builds brand recognition.\nIf Kelly perfects her baking recipe, then she gains customer loyalty.",
+      "question": "Does the context entail the conclusion 'Kelly does not perfect her baking recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Kelly follows traditional methods.. Kelly either stands out from the competition or follows traditional methods, but not both.. Therefore, Kelly does not stand out from the competition.. Kelly does not master traditional techniques.. Kelly either masters traditional techniques or develops new recipes, but not both.. Therefore, Kelly develops new recipes.. Kelly develops new recipes. Kelly does not stand out from the competition.. If someone either creates unique products or develops new recipes (but not both), then they stand out from the competition.. Therefore, Kelly creates unique products.. Kelly creates unique products. Kelly engages with customers.. If Kelly offers free samples, then she either creates unique products or engages with customers (but not both).. Therefore, Kelly does not offer free samples.. Kelly focuses on her community.. Kelly either focuses on her community or expands her business, but not both.. Therefore, Kelly does not expand her business.. Kelly provides quality products. Kelly does not expand her business.. If someone provides quality products and builds brand recognition, then they can expand their business.. Therefore, Kelly does not build brand recognition.. Kelly does not offer free samples. Kelly does not build brand recognition.. If Kelly either offers free samples or gains customer loyalty (but not both), then she builds brand recognition.. Therefore, Kelly does not gain customer loyalty.. Kelly does not gain customer loyalty.. If Kelly perfects her baking recipe, then she gains customer loyalty.. Therefore, Kelly does not perfect her baking recipe..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Kelly does not expand her business.\n- Kelly does not stand out from the competition.\n- Kelly develops new recipes.",
+      "question": "Does the context entail the conclusion 'Kelly does not perfect her baking recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Kelly develops new recipes (added fact). The rule states that if someone creates unique products or develops new recipes but not both, they stand out. Kelly does not stand out (added fact), so she must create unique products (to make the exclusive OR false). Kelly creates unique products and engages with customers (context). If she offered free samples, the rule would require exclusive OR of creating unique products or engaging, but since both are true, she cannot offer free samples. She does not expand her business (added fact), and since she provides quality products, she must not build brand recognition (from the rule: if quality and brand recognition, then expand). The rule about offering free samples or gaining loyalty leading to brand recognition means that since she doesn't build brand recognition, she neither offers free samples nor gains customer loyalty. Since she doesn't gain customer loyalty (from above), and the rule states that perfecting the recipe leads to gaining loyalty, she cannot perfect her recipe (modus tollens). Therefore, 'Kelly does not perfect her baking recipe' is entailed.\n\nSteps:\n1. Develops new recipes + does not stand out \u2192 creates unique products.\n2. Creates unique products and engages with customers \u2192 cannot offer free samples.\n3. Does not build brand (from not expanding despite quality products) \u2192 does not gain loyalty.\n4. Does not gain loyalty \u2192 does not perfect recipe (modus tollens on 'perfects \u2192 loyalty').",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 562
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Kelly does not gain customer loyalty, then she does not perfect her baking recipe.\n\nAdded facts:\n- Kelly creates unique products if and only if Kelly develops new recipes.",
+      "question": "Does the context entail the conclusion 'Kelly does not perfect her baking recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the original context: Kelly follows traditional methods (F=True), so she does not stand out (S=False) due to F XOR S. She does not master traditional techniques (M=False), so she develops new recipes (D=True) due to M XOR D. Added fact: C \u2194 D, so Kelly creates unique products (C=True). She engages with customers (E=True), so C and E are both true, meaning she does not offer free samples (O=False) to satisfy C XOR E being false. She focuses on her community (K=True), so she does not expand (B=False) via K XOR B. Quality products (Q=True) and B=False imply she does not build brand recognition (R=False) via Q \u2227 R \u2192 B. Premise 12: (O XOR L) \u2192 R, with R=False and O=False, implies L=False (gain customer loyalty is false). Added rule: \u00acL \u2192 \u00acP. Since \u00acL is true, \u00acP (Kelly does not perfect baking recipe) must be true.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 938
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Kelly creates unique products if and only if Kelly develops new recipes.\n\nAdded rules:\n- If Kelly creates unique products, then she develops new recipes.\n- If Kelly develops new recipes, then she creates unique products.\n\nAdded facts:\n- Kelly creates unique products.\n- Kelly does not build brand recognition.",
+      "question": "Does the context entail the conclusion 'Kelly does not perfect her baking recipe.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Kelly creates unique products (C=True). From added rule C \u2192 D, Kelly develops new recipes (D=True). Kelly engages with customers (E=True). Rule: O \u2192 (C XOR E). Since C and E are both true, C XOR E = False. Thus, O must be False (modus tollens). Given \u00acR (does not build brand recognition), rule (O XOR L) \u2192 R implies \u00ac(O XOR L). With O=False, L must be False (so O and L are both False). From rule P \u2192 L, \u00acL implies \u00acP (modus tollens). Thus, Kelly does not perfect her baking recipe is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1241
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Kelly offers free samples, then Kelly does not create unique products.\n\nAdded rules:\n- If Kelly creates unique products, then she offers free samples.\n- If Kelly gains customer loyalty, then she perfects her baking recipe.",
+      "question": "Does the context entail the conclusion 'Kelly does not perfect her baking recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Kelly follows traditional methods (fact), so she does not stand out (S=False). She does not master traditional techniques (fact), so she develops new recipes (D=True). Rule: (C XOR D) \u2192 S; S=False implies C and D must both be true, so Kelly creates unique products (C=True). Added rule C \u2192 O: C=True implies she offers free samples (O=True). Original fact: Kelly provides quality products (Q=True), and focuses on community (K=True), so she does not expand business (B=False). Rule: Q \u2227 R \u2192 B; B=False implies R=False (no brand recognition). Rule: (O XOR L) \u2192 R; R=False implies O XOR L=False. O=True, so L=True (gains customer loyalty). Added rule L \u2192 P: L=True implies P=True (perfects recipe). Therefore, Kelly does perfect her baking recipe, so 'Kelly does not perfect her baking recipe' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1493
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- Kelly perfects her baking recipe if and only if she gains customer loyalty.\n- Kelly creates unique products if and only if Kelly develops new recipes.",
+      "question": "Does the context entail the conclusion 'Kelly does not perfect her baking recipe.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the original context: Kelly follows traditional methods (F=True), so she does not stand out (S=False) due to F XOR S. She does not master traditional techniques (M=False), so she develops new recipes (D=True) due to M XOR D. The rule (C XOR D) \u2192 S implies S=False requires C XOR D=False, so C=True (creates unique products). Added rule C \u2194 D confirms C=D=True. Kelly engages with customers (E=True), so C and E are both true, meaning she cannot offer free samples (O=False) to satisfy the rule O \u2192 (C XOR E). Using Q=True, B=False (from K=True and K XOR B), and Q \u2227 R \u2192 B, R=False (no brand recognition). From (O XOR L) \u2192 R and R=False, with O=False, L=False (no customer loyalty). Added rule P \u2194 L means P=False when L=False. Thus, Kelly does not perfect her baking recipe is entailed.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1790
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- It is not the case that either Kelly offers free samples or Kelly gains customer loyalty (but not both).",
+      "question": "Does the context entail the conclusion 'Kelly does not perfect her baking recipe.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "Kelly follows traditional methods (fact), so she does not stand out (S=False) due to F XOR S. She does not master traditional techniques (fact), so she develops new recipes (D=True) via M XOR D. Rule (C XOR D) \u2192 S (S=False) implies C=True (creates unique products). Kelly engages with customers (E=True), so C and E both true \u2192 C XOR E=False. Rule O \u2192 (C XOR E) requires O=False (to satisfy the implication). Added fact \u00ac(O XOR L) \u2192 O \u2194 L; O=False \u2192 L=False. Original rule P \u2192 L (if perfects, gains loyalty). L=False \u2192 modus tollens gives \u00acP (Kelly does not perfect). Thus, 'Kelly does not perfect her baking recipe' is entailed.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2078
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- Kelly creates unique products and Kelly develops new recipes.\n- Kelly gains customer loyalty.",
+      "question": "Does the context entail the conclusion 'Kelly does not perfect her baking recipe.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Kelly gains customer loyalty (L=True) per added facts. Rule: P \u2192 L (perfecting implies loyalty). L=True does not imply P=True or P=False; P could still be true (since P\u2192L is satisfied when P is true). No rule states L \u2192 \u00acP or other connections forcing \u00acP. The conclusion 'Kelly does not perfect' (\u00acP) cannot be entailed because P could be true. Thus, the context does not entail \u00acP, making the answer False (B).",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2338
+    }
+  ]
+}

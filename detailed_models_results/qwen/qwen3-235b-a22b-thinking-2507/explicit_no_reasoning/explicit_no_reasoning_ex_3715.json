@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-235b-a22b-thinking-2507",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 205,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Gustavo is creative.\nGustavo is logical.\nGustavo is inquisitive.\nGustavo enjoys learning.\nGustavo does not understand cultures.\nGustavo makes groundbreaking discoveries.\nIf Gustavo thinks outside the box, then he is either creative or logical (but not both).\nIf Gustavo is inquisitive, then he either has strong curiosity or enjoys learning (but not both).\nIf someone has strong curiosity, then they value accuracy and are meticulous in their research.\nGustavo either speaks multiple languages or understands cultures.\nGustavo either has strong analytical skills or thinks outside the box, but not both.\nIf Gustavo speaks multiple languages, then he is either passionate about history or has strong analytical skills (but not both).\nIf Gustavo earns international recognition, then he is passionate about history and meticulous in his research.\nIf Gustavo is a dedicated scholar, then he will make groundbreaking discoveries and earn international recognition.",
+      "question": "Does the context entail the conclusion 'Gustavo is not a dedicated scholar.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- It is not the case that Gustavo is either creative or logical, but not both.\n- Gustavo does not have strong curiosity.\n- Gustavo speaks multiple languages.",
+      "question": "Does the context entail the conclusion 'Gustavo is not a dedicated scholar.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes original facts and added facts. From the added facts: Gustavo speaks multiple languages (speaks_languages = true), does not have strong curiosity (strong_curiosity = false), and it is not the case that he is either creative or logical but not both (which, combined with original facts that he is both creative and logical, means creative XOR logical is false). From fact 7 (if thinks_outside_box then creative XOR logical), since creative XOR logical is false, Gustavo cannot think_outside_box (thinks_outside_box = false). Fact 11 (strong_analytical_skills XOR thinks_outside_box) requires strong_analytical_skills to be true (since thinks_outside_box is false). Fact 12 (if speaks_languages then passionate_history XOR strong_analytical_skills) with speaks_languages true and strong_analytical_skills true implies passionate_history must be false (to satisfy XOR). Fact 13 (if earns_recognition then passionate_history AND meticulous) has passionate_history false, so earns_recognition must be false. Fact 14 (if dedicated_scholar then makes_discoveries AND earns_recognition) has makes_discoveries true (original fact) but earns_recognition false, so the consequent is false; thus, dedicated_scholar must be false. Therefore, the context entails that Gustavo is not a dedicated scholar.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 298
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- Gustavo either has strong analytical skills or thinks outside the box, but not both.\n\nAdded rules:\n- It is not the case that Gustavo has strong analytical skills and thinks outside the box.\n\nAdded facts:\n- Gustavo either has strong analytical skills or thinks outside the box.",
+      "question": "Does the context entail the conclusion 'Gustavo is not a dedicated scholar.'?",
+      "prediction": "{\n    \"reasoning\": \"From the original context, Gustavo is both",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 666
+    },
+    {
+      "step": 3,
+      "context": "Added facts:\n- Gustavo is creative and logical.\n- It is not the case that Gustavo thinks outside the box.\n- Gustavo has strong analytical skills.\n- It is not the case that Gustavo is passionate about history.",
+      "question": "Does the context entail the conclusion 'Gustavo is not a dedicated scholar.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Gustavo does not have a passionate history (added fact 4). Rule 13 states that earning international recognition requires being passionate about history and meticulous in research. Since passionate history is false, earning recognition must be false. Rule 14 states that being a dedicated scholar requires both making discoveries (true) and earning recognition (false). Thus, dedicated scholar must be false. The conclusion 'Gustavo is not a dedicated scholar' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 778
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- It is not the case that Gustavo is either creative or logical, but not both.\n\nAdded rules:\n- Gustavo is creative if and only if Gustavo is logical.\n\nAdded facts:\n- It is not the case that Gustavo earns international recognition.",
+      "question": "Does the context entail the conclusion 'Gustavo is not a dedicated scholar.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Gustavo does not earn international recognition (added fact). Rule 14 states that being a dedicated scholar requires both making discoveries (which is true from original context) and earning recognition (false). Therefore, the implication dedicated_scholar \u2192 (true \u2227 false) = false holds only if dedicated_scholar is false. Hence, the context entails that Gustavo is not a dedicated scholar.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 985
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Gustavo is inquisitive, then Gustavo either has strong curiosity or enjoys learning, and it is not the case that Gustavo has strong curiosity and enjoys learning.",
+      "question": "Does the context entail the conclusion 'Gustavo is not a dedicated scholar.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context states that Gustavo is inquisitive and enjoys learning. The added rule (which matches the original rule) implies inquisitive \u2192 (strong_curiosity XOR enjoys_learning). Since enjoys_learning is true and inquisitive is true, strong_curiosity must be false to satisfy XOR. Gustavo does not understand cultures, so from Gustavo either speaks multiple languages or understands cultures (with understands_cultures false), speaks_multiple_languages must be true. Gustavo is creative and logical (both true), so creative XOR logical is false. From the rule if thinks_outside_box then creative XOR logical, and since creative XOR logical is false, thinks_outside_box must be false. With thinks_outside_box false, and from Gustavo either has strong analytical skills or thinks outside the box but not both, strong_analytical_skills must be true. Speaking multiple languages true and strong_analytical_skills true, from if speaks multiple languages then passionate_history XOR strong_analytical_skills, passionate_history must be false to satisfy XOR. From if earns international recognition then passionate_history and meticulous, passionate_history false implies earns_international_recognition must be false. Finally, if dedicated scholar then makes discoveries and earns recognition: makes discoveries is true but earns recognition false, so dedicated scholar must be false. Thus, the context entails that Gustavo is not a dedicated scholar.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1188
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Gustavo enjoys learning.\n- Gustavo does not have strong curiosity.\n- It is not the case that Gustavo thinks outside the box.\n- It is not the case that Gustavo earns international recognition.\n- Gustavo has strong analytical skills.\n\nRemoved rules:\n- If Gustavo thinks outside the box, then false.\n\nAdded facts:\n- It is not the case that Gustavo has strong analytical skills.",
+      "question": "Does the context entail the conclusion 'Gustavo is not a dedicated scholar.'?",
+      "prediction": "",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1570
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Gustavo is creative if and only if Gustavo is logical.\n\nAdded rules:\n- If Gustavo is creative, then Gustavo is logical, and if Gustavo is logical, then Gustavo is creative.\n\nAdded facts:\n- Gustavo makes groundbreaking discoveries or p_100(Gustavo).",
+      "question": "Does the context entail the conclusion 'Gustavo is not a dedicated scholar.'?",
+      "prediction": "",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1709
+    }
+  ]
+}

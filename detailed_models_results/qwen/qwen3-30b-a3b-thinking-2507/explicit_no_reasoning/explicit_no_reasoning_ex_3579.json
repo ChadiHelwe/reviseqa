@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 180,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jack does not seek support.\nJack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both).\nIf someone is emotionally resilient, then they will thrive in life.\nIf Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Jack does not seek support.\n\nAdded rules:\n- If Jack is resourceful, then he overcomes adversity.\n- If Jack seeks support, then he is mentally tough.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes Jack being resourceful (fact). By the added rule 'If Jack is resourceful, then he overcomes adversity,' Jack overcomes adversity. From the original fact 'If Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both),' and since Jack is resourceful, he cannot have a positive attitude. The original fact 'Jack either has a positive attitude or seeks support, but not both' then implies he seeks support. The added rule 'If Jack seeks support, then he is mentally tough' makes him mentally tough. The original fact 'Jack is either athletically abled or mentally tough, but not both' means he is not athletically abled. Finally, the original fact 'Either Jack is athletically abled or he is physically disabled, but not both' implies he is physically disabled. All steps logically entail the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 226
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Jack overcomes adversity.\n- Jack does not have a positive attitude.\n- Jack seeks support.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "From the added facts:\n- Jack overcomes adversity.\n- Jack does not have a positive attitude.\n- Jack seeks support.\n\nUsing the rule 'Jack either has a positive attitude or seeks support, but not both' (fact 4), Jack seeking support implies he does not have a positive attitude, which aligns with the added fact.\n\nFrom 'If Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both)' (fact 5), since Jack does not have a positive attitude, he must be resourceful.\n\nFrom 'Jack does not thrive in life' (original fact), and 'If someone is emotionally resilient, then they will thrive in life' (rule 6), Jack cannot be emotionally resilient (he does not thrive).\n\nRule 7 states: 'If Jack is either mentally tough or emotionally resilient (but not both), then he overcomes adversity.' Since he overcomes adversity and is not emotionally resilient, the condition reduces to 'if he is mentally tough.' However, this rule only specifies that being mentally tough implies overcoming adversity, not the converse. Thus, we cannot determine if he is mentally tough.\n\nRule 8: 'Jack is either athletically abled or mentally tough, but not both.'\nRule 9: 'Either Jack is athletically abled or he is physically disabled, but not both.'\n\nWithout knowing whether he is mentally tough (and thus not athletically abled) or athletically abled (and thus not mentally tough), we cannot determine his physical disability status. Both scenarios are possible, so the conclusion 'Jack is physically disabled' is not entailed.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 496
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Jack overcomes adversity, then he has a positive attitude if and only if he is not resourceful.\n\nAdded rules:\n- If Jack overcomes adversity, then if he has a positive attitude, he is not resourceful.\n- If Jack overcomes adversity, then if he is not resourceful, he has a positive attitude.\n- If Jack does not overcome adversity, then he is not resourceful.\n\nAdded facts:\n- Jack is not emotionally resilient.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The context includes the fact that Jack does not seek support (assumed to be retained as it was not explicitly removed), leading to the conclusion that Jack has a positive attitude (PA = T) via the rule 'Jack either has a positive attitude or seeks support, but not both.' With PA = T, the added rules A and B (when Jack overcomes adversity) imply PA \u2194 \u00acR, so R = F (not resourceful) regardless of whether Jack overcomes adversity (O). Rule C (\u00acO \u2192 \u00acR) is satisfied as R = F always. The contrapositive of Rule 7 (M \u2192 O) gives \u00acO \u2192 \u00acM. However, O could be T or F, leading to two scenarios: if O = F, M = F (so D = F); if O = T, M could be T or F. Since M = F is possible (leading to D = F), the conclusion 'Jack is physically disabled' is not necessarily true. Thus, the context does not entail the conclusion.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 920
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Jack is not mentally tough, then he does not seek support.\n- If Jack is emotionally resilient, then he thrives in life.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Jack does not seek support (fact 1) and has a positive attitude (PA = T) via PA XOR S (fact 4). Jack is resourceful (R = T) (fact 2). Rule 5 (O \u2192 PA XOR R) requires O = F since PA and R are both true. From O = F and rule 7 ((M XOR E) \u2192 O), we have \u00ac(M XOR E), so M \u2194 E. Rule 6 (E \u2192 T) and \u00acT (fact 3) imply \u00acE, so M = F. Fact 8 (A XOR M) with M = F gives A = T. Fact 9 (A XOR P) with A = T gives P = F. Thus, Jack is not physically disabled, making the conclusion false.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1295
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\n\nAdded rules:\n- If Jack is mentally tough and not emotionally resilient, then he overcomes adversity.\n- If Jack is not mentally tough and is emotionally resilient, then he overcomes adversity.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Jack does not seek support (fact), so he has a positive attitude (PA = T) via PA XOR S (fact 4). Jack is resourceful (R = T) (fact 2). Fact 5 states O \u2192 (PA XOR R), but PA and R are both T, so PA XOR R = F, thus O = F. The added rules (M \u2227 \u00acE) \u2192 O and (\u00acM \u2227 E) \u2192 O imply that \u00acO requires \u00ac(M \u2227 \u00acE) \u2227 \u00ac(\u00acM \u2227 E), equivalent to M \u2194 E. Fact 3: Jack does not thrive (\u00acT), and rule E \u2192 T implies \u00acE. Thus, M = F (from M \u2194 E). Fact 8: A XOR M with M = F gives A = T. Fact 9: A XOR P with A = T gives P = F. Therefore, Jack is not physically disabled, making the conclusion false.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1559
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Jack overcomes adversity, then he does not have a positive attitude if and only if he is resourceful.\n- Jack is mentally tough if and only if he is physically disabled.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Jack does not seek support (fact), so he has a positive attitude (PA = True) via PA XOR S (fact 4). Jack is resourceful (R = True) (fact 2). Fact 5: O \u2192 (PA XOR R) requires O = False since PA and R are both True. Added rule 1 (O \u2192 (\u00acPA \u2194 R)) is satisfied because O = False. Fact 6: E \u2192 T, and \u00acT implies E = False. Added rule 2: M \u2194 P. Fact 8: A XOR M, Fact 9: A XOR P. With M \u2194 P, Fact 8 and Fact 9 reduce to A XOR M. Both scenarios are possible: M = True (P = True, A = False) and M = False (P = False, A = True). Since both satisfy all constraints, the conclusion 'Jack is physically disabled' (P = True) is possible but not necessary. Therefore, the context does not entail the conclusion.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1885
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Jack seeks support, then he is mentally tough.\n\nAdded rules:\n- If Jack seeks support, then he is not mentally tough.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Jack does not seek support (fact), so he has a positive attitude (PA = True) via PA XOR S (fact 4). Jack is resourceful (R = True) (fact 2). Fact 5 (O \u2192 PA XOR R) requires O = False because PA and R are both True. Rule 6 (E \u2192 T) and Jack not thriving (\u00acT) imply \u00acE (emotionally resilient = False). Added rules state that if M \u2227 \u00acE then O and if \u00acM \u2227 E then O. Since O = False and \u00acE = True, (M \u2227 True) must be False \u21d2 M = False. From fact 8 (A XOR M), M = False \u21d2 A = True. From fact 9 (A XOR P), A = True \u21d2 P = False (Jack is not physically disabled). Thus, the conclusion 'Jack is physically disabled' is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2202
+    }
+  ]
+}

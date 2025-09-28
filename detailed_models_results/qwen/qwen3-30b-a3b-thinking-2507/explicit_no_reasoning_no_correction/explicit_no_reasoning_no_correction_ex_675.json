@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 300,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Navy has advanced navigation.\nNavy is not efficient.\nNavy does not have multiple propellers.\nNavy is not maneuverable.\nThe Navy requires frequent maintenance.\nIf Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.\nIf Navy either has multiple propellers or is reliable (but not both), then she is maneuverable.\nAll reliable ships have an experienced crew and a strong engine.\nNavy is either capable of pulling large cargo or requires frequent maintenance, but not both.\nIf Navy can handle rough seas or has a strong engine, then she can pull large cargo.\nIf Navy has a bullnose design, then she can handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Navy is either capable of pulling large cargo or requires frequent maintenance, but not both.\n\nAdded rules:\n- If Navy can pull large cargo then Navy has a bullnose design.\n\nAdded facts:\n- Navy has a strong engine.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The Navy has a strong engine (added fact). The rule states: If Navy can handle rough seas or has a strong engine, then she can pull large cargo. Since the Navy has a strong engine, the antecedent is true, so she can pull large cargo. The added rule states: If Navy can pull large cargo, then she has a bullnose design. Thus, the Navy must have a bullnose design. Therefore, the conclusion 'Navy does not have a bullnose design' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 250
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Navy can pull large cargo then Navy has a bullnose design.\n\nAdded rules:\n- If Navy has a strong engine and is not reliable, then she cannot handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The Navy is not maneuverable (fact). The rule states that if she has multiple propellers xor reliable, she is maneuverable. Since she has no multiple propellers (fact), the condition simplifies to 'reliable \u2192 maneuverable'. Given she is not maneuverable, reliable must be false (Navy is not reliable). The added rule states: if strong engine and not reliable, then cannot handle rough seas. Navy has strong engine (fact) and is not reliable, so she cannot handle rough seas. The original rule states: if bullnose design, then can handle rough seas. Since she cannot handle rough seas, modus tollens implies she does not have a bullnose design. The contradiction with the cargo-pulling rule doesn't affect this deduction, as it relies on other rules. Thus, the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 461
+    },
+    {
+      "step": 3,
+      "context": "Added facts:\n- Navy has an experienced crew.\n- Navy is not reliable.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The Navy requires frequent maintenance (fact, retained from initial context). By rule 4 (pull large cargo XOR require frequent maintenance), she cannot pull large cargo. Rule 5 states that pulling large cargo implies handle rough seas OR strong engine. Contrapositive: not pulling large cargo implies cannot handle rough seas AND does not have strong engine. Thus, she cannot handle rough seas. Rule 6 states bullnose \u2192 handle rough seas. By modus tollens, cannot handle rough seas \u2192 no bullnose. Therefore, the conclusion 'Navy does not have a bullnose design' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 728
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Navy has a strong engine and is not reliable, then she cannot handle rough seas.\n\nAdded rules:\n- If Navy has a strong engine and is not reliable, then she can handle rough seas.\n- If Navy can handle rough seas, then she has a bullnose design.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "The Navy requires frequent maintenance (fact retained). By rule 4 (pull large cargo XOR requires maintenance), she cannot pull large cargo. Rule 5 (handle rough seas OR strong engine \u2192 pull large cargo) implies contrapositive: \u00acpull large cargo \u2192 \u00achandle rough seas \u2227 \u00acstrong engine. Thus, she cannot handle rough seas. Rule 6 (bullnose \u2192 handle rough seas) implies contrapositive: \u00achandle rough seas \u2192 \u00acbullnose. Therefore, the Navy does not have a bullnose design. The added rule (handle rough seas \u2192 bullnose) is irrelevant here since she cannot handle rough seas, so rule 6 alone suffices to conclude \u00acbullnose.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 922
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Navy either has advanced navigation or has an experienced crew (but not both), then she is efficient.\n\nAdded facts:\n- Navy can pull large cargo.\n- Navy has a bullnose design if and only if she can handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The Navy can pull large cargo (added fact). The rule states that if she can handle rough seas or has a strong engine, then she can pull large cargo. Since she can pull large cargo, this does not confirm whether she handles rough seas or has a strong engine. The biconditional states that bullnose design \u2194 handle rough seas. If she handles rough seas, she has a bullnose; if not, she does not. However, there is no information to determine whether she handles rough seas (she might handle rough seas, or have a strong engine instead). Thus, it is possible for her to have a bullnose (if she handles rough seas) or not (if she lacks rough seas handling but has a strong engine). The conclusion 'Navy does not have a bullnose design' is not entailed, as it is possible for the Navy to have a bullnose. Therefore, the entailment is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1182
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Navy has a strong engine and is not reliable, then she can handle rough seas.\n\nAdded facts:\n- Navy has a strong engine and is not reliable, and she cannot handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The rule 'If Navy has a bullnose design, then she can handle rough seas' (still active, as not removed) implies its contrapositive: 'If Navy cannot handle rough seas, then she does not have a bullnose design.' The added fact states 'Navy cannot handle rough seas.' Therefore, the contrapositive applies directly, leading to the conclusion that Navy does not have a bullnose design. The removed rule (about strong engine and reliability) is irrelevant here, as the bullnose-handling rough seas connection is active and sufficient for the entailment.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1483
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Navy has a strong engine and is not reliable, and she cannot handle rough seas.\n\nAdded rules:\n- If Navy has a strong engine, then she can handle rough seas.",
+      "question": "Does the context entail the conclusion 'Navy does not have a bullnose design.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context has removed the fact that she cannot handle rough seas and added the rule: 'If Navy has a strong engine, then she can handle rough seas.' However, there is no information indicating whether she has a strong engine or whether she can handle rough seas. The rule connecting bullnose design to handling rough seas ('bullnose \u2192 handle rough seas') is still active, but its contrapositive ('\u00achandle rough seas \u2192 \u00acbullnose') cannot be applied without knowing she cannot handle rough seas. Since there is no evidence she cannot handle rough seas, it is possible she has a bullnose (e.g., if she has a strong engine and handles rough seas, which implies she might have a bullnose). Thus, the conclusion 'Navy does not have a bullnose design' is not necessarily entailed by the context. The premises do not guarantee the conclusion, so the entailment does not hold.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1701
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 19,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Janelle conducts experiments.\nJanelle collects data.\nJanelle is passionate about botany.\nJanelle is meticulous in her work.\nJanelle does not gain acclaim.\nJanelle does not deserve an award.\nJanelle does not contribute to her field.\nIf Janelle conducts experiments, then she either publishes papers or collects data, but not both.\nIf Janelle is passionate about botany, then she is a dedicated researcher and meticulous in her work.\nIf Janelle either receives recognition or gains acclaim (but not both), then she deserves an award.\nIf Janelle either advances knowledge or publishes papers (but not both), then she contributes to her field.\nIf Janelle is a dedicated researcher, then she either advances knowledge or is a brilliant scientist (or both).\nIf Janelle is a brilliant scientist, then she either makes a groundbreaking discovery or receives recognition (or both).",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Janelle does not contribute to her field, then she advances knowledge if and only if she publishes papers.\n- If Janelle is a dedicated researcher and does not advance knowledge, then she is a brilliant scientist.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the given facts and rules: Janelle conducts experiments (true) and collects data (true), so by rule (a), she does not publish papers (Q=false). Janelle does not contribute to her field (F=false), so by added rule (g), advances knowledge (K) iff publishes papers (Q). Since Q=false, K=false. Janelle is passionate about botany (true), so by rule (b), she is a dedicated researcher (DR=true). With DR=true and K=false, added rule (h) implies she is a brilliant scientist (BS=true). Rule (f) states BS=true implies makes groundbreaking discovery (G) or receives recognition (R) (or both). Rule (c) states that if she receives recognition or gains acclaim (but not both), she deserves an award. She does not gain acclaim (A=false) and does not deserve an award (W=false), so if R were true, rule (c) would require W=true, a contradiction. Thus, R=false. Therefore, from rule (f), G must be true to satisfy G \u2228 R since R=false. Hence, the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 294
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Janelle does not gain acclaim.\n\nRemoved rules:\n- If Janelle is a brilliant scientist, then she either makes a groundbreaking discovery or receives recognition (or both).\n\nAdded rules:\n- If Janelle is a brilliant scientist, then she receives recognition and does not make a groundbreaking discovery.\n\nAdded facts:\n- Janelle gains acclaim.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From given facts and rules: Janelle conducts experiments (E=T) and collects data (D=T), so by rule (a), she does not publish papers (Q=F). Janelle gains acclaim (A=T), and does not deserve an award (W=F). Rule (c) states (R \u2295 A) \u2192 W. W=F implies R \u2295 A=F, so R=A=T. Janelle does not contribute to her field (C=F), so by rule (g), K \u2194 Q. Q=F implies K=F. She is passionate about botany (P=T), so by rule (b), she is a dedicated researcher (DR=T). DR=T and K=F trigger rule (h), making her a brilliant scientist (BS=T). The new rule (BS \u2192 R \u2227 \u00acG) applies; BS=T implies R=T (consistent with earlier) and \u00acG=T, so G=F. Thus, Janelle does not make a groundbreaking discovery.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 634
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Janelle is passionate about botany.\n\nAdded rules:\n- If Janelle receives recognition, then she makes a groundbreaking discovery.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From the current context: Janelle conducts experiments (E=T) and collects data (D=T), so by rule (a), she does not publish papers (Q=F). Janelle does not gain acclaim (A=F) and does not deserve an award (W=F). Rule (c) states (R \u2295 A) \u2192 W. Since A=F and W=F, R must be F (to avoid (R \u2295 F) = T \u2192 W=F contradiction). The added rule R \u2192 G is vacuously satisfied (R=F), but provides no information about G. To establish G, we would need BS (brilliant scientist) via rule (BS \u2192 G \u2228 R), but DR (dedicated researcher) is unknown (the fact Janelle is passionate about botany was removed, breaking the only path to DR). Thus, BS is not established, and no rule forces G to be true. G could be false (e.g., DR=F, BS=F, G=F), so the context does not entail G. Therefore, the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 960
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Janelle is a brilliant scientist, then she receives recognition and does not make a groundbreaking discovery.\n\nAdded rules:\n- If Janelle is a brilliant scientist, then she receives recognition.\n- If Janelle is a brilliant scientist, then she does not make a groundbreaking discovery.\n\nAdded facts:\n- Janelle receives recognition.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Given the context: R is true (Janelle receives recognition). The added rules state BS \u2192 R and BS \u2192 \u00acG. R being true does not force BS to be true (BS could be false), as the implication is one-way. If BS is false, G could be true. If BS is true, \u00acG is enforced, making G false. Since the context allows for both scenarios (BS true or false), G cannot be definitively concluded as true. There is no rule that forces BS to be true or false; thus, G could be either. Therefore, the context does not entail that Janelle makes a groundbreaking discovery.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1265
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Janelle receives recognition, then she makes a groundbreaking discovery.\n\nAdded rules:\n- If Janelle is a dedicated researcher, then she is a brilliant scientist.\n\nAdded facts:\n- Janelle does not publish papers.\n- Janelle does not advance knowledge.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the current context: Janelle conducts experiments (E=T) and collects data (D=T), so by rule (a), she does not publish papers (Q=F), matching the added fact. Janelle does not advance knowledge (K=F), also an added fact. Assuming Janelle is still passionate about botany (P=T, as not removed), rule (b) implies she is a dedicated researcher (DR=T). The added rule DR \u2192 BS gives BS=T. Rule (f) (still active) states BS \u2192 (G \u2228 R). From rule (c): (R \u2295 A) \u2192 W. Facts state Janelle does not gain acclaim (A=F) and does not deserve an award (W=F), so R must equal A (R=F). Thus, G must be true (R=F, so G=T from BS \u2192 G \u2228 R). Therefore, the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1539
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Janelle does not make a groundbreaking discovery, then she does not receive recognition.\n\nAdded rules:\n- If Janelle conducts experiments and collects data, then she is passionate about botany.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the context: Janelle conducts experiments (E=T) and collects data (D=T), so by added rule (E \u2227 D \u2192 P), she is passionate about botany (P=T). Rule (b) (P \u2192 DR) gives dedicated researcher (DR=T). Rule (h) (DR \u2227 \u00acK \u2192 BS) requires \u00acK; rule (g) (\u00acC \u2192 K \u2194 Q) with \u00acC (does not contribute) and rule (a) giving Q=F (since E and D imply not Q), so K=F. Thus BS=T. Rule (f) (BS \u2192 G \u2228 R) requires G \u2228 R; rule (c) with \u00acA (does not gain acclaim) and \u00acW (does not deserve award) forces \u00acR. Hence G must be true to satisfy G \u2228 R. Therefore, Janelle makes a groundbreaking discovery.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1858
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Janelle is not a brilliant scientist, then she is not a dedicated researcher.\n- If Janelle makes a groundbreaking discovery, then she is not a brilliant scientist.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Given Janelle is passionate about botany (implicit from initial context), rule (b) implies DR (dedicated researcher) = true. Added rule 1 (\u00acBS \u2192 \u00acDR) contrapositive is DR \u2192 BS, so BS = true. Rule 2 (G \u2192 \u00acBS) requires \u00acBS to be true if G is true. But BS = true, making \u00acBS false. Thus, G must be false (G \u2192 false implies \u00acG). Therefore, Janelle does not make a groundbreaking discovery, entailing the conclusion as False.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2155
+    }
+  ]
+}

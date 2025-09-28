@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 376,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Cali does not play a sport.\nCali uses ice.\nCali seeks treatment.\nCali needs rehabilitation.\nCali is either an athlete or plays a sport.\nIf Cali is an athlete, then she either sees a doctor or uses ice, but not both.\nIf Cali experiences pain or has swelling, then she will see a doctor.\nIf Cali either experiences pain or has an injury (but not both), then she seeks treatment.\nIf Cali has an injury or needs rehabilitation, then she takes etodolac.\nIf Cali takes etodolac, then she manages her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Cali takes etodolac, then she manages her pain.\n\nAdded rules:\n- If Cali takes etodolac, then she does not manage her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context states that Cali needs rehabilitation, which triggers rule 9 (If Cali has an injury or needs rehabilitation, then she takes etodolac). This leads to her taking etodolac. The added rule (rule 10) explicitly states that if Cali takes etodolac, she does not manage her pain. Since the premises directly imply she takes etodolac, and the new rule links this to not managing pain, the conclusion is logically entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 230
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Cali experiences pain or has swelling, then she will see a doctor.\n- If Cali has an injury or needs rehabilitation, then she takes etodolac.\n- If Cali takes etodolac, then she does not manage her pain.\n\nAdded rules:\n- Either Cali does not experience pain and does not have swelling, or she sees a doctor.\n- Either Cali does not have an injury and does not need rehabilitation, or she takes etodolac.\n- Either Cali does not take etodolac, or she does not manage her pain.\n- If Cali manages her pain, then she does not take etodolac.\n\nAdded facts:\n- Either Cali needs rehabilitation, or she does not need rehabilitation.\n- Either Cali needs rehabilitation, or she has an injury.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the added rules and facts: Cali needs rehabilitation (R), so the second added rule (\u00acI \u2227 \u00acR \u2228 E) requires E (takes etodolac) to be true because \u00acR is false. The third added rule (\u00acE \u2228 \u00acM) then forces \u00acM (does not manage pain) since E is true. The fourth rule (M \u2192 \u00acE) further confirms \u00acM, as E is true. Thus, the conclusion is logically entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 421
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Either Cali does not have an injury and does not need rehabilitation, or she takes etodolac.\n\nAdded rules:\n- Either Cali manages her pain, or she is not an athlete.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The added rule is 'Either Cali manages her pain (M) or she is not an athlete (\u00acA)' (M \u2228 \u00acA). Without explicit information about Cali's status as an athlete (A) or not, we cannot definitively determine the truth of M. If A is true, M must be true (from M \u2228 \u00acA), contradicting the conclusion 'Cali does not manage her pain (\u00acM)'. If A is false, \u00acA is true, making M irrelevant. Since the context does not provide facts about A, the conclusion cannot be logically entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 745
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Cali is an athlete, then she manages her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context includes the premise that Cali is either an athlete or plays a sport. Since it is stated that Cali does not play a sport, she must be an athlete. The added rule 'If Cali is an athlete, then she manages her pain' (A \u2192 M) directly implies that Cali manages her pain (M). This contradicts the conclusion 'Cali does not manage her pain' (\u00acM), making the conclusion false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 965
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Cali does not manage her pain, then she is not an athlete.\n- Either Cali manages her pain, or she manages her pain.\n- Either Cali manages her pain, or she does not manage her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The added rules include a tautology (M \u2228 \u00acM) and a redundant disjunction (M \u2228 M), which provide no new constraints. The rule \u00acM \u2192 \u00acA (If Cali does not manage her pain, then she is not an athlete) is logically equivalent to A \u2192 M (If Cali is an athlete, then she manages her pain). However, the context does not establish whether Cali is an athlete. Without this information, the conclusion \u00acM cannot be definitively entailed. The prior context (Cali is an athlete) is not explicitly listed here, so we cannot assume it. Thus, the answer is Uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1143
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Cali does not manage her pain, then she is not an athlete.\n- Either Cali manages her pain, or she manages her pain.\n\nAdded rules:\n- If Cali is an athlete, then she does not manage her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context establishes that Cali is an athlete (since she does not play a sport and the disjunction 'athlete or sport' is given). The added rule 'If Cali is an athlete, then she does not manage her pain' (A \u2192 \u00acM) directly implies \u00acM. Thus, the conclusion 'Cali does not manage her pain' is logically entailed by the premises.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1399
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Either Cali manages her pain, or she is not an athlete.\n\nAdded rules:\n- Either Cali manages her pain, or she is an athlete.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The added rule 'Either Cali manages her pain, or she is an athlete' (M \u2228 A) is always true if Cali is an athlete (A). Since the context includes prior premises that establish Cali is an athlete (e.g., 'Cali is either an athlete or plays a sport' and 'Cali does not play a sport'), A is true. With A being true, M \u2228 A holds regardless of M's truth value. No rules directly force \u00acM, and the conclusion 'Cali does not manage her pain' (\u00acM) is not logically entailed. Therefore, the answer is False.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1601
+    }
+  ]
+}

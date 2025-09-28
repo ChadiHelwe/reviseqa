@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-235b-a22b-2507",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 180,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jack does not seek support.\nJack is resourceful.\nJack does not thrive in life.\nJack either has a positive attitude or seeks support, but not both.\nIf Jack overcomes adversity, then he either has a positive attitude or is resourceful (but not both).\nIf someone is emotionally resilient, then they will thrive in life.\nIf Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\nJack is either athletically abled or mentally tough, but not both.\nEither Jack is athletically abled or he is physically disabled, but not both.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Jack does not seek support.\n\nAdded rules:\n- If Jack is resourceful, then he overcomes adversity.\n- If Jack seeks support, then he is mentally tough.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We are given a revised context: the fact 'Jack does not seek support' has been removed, meaning Jack may or may not seek support. We now have two added rules: (1) If Jack is resourceful, then he overcomes adversity; (2) If Jack seeks support, then he is mentally tough. We are to determine whether 'Jack is physically disabled' is entailed.\n\nFrom the original context, we retain:\n- Jack is resourceful.\n- Jack does not thrive in life.\n- Jack either has a positive attitude or seeks support, but not both.\n- If Jack overcomes adversity, then he either has a positive attitude or is resourceful, but not both.\n- If someone is emotionally resilient, then they will thrive in life.\n- If Jack is either mentally tough or emotionally resilient, but not both, then he is able to overcome adversity.\n- Jack is either athletically abled or mentally tough, but not both.\n- Either Jack is athletically abled or he is physically disabled, but not both.\n\nSince Jack is resourceful, by the new rule, he overcomes adversity.\n\nSo: Jack overcomes adversity.\n\nNow, from the rule: If Jack overcomes adversity, then he either has a positive attitude or is resourceful, but not both.\n\nBut Jack *is* resourceful, so to satisfy the 'but not both', he must *not* have a positive attitude.\n\nSo: Jack does not have a positive attitude.\n\nFrom: Jack either has a positive attitude or seeks support, but not both.\n\nHe does not have a positive attitude, so to satisfy the disjunction, he must *seek support* (and only that, not both).\n\nSo: Jack seeks support.\n\nNow, from the new rule: If Jack seeks support, then he is mentally tough.\n\nSo: Jack is mentally tough.\n\nNow consider: Jack is either athletically abled or mentally tough, but not both.\n\nHe *is* mentally tough, so he must *not* be athletically abled.\n\nThen, from: Either Jack is athletically abled or he is physically disabled, but not both.\n\nHe is not athletically abled, so he must be physically disabled (to satisfy the disjunction), and not both \u2192 so he is physically disabled.\n\nAll steps are logically entailed. Therefore, the conclusion 'Jack is physically disabled' is entailed by the context.\n\nThus, the answer is True.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 226
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Jack overcomes adversity.\n- Jack does not have a positive attitude.\n- Jack seeks support.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We are given new facts: Jack overcomes adversity, Jack does not have a positive attitude, and Jack seeks support. We retain the original rules unless stated otherwise. From the rule: If Jack seeks support, then he is mentally tough (added previously). Since Jack seeks support, he is mentally tough. Now consider: Jack is either athletically abled or mentally tough, but not both. Since he is mentally tough, he cannot be athletically abled. Next, from: Either Jack is athletically abled or he is physically disabled, but not both. Since he is not athletically abled, he must be physically disabled (to satisfy the exclusive or). All steps follow necessarily from the given facts and rules. Thus, the conclusion 'Jack is physically disabled' is entailed.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 854
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Jack overcomes adversity, then he has a positive attitude if and only if he is not resourceful.\n\nAdded rules:\n- If Jack overcomes adversity, then if he has a positive attitude, he is not resourceful.\n- If Jack overcomes adversity, then if he is not resourceful, he has a positive attitude.\n- If Jack does not overcome adversity, then he is not resourceful.\n\nAdded facts:\n- Jack is not emotionally resilient.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We are given: Jack is not emotionally resilient (added fact). From prior context, we know: Jack overcomes adversity, seeks support, does not have a positive attitude. But now, the rule 'If Jack overcomes adversity, then he has a positive attitude if and only if he is not resourceful' is removed and replaced with two conditionals: (1) If Jack overcomes adversity, then if he has a positive attitude, he is not resourceful; (2) If Jack overcomes adversity, then if he is not resourceful, he has a positive attitude. Also added: If Jack does not overcome adversity, then he is not resourceful. But we are told Jack *does* overcome adversity, so this last rule does not apply.\n\nFrom previous facts, we had deduced Jack is mentally tough (because he seeks support, and we have the rule: if seeks support \u2192 mentally tough). Also, we retain: Jack is either athletically abled or mentally tough, but not both. Since he is mentally tough, he is not athletically abled.\n\nAlso retained: Either Jack is athletically abled or he is physically disabled, but not both. Since he is not athletically abled, he must be physically disabled.\n\nBut wait \u2014 do we still have the facts that Jack seeks support and is mentally tough? The added facts are only: Jack overcomes adversity, does not have a positive attitude, seeks support, and is not emotionally resilient. So yes, he seeks support. With the rule 'if seeks support \u2192 mentally tough', we get Jack is mentally tough.\n\nThen, same as before: mentally tough \u2192 not athletically abled (by the exclusive or), so must be physically disabled (by the other exclusive or).\n\nNow, check consistency with resourcefulness. We do not have an explicit statement about whether Jack is resourceful. But we have: If Jack does not overcome adversity \u2192 not resourceful. But he *does* overcome adversity, so this tells us nothing.\n\nThe two new implications about adversity and resourcefulness are one-way. We know Jack does not have a positive attitude. From (2): If not resourceful \u2192 has positive attitude. But Jack does *not* have a positive attitude, so by contrapositive, he *is* resourceful.\n\nSo Jack is resourceful.\n\nNow check (1): If has positive attitude \u2192 not resourceful. But he doesn't have a positive attitude, so this is vacuously satisfied.\n\nSo resourceful, mentally tough, not athletically abled, so physically disabled.\n\nAll steps are entailed. Conclusion follows.\n\nThus, the context entails that Jack is physically disabled.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1088
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Jack is not mentally tough, then he does not seek support.\n- If Jack is emotionally resilient, then he thrives in life.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added rules are: (1) If Jack is not mentally tough, then he does not seek support; (2) If Jack is emotionally resilient, then he thrives in life. However, rule (2) was already present in the original context, so no change there. The first added rule is the contrapositive of the previously existing rule 'If Jack seeks support, then he is mentally tough' (which was added earlier). So this new rule does not add new information beyond what was already assumed.\n\nWe are not given any new facts in this version. However, in the immediately preceding context, we had: Jack overcomes adversity, does not have a positive attitude, seeks support, and is not emotionally resilient. Also, from previous deductions: seeking support \u2192 mentally tough (either directly or via contrapositive of the new rule), so Jack is mentally tough.\n\nThen, from the rule: Jack is either athletically abled or mentally tough, but not both. Since he is mentally tough, he is not athletically abled.\n\nThen, from: Either Jack is athletically abled or he is physically disabled, but not both. Since he is not athletically abled, he must be physically disabled.\n\nAll the necessary facts and rules to derive this conclusion are still present and no contradictions arise. The added rules do not alter the logical path. Therefore, the conclusion 'Jack is physically disabled' is still entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1799
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Jack is either mentally tough or emotionally resilient (but not both), then he is able to overcome adversity.\n\nAdded rules:\n- If Jack is mentally tough and not emotionally resilient, then he overcomes adversity.\n- If Jack is not mentally tough and is emotionally resilient, then he overcomes adversity.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The removed rule was: If Jack is either mentally tough or emotionally resilient (but not both), then he overcomes adversity. It is replaced by two rules: (1) If Jack is mentally tough and not emotionally resilient, then he overcomes adversity; (2) If Jack is not mentally tough and is emotionally resilient, then he overcomes adversity. These two together are logically equivalent to the removed rule, as they capture exactly the cases where exactly one of mental toughness or emotional resilience holds, and in either case, Jack overcomes adversity. So the replacement does not change the logical implications.\n\nWe still have: Jack seeks support \u2192 mentally tough (assumed from previous added rules), and Jack seeks support is a given fact, so Jack is mentally tough.\n\nAlso given: Jack is not emotionally resilient, so Jack is mentally tough and not emotionally resilient \u2192 by new rule (1), he overcomes adversity, which is consistent with the given fact that he does.\n\nFrom earlier: Jack is mentally tough \u2192 not athletically abled (due to the exclusive or: athletically abled or mentally tough, but not both).\n\nThen, from: either athletically abled or physically disabled, but not both \u2014 since not athletically abled, must be physically disabled.\n\nNo contradictions; all steps are entailed.\n\nThus, the conclusion 'Jack is physically disabled' still follows.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2181
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Jack overcomes adversity, then he does not have a positive attitude if and only if he is resourceful.\n- Jack is mentally tough if and only if he is physically disabled.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We are given two new rules: (1) If Jack overcomes adversity, then he does not have a positive attitude if and only if he is resourceful; (2) Jack is mentally tough if and only if he is physically disabled.\n\nFrom prior context: Jack overcomes adversity (given), Jack does not have a positive attitude (given), and Jack seeks support (given). From 'if seeks support \u2192 mentally tough' (previously added), Jack is mentally tough.\n\nNow, rule (1): Since Jack overcomes adversity, we apply the biconditional: \u00ac(positive attitude) \u2194 resourceful.\nJack does not have a positive attitude, so the left side is true, thus the right side must be true \u2192 Jack is resourceful. This is consistent with earlier deductions.\n\nNow, rule (2): Jack is mentally tough iff he is physically disabled.\nWe have Jack is mentally tough, so by this biconditional, he must be physically disabled.\n\nTherefore, the conclusion 'Jack is physically disabled' is entailed.\n\nAll steps are logically necessary given the facts and rules.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2584
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Jack seeks support, then he is mentally tough.\n\nAdded rules:\n- If Jack seeks support, then he is not mentally tough.",
+      "question": "Does the context entail the conclusion 'Jack is physically disabled.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The rule 'If Jack seeks support, then he is mentally tough' is removed and replaced with 'If Jack seeks support, then he is not mentally tough'. We are given that Jack seeks support (added fact), so by this new rule, Jack is not mentally tough.\n\nWe also have the rule: 'Jack is mentally tough if and only if he is physically disabled' (added in previous step). This means:\n- If mentally tough \u2192 physically disabled\n- If physically disabled \u2192 mentally tough\n\nSo being mentally tough and being physically disabled are logically equivalent.\n\nBut we now have: Jack is not mentally tough \u2192 therefore, by contrapositive of the biconditional, Jack is not physically disabled.\n\nThus, the conclusion 'Jack is physically disabled' is contradicted by the current context.\n\nTherefore, the context does not entail the conclusion; in fact, it entails the negation.\n\nHence, the answer is False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2906
+    }
+  ]
+}

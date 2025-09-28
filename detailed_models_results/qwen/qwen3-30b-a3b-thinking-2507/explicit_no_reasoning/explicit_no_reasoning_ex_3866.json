@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 231,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Bentley travels extensively.\nBentley cannot understand literature.\nBentley admires poetry.\nBentley is a linguist.\nBentley does not value diversity.\nIf Bentley travels extensively and reads classics, then he can understand literature.\nIf Bentley admires poetry, then he collects rare books and values history.\nBentley either explores dialects or collects rare books, but not both.\nIf Bentley is a linguist, then he either explores dialects or studies a language, but not both.\nIf someone appreciates culture, then they value diversity.\nAnyone who reads classics or becomes a translator can appreciate culture.\nIf Bentley studies Kannada and masters its script, then he can become a translator.",
+      "question": "Does the context entail the conclusion 'Bentley does not master its script.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Bentley does not value diversity.\n\nAdded rules:\n- For all x, if x studies a language, then x masters its script.\n\nAdded facts:\n- Bentley values diversity.",
+      "question": "Does the context entail the conclusion 'Bentley does not master its script.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Bentley is a linguist (current fact). The rule states: if Bentley is a linguist, he either explores dialects or studies a language (not both). Bentley admires poetry (current fact), so he collects rare books (from original rule). The rule 'Bentley either explores dialects or collects rare books, but not both' implies he does not explore dialects (since he collects rare books). Therefore, he must study a language. The added rule states studying a language implies mastering the script. Thus, he masters the script, making the conclusion 'Bentley does not master its script' false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 250
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- For all x, if x studies a language, then x masters its script.\n\nAdded rules:\n- For all x, either x does not study a language or x masters its script.\n\nAdded facts:\n- Bentley does not read classics.",
+      "question": "Does the context entail the conclusion 'Bentley does not master its script.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Bentley is a linguist (fact). Rule: linguist implies explore dialects XOR study language. Bentley admires poetry (fact), so he collects rare books (from rule), thus he does not explore dialects (from 'either explores dialects or collects rare books, but not both'). Therefore, he must study a language (S = true). Added rule: \u00acS \u2228 M (equivalent to S \u2192 M). Since S is true, M (masters script) must be true. Thus, the conclusion 'Bentley does not master its script' (\u00acM) is false. The context entails that the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 468
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- Either Bentley does not travel extensively, or Bentley does not read classics, or Bentley can understand literature.\n- For all x, if x studies a language, then x masters its script.\n\nAdded facts:\n- Either Bentley masters its script, or Bentley does not master its script.",
+      "question": "Does the context entail the conclusion 'Bentley does not master its script.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The context provides: (1) \u00acTravel \u2228 \u00acReadClassics \u2228 Understand, (2) S \u2192 M (if studies language, masters script), and (3) M \u2228 \u00acM (tautology). To entail \u00acM, the context must force M to be false in all valid models. However, S (studies language) is neither confirmed nor denied. If S is true, M must be true (so \u00acM is false). If S is false, M could still be true or false (since S \u2192 M is vacuously true when S is false). Thus, \u00acM is not necessarily true\u2014it could be false (if S is true) or true (if S is false and M is false). The context does not eliminate all possibilities where M holds, so \u00acM is not entailed. The conclusion is not certain.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 704
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Bentley admires poetry, then he collects rare books and values history.\n\nAdded rules:\n- If Bentley does not study a language, then Bentley does not master its script.\n\nAdded facts:\n- Bentley does not collect rare books.",
+      "question": "Does the context entail the conclusion 'Bentley does not master its script.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Bentley is a linguist (fact). Rule: linguist implies E XOR S (explores dialects or studies language, not both). Fact: Bentley does not collect rare books (\u00acC). Rule: E XOR C, so \u00acC implies E is true. From E XOR S and E true, S is false (Bentley does not study a language). Added rule: \u00acS \u2192 \u00acM. Since \u00acS is true, \u00acM must be true. Thus, 'Bentley does not master its script' is entailed. Answer is True.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 992
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Bentley does not collect rare books.\n\nAdded facts:\n- Bentley studies a language.",
+      "question": "Does the context entail the conclusion 'Bentley does not master its script.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Bentley studies a language (added fact). The rule 'If Bentley studies a language, then he masters its script' applies (standard rule from prior context). Thus, since Bentley studies a language, he must master its script. This directly contradicts the conclusion 'Bentley does not master its script.' Therefore, the conclusion is false, and the context does not entail it. The correct answer is False.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1230
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Bentley studies a language.\n\nAdded facts:\n- Bentley explores dialects.",
+      "question": "Does the context entail the conclusion 'Bentley does not master its script.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Bentley explores dialects (added fact), and as a linguist, he must satisfy E XOR S (explores dialects or studies language, not both). Since E is true (he explores dialects), S (studies language) must be false. The rule 'If studies language, masters script' (S \u2192 M) is vacuously true when S is false, providing no information about M. Thus, M could be true or false. The conclusion 'Bentley does not master its script' (\u00acM) is not enforced; it could be false (if he masters the script). Since the context does not require \u00acM to hold in all cases, it does not entail the conclusion. The answer is False (B).",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1404
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Bentley is a linguist, then he either explores dialects or studies a language, but not both.\n- If Bentley does not study a language, then Bentley does not master its script.\n\nAdded rules:\n- If Bentley is a linguist and Bentley explores dialects, then Bentley studies a language.",
+      "question": "Does the context entail the conclusion 'Bentley does not master its script.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Bentley is a linguist (fact). The added rule states: (L \u2227 E) \u2192 S. Since L is true, this simplifies to E \u2192 S. There is no rule connecting S to M (mastering script) in the current context (the rule S \u2192 M was not added, and \u00acS \u2192 \u00acM was removed). Without any rule linking S and M, M can be true or false regardless of S. A model where E is true (so S is true) and M is true satisfies all rules, making the conclusion \u00acM false. Thus, the conclusion is not entailed in all cases, so the context does not entail \"Bentley does not master its script.\"",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1645
+    }
+  ]
+}

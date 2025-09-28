@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 56,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Felicity values feedback.\nFelicity is not open-minded.\nFelicity does not achieve success.\nFelicity avoids the spotlight.\nFelicity does not stay grounded.\nFelicity is passionate.\nFelicity does not pursue excellence.\nFelicity is not innovative.\nIf Felicity either embraces collaboration or values feedback (but not both), then she is open-minded.\nFelicity either sets goals or embraces collaboration, but not both.\nIf Felicity either sets goals or has perseverance (but not both), then she achieves success.\nEveryone who either remains humble or avoids the spotlight (but not both) stays grounded.\nFelicity either earns recognition or remains humble, but not both.\nIf Felicity is passionate, then she is either curious or has perseverance (but not both).\nIf Felicity either pursues excellence or makes breakthroughs (but not both), then she earns recognition.\nAnyone who has curiosity and is dedicated can make breakthroughs.\nIf Felicity is either dedicated or brilliant (but not both), then she is innovative.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Everyone who has curiosity and is dedicated can make breakthroughs.\n\nAdded rules:\n- Everyone who has curiosity and does not make breakthroughs is dedicated.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "B",
+      "correct_answer": "False",
+      "reasoning": "The context does not entail that Felicity is not brilliant. From the rules, we deduce that Felicity is not passionate, does not stay grounded, and has perseverance. The key rule involving brilliance states: 'If Felicity is either dedicated or brilliant (but not both), then she is innovative.' Since Felicity is not innovative, the antecedent 'dedicated XOR brilliant' must be false, meaning she is either both dedicated and brilliant or neither. The new added rule 'Everyone who has curiosity and does not make breakthroughs is dedicated' does not apply (she lacks curiosity), so dedication is undetermined. Thus, it is possible for Felicity to be both dedicated and brilliant, or neither. Since the context allows for Felicity to be brilliant, the conclusion 'Felicity is not brilliant' is not entailed. Therefore, the answer is False.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 317
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Felicity either embraces collaboration or values feedback, but not both, then she is open-minded.\n\nAdded rules:\n- If Felicity has perseverance, then she is not dedicated.\n\nAdded facts:\n- Felicity does not have curiosity.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "A",
+      "correct_answer": "True",
+      "reasoning": "Felicity is passionate (fact) and does not have curiosity (added fact). By rule 13 (passionate \u2192 curious XOR perseverance), perseverance must be true. Added rule states perseverance \u2192 \u00acdedicated, so Felicity is not dedicated. The rule (dedicated XOR brilliant) \u2192 innovative (fact: not innovative) requires that dedicated and brilliant have the same truth value. Since dedicated is false, brilliant must also be false. Thus, Felicity is not brilliant, entailing the conclusion.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 576
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Felicity either sets goals or has perseverance, but not both, then she achieves success.\n\nAdded rules:\n- If Felicity is dedicated, then she does not have perseverance.\n- If Felicity is not innovative, then it is not the case that she is either dedicated or brilliant, but not both.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "A",
+      "correct_answer": "True",
+      "reasoning": "Felicity is not innovative (Fact 8). Added rule 2 states \u00acInnovative \u2192 \u00ac(Dedicated XOR Brilliant), so Dedicated and Brilliant must share the same truth value. Felicity avoids the spotlight (Fact 4), and rule 'Everyone who either remains humble or avoids the spotlight (but not both) stays grounded' implies RemainsHumble must be True (otherwise StaysGrounded would be True, contradicting Fact 5). Thus, EarnsRecognition must be False (from 'EarnsRecognition XOR RemainsHumble'). If Dedicated were True, Curious would be True (Rule 13), leading to MakesBreakthrough (rule: Curious \u2227 Dedicated \u2192 MakesBreakthrough), which would require EarnsRecognition = True (since PursuesExcellence = False), contradicting EarnsRecognition = False. Thus, Dedicated must be False, so Brilliant must also be False (from added rule 2). Therefore, Felicity is not brilliant.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 796
+    },
+    {
+      "step": 4,
+      "context": "Added facts:\n- Felicity remains humble.\n- Felicity does not earn recognition.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "A",
+      "correct_answer": "True",
+      "reasoning": "Felicity remains humble and does not earn recognition (added facts). Rule 5 (EarnsRecognition XOR RemainsHumble) holds. Rule 7 (PursuesExcellence XOR MakesBreakthroughs \u2192 EarnsRecognition) and the fact that she does not pursue excellence imply MakesBreakthroughs = False. Rule 6 (Passionate \u2192 Curious XOR Perseverance) and Passionate being true imply one of Curious or Perseverance is true. The rule Curious \u2227 Dedicated \u2192 MakesBreakthroughs (from context) requires that if Curious is true, Dedicated must be false (since MakesBreakthroughs = False). If Perseverance is true, the added rule Dedicated \u2192 \u00acPerseverance implies Dedicated = False. Thus, Dedicated = False in all cases. From (Dedicated XOR Brilliant) \u2192 Innovative and \u00acInnovative, Dedicated = Brilliant must both be false. Therefore, Felicity is not brilliant.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1130
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Felicity does not have curiosity.\n\nAdded facts:\n- Felicity has curiosity.\n- Felicity does not make breakthroughs.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "A",
+      "correct_answer": "False",
+      "reasoning": "Felicity has curiosity (added fact) and does not make breakthroughs (added fact). The rule 'Curious and Dedicated \u2192 MakesBreakthroughs' implies that if she were dedicated, she would make breakthroughs. Since she doesn't, she is not dedicated. The rule 'Dedicated XOR Brilliant \u2192 Innovative' and her being not innovative (original fact) require Dedicated and Brilliant to be equal. Since Dedicated is false, Brilliant must also be false. Thus, Felicity is not brilliant.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1414
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Felicity is not innovative, then she is dedicated if and only if she is brilliant.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "B",
+      "correct_answer": "False",
+      "reasoning": "Felicity is not innovative (Fact). The added rule states: If not innovative, then Dedicated \u2194 Brilliant. This means if Dedicated is true, Brilliant must be true, and if Dedicated is false, Brilliant must be false. There are no additional facts or rules specifying Dedicated's truth value. Thus, it is possible for Dedicated to be true (making Brilliant true) or false (making Brilliant false). The conclusion 'Felicity is not brilliant' is not entailed because Felicity could be brilliant (if Dedicated is true). Therefore, the context does not entail that she is not brilliant, making the correct answer False.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1613
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Everyone who has curiosity and does not make breakthroughs is dedicated.\n\nAdded facts:\n- Felicity is not dedicated.",
+      "question": "Does the context entail the conclusion 'Felicity is not brilliant.'?",
+      "prediction": "A",
+      "correct_answer": "True",
+      "reasoning": "Felicity is not innovative (fact). The rule states: (Dedicated XOR Brilliant) \u2192 Innovative. With \u00acInnovative, this implies \u00ac(Dedicated XOR Brilliant), meaning Dedicated and Brilliant must be equivalent. Given the added fact that Felicity is not dedicated (\u00acDedicated), Brilliant must also be false (\u00acBrilliant). Thus, Felicity is not brilliant, so the conclusion is entailed, making the answer True.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1830
+    }
+  ]
+}

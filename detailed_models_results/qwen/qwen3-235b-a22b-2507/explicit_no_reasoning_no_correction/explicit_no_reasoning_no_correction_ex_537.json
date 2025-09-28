@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-235b-a22b-2507",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 275,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.8571428571428571
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Raphael is not reflective.\nRaphael does not gain wisdom.\nRaphael reads widely.\nRaphael does not think critically.\nRaphael is inquisitive.\nAnyone who is reflective or has life experience can gain wisdom.\nIf Raphael either reads widely or is discerning (but not both), then he thinks critically.\nRaphael either pursues learning or has life experience, but not both.\nIf Raphael is inquisitive, then he is either seeking truth or discerning (but not both).\nEveryone pursues learning or values knowledge.\nAnyone who values knowledge or is scholarly minded seeks truth.\nRaphael is either scholarly minded or non-academic, but not both.",
+      "question": "Does the context entail the conclusion 'Raphael is not non-academic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Everyone who values knowledge or is scholarly minded seeks truth.\n\nAdded rules:\n- Everyone who pursues learning is scholarly minded.",
+      "question": "Does the context entail the conclusion 'Raphael is not non-academic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We are asked whether the context entails 'Raphael is not non-academic,' i.e., whether Raphael is academic. This is equivalent to determining whether Raphael is scholarly minded, since he is either scholarly minded or non-academic (but not both). So 'Raphael is not non-academic' means 'Raphael is scholarly minded'.\n\nGiven:\n- Raphael is either scholarly minded or non-academic (but not both). So if we can deduce he is scholarly minded, the conclusion follows.\n- Raphael either pursues learning or has life experience, but not both.\n- Everyone who pursues learning is scholarly minded. (New rule)\n- Raphael reads widely.\n- Raphael does not think critically.\n- If Raphael either reads widely or is discerning (but not both), then he thinks critically.\nRaphael is inquisitive.\nIf Raphael is inquisitive, then he is either seeking truth or discerning (but not both).\n\nLet\u2019s analyze step by step.\n\nFrom: Raphael reads widely, and does not think critically.\nThe conditional: If (reads widely XOR is discerning), then thinks critically.\nBut he does *not* think critically, so the consequent is false. Therefore, the antecedent must be false (to avoid contradiction).\nSo it is *not* true that (reads widely XOR discerning).\nRaphael reads widely (true), so for the XOR to be false, 'is discerning' must also be true (since T XOR T = F). Therefore, Raphael is discerning.\n\nSo: Raphael is discerning.\n\nNow, Raphael is inquisitive. The rule: If inquisitive, then (seeking truth XOR discerning).\nHe is discerning (we just deduced), so for the XOR to be true, 'seeking truth' must be false.\nSo: Raphael is not seeking truth.\n\nNow, recall: Raphael either pursues learning or has life experience, but not both.\nAlso: Anyone who is reflective or has life experience can gain wisdom.\nBut Raphael does not gain wisdom, and is not reflective.\nSo: He cannot gain wisdom \u2192 so it is not true that (reflective or has life experience). He is not reflective (given), so to prevent gaining wisdom, he must also *not* have life experience.\nThus: Raphael does not have life experience.\n\nThen, from the exclusive or (pursues learning XOR has life experience), since he does not have life experience, he *must* pursue learning.\n\nNow, the added rule: Everyone who pursues learning is scholarly minded.\nSo Raphael is scholarly minded.\n\nAnd since he is either scholarly minded or non-academic (but not both), and he is scholarly minded, he is *not* non-academic.\n\nTherefore, the conclusion 'Raphael is not non-academic' is entailed by the context.\nAnswer is True.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 239
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Raphael is reflective or has life experience, then he gains wisdom.\n- Raphael either pursues learning or values knowledge.\n- If Raphael pursues learning then he is scholarly minded.\n\nAdded facts:\n- Raphael is discerning.\n- Raphael is not seeking truth.",
+      "question": "Does the context entail the conclusion 'Raphael is not non-academic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We are to determine whether the context entails 'Raphael is not non-academic'\u2014i.e., Raphael is scholarly minded, since he is either scholarly minded or non-academic (but not both).\n\nGiven:\n- Raphael is discerning (added fact).\n- Raphael is not seeking truth (added fact).\n- Raphael is inquisitive (from original context).\n- If Raphael is inquisitive, then he is either seeking truth or discerning (but not both).\nHe is discerning and not seeking truth \u2192 satisfies the XOR (true if exactly one is true). So this holds.\n\n- Raphael does not gain wisdom (given).\n- If Raphael is reflective or has life experience, then he gains wisdom (added).\nContrapositive: If he does not gain wisdom, then he is neither reflective nor has life experience.\nThus: Raphael is not reflective and does not have life experience.\n\n- Raphael either pursues learning or values knowledge (added, but is this exclusive?). Wait: the statement is 'Raphael either pursues learning or values knowledge'\u2014it does not say 'but not both', so it's inclusive OR.\nBut we also have from original: 'Everyone pursues learning or values knowledge' \u2014so at least one is true. Now the added rule makes it explicit that for Raphael, he does one or both.\n\nBut also: If Raphael pursues learning, then he is scholarly minded (added).\nAnd: Raphael is either scholarly minded or non-academic (but not both) \u2192 so they are exclusive.\nThus, to show he is not non-academic, we must show he is scholarly minded.\n\nSo can we show he pursues learning?\nWe know he does not have life experience (from above).\nOriginal: Raphael either pursues learning or has life experience, but not both.\nSince he does not have life experience, he *must* pursue learning.\n\nThus: Raphael pursues learning.\nThen: If he pursues learning, he is scholarly minded \u2192 so he is scholarly minded.\nTherefore: He is not non-academic.\n\nAll steps follow from the context. The conclusion is entailed.\nAnswer: True.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 936
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Anyone who is reflective or has life experience can gain wisdom.\n\nAdded rules:\n- Everyone who is reflective gains wisdom.\n- Everyone who has life experience gains wisdom.",
+      "question": "Does the context entail the conclusion 'Raphael is not non-academic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We are to determine if the context entails 'Raphael is not non-academic' \u2014 i.e., Raphael is scholarly minded, since he is either scholarly minded or non-academic (but not both).\n\nKey added rules:\n- Everyone who is reflective gains wisdom.\n- Everyone who has life experience gains wisdom.\nSo: If Raphael is reflective \u2192 he gains wisdom; if he has life experience \u2192 he gains wisdom.\nBut Raphael does not gain wisdom (given). Therefore, he is not reflective and does not have life experience (by contrapositive).\n\nOriginal rule:\n- Raphael either pursues learning or has life experience, but not both.\nHe does not have life experience \u2192 so he must pursue learning.\n\nAdded rule:\n- If Raphael pursues learning, then he is scholarly minded.\nThus: Raphael pursues learning \u2192 Raphael is scholarly minded.\nTherefore: Raphael is scholarly minded.\nHence: He is not non-academic.\n\nNo contradictions. All steps follow from the rules and facts.\nThe conclusion is entailed.\nAnswer: True.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1504
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- Everyone who has life experience gains wisdom.\n- If Raphael is reflective or has life experience, then he gains wisdom.\n\nAdded rules:\n- If Raphael values knowledge then he is not scholarly minded.\n\nAdded facts:\n- Raphael has life experience.",
+      "question": "Does the context entail the conclusion 'Raphael is not non-academic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We are to determine whether the context entails 'Raphael is not non-academic' \u2014 i.e., Raphael is scholarly minded, because he is either scholarly minded or non-academic (but not both).\n\nKey facts and rules:\n- Added fact: Raphael has life experience.\n- Original: Raphael either pursues learning or has life experience, but not both. Since he has life experience, he does *not* pursue learning.\n- Added rule: If Raphael pursues learning, then he is scholarly minded. But this is not applicable, since he does not pursue learning (so no conclusion from this implication).\n- Added rule: If Raphael values knowledge, then he is not scholarly minded.\n- Original: Everyone pursues learning or values knowledge. Raphael does not pursue learning \u2192 so he must value knowledge.\nTherefore: Raphael values knowledge.\nThen, by the added rule: If he values knowledge, then he is *not* scholarly minded \u2192 so Raphael is *not* scholarly minded.\nSince he is either scholarly minded or non-academic (but not both), and he is not scholarly minded, he must be non-academic.\nThus, the statement 'Raphael is not non-academic' is false.\nThe context entails that he *is* non-academic, so it entails the negation of the conclusion.\nTherefore, the conclusion 'Raphael is not non-academic' is not entailed.\nAnswer: False.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1817
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- Everyone who is scholarly minded does not value knowledge.\n\nAdded facts:\n- Raphael values knowledge.\n- If Raphael is scholarly minded then he does not value knowledge.",
+      "question": "Does the context entail the conclusion 'Raphael is not non-academic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We are to determine whether the context entails 'Raphael is not non-academic' \u2014 i.e., Raphael is scholarly minded, because he is either scholarly minded or non-academic (but not both). So the conclusion is equivalent to 'Raphael is scholarly minded'.\n\nGiven facts and rules:\n- Raphael values knowledge (added fact).\n- Everyone who is scholarly minded does not value knowledge (added rule). This means: If someone is scholarly minded, then they do not value knowledge.\n- Also added: 'If Raphael is scholarly minded then he does not value knowledge' \u2014 this is redundant with the above universal rule.\n\nNow, Raphael *does* value knowledge. Therefore, if he were scholarly minded, he would both value and not value knowledge \u2014 contradiction.\nSo by contrapositive: He cannot be scholarly minded.\nThus, Raphael is *not* scholarly minded.\nThen, since he is either scholarly minded or non-academic (but not both), he must be non-academic.\nTherefore, 'Raphael is not non-academic' is false.\nThe context entails that Raphael *is* non-academic, so it does *not* entail the conclusion.\nAnswer: False.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2217
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- It is not the case that Raphael does not value knowledge.\n- It is not the case that Raphael is not discerning.\n- If Raphael thinks critically then false.",
+      "question": "Does the context entail the conclusion 'Raphael is not non-academic.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "We analyze the added facts and their implications.\n\nAdded fact 1: 'It is not the case that Raphael does not value knowledge' \u2192 equivalent to: Raphael values knowledge.\nAdded fact 2: 'It is not the case that Raphael is not discerning' \u2192 equivalent to: Raphael is discerning.\nAdded fact 3: 'If Raphael thinks critically then false' \u2192 this is a way of saying: If Raphael thinks critically, then a falsehood follows \u2192 so he cannot think critically. Thus: Raphael does not think critically.\n\nFrom original context:\n- Raphael reads widely.\n- If Raphael either reads widely or is discerning (but not both), then he thinks critically.\nNow: He reads widely (true), and is discerning (true) \u2192 so 'reads widely OR discerning but not both' is false (because both are true, so XOR is false).\nTherefore, the antecedent of the conditional is false, so the implication does not trigger. Thus, no contradiction from him not thinking critically.\n\nWe also have: Raphael is inquisitive.\nRule: If inquisitive, then (seeking truth XOR discerning).\nHe is discerning \u2192 so for the XOR to be true, he must *not* be seeking truth.\nThus: Raphael is not seeking truth.\n\nNow: Does this help determine whether he is scholarly minded?\nWe need to determine if 'Raphael is not non-academic' \u2014 i.e., Raphael is scholarly minded.\nFrom original: Raphael is either scholarly minded or non-academic (but not both).\n\nBut no rule in the current context connects 'values knowledge', 'discerning', or 'inquisitive' to 'scholarly minded', unless we rely on prior rules. But in this version, rules like 'if pursues learning then scholarly minded' or 'everyone who values knowledge seeks truth' have been removed or not specified.\n\nWe know Raphael values knowledge, but we don\u2019t have any rule linking this to being scholarly minded.\nWe also don\u2019t know whether he pursues learning.\nOriginal rule: 'Raphael either pursues learning or has life experience, but not both.'\nBut we don\u2019t know if he has life experience or not.\nAlso: 'If reflective or has life experience, then gains wisdom' \u2014 but Raphael is not reflective and does not gain wisdom, but this was modified in previous versions.\nIn this version, the only constraints are the added facts and the core original statements that haven\u2019t been removed.\n\nBut no chain allows us to deduce whether he is scholarly minded.\nWe cannot confirm or deny it.\nTherefore, we cannot determine whether he is not non-academic.\nAnswer: Uncertain.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2553
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- Everyone who is not scholarly minded does not pursue learning.\n\nAdded facts:\n- Raphael is not scholarly minded.\n- Raphael does not pursue learning.\n- Raphael is either scholarly minded or non-academic.\n- It is not the case that Raphael is both scholarly minded and non-academic.",
+      "question": "Does the context entail the conclusion 'Raphael is not non-academic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We are given:\n- Raphael is not scholarly minded (added fact).\n- Raphael does not pursue learning (added fact).\n- Raphael is either scholarly minded or non-academic (added fact) \u2014 this is inclusive OR unless specified otherwise, but the next fact clarifies exclusivity.\n- It is not the case that Raphael is both scholarly minded and non-academic \u2014 meaning he cannot be both; so the disjunction is exclusive.\nThus: Raphael is exactly one of: scholarly minded or non-academic.\nSince he is *not* scholarly minded, he must be non-academic.\nTherefore, 'Raphael is not non-academic' is false.\nThe context entails that Raphael *is* non-academic.\nThus, the conclusion 'Raphael is not non-academic' is not entailed.\nAnswer: False.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 3215
+    }
+  ]
+}

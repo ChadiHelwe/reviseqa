@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 154,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Carson prioritizes self-care.\nCarson has a strong professional network.\nCarson either prioritizes self-care or values work-life balance, but not both.\nCarson either has a strong professional network or makes profitable investments, but not both.\nCarson either has leadership roles or values work-life balance, but not both.\nCarson either enjoys outdoor activities or has leadership roles, but not both.\nCarson enjoys outdoor activities or trains for a marathon.\nIf Carson trains for a marathon and has good running performance, then he makes profitable investments.",
+      "question": "Does the context entail the conclusion 'Carson does not have good running performance.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Carson does not make profitable investments, then either Carson does not train for a marathon or Carson does not have good running performance.",
+      "question": "Does the context entail the conclusion 'Carson does not have good running performance.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the context:\n- StrongNetwork = True (given)\n- StrongNetwork XOR ProfitableInvestments \u2192 ProfitableInvestments = False\n- Added rule: ~ProfitableInvestments \u2192 (~MarathonTraining \u2228 ~GoodPerformance)\n- ~ProfitableInvestments is True, so ~MarathonTraining \u2228 ~GoodPerformance must be True.\n- MarathonTraining = True (from OutdoorActivities = False and OutdoorActivities \u2228 MarathonTraining), so ~MarathonTraining = False.\n- Thus, ~GoodPerformance must be True \u2192 GoodPerformance = False.\nTherefore, the conclusion 'Carson does not have good running performance' is entailed, making the answer True.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 216
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Carson has a strong professional network.\n\nAdded rules:\n- If Carson trains for a marathon, then he has good running performance.",
+      "question": "Does the context entail the conclusion 'Carson does not have good running performance.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "1. Removed fact 'Carson has a strong professional network' implies S = false.\n2. Premise: S XOR P \u2192 P = true (profitable investments).\n3. Premise: SC = true (prioritizes self-care).\n4. SC XOR WLB \u2192 WLB = false.\n5. L XOR WLB \u2192 L = true (leadership roles).\n6. O XOR L \u2192 O = false (outdoor activities).\n7. O OR M \u2192 M = true (trains for marathon).\n8. Added rule: M \u2192 G \u2192 G = true (good running performance).\nThus, the conclusion 'Carson does not have good running performance' (\u00acG) is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 440
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- If Carson does not have good running performance, then Carson does not train for a marathon.",
+      "question": "Does the context entail the conclusion 'Carson does not have good running performance.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the context:\n- M (trains for marathon) = true (from O XOR L \u2192 L = true, so O = false; O OR M \u2192 M = true).\n- Added rule: \u00acG \u2192 \u00acM, which is equivalent to M \u2192 G.\n- Since M = true, G must be true (via modus ponens).\n- Therefore, \u00acG (Carson does not have good running performance) is false.\nThus, the conclusion is not entailed; the answer is False.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 673
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- Either Carson does not train for a marathon, or Carson has good running performance.",
+      "question": "Does the context entail the conclusion 'Carson does not have good running performance.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the context:\n- O (outdoor activities) = false (from L = true and O XOR L).\n- O OR M \u2192 M = true (trains for marathon).\n- Added rule: \u00acM \u2228 G \u2192 equivalent to M \u2192 G.\n- M = true, so G (good running performance) must be true.\n- Conclusion: 'Carson does not have good running performance' (\u00acG) is false.\nThus, the answer is False.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 856
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- Either Carson does not train for a marathon, or Carson does not have good running performance, or Carson makes profitable investments.",
+      "question": "Does the context entail the conclusion 'Carson does not have good running performance.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the base context:\n- SN = true (strong professional network)\n- SN XOR PI \u2192 PI = false\n- O XOR L \u2192 L = true\n- L XOR WLB \u2192 WLB = false\n- SC = true, so (SC XOR WLB) confirms WLB = false\n- O OR M \u2192 M = true (since O = false)\n- Added rule: \u00acM \u2228 \u00acG \u2228 PI\nSubstituting known values (M = true, PI = false):\n\u00acM = false, PI = false \u2192 disjunction requires \u00acG = true\nThus, G = false \u2192 'Carson does not have good running performance' is entailed.\nAdditionally, base rule (M \u2227 G) \u2192 PI (with PI = false) already implies \u00acG, making this redundant but consistent.\nTherefore, the conclusion is entailed: Answer = True.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1030
+    },
+    {
+      "step": 6,
+      "context": "Added facts:\n- Carson does not value work-life balance.",
+      "question": "Does the context entail the conclusion 'Carson does not have good running performance.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the added fact: WLB = false.\n- Rule 3 (SC XOR WLB): SC = true \u2192 consistent.\n- Rule 5 (L XOR WLB): WLB = false \u2192 L = true.\n- Rule 6 (O XOR L): L = true \u2192 O = false.\n- Rule 7 (O OR M): O = false \u2192 M = true (trains for marathon).\n- Rule 4 (SN XOR PI): SN = true \u2192 PI = false.\n- Rule 8 (M \u2227 G \u2192 PI): PI = false and M = true \u2192 G must be false (to prevent M \u2227 G being true).\nThus, G = false \u2192 'Carson does not have good running performance' is entailed (True).",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1296
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Carson enjoys outdoor activities or trains for a marathon.\n\nAdded rules:\n- If Carson does not enjoy outdoor activities, then Carson trains for a marathon.\n\nAdded facts:\n- Carson has good running performance.",
+      "question": "Does the context entail the conclusion 'Carson does not have good running performance.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Added fact: G = true (Carson has good running performance).\nConclusion: \u00acG (Carson does not have good running performance).\nSince G is explicitly stated as true, \u00acG is directly false.\nThe new rule (\u00acO \u2192 M) and removed rule are irrelevant to G's value, as G is a given fact.\nThus, the context contradicts the conclusion; it does not entail it (answer = False).",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1523
+    }
+  ]
+}

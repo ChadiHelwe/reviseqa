@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 212,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.14285714285714285
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kyro hides in vegetation.\nKyro climbs rocks.\nKyro does not feed on plankton.\nFor Kyro, either he hides in vegetation or burrows sand, but not both.\nIf Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.\nEvery mudskipper that explores the mudflats either walks on mud or feeds on plankton (or both).\nKyro either swims efficiently or walks on mud, but not both.\nKyro either breathes air or swims efficiently, but not both.\nAll mudskippers that can breathe air can survive out of water.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x explores the mudflats, then x either walks on mud or feeds on plankton.\n\nAdded rules:\n- For all x, if x explores the mudflats, then x does not walk on mud.\n- For all x, if x does not breathe air, then x cannot survive out of water.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the premises, Kyro climbs rocks (premise 2) and does not burrow sand (premise 4). This triggers premise 5, so Kyro explores the mudflats. The new rule states that if Kyro explores the mudflats, he does not walk on mud. Premise 7 then forces Kyro to swim efficiently (since he doesn't walk on mud). Premise 8 requires Kyro to breathe air or swim efficiently, but not both. Since he swims efficiently, he cannot breathe air. Finally, the new rule states that if Kyro does not breathe air, he cannot survive out of water. Thus, the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 232
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Kyro hides in vegetation.\n\nAdded facts:\n- Kyro burrows sand.\n- Kyro walks on mud.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "B",
+      "correct_answer": "False",
+      "reasoning": "Kyro burrows sand (added) and climbs rocks (original fact), violating the 'but not both' condition in the rule 'If Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.' Thus, the antecedent is false, and we cannot conclude he explores the mudflats. However, Kyro walks on mud (added), so he cannot swim efficiently (rule: 'swims efficiently or walks on mud, but not both'). This forces Kyro to breathe air (rule: 'breathes air or swims efficiently, but not both'). Since Kyro breathes air, the rule 'if not breathe air, cannot survive out of water' does not apply. Additionally, 'all mudskippers that can breathe air can survive out of water' implies Kyro can survive. Thus, the conclusion 'Kyro cannot survive out of water' is false.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 494
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, x breathes air if and only if x can survive out of water.\n- For all x, if x walks on mud, then x does not explore the mudflats.\n\nAdded facts:\n- Kyro breathes air.\n- Kyro does not swim efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "B",
+      "correct_answer": "False",
+      "reasoning": "Kyro breathes air (added fact). The added rule states 'x breathes air if and only if x can survive out of water,' which directly links breathing air to survival out of water. Since Kyro breathes air, he can survive out of water. The conclusion 'Kyro cannot survive out of water' contradicts this, making it false.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 759
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Kyro walks on mud.\n- Kyro does not swim efficiently.\n- Kyro breathes air.\n\nAdded facts:\n- Kyro does not walk on mud.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "B",
+      "correct_answer": "True",
+      "reasoning": "Kyro climbs rocks (fact), so he must explore the mudflats (rule: 'If Kyro climbs rocks or burrows sand, but not both, then he explores the mudflats'). However, the rule 'every mudskipper that explores the mudflats either walks on mud or feeds on plankton' conflicts with Kyro not walking on mud (added fact) and not feeding on plankton (original fact), creating a contradiction. Additionally, Kyro does not walk on mud, so he must swim efficiently (rule: 'swims efficiently or walks on mud, but not both'). Since he swims efficiently, he cannot breathe air (rule: 'breathes air or swims efficiently, but not both'). However, the original rule only states 'breathes air \u2192 can survive out of water,' which does not logically imply 'not breathe air \u2192 cannot survive.' Without a rule enforcing the converse, there's no basis to conclude Kyro cannot survive. The contradiction in the premises does not directly affect the survival conclusion, so the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 962
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, if x can survive out of water, then x breathes air.\n- For all x, it is not the case that x walks on mud and x explores the mudflats.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "C",
+      "correct_answer": "True",
+      "reasoning": "The added rule states 'if x can survive out of water, then x breathes air' (Survive \u2192 Breathe air). However, there is no direct information about Kyro's breathing. The second added rule (\u00ac(Walk on mud \u2227 Explore mudflats)) and the fact that Kyro does not walk on mud (\u00acWalk on mud) only ensure he can explore the mudflats or not, but no definitive link to survival. Without knowing if Kyro breathes air or not, the conclusion 'Kyro cannot survive out of water' cannot be logically entailed. Thus, the answer is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1287
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Kyro either swims efficiently or walks on mud, but not both.\n\nAdded facts:\n- Kyro does not swim efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "B",
+      "correct_answer": "False",
+      "reasoning": "From the added fact that Kyro does not swim efficiently and the original rule 'Kyro either breathes air or swims efficiently, but not both,' we deduce Kyro breathes air. The original rule 'All mudskippers that can breathe air can survive out of water' directly implies Kyro can survive. However, the added rule 'if x can survive out of water, then x breathes air' (Survive \u2192 Breathe air) and the original rule 'Breathe air \u2192 Survive' create a biconditional. Since Kyro breathes air, he must survive. The contradiction in exploring mudflats and walking on mud does not affect this conclusion, as the survival condition is logically enforced by the breathing air rule. Thus, the conclusion 'Kyro cannot survive out of water' is false.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1529
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Kyro does not swim efficiently.\n\nAdded facts:\n- Kyro swims efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "A",
+      "correct_answer": "True",
+      "reasoning": "Kyro swims efficiently (added fact), so he cannot breathe air (rule: 'Kyro either breathes air or swims efficiently, but not both'). The added rule 'if x can survive out of water, then x breathes air' (Survive \u2192 Breathe air) implies the contrapositive 'if x does not breathe air, then x cannot survive out of water' (\u00acBreathe air \u2192 \u00acSurvive). Since Kyro does not breathe air, the conclusion 'Kyro cannot survive out of water' is entailed. Therefore, the answer is True.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1797
+    }
+  ]
+}

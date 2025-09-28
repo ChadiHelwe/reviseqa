@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 97,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "River does not learn quickly.\nRiver is not trainable.\nRiver roams freely.\nRiver is not of a desirable breed.\nRiver responds to calls.\nRiver defends his territory.\nRiver guards his family.\nIf River either has intelligence or learns quickly (but not both), then he is trainable.\nFor River, either he tracks preys or he roams freely, but not both.\nIf River has good instincts or is a faithful companion, then he can track preys.\nIf River is either valuable or has intelligence (but not both), then he is of a desirable breed.\nIf River either obeys commands or responds to calls (but not both), then he is a faithful companion.\nIf River protects his owner, then he either defends his territory or guards his family (but not both).\nAny dog that obeys commands or protects its owner is loyal.\nIf River is either loyal or independent (but not both), then he is valuable.",
+      "question": "Does the context entail the conclusion 'River is not independent.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If River has good instincts or is a faithful companion, then he can track preys.\n\nAdded rules:\n- If River does not track preys, then River does not have good instincts and River is not a faithful companion.\n\nAdded facts:\n- River does not track preys.\n- River does not protect his owner.",
+      "question": "Does the context entail the conclusion 'River is not independent.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the added rule and fact: \u00acTrack implies \u00acGoodInstincts \u2227 \u00acFaithfulCompanion. Since \u00acTrack is given, River lacks good instincts and is not a faithful companion. From the rule (Obeys \u2295 RespondsCalls) \u2192 FaithfulCompanion and given RespondsCalls (from context), Obeys must be true (to avoid XOR contradiction). With Obeys true, the rule Obeys \u2228 ProtectOwner \u2192 Loyal implies Loyal is true. Given \u00acProtectOwner, Obeys alone makes Loyal true. The rule (Loyal \u2295 Independent) \u2192 Valuable and \u00acDesirableBreed (via Valuable \u2295 Intelligence \u2192 DesirableBreed and known \u00acIntelligence from \u00acTrainable and \u00acLearnsQuickly) implies Valuable = false. Thus, (Loyal \u2295 Independent) must be false for the implication to hold, meaning Independent = Loyal = true. Hence, River is independent, so 'River is not independent' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 290
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- River does not have good instincts.\n- River is not a faithful companion.\n- River obeys commands.\n- River is loyal.",
+      "question": "Does the context entail the conclusion 'River is not independent.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the initial context, River is not of a desirable breed (DesirableBreed = False). Rule 7: (Valuable \u2295 Intelligence) \u2192 DesirableBreed. River is not trainable (Trainable = False), so from Rule 1 (Intelligence \u2295 LearnsQuickly) \u2192 Trainable, Intelligence = LearnsQuickly = False (since River does not learn quickly). Thus, Intelligence = False, so Rule 7 simplifies to Valuable \u2192 DesirableBreed. Since DesirableBreed = False, Valuable must be False (via modus tollens). Rule 5: (Loyal \u2295 Independent) \u2192 Valuable. With Valuable = False, the antecedent (Loyal \u2295 Independent) must be False. Loyal = True (given), so Independent must equal True to make XOR False. Thus, River is independent, and 'River is not independent' is false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 618
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- River does not learn quickly.\n\nAdded rules:\n- If River obeys commands, then River is not independent.",
+      "question": "Does the context entail the conclusion 'River is not independent.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The added rule states: If River obeys commands, then he is not independent. However, from the context's rule (ObeysCommands \u2295 RespondsCalls) \u2192 FaithfulCompanion and the fact that River responds to calls, we deduce River does not obey commands (due to XOR requirement). Since River does not obey commands, the antecedent of the added rule is false, making the rule vacuously true but providing no information about independence. No other rules or facts in the context address River's independence. Therefore, the context does not entail that 'River is not independent,' making the conclusion false in terms of entailment.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 888
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If River does not track preys, then River does not have good instincts.\n- If River does not track preys, then River is not a faithful companion.",
+      "question": "Does the context entail the conclusion 'River is not independent.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From the context: River roams freely (given), so by the rule 'Tracks XOR Roams', River does not track preys (Tracks = False). The added rules '\u00acTracks \u2192 \u00acGoodInstincts' and '\u00acTracks \u2192 \u00acFaithfulCompanion' apply, so River lacks good instincts and is not a faithful companion. Given River responds to calls (RespondsCalls = True), the rule '(Obeys XOR RespondsCalls) \u2192 FaithfulCompanion' forces Obeys = True (to satisfy \u00acFaithfulCompanion). From 'Obeys \u2228 ProtectOwner \u2192 Loyal' and Obeys = True, Loyal = True. River is not of a desirable breed (DesirableBreed = False), and with '(Valuable XOR Intelligence) \u2192 DesirableBreed', Valuable = Intelligence. River is not trainable, and '(Intelligence XOR LearnsQuickly) \u2192 Trainable' with LearnsQuickly = False (given) implies Intelligence = False, so Valuable = False. Finally, '(Loyal XOR Independent) \u2192 Valuable' with Loyal = True and Valuable = False requires Loyal XOR Independent to be False, so Independent = True. Thus, River is independent, so 'River is not independent' is false.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1093
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If River obeys commands, then River is not independent.\n\nAdded rules:\n- If River roams freely, then River does not learn quickly.",
+      "question": "Does the context entail the conclusion 'River is not independent.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "River roams freely (fact), so by added rule, River does not learn quickly (already known). River is not trainable (fact), so from (Intelligence XOR LearnsQuickly) \u2192 Trainable, Intelligence = LearnsQuickly = False. River is not of a desirable breed (fact), so (Valuable XOR Intelligence) \u2192 DesirableBreed implies Valuable = Intelligence = False. River is loyal (Obeys commands = True via (Obeys XOR RespondsCalls) \u2192 FaithfulCompanion and \u00acFaithfulCompanion), so Loyal = True. From (Loyal XOR Independent) \u2192 Valuable = False, Loyal = Independent = True. Hence, River is independent, so 'River is not independent' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1445
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If River is not trainable, then it is not the case that River either has intelligence or learns quickly (but not both).\n- If River is not of a desirable breed, then it is not the case that River is either valuable or has intelligence (but not both).\n- If River obeys commands or River protects his owner, then River is loyal.",
+      "question": "Does the context entail the conclusion 'River is not independent.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "River roams freely (fact), so by 'Tracks XOR Roams', River does not track preys (Tracks = False). Tracks = False \u2192 (GoodInstincts \u2228 FaithfulCompanion) \u2192 Tracks implies GoodInstincts = False and FaithfulCompanion = False. Given RespondsCalls = True, Rule (Obeys XOR RespondsCalls) \u2192 FaithfulCompanion forces Obeys = True (to make XOR False). Obeys = True \u2192 Rule (Obeys \u2228 ProtectOwner) \u2192 Loyal implies Loyal = True. River is not of a desirable breed (fact), so Rule (\u00acDesirableBreed \u2192 \u00ac(Valuable XOR Intelligence)) with Intelligence = False (from \u00acTrainable \u2192 \u00ac(Intelligence XOR LearnsQuickly) and LearnsQuickly = False) implies Valuable = False. Rule (Loyal XOR Independent) \u2192 Valuable with Valuable = False requires Loyal = Independent. Loyal = True \u2192 Independent = True. Thus, River is independent, so 'River is not independent' is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1683
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If it is not the case that River either defends his territory or guards his family (but not both), then River does not protect his owner.\n- If River is not a faithful companion, then it is not the case that River either obeys commands or responds to calls (but not both).\n- If River is not valuable, then it is not the case that River is either loyal or independent (but not both).",
+      "question": "Does the context entail the conclusion 'River is not independent.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "River defends his territory and guards his family (given facts), so Defends XOR Guards = False. Added rule 1: \u00ac(Defends XOR Guards) \u2192 \u00acProtectOwner. Thus, River does not protect his owner (\u00acProtectOwner = True).\n\nRiver responds to calls (RespondsCalls = True) and is not a faithful companion (from \u00acTracks \u2192 \u00ac(GoodInstincts \u2228 FaithfulCompanion), Tracks = False due to Roams = True). Added rule 2: \u00acFaithfulCompanion \u2192 \u00ac(Obeys XOR RespondsCalls). Thus, Obeys = True (to make XOR False).\n\nObeys = True \u2192 Loyal = True (via Obeys \u2228 ProtectOwner \u2192 Loyal).\n\nRiver is not of a desirable breed (DesirableBreed = False). Original rule: Valuable XOR Intelligence \u2192 DesirableBreed. Contrapositive: DesirableBreed = False \u2192 Valuable = Intelligence.\n\nRiver is not trainable (Trainable = False), and LearnsQuickly = False (given). Original rule: Intelligence XOR LearnsQuickly \u2192 Trainable. Contrapositive: Trainable = False \u2192 Intelligence = LearnsQuickly = False. Thus, Valuable = False.\n\nAdded rule 3: \u00acValuable \u2192 \u00ac(Loyal XOR Independent). \u00acValuable = True \u2192 Loyal XOR Independent = False \u2192 Loyal = Independent.\n\nLoyal = True \u2192 Independent = True. Thus, River is independent, so 'River is not independent' is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2030
+    }
+  ]
+}

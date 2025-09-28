@@ -10,7 +10,7 @@ mkdir -p detailed_models_results
 
 echo "Results will be saved to models_results/ and detailed_models_results/"
 
-model_name="anthropic/claude-sonnet-4"
+model_name="qwen/qwen3-235b-a22b-thinking-2507"
 # Run evaluation with small batch size and single model for testing
 python src/evaluation.py \
     --data-dir reviseqa_data/nl/verified-400/ \

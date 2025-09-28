@@ -1,0 +1,135 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 307,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Erik experiences failure.\nErik has a supportive network.\nErik is highly motivated.\nErik faces challenges.\nErik either experiences failure or achieves success, but not both.\nErik either benefits from counseling or has a supportive network, but not both.\nAnyone who struggles with self-destruction would benefit from counseling.\nAll highly motivated individuals are dedicated and take risks.\nAll dedicated individuals have a passion and face challenges.\nIf someone needs support to thrive and has a passion, then they can achieve success.\nFor all humans, if they struggle with self-destruction or have fragile relationships (or both), then they need support to thrive.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed facts:\n- Erik either experiences failure or achieves success, but not both.\n\nRemoved rules:\n- For all x, if x needs support to thrive and x has a passion, then x can achieve success.\n- For all x, if x struggles with self-destruction or x has fragile relationships, then x needs support to thrive.\n\nAdded rules:\n- For all x, if x achieves success, then x needs support to thrive and x has a passion.\n- For all x, x needs support to thrive if and only if x struggles with self-destruction or x has fragile relationships.\n\nAdded facts:\n- Erik achieves success.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Erik achieves success (added fact). From added rule 1, this implies Erik needs support to thrive (NS) and has a passion. Added rule 2 states NS \u2194 (SD \u2228 FR). Since NS is true, SD \u2228 FR must be true.\n\nErik has a supportive network (original fact), so from the fact that Erik either benefits from counseling or has a supportive network (not both), he does not benefit from counseling (C is false). The rule \"anyone who struggles with self-destruction would benefit from counseling\" (SD \u2192 C) and C being false imply SD is false (via modus tollens).\n\nWith SD false, SD \u2228 FR requires FR to be true. Thus, Erik has fragile relationships, making the conclusion \"Erik does not have fragile relationships\" false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 233
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Erik either benefits from counseling or has a supportive network, but not both.\n\nAdded rules:\n- For all x, if x is highly motivated then x has a passion.\n- For all x, not x needs support to thrive if and only if not x struggles with self-destruction and not x has fragile relationships.\n\nAdded facts:\n- Erik either benefits from counseling or has a supportive network.\n- It is not the case that Erik benefits from counseling and Erik has a supportive network.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Erik has a supportive network (SN = true) from original context (not removed). Added facts: C \u2228 SN and \u00ac(C \u2227 SN) imply C = false (Erik does not benefit from counseling). Original rule: SD \u2192 C (if struggles with self-destruction, benefits from counseling). Since C = false, SD must be false (modus tollens). Added rule 2: \u00acNS \u2194 (\u00acSD \u2227 \u00acFR). With SD = false, \u00acSD = true, so rule simplifies to \u00acNS \u2194 \u00acFR, meaning NS \u2194 FR. No information on NS (needs support to thrive), so FR could be true or false. Therefore, it's possible Erik has fragile relationships (FR = true), making the conclusion 'Erik does not have fragile relationships' not entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 580
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- For all x, if x achieves success, then x needs support to thrive and x has a passion.\n\nAdded rules:\n- For all x, if x achieves success, then it is not the case that x needs support to thrive and x has a passion.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The context provides an added rule: if x achieves success, then it is not the case that x needs support to thrive and x has a passion. However, there is no information stating whether Erik achieves success, nor any rules connecting fragile relationships to other attributes (e.g., needing support or success). Without facts about Erik's success or relationships, and without rules linking success/needs support to fragile relationships, the conclusion 'Erik does not have fragile relationships' cannot be logically derived. The context does not entail the conclusion, so the answer is 'False'.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 898
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x is highly motivated, then x is dedicated and x takes risks.\n- For all x, if x is dedicated, then x has a passion and x faces challenges.\n- For all x, if x achieves success, then it is not the case that x needs support to thrive and x has a passion.\n\nAdded rules:\n- For all x, if x is highly motivated, then x is dedicated.\n- For all x, if x is highly motivated, then x takes risks.\n- For all x, if x is dedicated, then x has a passion.\n- For all x, if x is dedicated, then x faces challenges.\n- For all x, if x achieves success, then x does not need support to thrive or x does not have a passion.\n\nAdded facts:\n- Erik does not benefit from counseling.\n- Erik has a passion.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Erik does not benefit from counseling (\u00acC). From the rule SD \u2192 C (anyone struggling with self-destruction benefits from counseling), \u00acC implies \u00acSD (modus tollens). Erik has a supportive network (derived from 'Erik either benefits from counseling or has a supportive network, but not both' and \u00acC), which implies he does not need support to thrive (NS = false). The rule 'if SD \u2228 FR, then NS' (assumed to be present, as it was in original context and not explicitly removed) combined with NS = false leads to \u00ac(SD \u2228 FR). Since \u00acSD is already established, \u00acFR must hold. Thus, Erik does not have fragile relationships, making the conclusion True.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1118
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, if x needs support to thrive, then x struggles with self-destruction or x has fragile relationships.\n- For all x, if x struggles with self-destruction or x has fragile relationships, then x needs support to thrive.\n- For all x, if not x needs support to thrive, then not x struggles with self-destruction and not x has fragile relationships.\n- For all x, if not x struggles with self-destruction and not x has fragile relationships, then not x needs support to thrive.\n- For all x, if x achieves success, then it is not the case that x needs support to thrive and x has a passion.\n\nAdded facts:\n- Erik does not benefit from counseling or Erik does not have a supportive network.\n- Erik is dedicated.\n- Erik does not struggle with self-destruction.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Erik does not struggle with self-destruction (\u00acSD). Rules 1-4 establish NS \u2194 (SD \u2228 FR), so with SD = false, NS \u2194 FR. To conclude \u00acFR, \u00acNS must hold. The context provides no rules or facts to determine NS. For example, a valid model exists where FR = true (NS = true), \u00acSD = true, the fact \u00acC \u2228 \u00acSN is satisfied (e.g., with C = true, SN = false), and all rules hold without contradiction. Thus, the conclusion 'Erik does not have fragile relationships' is not entailed, as there exists a scenario where it is false. The context does not entail the conclusion, so the answer is 'False'.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1520
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, if not x benefits from counseling, then not x struggles with self-destruction.\n\nAdded facts:\n- Erik takes risks.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The context provides the rule: if Erik does not benefit from counseling, then he does not struggle with self-destruction (\u00acC \u2192 \u00acSD). However, there is no information about whether Erik benefits from counseling (C) or not. The added fact that Erik takes risks does not connect to counseling, self-destruction, or fragile relationships through any rule. Without any rule linking fragile relationships (FR) to other attributes (e.g., SD, C, or taking risks), it is possible for Erik to have fragile relationships (FR = true) while satisfying all context rules (e.g., if Erik benefits from counseling (C = true), the rule \u00acC \u2192 \u00acSD is vacuously satisfied, and FR = true is allowed). Since a valid model exists where Erik has fragile relationships, the conclusion 'Erik does not have fragile relationships' is not entailed. Thus, the correct answer is False.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1913
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- For all x, if x achieves success, then x does not need support to thrive or x does not have a passion.\n- For all x, if x achieves success, then it is not the case that x needs support to thrive and x has a passion.\n\nAdded rules:\n- For all x, if x achieves success and x has a passion, then x needs support to thrive.",
+      "question": "Does the context entail the conclusion 'Erik does not have fragile relationships.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "Erik has a supportive network (fact not removed), so from 'Erik either benefits from counseling or has a supportive network, but not both' (rule not removed), he does not benefit from counseling (\u00acC). The rule 'anyone who struggles with self-destruction benefits from counseling' (SD \u2192 C) and \u00acC imply \u00acSD (modus tollens). Assuming the rule NS \u2194 (SD \u2228 FR) is still present (not removed), \u00acSD implies NS \u2194 FR. Additionally, having a supportive network (SN) typically implies not needing support to thrive (SN \u2192 \u00acNS), so \u00acNS. With \u00acNS and NS \u2194 FR, it follows that \u00acFR. Thus, Erik does not have fragile relationships, making the conclusion True.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2197
+    }
+  ]
+}

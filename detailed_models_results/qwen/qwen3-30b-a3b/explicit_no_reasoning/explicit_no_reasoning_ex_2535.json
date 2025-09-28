@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 116,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.2857142857142857
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Ricky identifies new strains.\nRicky does not understand fungal behavior.\nRicky does not analyze spore development.\nRicky is not a renowned mycologist.\nAll mycologists either identify new strains or classify fungal species, but not necessarily both.\nEvery mycologist who examines fungal growth either classifies fungal species or understands fungal behavior (or both).\nRicky either analyzes spore development or investigates fungal interactions.\nIf Ricky either examines fungal growth or investigates fungal interactions (but not both), then he studies fungal ecology.\nIf Ricky either specializes in fungal pathology or studies fungal ecology (but not both), then he is a renowned mycologist.\nRicky either specializes in fungal reproduction or specializes in fungal pathology, but not both.",
+      "question": "Does the context entail the conclusion 'Ricky specializes in fungal reproduction.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, either x identifies new strains or classifies fungal species, but not both.\n- Either Ricky specializes in fungal reproduction or specializes in fungal pathology, but not both.\n\nAdded rules:\n- For all x, x either identifies new strains or classifies fungal species.\n- For all x, it is not the case that x both identifies new strains and classifies fungal species.\n- Ricky either specializes in fungal reproduction or specializes in fungal pathology.\n- It is not the case that Ricky both specializes in fungal reproduction and specializes in fungal pathology.\n- If Ricky examines fungal growth, then Ricky classifies fungal species.",
+      "question": "Does the context entail the conclusion 'Ricky specializes in fungal reproduction.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the context, Ricky identifies new strains, which (with the added rules) implies he does not classify fungal species. The rule 'If Ricky examines fungal growth, then he classifies fungal species' means Ricky does not examine fungal growth. Since Ricky does not analyze spore development, he must investigate fungal interactions. This triggers the rule that if he investigates interactions (but not growth), he studies fungal ecology. However, Ricky is not a renowned mycologist. The rule 'If Ricky specializes in pathology or studies ecology (but not both), then he is renowned' requires the antecedent to be false. Since he studies ecology, he must also specialize in pathology to avoid the 'but not both' condition. The added rule states Ricky specializes in either reproduction or pathology (but not both), so specializing in pathology negates reproduction. Thus, the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 252
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- For all x, either x identifies new strains or classifies fungal species, but not both.\n- Either Ricky specializes in fungal reproduction or specializes in fungal pathology, but not both.\n\nAdded facts:\n- Ricky studies fungal ecology.",
+      "question": "Does the context entail the conclusion 'Ricky specializes in fungal reproduction.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the added rules, Ricky must specialize in either fungal reproduction or fungal pathology (but not both). The added fact that Ricky studies fungal ecology triggers the conditional: 'If Ricky specializes in pathology or studies ecology (but not both), then he is a renowned mycologist.' Since Ricky is not renowned, the antecedent must be false. This requires that Ricky both specializes in pathology and studies ecology (to avoid 'but not both'). However, the mutual exclusivity of his specialization (reproduction/pathology) means he cannot specialize in reproduction if he specializes in pathology. Thus, the conclusion 'Ricky specializes in fungal reproduction' is contradicted.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 604
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Either Ricky studies fungal ecology, or Ricky examines fungal growth if and only if Ricky investigates fungal interactions.\n- If Ricky either specializes in fungal pathology or studies fungal ecology, but not both, then he is a renowned mycologist.\n\nAdded rules:\n- Either Ricky studies fungal ecology, or both if Ricky examines fungal growth then Ricky investigates fungal interactions and if Ricky investigates fungal interactions then Ricky examines fungal growth.\n- If Ricky either specializes in fungal pathology or studies fungal ecology, and it is not the case that Ricky both specializes in fungal pathology and studies fungal ecology, then Ricky is a renowned mycologist.\n\nAdded facts:\n- Ricky investigates fungal interactions.",
+      "question": "Does the context entail the conclusion 'Ricky specializes in fungal reproduction.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The context states that Ricky investigates fungal interactions. From the added rule, this implies he examines fungal growth (via the biconditional). The rule 'If Ricky examines fungal growth, then he classifies fungal species' confirms he classifies species, so he does not identify new strains (due to mutual exclusivity). However, the specialization in reproduction or pathology (mutually exclusive) is not determined by any other rules. The conditional about renowned mycologists (specializes in pathology or studies ecology) does not provide sufficient constraints without knowing his ecology status. Since no rules force him to specialize in reproduction, the conclusion is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 834
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Ricky either specializes in fungal pathology or studies fungal ecology, and it is not the case that Ricky both specializes in fungal pathology and studies fungal ecology, then Ricky is a renowned mycologist.\n\nAdded rules:\n- If Ricky studies fungal ecology, then he does not specialize in fungal pathology.",
+      "question": "Does the context entail the conclusion 'Ricky specializes in fungal reproduction.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The context includes the rule 'If Ricky studies fungal ecology, then he does not specialize in fungal pathology.' However, there are no explicit facts stating whether Ricky studies fungal ecology. Additionally, the mutual exclusivity between specializing in fungal reproduction or pathology is not confirmed in this context. Without determining if Ricky studies fungal ecology or other relevant facts, the conclusion cannot be definitively entailed. The absence of necessary premises makes the conclusion uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1147
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, either x does not identify new strains or x does not classify fungal species.\n- Either Ricky studies fungal ecology, or Ricky examines fungal growth if and only if Ricky investigates fungal interactions.\n\nAdded facts:\n- Ricky either identifies new strains or classifies fungal species.\n- If Ricky examines fungal growth, then Ricky either classifies fungal species or understands fungal behavior.",
+      "question": "Does the context entail the conclusion 'Ricky specializes in fungal reproduction.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The context provides that Ricky either identifies new strains or classifies fungal species (mutually exclusive). However, there is no explicit rule linking this to specializing in fungal reproduction. The added rule about 'studies fungal ecology' or the biconditional between examining growth and investigating interactions does not directly determine his specialization. Without constraints forcing Ricky to specialize in reproduction over pathology, the conclusion remains unentailed.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1364
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Ricky studies fungal ecology, then he does not specialize in fungal pathology.\n\nAdded rules:\n- If Ricky studies fungal ecology, then he specializes in fungal pathology.",
+      "question": "Does the context entail the conclusion 'Ricky specializes in fungal reproduction.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The context introduces a rule that if Ricky studies fungal ecology, he specializes in fungal pathology. However, there is no explicit information confirming whether Ricky studies fungal ecology. The mutual exclusivity between specializing in fungal reproduction or pathology means that if he cannot be in pathology, he must be in reproduction. Yet, since the condition for studying ecology (and thus pathology) is not definitively met or denied, and no other rules force his specialization, the conclusion remains undetermined. Without additional constraints, the answer is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1592
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- Either Ricky does not specialize in fungal reproduction or Ricky does not specialize in fungal pathology.\n- Either Ricky specializes in fungal reproduction or Ricky does not specialize in fungal reproduction.",
+      "question": "Does the context entail the conclusion 'Ricky specializes in fungal reproduction.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The added facts state that Ricky cannot specialize in both fungal reproduction and pathology (\u00acR \u2228 \u00acP) and a tautology (R \u2228 \u00acR). However, these facts do not confirm or deny whether Ricky specializes in fungal reproduction (R). The disjunction \u00acR \u2228 \u00acP allows for scenarios where R is true (if \u00acP is true) or R is false (if P is true). Without additional constraints forcing R to be true or false, the conclusion remains undetermined. The context neither supports nor contradicts the specialization in reproduction definitively.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1799
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b",
+    "task_path": "explicit",
+    "chain_index": 199,
+    "include_reasoning": true,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.14285714285714285
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Chosen is not a graceful unicorn.\nChosen does not possess magic.\nChosen does not inspire wonder.\nChosen does not roam free-spirited.\nIf Chosen is a graceful unicorn, then she has delicate features.\nIf Chosen has delicate features or radiates soft light, then she possesses magic.\nIf Chosen either radiates soft light or has a majestic appearance (but not both), then she inspires wonder.\nChosen either roams free-spirited or has a shining horn, but not both.\nChosen either possesses healing powers or has a majestic appearance, but not both.\nIf Chosen has a shining horn and possesses healing powers, then she brings joy and peace.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Chosen is not a graceful unicorn.. If Chosen is a graceful unicorn, then she has delicate features.. Therefore, . Chosen does not possess magic.. If Chosen has delicate features or radiates soft light, then she possesses magic.. Therefore, Chosen does not radiate soft light.. Chosen does not radiate soft light. Chosen does not inspire wonder.. If Chosen either radiates soft light or has a majestic appearance (but not both), then she inspires wonder.. Therefore, The Chosen does not have a majestic appearance.. Chosen does not roam free-spirited.. Chosen either roams free-spirited or has a shining horn, but not both.. Therefore, Chosen has a shining horn.. The Chosen does not have a majestic appearance.. Chosen either possesses healing powers or has a majestic appearance, but not both.. Therefore, Chosen possesses healing powers.. Chosen has a shining horn. Chosen possesses healing powers.. If Chosen has a shining horn and possesses healing powers, then she brings joy and peace.. Therefore, Chosen does not bring joy and peace..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Chosen has a shining horn.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context states that Chosen has a shining horn. From the fourth fact, since she has a shining horn, she does not roam free-spirited. From the fifth fact, since she does not have a majestic appearance (derived via modus tollens from the third conditional and the premise that she does not inspire wonder), she must possess healing powers. The sixth conditional (if shining horn \u2227 healing powers \u2192 brings joy and peace) is satisfied, so the conclusion 'Chosen does not bring joy and peace' directly contradicts the premises. Thus, the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 473
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Chosen either radiates soft light or has a majestic appearance (but not both), then she inspires wonder.\n\nAdded rules:\n- If Chosen has a shining horn and Chosen does not possess healing powers, then Chosen does not bring joy and peace.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The context states Chosen has a shining horn. The added rule specifies that if she has a shining horn and lacks healing powers, she does not bring joy and peace. However, the premise 'Chosen either possesses healing powers or has a majestic appearance, but not both' creates ambiguity: we cannot determine which is true. Since the conclusion depends on her healing powers status (unknown), the context does not definitively entail 'Chosen does not bring joy and peace.'",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 653
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Chosen has delicate features or radiates soft light, then she possesses magic.\n\nAdded facts:\n- Chosen does not have delicate features.\n- Either Chosen has delicate features or Chosen radiates soft light.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the added facts, we deduce Chosen radiates soft light (\u00acA and A\u2228B implies B). Using modus tollens on rule 6 (if soft light XOR majestic \u2192 inspire wonder) and premise 3 (Chosen does not inspire wonder), we infer Chosen has both soft light and majestic appearance. Rule 8 (healing powers XOR majestic) then forces Chosen to not have healing powers (\u00acH). Rule 9 (shining horn \u2227 healing powers \u2192 brings joy and peace) requires both S and H. Since H is false, S \u2227 H is false, making the antecedent of rule 9 false. Without additional rules, the conclusion 'Chosen does not bring joy and peace' is entailed because the only path to joy/peace (S \u2227 H) is blocked. Thus, the answer is True.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 858
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Chosen does not have delicate features.\n\nAdded facts:\n- Chosen does not radiate soft light.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From the added fact 'Chosen does not radiate soft light' (\u00acR) and the premise 'Chosen does not roam free-spirited' (\u00acF), we deduce Chosen has a shining horn (H) via disjunctive syllogism. The premise 'Chosen either possesses healing powers or has a majestic appearance (but not both)' (P XOR M) and the negation of 'inspires wonder' (\u00acW) lead to \u00ac(R XOR M) via modus tollens. Since \u00acR is true, M must also be false (\u00acM). Thus, P is true (from P XOR M). With H and P both true, the rule 'H \u2227 P \u2192 brings joy and peace' implies J is true. Therefore, the conclusion 'Chosen does not bring joy and peace' (\u00acJ) is directly contradicted.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1153
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Chosen does not radiate soft light.\n\nAdded facts:\n- Chosen radiates soft light.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "With the added fact that Chosen radiates soft light (R = true), and the premise that she does not inspire wonder (\u00acW), the rule 'If R XOR M, then W' allows us to infer \u00ac(R XOR M) via modus tollens. Since R is true, M must also be true (M = true). From 'P XOR M' (Chosen either has healing powers or a majestic appearance but not both), M = true implies P = false (\u00acP). The fact 'F XOR H' (Chosen either roams free-spirited or has a shining horn but not both) and the premise '\u00acF' (Chosen does not roam free-spirited) confirm H = true (shining horn). The rule 'H \u2227 P \u2192 J' (if shining horn and healing powers, then brings joy and peace) is not triggered because P = false. Since there are no other rules determining J, the conclusion 'Chosen does not bring joy and peace' (\u00acJ) cannot be definitively entailed. The context does not provide sufficient information to confirm \u00acJ, making the answer uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1431
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Chosen radiates soft light.\n\nAdded facts:\n- Chosen does not radiate soft light.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "With the added fact that Chosen does not radiate soft light (\u00acR), and the premise \u00acF (does not roam free-spirited), we deduce H (has a shining horn) via F XOR H. The rule P XOR M (healing powers or majestic appearance, not both) remains. Since H is true, the rule H \u2227 P \u2192 J (brings joy and peace) only triggers if P is true. However, without constraints on P or M, P could be true (making J true) or false (leaving J undetermined). The conclusion \u00acJ is not necessarily entailed because J might still be true. Thus, the answer is B) False.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1762
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Chosen does not radiate soft light.\n\nAdded facts:\n- Chosen radiates soft light.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "The current context states that Chosen radiates soft light (R = true). From the rule (D \u2228 R) \u2192 M, this implies M is true. However, the fact \u00acM (Chosen does not possess magic) contradicts this, creating an inconsistency. The conclusion 'Chosen does not bring joy and peace' (\u00acJ) depends on the rule H \u2227 P \u2192 J. Since H is true (from \u00acF and F XOR H) and P is false (due to M being true and P XOR M), H \u2227 P is false. This means the rule does not activate, leaving J's truth value undetermined. The contradiction in the premises prevents definitive conclusions, but the absence of any rule forcing J to be false means \u00acJ cannot be entailed. Thus, the answer is uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1998
+    }
+  ]
+}

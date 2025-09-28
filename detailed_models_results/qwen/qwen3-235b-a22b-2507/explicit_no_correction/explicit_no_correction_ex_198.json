@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-235b-a22b-2507",
+    "task_path": "explicit_no_correction",
+    "chain_index": 59,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Girlfriend is a talented chef.\nGirlfriend does not work in a restaurant.\nGirlfriend hosts dinner parties.\nIf Girlfriend is a talented chef, then she either works in a restaurant or prefers homemade meals, but not both.\nIf Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both.\nGirlfriend either cooks for others or enjoys savory foods, but not both.\nGirlfriend either loves sweets or enjoys savory foods, but not both.\nGirlfriend either loves sweets or eats in moderation.\nEither GF has a big appetite or she eats in moderation, but not both.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Girlfriend is a talented chef. Girlfriend does not work in a restaurant.. If Girlfriend is a talented chef, then she either works in a restaurant or prefers homemade meals, but not both.. Therefore, Girlfriend prefers homemade meals.. Girlfriend hosts dinner parties. Girlfriend prefers homemade meals.. If Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both.. Therefore, Girlfriend does not cook for others.. Girlfriend does not cook for others.. Girlfriend either cooks for others or enjoys savory foods, but not both.. Therefore, Girlfriend enjoys savory foods.. Girlfriend enjoys savory foods.. Girlfriend either loves sweets or enjoys savory foods, but not both.. Therefore, Girlfriend does not love sweets.. Girlfriend does not love sweets.. Girlfriend either loves sweets or eats in moderation.. Therefore, Girlfriend eats in moderation.. Girlfriend eats in moderation.. Either GF has a big appetite or she eats in moderation, but not both.. Therefore, GF has a big appetite..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- Either Girlfriend has a big appetite or she eats in moderation, but not both.\n\nAdded rules:\n- Either Girlfriend has a big appetite or she eats in moderation.\n- Either Girlfriend does not have a big appetite or she does not eat in moderation.\n\nAdded facts:\n- Girlfriend prefers homemade meals.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Girlfriend prefers homemade meals (given). From the original rules: If Girlfriend is a talented chef, then she either works in a restaurant or prefers homemade meals, but not both. She is a talented chef and does not work in a restaurant, so she must prefer homemade meals (consistent). She hosts dinner parties (given).\n\nIf Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both. She hosts dinner parties and prefers homemade meals \u2014 both are true \u2014 so this disjunction (but not both) is violated if she cooks for others. Therefore, she does not cook for others.\n\nGirlfriend either cooks for others or enjoys savory foods, but not both. Since she does not cook for others, she must enjoy savory foods.\n\nGirlfriend either loves sweets or enjoys savory foods, but not both. She enjoys savory foods, so she does not love sweets.\n\nGirlfriend either loves sweets or eats in moderation. She does not love sweets, so she must eat in moderation.\n\nNow, the two added rules:\n1. Either Girlfriend has a big appetite or she eats in moderation. (A \u2228 M)\n2. Either Girlfriend does not have a big appetite or she does not eat in moderation. (\u00acA \u2228 \u00acM)\n\nWe have established: eats in moderation (M is true).\n\nFrom (1): A \u2228 M. Since M is true, this is satisfied regardless of A.\nFrom (2): \u00acA \u2228 \u00acM. Since M is true, \u00acM is false. So for (2) to be true, \u00acA must be true \u2192 A is false.\n\nTherefore, (\u00acA \u2228 \u00acM) forces \u00acA to be true when M is true. So GF does not have a big appetite.\n\nHence, the conclusion 'GF has a big appetite' is entailed to be false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 414
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Girlfriend cooks for others, then she either hosts dinner parties or prefers homemade meals, but not both.\n\nAdded facts:\n- Girlfriend cooks for others.\n- Girlfriend does not eat in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Girlfriend is a talented chef and does not work in a restaurant. The rule 'If Girlfriend is a talented chef, then she either works in a restaurant or prefers homemade meals, but not both' implies she prefers homemade meals (since she doesn't work in a restaurant and only one can be true). So, she prefers homemade meals.\n\nGirlfriend cooks for others (given).\n\nThe rule 'Girlfriend either cooks for others or enjoys savory foods, but not both' means exactly one of them is true. Since she cooks for others, she does not enjoy savory foods.\n\nThe rule 'Girlfriend either loves sweets or enjoys savory foods, but not both' \u2014 since she does not enjoy savory foods, she must love sweets (to satisfy the exclusive or).\n\nWe are told: Girlfriend does not eat in moderation (given).\n\nThe rule 'Girlfriend either loves sweets or eats in moderation' \u2014 now both 'loves sweets' and 'does not eat in moderation' are true. But this is an inclusive or? Wait \u2014 the rule was not specified as exclusive. Assuming it is inclusive (standard interpretation unless stated), then it's satisfied if at least one is true. So no problem.\n\nNow consider the two rules about appetite and moderation:\n- Either GF has a big appetite or she eats in moderation. (A \u2228 M)\n- Either GF does not have a big appetite or she does not eat in moderation. (\u00acA \u2228 \u00acM)\n\nGiven: does not eat in moderation \u2192 M is false.\n\nFirst rule: A \u2228 M \u2192 A \u2228 false \u2192 A must be true.\nSecond rule: \u00acA \u2228 \u00acM \u2192 \u00acA \u2228 true \u2192 always true, regardless of A.\n\nSo from first rule, since M is false, A must be true for the disjunction to hold.\n\nTherefore, GF has a big appetite.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 919
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Girlfriend does not eat in moderation.\n\nAdded facts:\n- Girlfriend does not cook for others.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Girlfriend is a talented chef and does not work in a restaurant. From the rule: If talented chef, then either works in restaurant or prefers homemade meals, but not both. Since she doesn't work in a restaurant, she must prefer homemade meals.\n\nGirlfriend does not cook for others (given).\n\nRule: Girlfriend either cooks for others or enjoys savory foods, but not both. Since she does not cook for others, she must enjoy savory foods (to satisfy the exclusive or).\n\nRule: Girlfriend either loves sweets or enjoys savory foods, but not both. She enjoys savory foods, so she does not love sweets.\n\nRule: Girlfriend either loves sweets or eats in moderation. She does not love sweets, so she must eat in moderation.\n\nNow the appetite rules:\n- Either GF has a big appetite or she eats in moderation. (A \u2228 M)\n- Either GF does not have a big appetite or she does not eat in moderation. (\u00acA \u2228 \u00acM)\n\nWe have: eats in moderation \u2192 M is true.\n\nFirst rule: A \u2228 M \u2192 A \u2228 true \u2192 always true, so no constraint on A.\nSecond rule: \u00acA \u2228 \u00acM \u2192 \u00acA \u2228 false \u2192 so \u00acA must be true \u2192 A is false.\n\nTherefore, from second rule, GF does not have a big appetite.\n\nThus, the conclusion 'GF has a big appetite' is entailed to be false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1403
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- Either Girlfriend has a big appetite or she eats in moderation.\n- Either Girlfriend does not have a big appetite or she does not eat in moderation.\n\nAdded rules:\n- Either Girlfriend has a big appetite or she eats in moderation, but not both.\n\nAdded facts:\n- Girlfriend enjoys savory foods.\n- Girlfriend does not love sweets.\n- Girlfriend eats in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Girlfriend enjoys savory foods (given). Girlfriend does not love sweets (given). The rule 'Girlfriend either loves sweets or enjoys savory foods, but not both' is satisfied: one is true (enjoys savory), one is false (does not love sweets).\n\nGirlfriend eats in moderation (given).\n\nNew rule: Either Girlfriend has a big appetite or she eats in moderation, but not both. (Exclusive or: exactly one of the two is true.)\n\nSince she eats in moderation is true, then for the exclusive or to hold, 'has a big appetite' must be false.\n\nTherefore, GF does not have a big appetite.\n\nThus, the conclusion 'GF has a big appetite' is entailed to be false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1779
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Girlfriend eats in moderation.\n\nRemoved rules:\n- Girlfriend either loves sweets or eats in moderation.\n\nAdded rules:\n- Girlfriend does not love sweets and she does not eat in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We are given: Girlfriend does not love sweets and she does not eat in moderation (this is a conjunction, so both parts are true). So, GF does not eat in moderation (M is false).\n\nFrom earlier context: Girlfriend is a talented chef and does not work in a restaurant. Therefore, from the rule 'If talented chef, then either works in restaurant or prefers homemade meals, but not both', she must prefer homemade meals.\n\nGirlfriend does not cook for others (from previous added fact, still in context).\n\nRule: 'Girlfriend either cooks for others or enjoys savory foods, but not both'. Since she does not cook for others, she must enjoy savory foods (to satisfy the exclusive or).\n\nNow, the appetite rule: 'Either Girlfriend has a big appetite or she eats in moderation, but not both' (exclusive or).\n\nWe know: she does not eat in moderation (M is false). Therefore, for the exclusive or to be true, 'has a big appetite' must be true (only one of the two can be true; since M is false, A must be true).\n\nThus, the context entails that GF has a big appetite.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2056
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Girlfriend does not love sweets and she does not eat in moderation.\n\nAdded rules:\n- Girlfriend either loves sweets or eats in moderation.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We no longer have the fact that 'Girlfriend does not love sweets and she does not eat in moderation' \u2014 this has been removed. The only related rule now is: 'Girlfriend either loves sweets or eats in moderation' (inclusive or).\n\nFrom earlier established facts: Girlfriend enjoys savory foods (still in context). And the rule: 'Girlfriend either loves sweets or enjoys savory foods, but not both'. Since she enjoys savory foods, she cannot love sweets. Therefore, she does not love sweets.\n\nNow, the rule 'Girlfriend either loves sweets or eats in moderation' (inclusive or). Since she does not love sweets, to satisfy this disjunction, she must eat in moderation.\n\nSo: GF eats in moderation.\n\nNow consider the rule: 'Either GF has a big appetite or she eats in moderation, but not both' (exclusive or).\n\nShe eats in moderation (true). Therefore, for the exclusive or to hold, 'has a big appetite' must be false.\n\nThus, GF does not have a big appetite. The conclusion 'GF has a big appetite' is entailed to be false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2386
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- Girlfriend enjoys savory foods and she does not love sweets.",
+      "question": "Does the context entail the conclusion 'GF has a big appetite.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Girlfriend enjoys savory foods and does not love sweets (given). This satisfies the rule: 'Girlfriend either loves sweets or enjoys savory foods, but not both' \u2014 one true, one false, so valid.\n\nFrom previous stable facts: Girlfriend is a talented chef and does not work in a restaurant \u2192 so she prefers homemade meals.\n\nGirlfriend does not cook for others (from earlier added fact, still in context).\n\nRule: 'Girlfriend either cooks for others or enjoys savory foods, but not both'. She does not cook for others (true) and enjoys savory foods (true). So both sides true \u2014 violates the 'but not both' (exclusive or). Therefore, contradiction?\n\nWait: 'either A or B, but not both' \u2014 A = cooks for others (false), B = enjoys savory foods (true). So false and true \u2192 only one true \u2192 satisfies the exclusive or. Correct: since she does not cook for others (A false), and enjoys savory foods (B true), then 'A or B but not both' is satisfied (only B true).\n\nNow, rule: 'Girlfriend either loves sweets or eats in moderation'. She does not love sweets (given), so to satisfy this, she must eat in moderation.\n\nThus: GF eats in moderation.\n\nNow, the appetite rule: 'Either GF has a big appetite or she eats in moderation, but not both' (exclusive or).\n\nShe eats in moderation \u2192 true. Therefore, 'has a big appetite' must be false for the exclusive or to hold.\n\nHence, GF does not have a big appetite. The conclusion is entailed to be false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2697
+    }
+  ]
+}

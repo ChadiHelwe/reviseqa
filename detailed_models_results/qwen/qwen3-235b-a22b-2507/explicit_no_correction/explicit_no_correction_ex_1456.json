@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-235b-a22b-2507",
+    "task_path": "explicit_no_correction",
+    "chain_index": 19,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.7142857142857143
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Janelle conducts experiments.\nJanelle collects data.\nJanelle is passionate about botany.\nJanelle is meticulous in her work.\nJanelle does not gain acclaim.\nJanelle does not deserve an award.\nJanelle does not contribute to her field.\nIf Janelle conducts experiments, then she either publishes papers or collects data, but not both.\nIf Janelle is passionate about botany, then she is a dedicated researcher and meticulous in her work.\nIf Janelle either receives recognition or gains acclaim (but not both), then she deserves an award.\nIf Janelle either advances knowledge or publishes papers (but not both), then she contributes to her field.\nIf Janelle is a dedicated researcher, then she either advances knowledge or is a brilliant scientist (or both).\nIf Janelle is a brilliant scientist, then she either makes a groundbreaking discovery or receives recognition (or both).",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Janelle conducts experiments. Janelle collects data.. If Janelle conducts experiments, then she either publishes papers or collects data, but not both.. Therefore, Janelle does not publish papers.. Janelle is passionate about botany. Janelle is meticulous in her work.. If Janelle is passionate about botany, then she is a dedicated researcher and meticulous in her work.. Therefore, Janelle is a dedicated researcher.. Janelle does not gain acclaim. Janelle does not deserve an award.. If Janelle either receives recognition or gains acclaim (but not both), then she deserves an award.. Therefore, Janelle does not receive recognition.. Janelle does not publish papers. Janelle does not contribute to her field.. If Janelle either advances knowledge or publishes papers (but not both), then she contributes to her field.. Therefore, Janelle does not advance knowledge.. Janelle is a dedicated researcher. Janelle does not advance knowledge.. If Janelle is a dedicated researcher, then she either advances knowledge or is a brilliant scientist (or both).. Therefore, Janelle is a brilliant scientist.. Janelle is a brilliant scientist. Janelle does not receive recognition.. If Janelle is a brilliant scientist, then she either makes a groundbreaking discovery or receives recognition (or both).. Therefore, Janelle makes a groundbreaking discovery..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- If Janelle does not contribute to her field, then she advances knowledge if and only if she publishes papers.\n- If Janelle is a dedicated researcher and does not advance knowledge, then she is a brilliant scientist.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Janelle conducts experiments and collects data. From the original rule, if she conducts experiments, she either publishes papers or collects data, but not both. Since she collects data, she does not publish papers. She is passionate about botany, so she is a dedicated researcher and meticulous. She does not gain acclaim and does not deserve an award. Since she does not deserve an award, and the rule states that if she either receives recognition or gains acclaim (but not both), then she deserves an award, and she doesn\u2019t gain acclaim, she must not receive recognition either (otherwise she would deserve an award). Therefore, she neither gains acclaim nor receives recognition. She does not contribute to her field. The new rule states: if Janelle does not contribute to her field, then she advances knowledge if and only if she publishes papers. Since she does not publish papers, she does not advance knowledge. Another new rule: if Janelle is a dedicated researcher and does not advance knowledge, then she is a brilliant scientist. She is a dedicated researcher and does not advance knowledge, so she is a brilliant scientist. The existing rule: if Janelle is a brilliant scientist, then she either makes a groundbreaking discovery or receives recognition (or both). She is a brilliant scientist but does not receive recognition, so to satisfy the implication, she must make a groundbreaking discovery. Therefore, the conclusion follows.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 582
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Janelle does not gain acclaim.\n\nRemoved rules:\n- If Janelle is a brilliant scientist, then she either makes a groundbreaking discovery or receives recognition (or both).\n\nAdded rules:\n- If Janelle is a brilliant scientist, then she receives recognition and does not make a groundbreaking discovery.\n\nAdded facts:\n- Janelle gains acclaim.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Janelle conducts experiments and collects data, so she does not publish papers (from the rule that she either publishes or collects data, but not both). She is passionate about botany, so she is a dedicated researcher and meticulous. She gains acclaim (added fact), but we do not know whether she receives recognition. She is a dedicated researcher and does not advance knowledge (since she does not contribute to her field and from the rule: if she does not contribute, then she advances knowledge iff she publishes papers; she doesn\u2019t publish, so she doesn\u2019t advance knowledge). By the added rule: if she is a dedicated researcher and does not advance knowledge, then she is a brilliant scientist. So Janelle is a brilliant scientist. The new rule states: if Janelle is a brilliant scientist, then she receives recognition and does not make a groundbreaking discovery. Therefore, she does not make a groundbreaking discovery. Thus, the context entails that she does not make a groundbreaking discovery.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 963
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Janelle is passionate about botany.\n\nAdded rules:\n- If Janelle receives recognition, then she makes a groundbreaking discovery.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Janelle conducts experiments and collects data, so she does not publish papers (due to the exclusive 'either publishes papers or collects data' rule). Without the fact that she is passionate about botany, we cannot conclude she is a dedicated researcher (since that was derived from passion about botany). Without being a dedicated researcher, we cannot apply the rule: if dedicated researcher and not advance knowledge \u2192 brilliant scientist. However, we still know she gains acclaim (added fact). We do not know whether she receives recognition. The rule 'if she contributes to her field' depends on advancing knowledge or publishing papers (but not both); she does neither (no publishing, and from the rule 'if not contribute, then advances knowledge iff publishes papers'; since no publishing \u2192 no advancing knowledge). So she does not advance knowledge. Thus, she neither advances knowledge nor publishes papers, so she does not contribute. Now, without knowing if she receives recognition, and with the new rule: if she receives recognition \u2192 she makes a groundbreaking discovery, we cannot trigger this rule without knowing recognition status. Also, the rule about being a brilliant scientist has been replaced: now, if brilliant scientist \u2192 receives recognition and does not make a groundbreaking discovery. But to be a brilliant scientist, we previously needed dedication and no advancement \u2014 but now we lack passion, so we cannot confirm she is a dedicated researcher, so we cannot confirm she is a brilliant scientist. Therefore, we cannot determine if she receives recognition, and thus cannot determine via any path whether she makes a groundbreaking discovery. The information is insufficient.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1285
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Janelle is a brilliant scientist, then she receives recognition and does not make a groundbreaking discovery.\n\nAdded rules:\n- If Janelle is a brilliant scientist, then she receives recognition.\n- If Janelle is a brilliant scientist, then she does not make a groundbreaking discovery.\n\nAdded facts:\n- Janelle receives recognition.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Janelle conducts experiments and collects data, so she does not publish papers. She gains acclaim (from previous addition) and now it is added that she receives recognition. Without the fact that she is passionate about botany, we cannot directly conclude she is a dedicated researcher \u2014 that was previously derived from passion. However, we still have the rule: if dedicated researcher and does not advance knowledge, then she is a brilliant scientist. But without passion, we lack basis for dedicated researcher. Yet, another route may exist: we know she receives recognition (added fact). Also, from the rule: if not contribute to field, then advances knowledge iff publishes papers. She does not publish papers, so she does not advance knowledge. Thus, she does not contribute. But can we establish she is a brilliant scientist? The two new rules: if brilliant scientist \u2192 receives recognition, and if brilliant scientist \u2192 does not make a groundbreaking discovery. These are separate. Receiving recognition does not imply she is a brilliant scientist (the rules are one-way). So we cannot conclude she is a brilliant scientist just from receiving recognition. Also, without being able to establish she is a dedicated researcher (due to missing passion), we cannot trigger the rule leading to brilliant scientist. The rule 'if passionate \u2192 dedicated researcher' is gone, and passion is no longer stated. Thus, we do not know if she is a dedicated researcher, so we do not know if she is a brilliant scientist. Without knowing if she is a brilliant scientist, the rules about brilliant scientists don't apply. The new rule: if receives recognition \u2192 makes a groundbreaking discovery, is present. And she receives recognition, so this rule implies she makes a groundbreaking discovery. This rule is unconditional and applies directly. Therefore, she makes a groundbreaking discovery.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1682
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Janelle receives recognition, then she makes a groundbreaking discovery.\n\nAdded rules:\n- If Janelle is a dedicated researcher, then she is a brilliant scientist.\n\nAdded facts:\n- Janelle does not publish papers.\n- Janelle does not advance knowledge.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Janelle conducts experiments and collects data (from context), and now it's added that she does not publish papers and does not advance knowledge. From the rule: if conducts experiments, then either publishes papers or collects data, but not both. She collects data, so not publishing is consistent. The fact that she is passionate about botany has been removed, so we cannot directly conclude she is a dedicated researcher from that. However, no alternative basis for being a dedicated researcher is provided. Without knowing she is passionate about botany, we cannot infer she is a dedicated researcher. The new rule: if dedicated researcher, then she is a brilliant scientist. But we do not know if she is a dedicated researcher. We also have: if not contribute to her field, then advances knowledge iff publishes papers. She does neither, so that condition holds vacuously \u2014 but she doesn't contribute (stated earlier). From previous structure: she does not contribute. But can we conclude she is a brilliant scientist? Only if we know she is a dedicated researcher. Now, the rules about brilliant scientist are: if brilliant scientist, then receives recognition, and if brilliant scientist, then does not make a groundbreaking discovery. We know she receives recognition (added fact). But receiving recognition does not imply she is a brilliant scientist (these are one-way implications). So we cannot conclude she is a brilliant scientist. Without being able to establish she is a dedicated researcher (due to missing passion), the new rule 'if dedicated researcher \u2192 brilliant scientist' cannot be triggered. Therefore, we do not know if she is a brilliant scientist. If she were a brilliant scientist, then she does not make a groundbreaking discovery \u2014 but we don't know that. If she is not a brilliant scientist, then that rule doesn't apply, and no other rule connects to making a groundbreaking discovery. There is no rule that leads to making a groundbreaking discovery now. In fact, all links to that conclusion have been removed or are blocked. Therefore, we cannot determine whether she makes a groundbreaking discovery. The information is insufficient.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2163
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Janelle does not make a groundbreaking discovery, then she does not receive recognition.\n\nAdded rules:\n- If Janelle conducts experiments and collects data, then she is passionate about botany.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Janelle conducts experiments and collects data (given). The new rule states: if Janelle conducts experiments and collects data, then she is passionate about botany. Therefore, she is passionate about botany. From earlier context: if Janelle is passionate about botany, then she is a dedicated researcher and meticulous in her work. Therefore, she is a dedicated researcher. It is also given that she does not publish papers and does not advance knowledge. From the rule: if not contribute to her field, then advances knowledge iff publishes papers. Since she does neither, the biconditional holds (both false), so this is consistent, and she does not contribute. The rule: if dedicated researcher, then she is a brilliant scientist (added). Since she is a dedicated researcher, she is a brilliant scientist. Now, the rules: if Janelle is a brilliant scientist, then she receives recognition, and if Janelle is a brilliant scientist, then she does not make a groundbreaking discovery. Therefore, she receives recognition and does not make a groundbreaking discovery. Thus, the context entails that she does not make a groundbreaking discovery. So the conclusion 'Janelle makes a groundbreaking discovery' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2689
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Janelle is not a brilliant scientist, then she is not a dedicated researcher.\n- If Janelle makes a groundbreaking discovery, then she is not a brilliant scientist.",
+      "question": "Does the context entail the conclusion 'Janelle makes a groundbreaking discovery.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From previous context: Janelle conducts experiments and collects data \u2192 she is passionate about botany (added rule). Passionate about botany \u2192 dedicated researcher and meticulous. Therefore, Janelle is a dedicated researcher. Given: if dedicated researcher \u2192 brilliant scientist (added earlier). So she is a brilliant scientist. Now, new rules: if not brilliant scientist \u2192 not dedicated researcher. This is the contrapositive of 'if dedicated researcher \u2192 brilliant scientist', so it's consistent. Also: if makes a groundbreaking discovery \u2192 not brilliant scientist. But we have established that she is a brilliant scientist. Therefore, if she were to make a groundbreaking discovery, she would not be a brilliant scientist \u2014 contradiction. So she cannot make a groundbreaking discovery. Thus, the conclusion 'Janelle makes a groundbreaking discovery' is false. The context entails that she does not make it.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 3029
+    }
+  ]
+}

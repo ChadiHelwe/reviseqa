@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 365,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Hayley does not read books.\nHayley does not appreciate life.\nHayley does not enjoy nature.\nHayley has a routine.\nHayley is methodical.\nHayley is disciplined.\nHayley does not care deeply.\nHayley does not feel happy.\nIf Hayley either lives a simple life or reads books (but not both), then she appreciates life.\nIf Hayley either enjoys nature or is content (but not both), then she lives a simple life.\nIf Hayley has a routine, then she is either organized or methodical, but not both.\nIf Hayley manages her time well, then she is either organized or disciplined, but not both.\nAll responsible people care deeply and manage their time well.\nIf Hayley keeps pets, then she is responsible.\nIf Hayley either owns chickens or keeps pets (but not both), then she feels happy.\nIf Hayley either owns chickens or loves animals (but not both), then she is content.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Hayley does not live a simple life.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added fact states Hayley does not live a simple life. From premise 10, if (enjoys_nature XOR content) then live_simple. Since live_simple is false, (enjoys_nature XOR content) must be false. Premise 3 states Hayley does not enjoy nature, so content must also be false. Premise 16 states if (owns_chickens XOR loves_animals) then content. Since content is false, (owns_chickens XOR loves_animals) must be false. Premise 15 (if owns_chickens XOR keeps_pets then feels_happy) and premise 8 (Hayley does not feel happy) imply owns_chickens and keeps_pets must both be false. From premise 14 (keeps_pets \u2192 responsible) and premise 13 (responsible \u2192 cares deeply), but premises 7 and 13 imply Hayley is not responsible, so keeps_pets is false (confirmed). Thus, owns_chickens is false, so loves_animals must be false to satisfy premise 16. Therefore, Hayley does not love animals.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 298
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- If Hayley is responsible, then she cares deeply.\n- If Hayley keeps pets, then she cares deeply.\n\nAdded facts:\n- Hayley is not responsible.\n- Hayley is not content.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the added fact that Hayley is not content (\u00accontent), and premise 16 (owns_chickens XOR loves_animals \u2192 content), it follows that (owns_chickens XOR loves_animals) must be false. Thus, owns_chickens and loves_animals must be equal (both true or both false). From premise 15 (owns_chickens XOR keeps_pets \u2192 feels_happy) and the original fact that Hayley does not feel happy (\u00acfeels_happy), (owns_chickens XOR keeps_pets) must be false. Since Hayley is not responsible (added fact) and premise 14 (keeps_pets \u2192 responsible), \u00ackeeps_pets is true. Thus, owns_chickens must equal keeps_pets (both false), so owns_chickens is false. Returning to premise 16, since owns_chickens is false, loves_animals must also be false to satisfy (owns_chickens XOR loves_animals) = false. Therefore, Hayley does not love animals, making the conclusion false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 589
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Hayley keeps pets, then she is responsible.\n- If Hayley keeps pets, then she cares deeply.\n\nAdded rules:\n- If Hayley does not care deeply, then she keeps pets.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the original fact that Hayley does not care deeply (\u00accare_deeply) and the added rule (\u00accare_deeply \u2192 keeps_pets), we derive that Hayley keeps pets. Premise 15 states that (owns_chickens XOR keeps_pets) \u2192 feels_happy. Since Hayley does not feel happy (\u00acfeels_happy), the XOR antecedent must be false, so owns_chickens = keeps_pets = true. Premise 1 requires (live_simple XOR read_books) \u2192 appreciates_life. With \u00acappreciates_life and read_books = false (Hayley does not read books), live_simple must be false. Premise 2 (enjoys_nature XOR content) \u2192 live_simple (false) requires (false XOR content) = false \u2192 content = false. Premise 16 states (owns_chickens XOR loves_animals) \u2192 content (false), so XOR must be false. With owns_chickens = true, loves_animals must be true to satisfy XOR = false. Thus, Hayley loves animals is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 901
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Hayley does not care deeply, then she keeps pets.\n\nAdded rules:\n- If Hayley does not care deeply, then she does not keep pets.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Hayley does not care deeply (fact). Added rule: \u00accare_deeply \u2192 \u00ackeeps_pets. Thus, \u00ackeeps_pets (Hayley does not keep pets). Premise 15: (owns_chickens XOR keeps_pets) \u2192 feels_happy. Since feels_happy is false, (owns_chickens XOR keeps_pets) must be false. Keeps_pets = false \u2192 owns_chickens = false. Premise 1: (live_simple XOR read_books) \u2192 appreciates_life. Hayley does not appreciate life (\u00acappreciates_life) and does not read books (\u00acread_books), so live_simple must be false. Premise 2: (enjoys_nature XOR content) \u2192 live_simple. Hayley does not enjoy nature (\u00acenjoys_nature) and live_simple = false \u2192 content must be false. Premise 16: (owns_chickens XOR loves_animals) \u2192 content. Content = false \u2192 (owns_chickens XOR loves_animals) must be false. Owns_chickens = false \u2192 loves_animals must be false to satisfy XOR = false. Thus, Hayley does not love animals.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1218
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Hayley loves animals, then she is content.\n- If Hayley owns chickens, then she feels happy.\n- If Hayley is responsible, then she manages her time well.\n- If Hayley keeps pets, then she cares deeply.\n\nAdded facts:\n- Hayley does not keep pets.\n- Hayley does not own chickens.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Hayley does not enjoy nature (original fact), and from the original premise 2 (if (enjoys_nature XOR content) then live_simple) and live_simple being false (derived from \u00acappreciates_life and \u00acread_books), it follows that content must be false. The added rule 'loves_animals \u2192 content' implies that if Hayley loved animals, she would be content (content true). However, content is false, so by modus tollens, Hayley does not love animals. Thus, the conclusion 'Hayley loves animals' is false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1549
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- If Hayley has a routine, then she is not organized.\n- If Hayley manages her time well, then she is not organized.\n\nAdded facts:\n- Hayley does not love animals.\n- Hayley is not organized.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context explicitly states as an added fact that Hayley does not love animals. The conclusion 'Hayley loves animals' directly contradicts this fact. Therefore, the context entails that the conclusion is false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1787
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Hayley does not love animals.\n- Hayley is not content.\n\nAdded rules:\n- If Hayley does not own chickens, then she loves animals.",
+      "question": "Does the context entail the conclusion 'Hayley loves animals.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context derived \u00accontent from Rule 2 and given facts. Rule 8 states (owns_chickens XOR loves_animals) \u2192 content. Since \u00accontent, \u00ac(owns_chickens XOR loves_animals), so owns_chickens \u2194 loves_animals. The added rule \u00acowns_chickens \u2192 loves_animals, combined with the biconditional, forces owns_chickens = true (as assuming false leads to contradiction: loves_animals would need to be both true (via added rule) and false (via biconditional)). Thus, owns_chickens = true implies loves_animals = true via the biconditional. Therefore, 'Hayley loves animals' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1926
+    }
+  ]
+}

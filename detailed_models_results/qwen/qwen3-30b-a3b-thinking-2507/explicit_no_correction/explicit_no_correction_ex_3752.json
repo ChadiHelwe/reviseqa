@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_correction",
+    "chain_index": 212,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kyro hides in vegetation.\nKyro climbs rocks.\nKyro does not feed on plankton.\nFor Kyro, either he hides in vegetation or burrows sand, but not both.\nIf Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.\nEvery mudskipper that explores the mudflats either walks on mud or feeds on plankton (or both).\nKyro either swims efficiently or walks on mud, but not both.\nKyro either breathes air or swims efficiently, but not both.\nAll mudskippers that can breathe air can survive out of water.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Kyro hides in vegetation.. For Kyro, either he hides in vegetation or burrows sand, but not both.. Therefore, Kyro does not burrow sand.. Kyro climbs rocks. Kyro does not burrow sand.. If Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.. Therefore, Kyro explores the mudflats.. Kyro explores the mudflats. Kyro does not feed on plankton.. Every mudskipper that explores the mudflats either walks on mud or feeds on plankton (or both).. Therefore, Kyro walks on mud.. Kyro walks on mud.. Kyro either swims efficiently or walks on mud, but not both.. Therefore, Kyro does not swim efficiently.. Kyro does not swim efficiently.. Kyro either breathes air or swims efficiently, but not both.. Therefore, Kyro can breathe air.. Kyro can breathe air.. All mudskippers that can breathe air can survive out of water.. Therefore, Kyro cannot survive out of water..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x explores the mudflats, then x either walks on mud or feeds on plankton.\n\nAdded rules:\n- For all x, if x explores the mudflats, then x does not walk on mud.\n- For all x, if x does not breathe air, then x cannot survive out of water.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Kyro hides in vegetation. For Kyro, either he hides in vegetation or burrows sand, but not both. Therefore, Kyro does not burrow sand. Kyro climbs rocks. If Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats. Since Kyro climbs rocks and does not burrow sand, he explores the mudflats. Added rule: If Kyro explores the mudflats, then he does not walk on mud. Therefore, Kyro does not walk on mud. Kyro either swims efficiently or walks on mud, but not both. Since he does not walk on mud, Kyro swims efficiently. Kyro either breathes air or swims efficiently, but not both. Since he swims efficiently, Kyro does not breathe air. Added rule: If Kyro does not breathe air, then he cannot survive out of water. Therefore, Kyro cannot survive out of water.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 448
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Kyro hides in vegetation.\n\nAdded facts:\n- Kyro burrows sand.\n- Kyro walks on mud.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Kyro burrows sand (added fact) and climbs rocks (still present). Rule 4: 'either hides vegetation or burrows sand, not both' is satisfied since he burrows sand. Rule 5: 'if climbs rocks or burrows sand (not both), then explores mudflats' does not apply because he does both (climbs rocks and burrows sand), so no conclusion about exploring mudflats. Kyro walks on mud (added fact). Rule 7: 'swims efficiently XOR walks on mud' \u2192 since he walks, he does not swim efficiently. Rule 8: 'breathes air XOR swims efficiently' \u2192 since he does not swim, he breathes air. Rule 9: 'breathes air \u2192 can survive out of water' \u2192 he can survive, so 'cannot survive' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 764
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, x breathes air if and only if x can survive out of water.\n- For all x, if x walks on mud, then x does not explore the mudflats.\n\nAdded facts:\n- Kyro breathes air.\n- Kyro does not swim efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Kyro breathes air (added fact) and the added rule states 'x breathes air if and only if x can survive out of water.' This biconditional means breathing air directly implies the ability to survive out of water. Therefore, since Kyro breathes air, he can survive out of water, making the conclusion 'Kyro cannot survive out of water' false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1017
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Kyro walks on mud.\n- Kyro does not swim efficiently.\n- Kyro breathes air.\n\nAdded facts:\n- Kyro does not walk on mud.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Kyro does not walk on mud (added fact). From Rule 4 (hides vegetation implies not burrows sand) and Rule 5 (climbs rocks and not burrows sand implies explores mudflats), Kyro explores mudflats. Rule 6 (explores mudflats implies walks or feeds) creates a contradiction with current facts (does not walk and does not feed), but this contradiction is unrelated to survival. Rule 7: does not walk \u2192 swims efficiently. Rule 8: swims \u2192 does not breathe air. Rule 9 (breathes air \u2192 survives) does not apply since he does not breathe air. No rule states that not breathing air implies cannot survive. Therefore, the conclusion 'Kyro cannot survive' is not entailed by the context. The context lacks a rule linking not breathing air to inability to survive, so the answer is False.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1208
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- For all x, if x can survive out of water, then x breathes air.\n- For all x, it is not the case that x walks on mud and x explores the mudflats.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From the original context: Kyro hides in vegetation (so he does not burrow sand), climbs rocks. Rule: if climbs rocks XOR burrows sand (true), then explores mudflats (true). Rule: explores mudflats \u2192 walks on mud or feeds plankton (but does not feed), so walks on mud (true). Rule: swims XOR walks \u2192 swims = false. Rule: breathes air XOR swims \u2192 breathes = true. Original rule: breathes air \u2192 can survive. Therefore, Kyro can survive, making the conclusion 'cannot survive' False. The added rule 'survive \u2192 breathes air' is now redundant as the original rule already gives breathes \u2192 survive, creating a biconditional, but does not affect the conclusion. Thus, the conclusion is false.",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1477
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Kyro either swims efficiently or walks on mud, but not both.\n\nAdded facts:\n- Kyro does not swim efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Kyro hides in vegetation. Rule: hides vegetation XOR burrows sand \u2192 he does not burrow sand. Kyro climbs rocks. Rule: climbs rocks XOR burrows sand \u2192 explores mudflats (true). Rule: explores mudflats \u2192 walks on mud or feeds plankton. He does not feed plankton (given), so he walks on mud. He does not swim efficiently (added fact). Rule: breathes air XOR swims efficiently \u2192 since he does not swim, he breathes air. Rule: breathes air \u2192 survives out of water. Therefore, Kyro can survive, so 'cannot survive' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1738
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Kyro does not swim efficiently.\n\nAdded facts:\n- Kyro swims efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Kyro swims efficiently (added fact). From Rule 8 (breathes air XOR swims efficiently), Kyro does not breathe air. Rule 9 states 'breathes air \u2192 can survive,' but no rule states '\u00acbreathes air \u2192 \u00acsurvive.' Thus, the absence of breathing air does not necessitate inability to survive. The context provides no basis to conclude Kyro cannot survive, so the conclusion is not entailed. The potential contradiction in Rule 7 (swims XOR walks) is irrelevant to the survival question, as survival depends solely on breathing air per Rule 9. Since Rule 9 is a one-way implication, the conclusion 'cannot survive' is not entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1946
+    }
+  ]
+}

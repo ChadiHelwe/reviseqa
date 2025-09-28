@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 1,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Jackson does not mentor students.\nJackson does not advance his field.\nJackson is not curious.\nJackson has expertise.\nJackson develops innovative methods.\nJackson does not gain recognition.\nIf Jackson either mentors students or collaborates with others (but not both), then he advances his field.\nAll respected experts are curious and value knowledge.\nIf Jackson has expertise, then he either holds leadership roles or collaborates with others (but not both).\nIf Jackson makes significant contributions, then he either holds leadership roles or develops innovative methods (but not both).\nIf Jackson either receives awards or gains recognition (but not both), then he makes significant contributions.\nIf Jackson publishes papers or is a dedicated researcher, then he receives awards.\nIf Jackson is either a dedicated researcher or a passionate conservationist (but not both), then he is a respected expert.",
+      "question": "Does the context entail the conclusion 'Jackson is not a passionate conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Jackson is either a dedicated researcher or a passionate conservationist (but not both), then he is a respected expert.\n\nAdded rules:\n- If Jackson is a passionate conservationist, then he is a respected expert.\n\nAdded facts:\n- Jackson is not a dedicated researcher.\n- Jackson holds leadership roles.\n- Jackson does not collaborate with others.",
+      "question": "Does the context entail the conclusion 'Jackson is not a passionate conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Assuming Jackson is a passionate conservationist (PC) leads to him being a respected expert (RE) via the added rule (PC \u2192 RE). Rule 2 states all respected experts are curious, so RE implies Curious. However, the context explicitly states Jackson is not curious (\u00acCurious). This creates a contradiction, proving PC must be false. Thus, Jackson is not a passionate conservationist.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 269
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Jackson is not curious.\n\nAdded rules:\n- If Jackson holds leadership roles and develops innovative methods, then he is a passionate conservationist.",
+      "question": "Does the context entail the conclusion 'Jackson is not a passionate conservationist.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Jackson develops innovative methods (DIM) and the context contains the rule: (HLR \u2227 DIM) \u2192 PC. From the fact Jackson does not advance his field and the rule (Mentors XOR Collaborates) \u2192 Advances Field, it follows that Collaborates must be false (since Mentors is false and Advances Field is false). With Expertise true, the rule Expertise \u2192 (HLR XOR Collaborates) implies HLR must be true (since Collaborates is false). Thus, HLR \u2227 DIM is true, so PC must be true. Therefore, the conclusion 'Jackson is not a passionate conservationist' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 474
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Jackson holds leadership roles and develops innovative methods, then he is a passionate conservationist.\n\nAdded rules:\n- If Jackson is a passionate conservationist, then he makes significant contributions.",
+      "question": "Does the context entail the conclusion 'Jackson is not a passionate conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Jackson develops innovative methods (DIM = true) and holds leadership roles (HLR = true). The added rule states PC \u2192 MSC. The rule MSC \u2192 (HLR XOR DIM) applies. Since HLR and DIM are both true, HLR XOR DIM = false. Thus, MSC must be false (as MSC implies true XOR, which is false). From PC \u2192 MSC and MSC false, PC must be false by modus tollens. Therefore, Jackson is not a passionate conservationist.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 684
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- If Jackson either receives awards or gains recognition (but not both), then he makes significant contributions.\n- If Jackson publishes papers or is a dedicated researcher, then he receives awards.\n\nAdded facts:\n- Jackson either holds leadership roles or collaborates with others (but not both).\n- If Jackson is a respected expert, then he is curious and he values knowledge.",
+      "question": "Does the context entail the conclusion 'Jackson is not a passionate conservationist.'?",
+      "prediction": "B",
+      "correct_answer": "True",
+      "reasoning": "The context states Jackson is not curious (Curious = false), making him not a respected expert (RE = false) since RE implies Curious. The rule (DR XOR PC) \u2192 RE means DR XOR PC must be false (as RE is false), so DR = PC. DR (dedicated researcher) is unknown. If DR is true, PC is true; if DR is false, PC is false. Since DR's value is undetermined, PC could be either true or false. Thus, the conclusion 'Jackson is not a passionate conservationist' (PC = false) is not entailed, as it could be false. The context does not force PC to be false, so the entailment does not hold.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 875
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Jackson either holds leadership roles or collaborates with others (but not both).\n\nAdded rules:\n- If Jackson does not make significant contributions, then he is not a passionate conservationist.\n- If Jackson is not a respected expert, then he is not a passionate conservationist.\n- If Jackson has expertise, then he is a passionate conservationist.\n\nAdded facts:\n- Jackson either holds leadership roles or collaborates with others.\n- It is not the case that Jackson both holds leadership roles and collaborates with others.\n- Either Jackson is a passionate conservationist or Jackson is not a passionate conservationist.",
+      "question": "Does the context entail the conclusion 'Jackson is not a passionate conservationist.'?",
+      "prediction": "B",
+      "correct_answer": "True",
+      "reasoning": "Jackson has expertise (E = true) per added facts. Rule 3 states E \u2192 PC, so PC must be true. The conclusion 'Jackson is not a passionate conservationist' (\u00acPC) contradicts this. Since PC is necessarily true, \u00acPC cannot be entailed. Thus, the context does not support the conclusion, making the correct answer False (B).",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1148
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Jackson makes significant contributions, then he either holds leadership roles or develops innovative methods (but not both).",
+      "question": "Does the context entail the conclusion 'Jackson is not a passionate conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "Jackson is not a dedicated researcher (DR = false), as established in prior context. The rule (DR XOR PC) \u2192 RE holds, and since RE is false (Jackson is not curious), DR XOR PC must be false. Thus, DR = PC. Given DR = false, PC must be false. Therefore, the conclusion 'Jackson is not a passionate conservationist' is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1416
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- If Jackson has expertise, then he is a passionate conservationist.\n\nAdded facts:\n- Jackson has expertise and Jackson is not a passionate conservationist.",
+      "question": "Does the context entail the conclusion 'Jackson is not a passionate conservationist.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added facts explicitly state 'Jackson is not a passionate conservationist.' This directly matches the conclusion. Since the conclusion is a given fact in the context, the context necessarily entails it. The removed rule (which would have implied a contradiction with the fact) is no longer part of the context, so it cannot affect the entailment. Thus, the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1589
+    }
+  ]
+}

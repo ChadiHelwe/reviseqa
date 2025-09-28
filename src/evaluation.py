@@ -240,7 +240,8 @@ class Conversation:
                     out = response.choices[0].message.content
                     self.messages.append({"role": "assistant", "content": out})
                     return out
-                except:
+                except Exception as e:
+                    print(f"Error during API call: {e}. Retrying...")
                     attempt += 1
                     continue
         
@@ -269,7 +270,8 @@ class Conversation:
                     max_retries=2,
                 )
                 return response
-        except Exception:
+        except Exception as e:
+            print(f"Error during API call: {e}")
             err_json = json.dumps({"reasoning": "ERROR", "mistake": "ERROR", "answer": "ERROR"})
             self.messages.append({"role": "assistant", "content": err_json})
             return SimpleNamespace(reasoning="ERROR", answer="ERROR")
@@ -643,6 +645,17 @@ class Evaluator:
             else:
                 chains = self.dataset.implicit_data
             for idx, chain in enumerate(chains):
+                # Check if detailed result file already exists
+                if self.detailed_output_dir:
+                    track_dir = os.path.join(self.detailed_output_dir, path)
+                    original_filename = self.dataset.filenames[idx]
+                    task_filename = f"{path}_{original_filename}.json"
+                    task_filepath = os.path.join(track_dir, task_filename)
+
+                    if os.path.exists(task_filepath):
+                        print(f"Skipping {path}/{original_filename} - result already exists")
+                        continue
+
                 tasks.append((path, idx, chain, self.model_name, self.guided))
 
         with ThreadPoolExecutor(max_workers=self.batch_size) as executor:

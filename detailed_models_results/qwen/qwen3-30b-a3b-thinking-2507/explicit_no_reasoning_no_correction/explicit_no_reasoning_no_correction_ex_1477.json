@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 23,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Danielle faces challenges.\nDanielle discovers her passion.\nDanielle has a hidden talent.\nDanielle does not achieve expertise in her field.\nDanielle does not improve her craft.\nDanielle has good communication skills.\nDanielle does not get recommendations.\nIf Danielle faces challenges, then she either finds her niche or discovers her passion, but not both.\nIf Danielle has a hidden talent, then she either overcomes shyness or finds her niche (or both).\nDanielle either overcomes shyness or builds confidence, but not both.\nIf Danielle gains recognition, then she achieves expertise in her field.\nAnyone who develops unique skills either gains recognition or improves their craft (or both).\nEveryone who is a successful performer either builds confidence or develops unique skills (or both).\nAnyone who is a sought-after coach and has good communication skills will get recommendations.\nIf Danielle is a talented mimic, then she is either a successful performer or a sought-after coach (or both).",
+      "question": "Does the context entail the conclusion 'Danielle is a talented mimic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, if x does not gain recognition and x does not improve their craft, then x does not develop unique skills.\n\nAdded facts:\n- Danielle does not gain recognition.",
+      "question": "Does the context entail the conclusion 'Danielle is a talented mimic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context includes the facts that Danielle does not gain recognition and does not improve her craft. Applying the added rule (\u00acGainsRecognition \u2227 \u00acImprovesCraft \u2192 \u00acDevelopsUniqueSkills) confirms Danielle does not develop unique skills. The original rules state that if Danielle were a talented mimic, she would need to be a successful performer or sought-after coach (or both). However, Danielle does not develop unique skills, and the rule for successful performers (SuccessfulPerformer \u2192 BuildsConfidence \u2228 DevelopsUniqueSkills) requires one of these, but she lacks both (BuildsConfidence is false due to the XOR rule). Additionally, being a sought-after coach with good communication skills would lead to recommendations, which contradicts the fact that she does not get recommendations. Thus, she is neither a successful performer nor a sought-after coach, making the conclusion 'Danielle is a talented mimic' false.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 299
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Danielle faces challenges, then she either finds her niche or discovers her passion, but not both.\n\nAdded rules:\n- If Danielle faces challenges, then she finds her niche.\n- If Danielle finds her niche, then she does not overcome shyness.\n- If Danielle finds her niche, then she does not discover her passion.",
+      "question": "Does the context entail the conclusion 'Danielle is a talented mimic.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The context includes a contradiction: Danielle is factually stated to discover her passion, but the added rule (if she finds her niche, she does not discover her passion) and the fact that she faces challenges (leading to finding her niche) imply she cannot discover her passion. Despite this, the question asks whether the context entails 'Danielle is a talented mimic.' To entail this, the premises must necessitate it. The rule for a talented mimic requires her to be a successful performer or sought-after coach. However, she does not get recommendations (fact), and having good communication skills would require her to be a sought-after coach to get recommendations. Since she doesn't get recommendations, she cannot be a sought-after coach. To be a successful performer, she would need to build confidence (which she does, via XOR rule), but no rule states that building confidence makes her a successful performer. Thus, the context does not necessitate she is a talented mimic, making the entailment false.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 571
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- Danielle discovers her passion.\n\nAdded rules:\n- For all x, if x does not develop unique skills, then x is not a successful performer.",
+      "question": "Does the context entail the conclusion 'Danielle is a talented mimic.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the context, Danielle does not improve her craft (fact) and does not gain recognition (deduced via modus tollens from 'gains recognition \u2192 achieves expertise' and 'does not achieve expertise'). The rule 'develops unique skills \u2192 gains recognition \u2228 improves craft' implies Danielle does not develop unique skills. The added rule '\u00acdevelops unique skills \u2192 \u00acsuccessful performer' means she is not a successful performer. Additionally, she has good communication skills but does not get recommendations, so she cannot be a sought-after coach (as the rule specifies sought-after coaches with good communication skills get recommendations). Thus, she is neither a successful performer nor sought-after coach, violating the requirement for being a talented mimic (which requires one of these). Therefore, the conclusion 'Danielle is a talented mimic' is false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 890
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- For all x, if x is a sought-after coach and has good communication skills, then x gets recommendations.\n\nAdded rules:\n- If Danielle builds confidence, then she is a talented mimic.",
+      "question": "Does the context entail the conclusion 'Danielle is a talented mimic.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "The key factor is determining whether Danielle builds confidence, as the added rule states that if she does, she is a talented mimic. From the facts and remaining rules:\n- She has a hidden talent, implying she either overcomes shyness or finds her niche (or both).\n- The XOR rule states she either overcomes shyness or builds confidence, but not both.\n- If she finds her niche, the rule (assumed valid) ensures she does not overcome shyness, forcing her to build confidence (and thus be a talented mimic).\n- However, she could also overcome shyness (without finding her niche), which would mean she does not build confidence (and thus is not a talented mimic).\nBoth scenarios are possible under the given premises. Since there exists a valid model where the conclusion is false (she overcomes shyness), the context does not entail the conclusion. Thus, the entailment fails, and the answer is False.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1139
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Danielle faces challenges, then she finds her niche.\n\nAdded facts:\n- Danielle is not a sought-after coach.",
+      "question": "Does the context entail the conclusion 'Danielle is a talented mimic.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "Danielle faces challenges (fact) and does not discover her passion (fact removed in prior context). By the rule 'If Danielle faces challenges, then she either finds her niche or discovers her passion, but not both', she must find her niche. The rule 'If Danielle finds her niche, then she does not overcome shyness' applies, so she does not overcome shyness. The XOR rule 'Danielle either overcomes shyness or builds confidence, but not both' then forces her to build confidence. The added rule 'If Danielle builds confidence, then she is a talented mimic' directly entails that she is a talented mimic. All steps are valid with no contradictions, confirming the conclusion.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1430
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Danielle does not improve her craft.\n\nAdded facts:\n- Danielle finds her niche.",
+      "question": "Does the context entail the conclusion 'Danielle is a talented mimic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Danielle finds her niche (added fact). The rule 'If Danielle finds her niche, then she does not overcome shyness' applies, so she does not overcome shyness. The XOR rule 'Danielle either overcomes shyness or builds confidence, but not both' then forces her to build confidence. The added rule 'If Danielle builds confidence, then she is a talented mimic' directly entails that she is a talented mimic. All steps are valid, and no contradictions exist. Thus, the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1650
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Danielle finds her niche, then she builds confidence.\n- If Danielle finds her niche, then she is a talented mimic.\n- If Danielle is a talented mimic, then she is a successful performer.",
+      "question": "Does the context entail the conclusion 'Danielle is a talented mimic.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context includes the fact that Danielle finds her niche (from prior context not removed in this question). The added rule 'If Danielle finds her niche, then she is a talented mimic' directly applies. Since Danielle finds her niche, the rule entails she is a talented mimic. No other rules or facts contradict this conclusion. Therefore, the context fully entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1828
+    }
+  ]
+}

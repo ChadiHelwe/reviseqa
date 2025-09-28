@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 356,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Camille examines erosion in her work as an oceanographer.\nCamille conducts research.\nCamille does not create maps.\nCamille does not discover new species.\nCamille maps the shallows.\nCamille either examines erosion or tracks currents, but not both, in her work as an oceanographer.\nCamille either tracks currents or identifies patterns in her research, but not both.\nIf Camille conducts research, then she either analyzes data or identifies patterns, but not both.\nEvery oceanographer who charts the seafloor either analyzes data or creates maps.\nEvery oceanographer either charts the seafloor or explores oceans.\nIf Camille explores oceans and is respected, then she discovers new species.\nIf Camille either studies trenches or maps shallows (but not both), then she is respected.",
+      "question": "Does the context entail the conclusion 'Camille studies trenches.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added rules:\n- For all x, either x does not chart the seafloor, or x analyzes data, or x creates maps.\n- Either Camille does not explore oceans, or Camille is not respected, or she discovers new species.\n\nAdded facts:\n- Either Camille examines erosion or she tracks currents.\n- Either Camille conducts research or she analyzes data.\n- Either Camille does not create maps or she analyzes data.\n- Either Camille does not discover new species or she explores oceans.\n- Either Camille maps the shallows or she studies trenches.",
+      "question": "Does the context entail the conclusion 'Camille studies trenches.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the premises, Camille maps the shallows (premise 5) and does not create maps (premise 3). Since she conducts research (premise 2), premise 8 implies she either analyzes data or identifies patterns but not both. From premise 7, since she does not track currents (premise 6), she identifies patterns, so she does not analyze data. Premise 9 requires that if she charts the seafloor, she must analyze data or create maps, but she does neither, so she does not chart the seafloor. Premise 10 forces her to explore oceans (since she does not chart the seafloor). The added rule (either Camille does not explore oceans, or she is not respected, or she discovers new species) is satisfied because she does not discover new species (premise 4), making her not respected. Premise 12 states that if she studies trenches or maps shallows (but not both), she is respected. Since she maps shallows (true) and is not respected (false), the antecedent must be false. This requires both studying trenches and mapping shallows to be true (to make XOR false), thus entailing she studies trenches.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 262
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Either Camille studies trenches or she analyzes data.\n- Either Camille does not identify patterns or she does not analyze data.",
+      "question": "Does the context entail the conclusion 'Camille studies trenches.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the premises, Camille conducts research (fact 2) and does not analyze data (as per premise 8 and fact 7, since she identifies patterns). Fact A states 'Camille studies trenches \u2228 analyzes data.' Since analyzing data is false, studies trenches must be true. Fact B ('\u00acidentify patterns \u2228 \u00acanalyze data') is satisfied because \u00acanalyze data is true. Thus, the disjunction in Fact A requires 'studies trenches' to hold.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 676
+    },
+    {
+      "step": 3,
+      "context": "",
+      "question": "Does the context entail the conclusion 'Camille studies trenches.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the premises, Camille identifies patterns (I is true) and does not analyze data (D is false). The added fact 'Either Camille studies trenches or she analyzes data' (T \u2228 D) requires T to be true since D is false. However, the premise 'If Camille either studies trenches or maps shallows (but not both), then she is respected' creates a contradiction: Camille maps shallows (M is true), so T must be false (to avoid violating the 'but not both' condition). This forces T to be false, making the conclusion 'Camille studies trenches' false. The added rule 'Either Camille does not explore oceans, or she is not respected, or she discovers new species' also aligns with her not being respected, reinforcing this outcome.",
+      "correct": true,
+      "tags": [
+        "no_change"
+      ],
+      "is_demonstration": false,
+      "token_count": 850
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- It is not the case that Camille both examines erosion and tracks currents.\n\nAdded facts:\n- Camille does not track currents.\n- Camille identifies patterns.\n- Camille does not analyze data.",
+      "question": "Does the context entail the conclusion 'Camille studies trenches.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "From the premise 'Either Camille studies trenches or she analyzes data' (T \u2228 A) and the fact that she does not analyze data (\u00acA), T must be true. However, another premise states 'If Camille either studies trenches or maps shallows (but not both), then she is respected' (T \u2295 M \u2192 R). Since Camille maps the shallows (M is true), if T were true, T \u2295 M would be false (both true), making the implication vacuously true. But other constraints require her to be not respected (\u00acR). This creates a contradiction if T is true, as \u00acR implies the antecedent (T \u2295 M) must be false, which it is. However, the added fact T \u2228 A (T or A) and \u00acA force T to be true. Yet, the conclusion depends on resolving all constraints without contradiction. Since \u00acA and M being true (maps shallows) mean T must be true to satisfy T \u2228 A, but the implication T \u2295 M \u2192 R is not violated (antecedent is false), the conclusion is logically entailed. However, the user's correction suggests False, implying a possible oversight in the original reasoning. Given the current facts, the answer is True, but the user's context may require further analysis. Rechecking, if T is true, M is true, and T \u2295 M is false, then R can be false. This satisfies all premises. Therefore, the answer is True.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1080
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Camille maps the shallows.\n\nAdded facts:\n- Camille does not map the shallows.",
+      "question": "Does the context entail the conclusion 'Camille studies trenches.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "From the premise 'Either Camille studies trenches or she analyzes data' (S \u2228 A) and the fact that she does not analyze data (\u00acA), S must be true. However, if S is true, then from the premise 'If Camille either studies trenches or maps shallows (but not both), then she is respected' (S \u2295 M \u2192 R), since she does not map shallows (\u00acM), S is true, making the antecedent true. This would require her to be respected (R). But another premise states 'If Camille explores oceans and is respected, then she discovers new species' (E \u2227 R \u2192 D). Since she explores oceans (E is true, derived from 'Every oceanographer either charts the seafloor or explores oceans' and \u00acC), R being true would force D to be true. However, the context explicitly states 'Camille does not discover new species' (\u00acD). This contradiction invalidates S being true, so the conclusion 'Camille studies trenches' must be false.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1502
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- Either Camille does not track currents or she does not identify patterns.\n- Either Camille charts the seafloor or she explores oceans.\n\nAdded facts:\n- Camille studies trenches.",
+      "question": "Does the context entail the conclusion 'Camille studies trenches.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly states 'Camille studies trenches.' as a fact. Since the conclusion directly matches this fact, the context trivially entails it. No contradictions or dependencies affect this conclusion, as the added rules do not negate or interfere with the stated fact. Thus, the answer is True.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1808
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- Camille examines erosion in her work as an oceanographer.",
+      "question": "Does the context entail the conclusion 'Camille studies trenches.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The premise 'Either Camille studies trenches or she analyzes data' (T \u2228 A) is combined with the fact that she does not analyze data (\u00acA). This disjunction necessitates that 'Camille studies trenches' (T) must be true. The added fact that she examines erosion confirms she does not track currents, which aligns with other premises without contradiction. No conflicting rules or facts override this conclusion, so the context entails 'Camille studies trenches.'",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1973
+    }
+  ]
+}

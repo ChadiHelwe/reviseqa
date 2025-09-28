@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b",
+    "task_path": "explicit_no_reasoning_no_correction",
+    "chain_index": 144,
+    "include_reasoning": false,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.5714285714285714
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Waylon experiments with designs.\nWaylon does not refine his craftsmanship.\nWaylon loves music.\nWaylon values quality.\nWaylon has patience.\nWaylon does not produce quality instruments.\nFor all humans, if they either experiment with designs or learn from their mistakes, then they refine their craftsmanship.\nWaylon either learns from his mistakes or achieves perfection, but not both.\nIf someone loves music and values quality, then they are passionate about sound.\nIf Waylon has patience, then he either dedicates himself to his craft or achieves perfection, but not both.\nIf Waylon is passionate about sound, then he is a skilled luthier.\nIf Waylon dedicates himself to his craft, then he either inspires musicians or produces quality instruments.\nIf Waylon is a skilled luthier, then he can either create masterpieces or inspire musicians, but not both.",
+      "question": "Does the context entail the conclusion 'Waylon creates masterpieces.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- For all x, if x either experiments with designs or learns from their mistakes, but not both, then x refines their craftsmanship.\n- For all x, if x loves music and values quality, then x is passionate about sound.\n\nAdded rules:\n- For all x, if x either experiments with designs or learns from their mistakes, but not both, then x refines their craftsmanship.\n- For all x, either x does not love music and value quality, or x is passionate about sound.\n- For all x, if x is passionate about sound, then x either creates masterpieces or inspires musicians, but not both.",
+      "question": "Does the context entail the conclusion 'Waylon creates masterpieces.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the added rule, since Waylon experiments with designs (Exper=True) and does not refine craftsmanship (\u00acRefine), the condition (Exper XOR Learn) must be false, implying Learn=True. The original rule states Waylon either learns from mistakes or achieves perfection (but not both), so Perf=False. The second added rule forces Passionate=True (as M \u2227 Q is true). This leads to Skilled=True (Passionate \u2192 Skilled). With Pat=True, Dedicate must be true (Pat \u2192 Dedicate XOR Perf). Dedicate=True then implies Inspire=True (Dedicate \u2192 Inspire XOR Produce, and \u00acProduce). Finally, Skilled \u2192 Create XOR Inspire, so Create=False. Thus, the conclusion 'Waylon creates masterpieces' is false.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 278
+    },
+    {
+      "step": 2,
+      "context": "Added facts:\n- Waylon loves music and values quality.\n- It is not the case that Waylon either experiments with designs or learns from his mistakes, but not both.",
+      "question": "Does the context entail the conclusion 'Waylon creates masterpieces.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "False",
+      "reasoning": "From the added fact that Waylon loves music and values quality (L \u2227 Q), the second added rule (\u00ac(L \u2227 Q) \u2228 P) forces P (passionate about sound) to be true. Then, the third added rule (P \u2192 C XOR I) ensures exactly one of 'creates masterpieces' (C) or 'inspires musicians' (I) is true. However, there is no additional information to determine which of C or I holds. Thus, the conclusion 'Waylon creates masterpieces' cannot be definitively entailed.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 618
+    },
+    {
+      "step": 3,
+      "context": "Removed facts:\n- It is not the case that Waylon either experiments with designs or learns from his mistakes, but not both.\n\nAdded rules:\n- If Waylon experiments with designs then he learns from his mistakes, and if Waylon learns from his mistakes then he experiments with designs.\n\nAdded facts:\n- Waylon learns from his mistakes.",
+      "question": "Does the context entail the conclusion 'Waylon creates masterpieces.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The context contains a contradiction: Exper and Learn are both true (due to the added rule Exper \u2194 Learn and the fact that Learn is true). This triggers the rule (Exper \u2228 Learn) \u2192 Refine, implying Refine must be true, but the fact \u00acRefine contradicts this. However, assuming consistency in the remaining valid rules, Passionate is true (from L \u2227 Q \u2192 P). Skilled is true (P \u2192 Skilled). Skilled \u2192 Create XOR Inspire. Pat \u2192 Dedicate XOR Perf (since Perf is false, Dedicate is true). Dedicate \u2192 Inspire XOR Produce (\u00acProduce implies Inspire is true). Thus, Skilled \u2192 Create XOR Inspire forces Create to be false. Despite the contradiction, the logical chain leads to 'Create masterpieces' being false.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 818
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Waylon either learns from his mistakes or achieves perfection, but not both.\n\nAdded facts:\n- Waylon learns from his mistakes and achieves perfection.\n- Waylon does not inspire musicians.",
+      "question": "Does the context entail the conclusion 'Waylon creates masterpieces.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added fact that Waylon learns from his mistakes and achieves perfection (Learn \u2227 Perf) contradicts the removed rule that required Learn XOR Perf. However, with the current facts, Passionate is true (from Love \u2227 Value \u2192 Passionate). Skilled is true (Passionate \u2192 Skilled). The rule Skilled \u2192 Create XOR Inspire applies. Since \u00acInspire is given, Create must be true. Thus, the conclusion 'Waylon creates masterpieces' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1104
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- For all x, if x either experiments with designs or learns from their mistakes, but not both, then x refines their craftsmanship.\n- If Waylon experiments with designs then he learns from his mistakes, and if Waylon learns from his mistakes then he experiments with designs.\n\nAdded rules:\n- For all x, if x either experiments with designs or learns from their mistakes, but not both, then x refines their craftsmanship.\n- Waylon experiments with designs if and only if he learns from his mistakes.\n- If Waylon loves music and values quality, then he is passionate about sound.\n\nAdded facts:\n- Waylon achieves perfection.",
+      "question": "Does the context entail the conclusion 'Waylon creates masterpieces.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The context states that Waylon achieves perfection (Perf = true). However, there is no explicit rule connecting 'achieves perfection' to 'creates masterpieces.' The added rule (Exper \u2194 Learn) does not provide information about Exper or Learn's truth values, and no facts confirm Love \u2227 Value (which would trigger Passionate). Without links between Perf and Create masterpieces, or other necessary premises, the conclusion cannot be determined.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1292
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- For all x, if x is passionate about sound, then x either creates masterpieces or inspires musicians.\n- For all x, if x is passionate about sound, then it is not the case that x creates masterpieces and inspires musicians.\n- If Waylon is not a skilled luthier, then he is not passionate about sound.\n\nAdded facts:\n- Waylon does not dedicate himself to his craft.",
+      "question": "Does the context entail the conclusion 'Waylon creates masterpieces.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The context does not provide information about Waylon's passion for sound or his status as a skilled luthier. The rule 'If Waylon is not a skilled luthier, then he is not passionate about sound' requires knowing whether he is a skilled luthier, but no such fact is given. Without establishing that Waylon is passionate about sound, the conditional rules linking passion to creating masterpieces or inspiring musicians cannot be triggered. Additionally, there is no direct connection between 'does not dedicate himself to his craft' and 'creates masterpieces.' Thus, the conclusion remains undetermined.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1563
+    },
+    {
+      "step": 7,
+      "context": "Added facts:\n- Waylon creates masterpieces.",
+      "question": "Does the context entail the conclusion 'Waylon creates masterpieces.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly includes the fact 'Waylon creates masterpieces.' Since the conclusion is directly stated as a fact, it is entailed by the context.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1819
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "anthropic/claude-sonnet-4",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 376,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Cali does not play a sport.\nCali uses ice.\nCali seeks treatment.\nCali needs rehabilitation.\nCali is either an athlete or plays a sport.\nIf Cali is an athlete, then she either sees a doctor or uses ice, but not both.\nIf Cali experiences pain or has swelling, then she will see a doctor.\nIf Cali either experiences pain or has an injury (but not both), then she seeks treatment.\nIf Cali has an injury or needs rehabilitation, then she takes etodolac.\nIf Cali takes etodolac, then she manages her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Cali takes etodolac, then she manages her pain.\n\nAdded rules:\n- If Cali takes etodolac, then she does not manage her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the given facts: Cali does not play a sport, uses ice, seeks treatment, and needs rehabilitation. Since Cali doesn't play a sport but must be either an athlete or play a sport, she must be an athlete. As an athlete, she either sees a doctor or uses ice (but not both) - since she uses ice, she doesn't see a doctor. Since she needs rehabilitation, and the rule states that if she has an injury or needs rehabilitation then she takes etodolac, she takes etodolac. With the modified rule, if she takes etodolac, then she does not manage her pain. Therefore, Cali does not manage her pain.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 230
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Cali experiences pain or has swelling, then she will see a doctor.\n- If Cali has an injury or needs rehabilitation, then she takes etodolac.\n- If Cali takes etodolac, then she does not manage her pain.\n\nAdded rules:\n- Either Cali does not experience pain and does not have swelling, or she sees a doctor.\n- Either Cali does not have an injury and does not need rehabilitation, or she takes etodolac.\n- Either Cali does not take etodolac, or she does not manage her pain.\n- If Cali manages her pain, then she does not take etodolac.\n\nAdded facts:\n- Either Cali needs rehabilitation, or she does not need rehabilitation.\n- Either Cali needs rehabilitation, or she has an injury.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the facts, we know Cali needs rehabilitation. From the added fact 'Either Cali needs rehabilitation, or she has an injury', since Cali needs rehabilitation, this disjunction is satisfied regardless of whether she has an injury. From the rule 'Either Cali does not have an injury and does not need rehabilitation, or she takes etodolac', since Cali needs rehabilitation, the first part of the disjunction (does not have an injury AND does not need rehabilitation) is false, so she must take etodolac. From the rule 'Either Cali does not take etodolac, or she does not manage her pain', since she takes etodolac, the first part is false, so she does not manage her pain.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 462
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- Either Cali does not have an injury and does not need rehabilitation, or she takes etodolac.\n\nAdded rules:\n- Either Cali manages her pain, or she is not an athlete.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the given facts: Cali does not play a sport, uses ice, seeks treatment, and needs rehabilitation. Since Cali doesn't play a sport but must be either an athlete or play a sport, she must be an athlete. From the new rule 'Either Cali manages her pain, or she is not an athlete', since Cali is an athlete, she must manage her pain. However, we also have the rule 'If Cali manages her pain, then she does not take etodolac' and 'Either Cali does not take etodolac, or she does not manage her pain'. Without the removed rule that would force her to take etodolac, we cannot definitively determine whether she takes etodolac or not, which creates uncertainty about whether she manages her pain.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 838
+    },
+    {
+      "step": 4,
+      "context": "Added rules:\n- If Cali is an athlete, then she manages her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the given facts: Cali does not play a sport, but she must be either an athlete or play a sport, so she must be an athlete. The new rule states 'If Cali is an athlete, then she manages her pain.' Since Cali is an athlete, she manages her pain. This directly contradicts the conclusion 'Cali does not manage her pain.' Therefore, the context does not entail the conclusion - in fact, it entails the opposite.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1098
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Cali does not manage her pain, then she is not an athlete.\n- Either Cali manages her pain, or she manages her pain.\n- Either Cali manages her pain, or she does not manage her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "From the given facts: Cali does not play a sport, but she must be either an athlete or play a sport, so she must be an athlete. We now have two key rules: 'If Cali is an athlete, then she manages her pain' and 'If Cali does not manage her pain, then she is not an athlete.' Since Cali is an athlete, from the first rule she manages her pain. The contrapositive of the second rule is 'If Cali is an athlete, then she manages her pain,' which is consistent. The added rules 'Either Cali manages her pain, or she manages her pain' is a tautology (always true), and 'Either Cali manages her pain, or she does not manage her pain' is also a tautology. Since Cali is an athlete and must manage her pain, the conclusion 'Cali does not manage her pain' is false.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1260
+    },
+    {
+      "step": 6,
+      "context": "Removed rules:\n- If Cali does not manage her pain, then she is not an athlete.\n- Either Cali manages her pain, or she manages her pain.\n\nAdded rules:\n- If Cali is an athlete, then she does not manage her pain.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the given facts: Cali does not play a sport, but she must be either an athlete or play a sport, so she must be an athlete. We now have two contradictory rules about Cali being an athlete: 'If Cali is an athlete, then she manages her pain' and 'If Cali is an athlete, then she does not manage her pain.' Since Cali is an athlete, both rules apply, leading to a logical contradiction (she both manages and does not manage her pain). In classical logic, from a contradiction, anything can be derived, making the system inconsistent. However, looking at the specific conclusion 'Cali does not manage her pain,' one of the rules directly supports this conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1550
+    },
+    {
+      "step": 7,
+      "context": "Removed rules:\n- Either Cali manages her pain, or she is not an athlete.\n\nAdded rules:\n- Either Cali manages her pain, or she is an athlete.",
+      "question": "Does the context entail the conclusion 'Cali does not manage her pain.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the given facts: Cali does not play a sport, but she must be either an athlete or play a sport, so she must be an athlete. We have two conflicting rules about what happens if Cali is an athlete: 'If Cali is an athlete, then she manages her pain' and 'If Cali is an athlete, then she does not manage her pain.' Since Cali is an athlete, both rules apply, creating a contradiction where she both manages and does not manage her pain. We also have 'Either Cali manages her pain, or she is an athlete' - since Cali is an athlete, this disjunction is satisfied regardless. The remaining tautology 'Either Cali manages her pain, or she does not manage her pain' doesn't help resolve the contradiction. The system is inconsistent, but one of the rules directly entails that since Cali is an athlete, she does not manage her pain.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1799
+    }
+  ]
+}

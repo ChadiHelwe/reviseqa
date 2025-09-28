@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-235b-a22b-2507",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 241,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 1.0
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Noa is not punctual.\nNoa does not gain experience.\nNoa does not handle multiple tasks.\nNoa does not get promoted.\nNoa either has a good work ethic or is punctual, but not necessarily both.\nIf Noa earns recognition, then she gains experience.\nIf Noa either handles multiple tasks or problem-solves under pressure (but not both), then she earns recognition.\nIf Noa has a good work ethic and is respected by her colleagues, then she gets promoted.\nIf someone is valued by the team, then they are respected by their colleagues.\nFor all humans, if they are willing to take on tasks or can problem-solve under pressure (or both), then they are valued by the team.",
+      "question": "Does the context entail the conclusion 'Noa is not willing to take on tasks.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Noa either handles multiple tasks or problem-solves under pressure (but not both), then she earns recognition.\n\nAdded rules:\n- For all x, if x is willing to take on tasks, then x is valued by the team.\n\nAdded facts:\n- Noa has a good work ethic.",
+      "question": "Does the context entail the conclusion 'Noa is not willing to take on tasks.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Noa has a good work ethic (given). From the original context, she is not punctual. Since she has a good work ethic or is punctual (but not necessarily both), and she is not punctual, having a good work ethic satisfies that disjunction. Noa does not get promoted. Promotion requires both good work ethic and respect by colleagues. Since Noa has a good work ethic, the reason she does not get promoted must be that she is not respected by her colleagues. Being respected by colleagues follows from being valued by the team. Being valued by the team now follows from being willing to take on tasks (new rule: if willing to take on tasks, then valued by team). However, we do not know whether the converse holds; that is, being valued does not necessarily imply willingness to take on tasks. But since Noa is *not* respected, she is *not* valued by the team (from: if valued \u2192 respected; contrapositive: not respected \u2192 not valued). And from the new rule: if willing to take on tasks \u2192 valued. Therefore, if Noa were willing to take on tasks, she would be valued. But she is not valued, so by contrapositive, she is not willing to take on tasks. Thus, the context entails that Noa is not willing to take on tasks.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 256
+    },
+    {
+      "step": 2,
+      "context": "Added rules:\n- For all x, if x is not valued by the team, then x is not willing to take on tasks.\n- For all x, if x is not respected by her colleagues, then x is not valued by the team.\n- If Noa is willing to take on tasks, then she gets promoted.\n\nAdded facts:\n- Either Noa is punctual or Noa has a good work ethic, but it is not the case that Noa is both punctual and has a good work ethic.",
+      "question": "Does the context entail the conclusion 'Noa is not willing to take on tasks.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We are given that either Noa is punctual or she has a good work ethic, but not both. From previous context, Noa is not punctual; therefore, she must have a good work ethic. From the new rule: If Noa is willing to take on tasks, then she gets promoted. But we know from the original context that Noa does not get promoted. Therefore, by modus tollens, Noa is not willing to take on tasks. Additionally, the chain of implications supports this: if not respected \u2192 not valued (new rule), and if not valued \u2192 not willing (new rule). But even without tracing respect or valuation, the direct implication 'willing \u2192 promoted' and the fact that she is not promoted is sufficient to conclude she is not willing. Thus, the context entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 646
+    },
+    {
+      "step": 3,
+      "context": "Added rules:\n- For all x, if x is not valued by the team, then x is not willing to take on tasks and x does not problem-solve under pressure.",
+      "question": "Does the context entail the conclusion 'Noa is not willing to take on tasks.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We know Noa does not get promoted. Promotion requires both good work ethic and respect by colleagues. We are told Noa has a good work ethic (from the disjunction: either punctual or has good work ethic, but not both; and since she is not punctual, she must have a good work ethic). Therefore, since she does not get promoted, she must not be respected by her colleagues. From the rule: if not respected \u2192 not valued (added earlier), so Noa is not valued. Now, the new rule states: if not valued \u2192 not willing to take on tasks AND does not problem-solve under pressure. Therefore, since Noa is not valued, it follows that she is not willing to take on tasks. Hence, the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 971
+    },
+    {
+      "step": 4,
+      "context": "Added facts:\n- Noa does not problem-solve under pressure.",
+      "question": "Does the context entail the conclusion 'Noa is not willing to take on tasks.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "We know Noa does not problem-solve under pressure (new fact). From earlier rules, we have: if not valued \u2192 not willing to take on tasks and does not problem-solve under pressure. However, knowing that Noa does not problem-solve under pressure is consistent with her being valued or not valued \u2014 the implication only goes one way. We cannot infer from lack of problem-solving under pressure that she is not valued. Also, the rule 'if willing to take on tasks \u2192 gets promoted' and the fact that Noa does not get promoted implies she is not willing (via modus tollens), but this depends on that rule still being active. However, upon review, that rule ('If Noa is willing to take on tasks, then she gets promoted') was added in a prior update but is not contradicted or removed. So it remains. Since Noa is not promoted and that rule holds, she cannot be willing. Therefore, even with the new fact, the conclusion still follows via that rule. Thus, the context entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1218
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- If Noa has a good work ethic and is respected by her colleagues, then she gets promoted.\n- If Noa is willing to take on tasks, then she gets promoted.\n\nAdded facts:\n- Noa is willing to take on tasks and Noa does not get promoted.",
+      "question": "Does the context entail the conclusion 'Noa is not willing to take on tasks.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added fact explicitly states: 'Noa is willing to take on tasks and Noa does not get promoted'. This directly contradicts the conclusion 'Noa is not willing to take on tasks'. Since the context now asserts that Noa *is* willing to take on tasks, the conclusion does not follow. Therefore, the context does not entail the conclusion; in fact, it negates it.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1499
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Noa is willing to take on tasks and Noa does not get promoted.\n\nAdded facts:\n- It is not the case that Noa is willing to take on tasks and Noa does not get promoted.",
+      "question": "Does the context entail the conclusion 'Noa is not willing to take on tasks.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added fact states: 'It is not the case that Noa is willing to take on tasks and Noa does not get promoted'. This is equivalent to the negation of a conjunction: \u00ac(A \u2227 B), which is logically equivalent to (\u00acA \u2228 \u00acB). So, either Noa is not willing to take on tasks, or she does get promoted (or both). We know from earlier context that Noa does not get promoted. Therefore, since \u00ac(willing \u2227 \u00acpromoted) and \u00acpromoted is true, the disjunction \u00acwilling \u2228 promoted can only hold if \u00acwilling is true. Because if she is not promoted (\u00acpromoted), then to satisfy \u00ac(willing \u2227 \u00acpromoted), she must not be willing. So: given that she is not promoted, the only way for the added fact to hold is if she is not willing. Thus, the context entails that Noa is not willing to take on tasks.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1692
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- It is not the case that Noa is willing to take on tasks and Noa does not get promoted.\n\nAdded rules:\n- For all x, if x has a good work ethic, then x is willing to take on tasks.",
+      "question": "Does the context entail the conclusion 'Noa is not willing to take on tasks.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "We know from the context that Noa has a good work ethic (from the disjunction: either punctual or has good work ethic, not both; and she is not punctual, so she must have a good work ethic). The newly added rule states: For all x, if x has a good work ethic, then x is willing to take on tasks. Applying this rule to Noa: since she has a good work ethic, she must be willing to take on tasks. Therefore, the conclusion 'Noa is not willing to take on tasks' is false. The context does not entail it; in fact, it contradicts it.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1991
+    }
+  ]
+}

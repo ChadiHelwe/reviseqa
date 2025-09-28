@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 199,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.14285714285714285
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Chosen is not a graceful unicorn.\nChosen does not possess magic.\nChosen does not inspire wonder.\nChosen does not roam free-spirited.\nIf Chosen is a graceful unicorn, then she has delicate features.\nIf Chosen has delicate features or radiates soft light, then she possesses magic.\nIf Chosen either radiates soft light or has a majestic appearance (but not both), then she inspires wonder.\nChosen either roams free-spirited or has a shining horn, but not both.\nChosen either possesses healing powers or has a majestic appearance, but not both.\nIf Chosen has a shining horn and possesses healing powers, then she brings joy and peace.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Added facts:\n- Chosen has a shining horn.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added fact states Chosen has a shining horn. From statement 8, since she has a shining horn, she does not roam free-spirited (consistent with the context). From statement 9, Chosen either has healing powers or a majestic appearance (but not both). From statement 7 and 3, Chosen does not inspire wonder, so the XOR condition for radiating soft light or majestic appearance being false implies she has neither radiating soft light nor majestic appearance (as she cannot radiate soft light due to statement 6 and 2). Thus, from statement 9, she must have healing powers (since she lacks a majestic appearance). With both shining horn (added fact) and healing powers, statement 10 triggers, meaning Chosen brings joy and peace. Therefore, the conclusion 'Chosen does not bring joy and peace' is false.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 247
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Chosen either radiates soft light or has a majestic appearance (but not both), then she inspires wonder.\n\nAdded rules:\n- If Chosen has a shining horn and Chosen does not possess healing powers, then Chosen does not bring joy and peace.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The added rule states: If Chosen has a shining horn and does not possess healing powers, then she does not bring joy and peace. The original rule states: If Chosen has a shining horn and possesses healing powers, then she brings joy and peace. Since Chosen has a shining horn (derived from context rules), joy/peace depends on healing powers. Rule A states Chosen has healing powers XOR a majestic appearance. With no information about majestic appearance (the removed rule about inspiring wonder is irrelevant), healing powers could be true or false. If healing is true, she brings joy; if false, she does not. Both scenarios are consistent with the context. Thus, the conclusion 'does not bring joy' is not entailed (it could be false in one valid case), making the entailment uncertain.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 486
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Chosen has delicate features or radiates soft light, then she possesses magic.\n\nAdded facts:\n- Chosen does not have delicate features.\n- Either Chosen has delicate features or Chosen radiates soft light.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "Chosen has a shining horn (derived from not roaming free-spirited and the XOR rule). She radiates soft light (from added facts: no delicate features, so OR implies soft light). From the rule about inspiring wonder (not true), she must have majestic appearance (to avoid XOR condition). Thus, she does not have healing powers (XOR rule with majestic appearance). The rule for joy requires shining horn AND healing powers; since she lacks healing powers, the condition is false. Assuming a closed-world assumption where this is the only rule governing joy, the absence of sufficient conditions means she does not bring joy. Therefore, 'does not bring joy and peace' is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 760
+    },
+    {
+      "step": 4,
+      "context": "Removed facts:\n- Chosen does not have delicate features.\n\nAdded facts:\n- Chosen does not radiate soft light.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Chosen has a shining horn (from not roaming free-spirited and XOR rule). To bring joy and peace, she needs healing powers. The XOR rule states she either has healing powers or a majestic appearance. Without the removed rule linking majestic appearance to inspiring wonder, there is no way to determine which she has. She could have healing powers (bringing joy) or majestic appearance (not bringing joy). Since both scenarios are possible, the context does not entail that she 'does not bring joy and peace.' Therefore, the conclusion is not entailed, making the answer False.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1017
+    },
+    {
+      "step": 5,
+      "context": "Removed facts:\n- Chosen does not radiate soft light.\n\nAdded facts:\n- Chosen radiates soft light.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "Chosen has a shining horn (from not roaming free-spirited and XOR rule). She radiates soft light (added fact). Original context states she does not inspire wonder, so the rule 'if radiates soft light XOR majestic appearance then inspires wonder' must have a false antecedent. Since she radiates soft light, she must have a majestic appearance (to make XOR false). From the XOR rule 'healing powers XOR majestic appearance', she lacks healing powers. The joy rule 'shining horn AND healing powers \u2192 joy' has a false antecedent, so joy does not follow. Under closed-world assumption (only rule governing joy), she does not bring joy. Thus, 'does not bring joy and peace' is entailed.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1228
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Chosen radiates soft light.\n\nAdded facts:\n- Chosen does not radiate soft light.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Chosen has a shining horn (from not roaming free-spirited and XOR rule). She does not radiate soft light (added fact). The rule 'radiates soft light XOR majestic appearance \u2192 inspires wonder' must have a false antecedent (since she does not inspire wonder). As she does not radiate soft light, she must also not have majestic appearance (to make antecedent false). From the XOR rule 'healing powers XOR majestic appearance', lacking majestic appearance means she possesses healing powers. Thus, shining horn + healing powers triggers 'brings joy and peace'. Therefore, the conclusion 'does not bring joy' is false.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1474
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Chosen does not radiate soft light.\n\nAdded facts:\n- Chosen radiates soft light.",
+      "question": "Does the context entail the conclusion 'Chosen does not bring joy and peace.'?",
+      "prediction": "True",
+      "correct_answer": "False",
+      "reasoning": "Chosen has a shining horn (derived from not roaming free-spirited and XOR rule). She radiates soft light (added fact). She does not inspire wonder (context), so the rule 'radiates soft light XOR majestic appearance \u2192 inspires wonder' has a false antecedent. Thus, radiates soft light and majestic appearance must both be true (to make XOR false). Therefore, she has majestic appearance. From 'healing powers XOR majestic appearance', she lacks healing powers. The joy rule requires shining horn AND healing powers; since she lacks healing powers, joy is not triggered. Under closed-world assumption, this means she does not bring joy and peace. Thus, 'does not bring joy' is entailed, making the answer True.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1699
+    }
+  ]
+}

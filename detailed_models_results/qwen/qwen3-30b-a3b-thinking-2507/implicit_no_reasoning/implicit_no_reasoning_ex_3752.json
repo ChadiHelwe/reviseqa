@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "implicit_no_reasoning",
+    "chain_index": 212,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.14285714285714285
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Kyro hides in vegetation.\nKyro climbs rocks.\nKyro does not feed on plankton.\nFor Kyro, either he hides in vegetation or burrows sand, but not both.\nIf Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.\nEvery mudskipper that explores the mudflats either walks on mud or feeds on plankton (or both).\nKyro either swims efficiently or walks on mud, but not both.\nKyro either breathes air or swims efficiently, but not both.\nAll mudskippers that can breathe air can survive out of water.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Kyro hides in vegetation.\nKyro climbs rocks.\nKyro does not feed on plankton.\nFor Kyro, either he hides in vegetation or burrows sand, but not both.\nIf Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.\nFor all x, if x explores the mudflats, then x does not walk on mud.\nKyro either swims efficiently or walks on mud, but not both.\nKyro either breathes air or swims efficiently, but not both.\nFor all x, if x breathes air, then x can survive out of water.\nFor all x, if x does not breathe air, then x cannot survive out of water.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "From the context: Kyro hides in vegetation (true), so he does not burrow sand (from 'either hides in vegetation or burrows sand, but not both'). He climbs rocks (true), so with not burrowing sand, he explores mudflats (from 'if Kyro either climbs rocks or burrows sand, but not both, then he explores mudflats'). Since he explores mudflats, he does not walk on mud (from 'if x explores mudflats, then x does not walk on mud'). He does not walk on mud, so from 'Kyro either swims efficiently or walks on mud, but not both', he swims efficiently. He swims efficiently, so from 'Kyro either breathes air or swims efficiently, but not both', he does not breathe air. From 'if x does not breathe air, then x cannot survive out of water', since he does not breathe air, he cannot survive out of water. Thus, the context entails the conclusion.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 232
+    },
+    {
+      "step": 2,
+      "context": "Kyro climbs rocks.\nKyro burrows sand.\nKyro walks on mud.\nKyro does not feed on plankton.\nFor Kyro, either he hides in vegetation or burrows sand, but not both.\nIf Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.\nFor all x, if x explores the mudflats, then x does not walk on mud.\nKyro either swims efficiently or walks on mud, but not both.\nKyro either breathes air or swims efficiently, but not both.\nFor all x, if x breathes air, then x can survive out of water.\nFor all x, if x does not breathe air, then x cannot survive out of water.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "B",
+      "correct_answer": "False",
+      "reasoning": "Kyro burrows sand (given) and climbs rocks (given), so from premise 5 (Hides_veg XOR Burrows_sand), Hides_veg = False. Premise 6's antecedent (Climbs_rocks XOR Burrows_sand) is false since both are true, so no conclusion about Explores_mudflats. Premise 3: Walks_mud = True. Premise 7: Explores_mudflats \u2192 \u00acWalks_mud. Since Walks_mud = True, Explores_mudflats must be False (modus tollens). Premise 8: Swims_efficiently XOR Walks_mud. Walks_mud = True, so Swims_efficiently = False. Premise 9: Breathes_air XOR Swims_efficiently. Swims_efficiently = False, so Breathes_air = True. Premise 10: Breathes_air \u2192 Survive_out. Thus, Survive_out = True. Conclusion 'Kyro cannot survive out of water' (\u00acSurvive_out) is False.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 632
+    },
+    {
+      "step": 3,
+      "context": "Kyro climbs rocks.\nKyro burrows sand.\nKyro walks on mud.\nKyro does not feed on plankton.\nFor Kyro, either he hides in vegetation or burrows sand, but not both.\nIf Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.\nFor all x, if x explores the mudflats, then x does not walk on mud.\nKyro either swims efficiently or walks on mud, but not both.\nKyro either breathes air or swims efficiently, but not both.\nFor all x, if x breathes air, then x can survive out of water.\nFor all x, if x does not breathe air, then x cannot survive out of water.\nFor all x, x breathes air if and only if x can survive out of water.\nFor all x, if x walks on mud, then x does not explore the mudflats.\nKyro does not swim efficiently.\nKyro breathes air.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "B",
+      "correct_answer": "False",
+      "reasoning": "Kyro breathes air (given in premise 15). Premise 12 states that breathing air is equivalent to surviving out of water (Breathes_air \u2194 Survive_out). Since Kyro breathes air, Survive_out must be true. Therefore, the conclusion 'Kyro cannot survive out of water' (\u00acSurvive_out) is directly contradicted by the premises. All other premises are consistent with this conclusion (e.g., premise 14 confirms he does not swim efficiently, and premise 15 confirms he breathes air), so there are no contradictions. The context entails that Kyro *can* survive out of water, making the conclusion false.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1068
+    },
+    {
+      "step": 4,
+      "context": "Kyro climbs rocks.\nKyro burrows sand.\nKyro does not walk on mud.\nKyro does not feed on plankton.\nFor Kyro, either he hides in vegetation or burrows sand, but not both.\nIf Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.\nFor all x, if x explores the mudflats, then x does not walk on mud.\nKyro either swims efficiently or walks on mud, but not both.\nKyro either breathes air or swims efficiently, but not both.\nFor all x, if x breathes air, then x can survive out of water.\nFor all x, if x does not breathe air, then x cannot survive out of water.\nFor all x, x breathes air if and only if x can survive out of water.\nFor all x, if x walks on mud, then x does not explore the mudflats.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "A",
+      "correct_answer": "True",
+      "reasoning": "Kyro does not walk on mud (given). From premise 8 (Swims_efficiently XOR Walks_mud), Swims_efficiently must be true. Premise 9 (Breathes_air XOR Swims_efficiently) then requires Breathes_air to be false. Premise 12 (Breathes_air \u2194 Survive_out) implies Survive_out is false. Thus, 'Kyro cannot survive out of water' (\u00acSurvive_out) is true. The context entails the conclusion, so the answer is True.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1476
+    },
+    {
+      "step": 5,
+      "context": "Kyro climbs rocks.\nKyro burrows sand.\nKyro does not walk on mud.\nKyro does not feed on plankton.\nFor Kyro, either he hides in vegetation or burrows sand, but not both.\nIf Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.\nFor all x, if x explores the mudflats, then x does not walk on mud.\nKyro either swims efficiently or walks on mud, but not both.\nKyro either breathes air or swims efficiently, but not both.\nFor all x, if x breathes air, then x can survive out of water.\nFor all x, if x does not breathe air, then x cannot survive out of water.\nFor all x, x breathes air if and only if x can survive out of water.\nFor all x, if x walks on mud, then x does not explore the mudflats.\nFor all x, if x can survive out of water, then x breathes air.\nFor all x, it is not the case that x walks on mud and x explores the mudflats.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "A",
+      "correct_answer": "True",
+      "reasoning": "Kyro does not walk on mud (given). From premise 8 (Swims_efficiently XOR Walks_mud), Swims_efficiently must be true. Premise 9 (Breathes_air XOR Swims_efficiently) requires Breathes_air to be false (since Swims_efficiently is true). Premise 11 (\u00acBreathes_air \u2192 \u00acSurvive_out) directly leads to \u00acSurvive_out when Breathes_air is false. Premise 12 (Breathes_air \u2194 Survive_out) further confirms that Breathes_air false implies Survive_out false. Thus, the context entails 'Kyro cannot survive out of water.'",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 1851
+    },
+    {
+      "step": 6,
+      "context": "Kyro climbs rocks.\nKyro burrows sand.\nKyro does not walk on mud.\nKyro does not feed on plankton.\nFor Kyro, either he hides in vegetation or burrows sand, but not both.\nIf Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.\nFor all x, if x explores the mudflats, then x does not walk on mud.\nKyro either breathes air or swims efficiently, but not both.\nFor all x, if x breathes air, then x can survive out of water.\nFor all x, if x does not breathe air, then x cannot survive out of water.\nFor all x, x breathes air if and only if x can survive out of water.\nFor all x, if x walks on mud, then x does not explore the mudflats.\nFor all x, if x can survive out of water, then x breathes air.\nFor all x, it is not the case that x walks on mud and x explores the mudflats.\nKyro does not swim efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "B",
+      "correct_answer": "False",
+      "reasoning": "Kyro does not swim efficiently (given). Premise 4 states that Kyro either breathes air or swims efficiently, but not both. Since swimming efficiently is false, Kyro must breathe air (Breathes_air = True). Premise 5 states that if Kyro breathes air, he can survive out of water. Therefore, Survive_out = True. The conclusion 'Kyro cannot survive out of water' (\u00acSurvive_out) is false, as the premises directly entail that Kyro *can* survive. Thus, the context does not entail the conclusion, making the answer B (False).",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2293
+    },
+    {
+      "step": 7,
+      "context": "Kyro climbs rocks.\nKyro burrows sand.\nKyro does not walk on mud.\nKyro does not feed on plankton.\nFor Kyro, either he hides in vegetation or burrows sand, but not both.\nIf Kyro either climbs rocks or burrows sand (but not both), then he explores the mudflats.\nFor all x, if x explores the mudflats, then x does not walk on mud.\nKyro either breathes air or swims efficiently, but not both.\nFor all x, if x breathes air, then x can survive out of water.\nFor all x, if x does not breathe air, then x cannot survive out of water.\nFor all x, x breathes air if and only if x can survive out of water.\nFor all x, if x walks on mud, then x does not explore the mudflats.\nFor all x, if x can survive out of water, then x breathes air.\nFor all x, it is not the case that x walks on mud and x explores the mudflats.\nKyro swims efficiently.",
+      "question": "Does the context entail the conclusion 'Kyro cannot survive out of water.'?",
+      "prediction": "A",
+      "correct_answer": "True",
+      "reasoning": "Kyro swims efficiently (given). From premise 8 (BreathesAir XOR SwimsEfficient), SwimsEfficient = True implies BreathesAir = False. Premise 10 states \u00acBreathesAir \u2192 \u00acSurviveOut, so \u00acSurviveOut is true. Premise 11 (BreathesAir \u2194 SurviveOut) confirms SurviveOut = False. Thus, 'Kyro cannot survive out of water' is true.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 2715
+    }
+  ]
+}

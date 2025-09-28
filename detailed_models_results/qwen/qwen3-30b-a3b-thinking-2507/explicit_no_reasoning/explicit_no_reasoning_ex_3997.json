@@ -1,0 +1,136 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_reasoning",
+    "chain_index": 258,
+    "include_reasoning": false,
+    "include_correction": true,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Theodora collaborates globally.\nTheodora improves outcomes.\nTheodora does not receive awards.\nTheodora does not fund research.\nTheodora does not advance medicine.\nIf Theodora collaborates globally, then she publishes papers and improves outcomes.\nIf Theodora has authority and publishes papers, then she receives awards.\nAnyone who has professional training has authority in their field.\nIf Theodora either funds research or makes breakthroughs (but not both), then she advances medicine.\nTheodora has compassion or makes breakthroughs.\nTheodora either possesses expertise or has compassion, but not both.\nIf Theodora has either personal experience or professional training (but not both), then she possesses expertise.",
+      "question": "Does the context entail the conclusion 'Theodora does not have personal experience.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Theodora has either personal experience or professional training (but not both), then she possesses expertise.\n\nAdded rules:\n- If Theodora has personal experience, then she possesses expertise.\n\nAdded facts:\n- Theodora publishes papers.",
+      "question": "Does the context entail the conclusion 'Theodora does not have personal experience.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context entails that Theodora does not have personal experience. Key steps: 1. Theodora publishes papers (given). 2. She does not receive awards (given), so she lacks authority (from 'If authority and publishes, then awards'). 3. Professional training implies authority, so she lacks professional training. 4. She does not advance medicine (given), so she cannot fund research or make breakthroughs exclusively (from 'If funds XOR breakthroughs, then advances medicine'). Since she does not fund research, she must not make breakthroughs. 5. Thus, she has compassion (from 'compassion or breakthroughs' and no breakthroughs). 6. She possesses expertise XOR compassion (given), so with compassion, she lacks expertise. 7. The added rule 'If personal experience, then expertise' implies personal experience would require expertise, which is false. By modus tollens, she lacks personal experience. Therefore, the conclusion 'Theodora does not have personal experience' is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 252
+    },
+    {
+      "step": 2,
+      "context": "Removed rules:\n- If Theodora collaborates globally, then she publishes papers and improves outcomes.\n\nAdded rules:\n- If Theodora collaborates globally, then she publishes papers.\n- If Theodora collaborates globally, then she improves outcomes.\n\nAdded facts:\n- Theodora does not have authority.\n- Theodora does not make breakthroughs.",
+      "question": "Does the context entail the conclusion 'Theodora does not have personal experience.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "Theodora does not have authority (given), so she lacks professional training (via modus tollens on 'professional training \u2192 authority'). She does not make breakthroughs (given), so she must have compassion (from 'compassion OR breakthroughs'). Rule 5 ('expertise XOR compassion') implies she lacks expertise since compassion is true. Rule 6 ('(personal experience XOR professional training) \u2192 expertise') requires expertise to be true if personal experience XOR professional training holds. Since expertise is false, (personal experience XOR professional training) must be false. With professional training false, personal experience must also be false (to make XOR false). Thus, she does not have personal experience.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 566
+    },
+    {
+      "step": 3,
+      "context": "Removed rules:\n- If Theodora has authority and publishes papers, then she receives awards.\n- If Theodora either funds research or makes breakthroughs (but not both), then she advances medicine.\n\nAdded rules:\n- Either Theodora does not have authority, or she does not publish papers, or she receives awards.\n\nAdded facts:\n- Theodora does not have professional training.\n- If Theodora publishes papers, then she publishes papers.",
+      "question": "Does the context entail the conclusion 'Theodora does not have personal experience.'?",
+      "prediction": "C",
+      "correct_answer": "True",
+      "reasoning": "The context includes the added rule 'Either Theodora does not have authority, or she does not publish papers, or she receives awards', and the fact that she does not have professional training. Assuming the rule 'If Theodora has either personal experience or professional training (but not both), then she possesses expertise' remains active (as it is not among the removed rules), the absence of professional training implies personal experience would require expertise. However, there is no rule or fact that connects expertise to any other given information (e.g., authority, publications, awards). The added rule does not provide additional constraints to negate personal experience. Since the context allows for a scenario where Theodora has personal experience (leading to expertise, which is not contradicted), the conclusion 'Theodora does not have personal experience' is not entailed. It remains possible she has personal experience, so the entailment cannot be confirmed.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 829
+    },
+    {
+      "step": 4,
+      "context": "Removed rules:\n- Theodora either has compassion or possesses expertise, but not both.\n\nAdded rules:\n- Theodora has compassion or possesses expertise.\n- Either Theodora does not have compassion, or she does not possess expertise.\n\nAdded facts:\n- Either Theodora publishes papers or she does not publish papers.",
+      "question": "Does the context entail the conclusion 'Theodora does not have personal experience.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The added rules 'Theodora has compassion or possesses expertise' and 'Either Theodora does not have compassion, or she does not possess expertise' together enforce that compassion and expertise are mutually exclusive (XOR). The rule 'If Theodora has either personal experience or professional training (but not both), then she possesses expertise' is still active. Assuming Theodora does not have professional training (a standard context from prior problems where it's stated as a fact, even if not explicitly listed here), she must lack professional training. With professional training false, the rule simplifies to 'If personal experience, then expertise' (since personal experience XOR professional training reduces to personal experience). If expertise were false (forcing compassion true via the XOR), then personal experience must be false (modus tollens on 'personal experience \u2192 expertise'). Since expertise must be false in the case of compassion being true (the only other possibility), personal experience is necessarily false. Hence, the conclusion is entailed.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1158
+    },
+    {
+      "step": 5,
+      "context": "Added rules:\n- If Theodora does not possess expertise, then she does not have personal experience.\n\nAdded facts:\n- Either Theodora has compassion or she does not have compassion.",
+      "question": "Does the context entail the conclusion 'Theodora does not have personal experience.'?",
+      "prediction": "C",
+      "correct_answer": "True",
+      "reasoning": "The added rule states: If Theodora does not possess expertise, then she does not have personal experience. This is equivalent to 'Personal experience \u2192 Expertise'. To entail 'Theodora does not have personal experience,' we must establish that expertise is false (since if expertise is true, personal experience could still be true or false). However, the context provides no information about expertise (e.g., no facts or rules connect expertise to other attributes like compassion or professional training). The added fact about compassion is a tautology (always true) and adds no constraints. Since expertise's truth value is unknown, both possibilities (expertise true or false) are consistent with the context. Thus, personal experience could be true (if expertise is true) or false (if expertise is false), making the conclusion uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1494
+    },
+    {
+      "step": 6,
+      "context": "Removed facts:\n- Theodora does not make breakthroughs.\n\nRemoved rules:\n- If Theodora has personal experience, then she possesses expertise.\n\nAdded rules:\n- If Theodora makes breakthroughs, then she does not have compassion.\n- If Theodora possesses expertise, then she has personal experience.\n\nAdded facts:\n- Theodora makes breakthroughs.",
+      "question": "Does the context entail the conclusion 'Theodora does not have personal experience.'?",
+      "prediction": "B",
+      "correct_answer": "False",
+      "reasoning": "Theodora makes breakthroughs (added fact). From added rule 1 (makes breakthroughs \u2192 \u00accompassion), she has no compassion. The context includes the unremoved rule 'Theodora either possesses expertise or has compassion, but not both' (XOR). With compassion false, expertise must be true (XOR). Added rule 2 states 'expertise \u2192 personal experience'. Since expertise is true, personal experience must be true. Thus, 'Theodora does not have personal experience' is false. The answer is B) False.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "removed_rules",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1766
+    },
+    {
+      "step": 7,
+      "context": "Added rules:\n- If Theodora does not have compassion, then she possesses expertise.\n- If Theodora has compassion, then she does not possess expertise.",
+      "question": "Does the context entail the conclusion 'Theodora does not have personal experience.'?",
+      "prediction": "C",
+      "correct_answer": "False",
+      "reasoning": "The context provides two rules that enforce a mutual exclusion between compassion and expertise (\u00accompassion \u2192 expertise and compassion \u2192 \u00acexpertise), but no rules connect these to personal experience. The conclusion about personal experience is entirely unsupported by the given information. Since there is no rule or fact linking compassion, expertise, or other elements to personal experience, the truth value of 'Theodora does not have personal experience' cannot be determined from the context. Thus, the entailment is impossible to confirm, making the answer 'Uncertain.'",
+      "correct": false,
+      "tags": [
+        "added_rules"
+      ],
+      "is_demonstration": false,
+      "token_count": 2022
+    }
+  ]
+}

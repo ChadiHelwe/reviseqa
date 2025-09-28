@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "model_name": "qwen/qwen3-30b-a3b-thinking-2507",
+    "task_path": "explicit_no_correction",
+    "chain_index": 133,
+    "include_reasoning": true,
+    "include_correction": false,
+    "total_steps": 8,
+    "final_accuracy": 0.42857142857142855
+  },
+  "predictions": [
+    {
+      "step": 0,
+      "context": "Dominic makes a new discovery.\nDominic earns respect.\nDominic does not gain recognition.\nDominic possesses deep knowledge.\nDominic publishes academic papers.\nDominic does not focus on cultural anthropology.\nIf Dominic makes a new discovery, then he either receives accolades or earns respect, but not both.\nIf Dominic advances knowledge, then he either receives accolades or gains recognition, but not both.\nDominic is either a renowned expert or possesses deep knowledge, but not both.\nIf a scholar analyzes historical texts and publishes academic papers, then they advance knowledge.\nDominic either focuses on cultural anthropology or specializes in linguistics, but not both.\nIf Dominic specializes in linguistics, then he either analyzes historical texts or studies lost languages (or both).\nIf Dominic studies lost languages, then he can decipher ancient scripts.\nIf Dominic either deciphers ancient scripts or translates rare texts (but not both), then he is a renowned expert.",
+      "question": "Does the context entail the conclusion 'Dominic translates rare texts.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Dominic makes a new discovery. Dominic earns respect.. If Dominic makes a new discovery, then he either receives accolades or earns respect, but not both.. Therefore, Dominic does not receive accolades.. Dominic does not receive accolades. Dominic does not gain recognition.. If Dominic advances knowledge, then he either receives accolades or gains recognition, but not both.. Therefore, Dominic does not advance knowledge.. Dominic possesses deep knowledge.. Dominic is either a renowned expert or possesses deep knowledge, but not both.. Therefore, Dominic is not a renowned expert.. Dominic publishes academic papers. Dominic does not advance knowledge.. If a scholar analyzes historical texts and publishes academic papers, then they advance knowledge.. Therefore, Dominic does not analyze historical texts.. Dominic does not focus on cultural anthropology.. Dominic either focuses on cultural anthropology or specializes in linguistics, but not both.. Therefore, Dominic specializes in linguistics.. Dominic specializes in linguistics. Dominic does not analyze historical texts.. If Dominic specializes in linguistics, then he either analyzes historical texts or studies lost languages (or both).. Therefore, Dominic studies lost languages.. Dominic studies lost languages.. If Dominic studies lost languages, then he can decipher ancient scripts.. Therefore, Dominic deciphers ancient scripts.. Dominic deciphers ancient scripts. Dominic is not a renowned expert.. If Dominic either deciphers ancient scripts or translates rare texts (but not both), then he is a renowned expert.. Therefore, Dominic translates rare texts..",
+      "correct": true,
+      "tags": [
+        "original"
+      ],
+      "is_demonstration": true
+    },
+    {
+      "step": 1,
+      "context": "Removed rules:\n- If Dominic makes a new discovery, then he either receives accolades or earns respect, but not both.\n\nAdded facts:\n- Dominic receives accolades.\n- Dominic analyzes historical texts.\n- Dominic does not decipher ancient scripts.",
+      "question": "Does the context entail the conclusion 'Dominic translates rare texts.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "Dominic does not focus on cultural anthropology (context), so by Rule 4 (focus on cultural anthropology xor linguistics), he specializes in linguistics. He analyzes historical texts (added fact) and publishes academic papers (context), so by Rule 3, he advances knowledge. By Rule 1, advancing knowledge implies he receives accolades (which he does) and not recognition. Dominic possesses deep knowledge (context), so by Rule 2, he is not a renowned expert. Rule 7 states (deciphers XOR translates) \u2192 renowned expert. Since he is not a renowned expert and does not decipher (added fact), the XOR must be false. With deciphers = false, translates must also be false for XOR to be false. Thus, Dominic does not translate rare texts.",
+      "correct": true,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 577
+    },
+    {
+      "step": 2,
+      "context": "Removed facts:\n- Dominic possesses deep knowledge.\n\nAdded rules:\n- For all x, if x is a renowned expert, then x either deciphers ancient scripts or translates rare texts, but not both.\n\nAdded facts:\n- Dominic does not possess deep knowledge.",
+      "question": "Does the context entail the conclusion 'Dominic translates rare texts.'?",
+      "prediction": "False",
+      "correct_answer": "True",
+      "reasoning": "Dominic does not possess deep knowledge (added fact). By Rule 3 (renowned expert XOR deep knowledge), Dominic is a renowned expert. The added rule states a renowned expert must decipher ancient scripts or translate rare texts, but not both. From facts: Dominic makes a new discovery \u2192 earns respect (not accolades); Dominic publishes papers but does not advance knowledge (from Rule 2 and lack of accolades/recognition); thus, Dominic does not analyze historical texts (Rule 4 contrapositive). Dominic does not focus on cultural anthropology \u2192 specializes in linguistics (Rule 5). Specializing in linguistics \u2192 studies lost languages (Rule 6, as no historical texts analysis). Studying lost languages \u2192 deciphers ancient scripts (Rule 7). Since Dominic deciphers ancient scripts (from Rule 7), and renowned expert must do exactly one of decipher/translate (added rule), he does not translate rare texts.",
+      "correct": false,
+      "tags": [
+        "removed_facts",
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 832
+    },
+    {
+      "step": 3,
+      "context": "Added facts:\n- Dominic translates rare texts.",
+      "question": "Does the context entail the conclusion 'Dominic translates rare texts.'?",
+      "prediction": "True",
+      "correct_answer": "True",
+      "reasoning": "The context explicitly states 'Dominic translates rare texts.' as an added fact. Since the conclusion directly matches this fact, the context entails the conclusion without any need for additional reasoning.",
+      "correct": true,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1119
+    },
+    {
+      "step": 4,
+      "context": "Added facts:\n- Dominic advances knowledge.\n- Dominic specializes in linguistics.",
+      "question": "Does the context entail the conclusion 'Dominic translates rare texts.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Dominic advances knowledge and specializes in linguistics. From prior rules, specializing in linguistics requires analyzing historical texts or studying lost languages. Advancing knowledge (via Rule 3) implies he analyzed historical texts. This satisfies the specialization rule without requiring him to study lost languages, so he does not decipher ancient scripts. The rule linking renowned expertise to deciphering/translation requires him to be a renowned expert to necessitate translation. However, whether he is a renowned expert depends on whether he possesses deep knowledge (Rule 2: renowned xor deep knowledge). Since the context does not specify whether Dominic possesses deep knowledge, it is unknown if he is a renowned expert. If he possesses deep knowledge, he is not renowned, and translation is not required. If he does not possess deep knowledge, he is renowned and must translate. As the context lacks this key detail, the conclusion cannot be determined\u2014it is uncertain.",
+      "correct": false,
+      "tags": [
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1213
+    },
+    {
+      "step": 5,
+      "context": "Removed rules:\n- Dominic is either a renowned expert or possesses deep knowledge, but not both.\n\nAdded facts:\n- Dominic is a renowned expert.\n- Dominic does not study lost languages.",
+      "question": "Does the context entail the conclusion 'Dominic translates rare texts.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "Dominic is a renowned expert (added fact) and does not study lost languages. Rule 8 states that (decipher XOR translate) \u2192 renowned expert, but this is a one-way implication. Being a renowned expert does not necessarily require him to decipher or translate (i.e., the converse is not enforced). Without additional rules linking other facts to deciphering or translating, we cannot determine whether he deciphers ancient scripts or translates rare texts. Both possibilities (he deciphers and does not translate, or he does not decipher and translates) are consistent with the given premises. Thus, the conclusion 'Dominic translates rare texts' is not entailed; it could be true or false.",
+      "correct": false,
+      "tags": [
+        "removed_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1459
+    },
+    {
+      "step": 6,
+      "context": "Added rules:\n- Dominic is a renowned expert if and only if he either deciphers ancient scripts or translates rare texts, but not both.\n\nAdded facts:\n- Dominic either deciphers ancient scripts or translates rare texts, but not both.",
+      "question": "Does the context entail the conclusion 'Dominic translates rare texts.'?",
+      "prediction": "Uncertain",
+      "correct_answer": "True",
+      "reasoning": "The added rule establishes a biconditional: Dominic is a renowned expert if and only if he deciphers ancient scripts or translates rare texts (but not both). The added fact states he does exactly one of those actions (decipher XOR translate). This satisfies the biconditional, confirming he is a renowned expert, but the fact does not specify *which* of the two actions he performs. He could decipher and not translate, or translate and not decipher. Since the context provides no additional information to determine which action he takes, it is impossible to conclude definitively that he translates rare texts. The conclusion is not entailed; it remains uncertain.",
+      "correct": false,
+      "tags": [
+        "added_rules",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1684
+    },
+    {
+      "step": 7,
+      "context": "Removed facts:\n- Dominic does not decipher ancient scripts.\n- Dominic translates rare texts.\n\nAdded facts:\n- Dominic deciphers ancient scripts.",
+      "question": "Does the context entail the conclusion 'Dominic translates rare texts.'?",
+      "prediction": "False",
+      "correct_answer": "False",
+      "reasoning": "The added fact states Dominic deciphers ancient scripts. A prior rule (implied to remain) states that Dominic either deciphers or translates rare texts, but not both. This 'but not both' condition means that if he deciphers, he cannot translate. Since the context explicitly states he deciphers, the conclusion that he translates rare texts is directly false under the given rule.",
+      "correct": true,
+      "tags": [
+        "removed_facts",
+        "added_facts"
+      ],
+      "is_demonstration": false,
+      "token_count": 1913
+    }
+  ]
+}
