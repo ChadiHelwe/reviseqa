@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 from src.metric import combine_scores, compute_lcata_k, consistency_decay_scores
+from src.latex_converter import create_latex_table, create_simplified_latex_table, create_task_specific_latex_table
 
 # Add src to Python path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
@@ -82,12 +83,29 @@ def compute_results():
         "implicit_no_reasoning_no_correction",
     ]
     results = compute_lcata_k("detailed_models_results/", [2, 4, 7])
-    print(results)
     combined_df = combine_scores(results, tasks)
     combined_df.to_csv("combined_model_results.csv", index=False)
 
     for task in tasks:
         consistency_decay_scores(task, combined_df)
+
+
+def generate_latex_table(args=None):
+    """Generate LaTeX table from LCATA scores."""
+    input_file = args.input if args and hasattr(args, 'input') else 'lcata_scores.csv'
+    output_file = args.output if args and hasattr(args, 'output') else None
+    simple_format = args.simple if args and hasattr(args, 'simple') else False
+    task_specific = args.task if args and hasattr(args, 'task') else None
+    gradient_colors = args.gradient_colors if args and hasattr(args, 'gradient_colors') else False
+
+    if task_specific:
+        create_task_specific_latex_table(input_file, task_specific, output_file, gradient_colors)
+    elif simple_format:
+        create_simplified_latex_table(input_file, output_file)
+    else:
+        create_latex_table(input_file, output_file)
+
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -106,6 +124,11 @@ Examples:
 
   # Run evaluation on a dataset
   python run.py evaluate --data-dir reviseqa_data/nl/verified --model-name anthropic/claude-3.7-sonnet
+
+  # Generate LaTeX table from LCATA scores
+  python run.py generate-latex
+  python run.py generate-latex --input lcata_scores.csv --output results_table.tex --simple
+  python run.py generate-latex --task explicit --output explicit_table.tex
 
         """,
     )
@@ -131,6 +154,26 @@ Examples:
 
     compute_results_parser = subparsers.add_parser(
         "compute_results", help="Compute and visualize evaluation results"
+    )
+
+    # Generate LaTeX table
+    latex_parser = subparsers.add_parser(
+        "generate-latex", help="Generate LaTeX table from LCATA scores"
+    )
+    latex_parser.add_argument(
+        "--input", default="lcata_scores.csv", help="Input CSV file with LCATA scores"
+    )
+    latex_parser.add_argument(
+        "--output", default=None, help="Output LaTeX file"
+    )
+    latex_parser.add_argument(
+        "--simple", action="store_true", help="Generate simplified table format"
+    )
+    latex_parser.add_argument(
+        "--task", help="Generate table for specific task (e.g., 'explicit', 'implicit', 'explicit_no_correction', 'implicit_no_correction')"
+    )
+    latex_parser.add_argument(
+        "--gradient-colors", action="store_true", help="Apply gradient coloring based on performance ranking"
     )
 
     # Generate NL dataset
@@ -199,6 +242,8 @@ Examples:
         verify_datasets(args)
     elif args.command == "compute_results":
         compute_results()
+    elif args.command == "generate-latex":
+        generate_latex_table(args)
 
 
 if __name__ == "__main__":

@@ -10,6 +10,7 @@ from enum import Enum
 from types import SimpleNamespace
 import random
 from typing import List, Dict, Any
+import re
 
 import instructor
 import tiktoken
@@ -25,6 +26,131 @@ from confidence import lor, lo
 
 
 load_dotenv()
+
+
+def extract_answer_from_prediction(prediction):
+    """
+    Extract the answer from a prediction string that may contain JSON with reasoning and answer.
+
+    Args:
+        prediction: String containing the prediction, possibly with JSON structure
+
+    Returns:
+        tuple: (extracted_answer, extracted_reasoning)
+    """
+    if not isinstance(prediction, str):
+        return str(prediction), ""
+
+    # First try to parse as direct JSON
+    try:
+        parsed = json.loads(prediction)
+        if isinstance(parsed, dict) and 'answer' in parsed:
+            answer = parsed.get('answer', '')
+            reasoning = parsed.get('reasoning', '')
+            return str(answer), str(reasoning)
+    except (json.JSONDecodeError, TypeError):
+        pass
+
+    # Try to find JSON block within the prediction using multiple patterns
+    json_patterns = [
+        # Look for complete JSON with reasoning and answer
+        r'\{[^{}]*"reasoning"[^{}]*"answer"[^{}]*\}',
+        # Look for JSON that might span multiple lines
+        r'\{.*?"reasoning".*?"answer".*?\}',
+        # Look for any JSON-like structure with answer field
+        r'\{[^{}]*"answer"[^{}]*\}',
+    ]
+
+    for pattern in json_patterns:
+        json_match = re.search(pattern, prediction, re.DOTALL)
+        if json_match:
+            json_str = json_match.group(0)
+            try:
+                parsed = json.loads(json_str)
+                if isinstance(parsed, dict) and 'answer' in parsed:
+                    answer = parsed.get('answer', '')
+                    reasoning = parsed.get('reasoning', '')
+                    return str(answer), str(reasoning)
+            except json.JSONDecodeError:
+                continue
+
+    # Try plain text format first: "Reasoning: ... Answer: ..."
+    extracted_answer = ""
+    extracted_reasoning = ""
+
+    # Extract reasoning from plain text format (case-insensitive)
+    reasoning_text_patterns = [
+        r'Reasoning:\s*(.*?)(?=Answer:|answer:|$)',
+        r'reasoning:\s*(.*?)(?=Answer:|answer:|$)',
+        r'REASONING:\s*(.*?)(?=ANSWER:|Answer:|answer:|$)',
+    ]
+
+    for pattern in reasoning_text_patterns:
+        match = re.search(pattern, prediction, re.DOTALL | re.IGNORECASE)
+        if match:
+            extracted_reasoning = match.group(1).strip()
+            break
+
+    # Extract answer from plain text format (case-insensitive)
+    answer_text_patterns = [
+        r'Answer:\s*(True|False|Uncertain|true|false|uncertain)',
+        r'answer:\s*(True|False|Uncertain|true|false|uncertain)',
+        r'ANSWER:\s*(True|False|Uncertain|true|false|uncertain)',
+        r'Answer:\s*([^\n\r]+)',
+        r'answer:\s*([^\n\r]+)',
+        r'ANSWER:\s*([^\n\r]+)',
+    ]
+
+    for pattern in answer_text_patterns:
+        match = re.search(pattern, prediction, re.IGNORECASE)
+        if match:
+            extracted_answer = match.group(1).strip()
+            break
+
+    # If no plain text format found, try JSON field patterns
+    if not extracted_answer:
+        json_answer_patterns = [
+            r'"answer":\s*(true|false|uncertain|True|False|Uncertain)',
+            r'"answer":\s*"([^"]*)"',
+            r'"answer":\s*([^,}\s]+)',
+        ]
+
+        for pattern in json_answer_patterns:
+            match = re.search(pattern, prediction, re.IGNORECASE)
+            if match:
+                extracted_answer = match.group(1)
+                break
+
+    if not extracted_reasoning:
+        json_reasoning_patterns = [
+            r'"reasoning":\s*"([^"]*)"',
+            r'"reasoning":\s*"([^"]*?)"(?=\s*,|\s*})',
+        ]
+
+        for pattern in json_reasoning_patterns:
+            match = re.search(pattern, prediction, re.DOTALL)
+            if match:
+                extracted_reasoning = match.group(1)
+                break
+
+    # Clean up extracted values
+    if extracted_answer.lower() in ['true', 'false', 'uncertain']:
+        extracted_answer = extracted_answer.capitalize()
+    elif extracted_answer.startswith('"') and extracted_answer.endswith('"'):
+        extracted_answer = extracted_answer[1:-1]
+
+    # Final fallback: look for standalone boolean words
+    if not extracted_answer:
+        standalone_match = re.search(r'\b(True|False|Uncertain|true|false|uncertain)\b', prediction, re.IGNORECASE)
+        if standalone_match:
+            extracted_answer = standalone_match.group(1).capitalize()
+
+    # If still no answer found, return the original prediction as answer
+    if not extracted_answer:
+        extracted_answer = prediction.strip()
+
+    return extracted_answer, extracted_reasoning
+
 
 # Following exact format from ProverQA
 PROMPT_TEMPLATE = """Context:
@@ -378,6 +504,15 @@ def _evaluate_batch(args):
                         if reasoning_match:
                             reasoning_output = reasoning_match.group(1)
 
+                correct_flag = int(entry.answer == predicted)
+
+        # Additional layer: try to extract answer from complex JSON predictions
+        if correct_flag == 0 and isinstance(response, str):
+            final_predicted, final_reasoning = extract_answer_from_prediction(response)
+            if final_predicted != predicted:  # Only update if we got a different result
+                predicted = final_predicted
+                if final_reasoning:  # Update reasoning if we extracted it
+                    reasoning_output = final_reasoning
                 correct_flag = int(entry.answer == predicted)
 
         batch_scores.append(correct_flag)
