@@ -1,10 +1,9 @@
 import json
 import os
-from pandas import pd 
+import pandas as pd 
 import matplotlib.pyplot as plt
 import seaborn as sns
-from anyio import Path
-# from src.confidence import lor
+from src.confidence import lor
 
 K_EASY = 2
 K_MEDIUM = 4
@@ -42,8 +41,9 @@ def lcata_score(scores, k):
 
     return lcata_k
 
-def __combine_scores(all_results, tasks):
+def combine_scores(all_results, tasks):
     data_frame_results = {
+        "task": [],
         "model": [],
         "k": [],
         "score": []
@@ -51,6 +51,7 @@ def __combine_scores(all_results, tasks):
 
     for task in tasks:
         for model, results in all_results.items():
+            print(results)
             for k, score in results[task].items():
                 data_frame_results["task"].append(task)
                 data_frame_results["model"].append(model)
@@ -70,7 +71,7 @@ def consistency_decay_scores(task, data_frame_results):
     plt.title(f"Consistency Decay for {task}")
     plt.savefig(f"consistency_decay_{task}.png")
     plt.clf()  # Clear the figure for the next plot
-    return task_data
+    # return task_data
 
 
 def compute_lcata_k(folder_path, k):
