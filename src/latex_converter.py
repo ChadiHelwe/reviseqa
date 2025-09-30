@@ -130,7 +130,7 @@ def determine_reasoning_type(task_name):
         return 'reasoning'
 
 
-def get_color_for_rank(rank, total_models, max_intensity=0.60):
+def get_color_for_rank(rank, total_models, max_intensity=0.90):
     """
     Get a color based on rank, with best performing models getting darker colors.
 
@@ -150,7 +150,7 @@ def get_color_for_rank(rank, total_models, max_intensity=0.60):
         opacity = max(0.05, max_intensity * (1 - (rank - 1) / (total_models - 1)))
 
     # Use a blue gradient for better visibility
-    return f"\\cellcolor{{blue!{int(opacity * 100)}}}"
+    return f"\\cellcolor{{green!{int(opacity * 100)}}}"
 
 
 def rank_scores_by_column(organized_data):
