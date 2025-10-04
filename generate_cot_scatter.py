@@ -23,7 +23,15 @@ min_val = min(min(cot_scores), min(standard_scores))
 # Add labels for each model
 for i, model in enumerate(models):
     # Clean up model names for readability
-    clean_name = model.replace('qwen-', '').replace('gemma-', '').replace('gpt-', '').replace('claude-', '')
+    clean_name = (model
+                 .replace('qwen-', 'Qwen ')
+                 .replace('qwen3-', 'Qwen 3 ')
+                 .replace('gemma-3-', 'Gemma 3 ')
+                 .replace('gpt-', 'GPT-')
+                 .replace('claude-', 'Claude ')
+                 .replace('gemini-2.5-', 'Gemini 2.5 ')
+                 .replace('grok-code-', 'Grok ')
+                 .replace('kimi-', 'Kimi '))
     ax.annotate(clean_name, (standard_scores[i], cot_scores[i]),
                 fontsize=12, alpha=0.9, fontweight='semibold',
                 xytext=(5, 5), textcoords='offset points')
