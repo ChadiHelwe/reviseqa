@@ -12,7 +12,7 @@ ReviseQA is a comprehensive framework for generating and evaluating logical reas
   - [Generating Datasets](#generating-datasets)
   - [Running Evaluations](#running-evaluations)
   - [Verifying Datasets](#verifying-datasets)
-- [Project Structure](#project-structure)
+- [Shell Scripts](#shell-scripts)
 - [Dataset Format](#dataset-format)
 - [Models Supported](#models-supported)
 - [Contributing](#contributing)
@@ -65,12 +65,12 @@ cp .env.example .env
 # Edit .env with your API keys for the models you want to use
 ```
 
-N.B: To generate the initial examples, please check the ProverGen repo [here](https://github.com/opendatalab/ProverGen), in addition if you find issues while compiling prover9 check the README file in the ProverGen repo [here](https://github.com/opendatalab/ProverGen/blob/main/README.md).
+N.B: To generate the initial examples, please check the ProverGen repo [here](https://github.com/opendatalab/ProverGen). In addition, if you find issues while compiling prover9, check the README file in the ProverGen repo [here](https://github.com/opendatalab/ProverGen/blob/main/README.md).
 
 
 ## Quick Start
 
-1. Save your OPENROUTER api key in a ```.env``` file
+1. Save your `OPENROUTER_API_KEY` in a ```.env``` file
 
 2. Generate a FOL dataset from ProverGen data:
 ```bash
@@ -144,29 +144,47 @@ Verify FOL dataset consistency:
 ```bash
 # Check FOL consistency
 python run.py verify --verify-type fol
-
-
-## Project Structure
-
 ```
-reviseqa/
-├── run.py                  # Main entry point
-├── src/
-│   ├── evaluation.py       # Model evaluation logic
-│   ├── generate_reviseqa.py    # FOL dataset generation
-│   ├── generate_reviseqa_nl.py # Natural language generation
-│   ├── prompt_engine.py    # Prompt templates and management
-│   ├── prover.py          # Theorem proving integration
-│   ├── data_structure.py  # Core data structures
-│   ├── utils.py           # Utility functions
-│   └──  verification_fol.py  # FOL verification
-├── scripts/
-│   └── evaluate_all.sh    # Batch evaluation script
-├── data/                  # Static data files
-├── reviseqa_data/        # Generated datasets
-├── provergen_data/       # Input data from ProverGen
-└── results/              # Evaluation results
+
+## Shell Scripts
+
+The repository includes several shell scripts for automating common workflows:
+
+### 1. Generate Edit Steps
+```bash
+./generate_edit_steps.sh
 ```
+Generates the different edit steps from the initial QA pairs from ProverGen, creating systematic modifications (adding/removing facts and rules).
+
+### 2. Verification Edit Steps
+```bash
+./verification_edit_steps.sh
+```
+Verifies the logical consistency of generated FOL datasets using Prover9 to ensure all modifications are logically valid.
+
+### 3. Translated Edit Steps
+```bash
+./translated_edit_steps.sh
+```
+Converts verified FOL datasets into natural language representations, creating human-readable reasoning problems.
+
+### 4. LLM as Judges
+```bash
+./llm_as_judges.sh
+```
+Runs evaluation using language models as judges to assess the quality of the translated dataset.
+
+### 5. Evaluate Models
+```bash
+./evaluate_models.sh
+```
+Executes comprehensive evaluation of a model across different settings and configurations.
+
+### 6. Compute Results
+```bash
+./compute_results.sh
+```
+Computes the results of the models across the different tasks.
 
 ## Dataset Format
 
@@ -189,14 +207,7 @@ ReviseQA supports evaluation with various language models:
 - **Mistral**: Mistral models (e.g., `mistral/ministral-8b`)
 - **Others**: Any model accessible via compatible APIs
 
-### Model Naming Convention
-Models are specified as `provider/model-name`, optionally with `:thinking` suffix for thinking-enabled variants.
-
 ## Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### Development Setup
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/improvement`)
