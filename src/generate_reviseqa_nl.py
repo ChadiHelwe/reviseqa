@@ -47,8 +47,7 @@ class ConsistencyError(Exception):
     pass
 
 
-# MODEL = "anthropic/claude-3.7-sonnet"
-MODEL = "google/gemini-2.0-flash-001"
+MODEL = "anthropic/claude-3.7-sonnet"
 
 FOL_TO_NL_PROMPT = """
 You are a Formal Logic, FOL-to-Natural-Language Translation Expert and JSON Schema Specialist.

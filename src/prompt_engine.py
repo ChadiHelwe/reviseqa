@@ -7,9 +7,9 @@ load_dotenv()
 
 
 # MODEL = "openai/o4-mini-high"
-MODEL = "deepseek/deepseek-chat-v3.1"
+MODEL = "deepseek/deepseek-prover-v2"
 # MODEL_OUTPUT_GENERATION = "anthropic/claude-3.7-sonnet"
-MODEL_OUTPUT_GENERATION = "deepseek/deepseek-chat-v3.1"
+MODEL_OUTPUT_GENERATION = "deepseek/deepseek-prover-v2"
 
 
 class Prover9InputStructure(BaseModel):
