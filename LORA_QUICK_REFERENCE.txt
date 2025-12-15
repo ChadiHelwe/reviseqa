@@ -1,0 +1,141 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                    LoRA FINETUNING - QUICK REFERENCE                          ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+📚 DOCUMENTATION
+├── README_LORA_COMPLETE.md    → Complete guide (START HERE)
+├── QUICKSTART_LORA.md         → Step-by-step quick start
+├── README_LORA.md             → Training details
+├── README_LORA_EVALUATION.md  → Evaluation details
+└── LORA_FILES_SUMMARY.md      → File reference
+
+🔧 INSTALLATION
+└── pip install -r requirements_lora.txt
+└── huggingface-cli login  (for gated models)
+
+🚀 TRAINING
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Basic Training                                                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ python lora_finetune.py \                                                   │
+│   --model_name Qwen/Qwen2-7B \                                              │
+│   --dataset_name folio \                                                    │
+│   --output_dir ./lora_qwen2_folio                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+📊 EVALUATION (Compatible with evaluation.py)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Single Evaluation                                                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ python lora_evaluation.py \                                                 │
+│   --base_model Qwen/Qwen2-7B \                                              │
+│   --lora_model ./lora_qwen2_folio/final_model \                             │
+│   --dataset_name FOLIO \                                                    │
+│   --split dev \                                                             │
+│   --mode CoT \                                                              │
+│   --trained_model                                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Batch Evaluation (All Datasets)                                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ python batch_evaluate_lora.py \                                             │
+│   --base_model Qwen/Qwen2-7B \                                              │
+│   --lora_model ./lora_qwen2_folio/final_model \                             │
+│   --datasets FOLIO ProofWriter ProntoQA \                                   │
+│   --modes CoT Direct                                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+🎮 INTERACTIVE TESTING
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ python lora_inference.py \                                                  │
+│   --base_model Qwen/Qwen2-7B \                                              │
+│   --lora_model ./lora_qwen2_folio/final_model \                             │
+│   --mode interactive                                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+🔄 MERGE WEIGHTS
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ python merge_lora_weights.py \                                              │
+│   --base_model Qwen/Qwen2-7B \                                              │
+│   --lora_model ./lora_qwen2_folio/final_model \                             │
+│   --output_path ./merged_qwen2_folio                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+💡 MODELS SUPPORTED
+├── Qwen/Qwen2-7B              (Recommended - no access needed)
+├── Qwen/Qwen2.5-7B
+├── meta-llama/Llama-2-7b-hf   (Requires HF access)
+├── meta-llama/Meta-Llama-3-8B (Requires HF access)
+├── google/gemma-7b            (Requires HF access)
+├── google/gemma-2-9b          (Requires HF access)
+└── mistralai/Mistral-7B-v0.1
+
+📁 DATASETS
+Training:
+├── folio           → Provergen/training_data/folio.json
+├── proofwriter     → Provergen/training_data/proofwriter-5000.json
+└── proofwriter     → Provergen/training_data/proofwriter-full.json
+
+Evaluation:
+├── FOLIO           → Provergen/logic_data/FOLIO/
+├── ProofWriter     → Provergen/logic_data/ProofWriter/
+├── ProntoQA        → Provergen/logic_data/ProntoQA/
+└── ProverGen       → Provergen/logic_data/ProverQA/
+
+⚙️  COMMON FLAGS
+Training:
+  --model_name MODEL           Model to finetune
+  --dataset_name DATASET       folio or proofwriter
+  --output_dir DIR             Where to save model
+  --num_epochs N               Training epochs (default: 3)
+  --batch_size N               Batch size (default: 4)
+  --learning_rate LR           Learning rate (default: 2e-4)
+  --lora_r RANK                LoRA rank (default: 16)
+  --use_4bit                   4-bit quantization (default)
+
+Evaluation:
+  --base_model MODEL           Base model name
+  --lora_model PATH            LoRA weights path
+  --dataset_name DATASET       FOLIO, ProofWriter, etc.
+  --split SPLIT                dev, test, train
+  --mode MODE                  CoT or Direct
+  --trained_model              Use simple prompt format
+  --temperature T              Sampling temp (0 = greedy)
+
+🎯 QUICK START WORKFLOW
+1. Train:     python lora_finetune.py --model_name Qwen/Qwen2-7B --dataset_name folio
+2. Evaluate:  python lora_evaluation.py --base_model Qwen/Qwen2-7B --lora_model ./lora_output/final_model --dataset_name FOLIO --mode CoT --trained_model
+3. Test:      python lora_inference.py --base_model Qwen/Qwen2-7B --lora_model ./lora_output/final_model --mode interactive
+
+💾 MEMORY REQUIREMENTS (4-bit quantization)
+├── 7B models:  6-8 GB VRAM
+├── 8B models:  7-9 GB VRAM
+└── 13B models: 10-12 GB VRAM
+
+If OOM: --batch_size 1 --gradient_accumulation_steps 16
+
+🔍 EXAMPLES
+├── finetune_examples.sh           → 12 training examples
+└── lora_evaluation_examples.sh    → 12 evaluation examples
+
+📈 OUTPUT FORMAT (Compatible with evaluation.py)
+Results saved as: {mode}_{dataset}_{split}_{model}_{start}-{end}.json
+Example: CoT_FOLIO_dev_final_model_0-100.json
+
+Accuracy printed to console:
+  Accuracy: 0.8523 (189/222)
+
+🐛 TROUBLESHOOTING
+├── CUDA OOM         → Reduce batch size, increase gradient accumulation
+├── Can't access     → huggingface-cli login, request model access
+├── Low accuracy     → Use --trained_model flag, check data format
+└── Slow evaluation  → Use Direct mode, reduce max_new_tokens
+
+📞 HELP
+├── Training:    See README_LORA.md
+├── Evaluation:  See README_LORA_EVALUATION.md
+├── Quick Start: See QUICKSTART_LORA.md
+└── Overview:    See README_LORA_COMPLETE.md
+
+═══════════════════════════════════════════════════════════════════════════════
