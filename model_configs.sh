@@ -143,7 +143,25 @@ BASE_MODELS_MEDIUM=(
 # - Llama-2-13B-chat
 # - Gemma-2-9B-IT
 
+# =============================================================================
+# GPU DEVICE SELECTION
+# =============================================================================
+
+# Set which GPU to use (default: GPU 0)
+# Override by setting environment variable: export GPU_DEVICE=1
+GPU_DEVICE="${GPU_DEVICE:-0}"
+
+# For multi-GPU training, specify multiple devices: GPU_DEVICE="0,1"
+# For CPU only (slow): GPU_DEVICE=""
+
+# Export CUDA_VISIBLE_DEVICES to control which GPU(s) are used
+export CUDA_VISIBLE_DEVICES="$GPU_DEVICE"
+
 echo "Model configurations loaded!"
+echo ""
+echo "GPU Configuration:"
+echo "  - Using GPU(s): ${GPU_DEVICE:-CPU only}"
+echo "  - Override with: export GPU_DEVICE=1 (before running scripts)"
 echo ""
 echo "Available model families:"
 echo "  - Gemma: 2B, 7B, 9B models"

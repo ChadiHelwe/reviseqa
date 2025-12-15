@@ -1,0 +1,127 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                        GPU DEVICE SELECTION - QUICK REFERENCE                 ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+📌 USE SPECIFIC GPU
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Training                                                                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ./train_all_models.sh folio 1              # Use GPU 1                     │
+│ GPU_DEVICE=2 ./train_all_models.sh folio   # Use GPU 2                     │
+│                                                                             │
+│ CUDA_VISIBLE_DEVICES=3 python lora_finetune.py \                           │
+│   --model_name Qwen/Qwen2.5-7B-Instruct \                                  │
+│   --dataset_name folio                                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Evaluation                                                                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ./run_lora_evaluation.sh 1                         # Use GPU 1             │
+│ ./evaluate_all_models.sh data/ 2                   # Use GPU 2             │
+│ GPU_DEVICE=3 ./run_lora_evaluation.sh              # Use GPU 3             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+📌 USE MULTIPLE GPUs
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ./train_all_models.sh folio "0,1"                  # Use GPUs 0,1          │
+│ ./run_lora_evaluation.sh "0,1,2,3"                 # Use all 4 GPUs        │
+│ GPU_DEVICE="2,3" ./evaluate_all_models.sh data/    # Use GPUs 2,3          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+📌 CHECK GPU STATUS
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ nvidia-smi                                    # Show all GPUs               │
+│ watch -n 1 nvidia-smi                         # Monitor in real-time        │
+│ nvidia-smi --list-gpus                        # List GPU names              │
+│ nvidia-smi --query-gpu=index,memory.free \    # Show free memory           │
+│   --format=csv                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+📌 METHODS TO SELECT GPU (In Order of Preference)
+
+Method 1: Script Argument (Recommended)
+  ./train_all_models.sh folio 1
+  ./run_lora_evaluation.sh 1
+
+Method 2: Environment Variable Before Command
+  GPU_DEVICE=1 ./train_all_models.sh folio
+  GPU_DEVICE=2 ./run_lora_evaluation.sh
+
+Method 3: Export Environment Variable
+  export GPU_DEVICE=1
+  ./train_all_models.sh folio
+
+Method 4: Direct CUDA_VISIBLE_DEVICES (Python Scripts)
+  CUDA_VISIBLE_DEVICES=1 python lora_finetune.py ...
+  CUDA_VISIBLE_DEVICES=2 python lora_evaluation_complete.py ...
+
+📌 COMMON SCENARIOS
+
+Single GPU System (GPU 0):
+  # No need to specify, defaults to GPU 0
+  ./train_all_models.sh folio
+  ./run_lora_evaluation.sh
+
+Multi-GPU System (Choose Free GPU):
+  # Check which GPU is free
+  nvidia-smi
+  # Use the free one
+  ./train_all_models.sh folio 1
+
+Train Multiple Models in Parallel:
+  # Terminal 1: Train on GPU 0
+  GPU_DEVICE=0 ./train_all_models.sh folio &
+  # Terminal 2: Train on GPU 1  
+  GPU_DEVICE=1 ./train_all_models.sh proofwriter &
+
+Maximize GPU Utilization:
+  # Use all GPUs for one model
+  ./train_all_models.sh folio "0,1,2,3"
+
+📌 TROUBLESHOOTING
+
+CUDA Out of Memory:
+  1. Use different GPU: GPU_DEVICE=1 ./train_all_models.sh folio
+  2. Check GPU status: nvidia-smi
+  3. Kill other processes: kill -9 <PID>
+  4. Reduce batch size: --batch_size 1 --gradient_accumulation_steps 16
+
+GPU Not Found:
+  1. Check CUDA: nvidia-smi
+  2. Check PyTorch: python -c "import torch; print(torch.cuda.is_available())"
+  3. Reinstall: pip install torch --index-url https://download.pytorch.org/whl/cu118
+
+Wrong GPU Being Used:
+  1. Check: echo $CUDA_VISIBLE_DEVICES
+  2. Override: CUDA_VISIBLE_DEVICES=1 python script.py
+  3. Clear: unset CUDA_VISIBLE_DEVICES
+
+📌 EXAMPLES
+
+Train Qwen on GPU 1:
+  ./train_all_models.sh folio 1
+
+Train Gemma on GPU 2:
+  GPU_DEVICE=2 python lora_finetune.py \
+    --model_name google/gemma-2-9b-it \
+    --dataset_name folio
+
+Evaluate on GPU 3:
+  ./run_lora_evaluation.sh 3
+
+Use GPUs 0 and 1:
+  ./train_all_models.sh folio "0,1"
+
+Auto-select free GPU:
+  FREE_GPU=$(nvidia-smi --query-gpu=memory.free --format=csv,noheader | \
+    cat -n | sort -k2 -rn | head -1 | awk '{print $1-1}')
+  GPU_DEVICE=$FREE_GPU ./train_all_models.sh folio
+
+📌 DEFAULTS
+
+Default GPU: 0 (first GPU)
+Override: Set GPU_DEVICE environment variable or pass as argument
+Multi-GPU: Use comma-separated list "0,1,2,3"
+
+═══════════════════════════════════════════════════════════════════════════════

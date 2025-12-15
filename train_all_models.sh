@@ -1,10 +1,20 @@
 #!/bin/bash
 # Train all recommended models (Gemma, Qwen, Llama up to 15B)
-# Usage: ./train_all_models.sh [folio|proofwriter]
+# Usage: ./train_all_models.sh [folio|proofwriter] [gpu_device]
+# Examples:
+#   ./train_all_models.sh folio          # Use GPU 0 (default)
+#   ./train_all_models.sh folio 1        # Use GPU 1
+#   ./train_all_models.sh folio "0,1"    # Use GPUs 0 and 1
+#   GPU_DEVICE=2 ./train_all_models.sh folio  # Use GPU 2
 
 set -e  # Exit on error
 
-# Source model configurations
+# Set GPU device if provided as second argument
+if [ -n "$2" ]; then
+    export GPU_DEVICE="$2"
+fi
+
+# Source model configurations (this will set CUDA_VISIBLE_DEVICES)
 source model_configs.sh
 
 # Default dataset

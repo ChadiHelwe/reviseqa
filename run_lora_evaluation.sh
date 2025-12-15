@@ -1,6 +1,20 @@
 #!/bin/bash
 # Run LoRA model evaluation matching src/evaluation.py methodology
-# Usage: ./run_lora_evaluation.sh
+# Usage: ./run_lora_evaluation.sh [gpu_device]
+# Examples:
+#   ./run_lora_evaluation.sh       # Use GPU 0 (default)
+#   ./run_lora_evaluation.sh 1     # Use GPU 1
+#   ./run_lora_evaluation.sh "0,1" # Use GPUs 0 and 1
+#   GPU_DEVICE=2 ./run_lora_evaluation.sh  # Use GPU 2
+
+# Set GPU device if provided
+if [ -n "$1" ]; then
+    export CUDA_VISIBLE_DEVICES="$1"
+    echo "Using GPU(s): $1"
+else
+    export CUDA_VISIBLE_DEVICES="${GPU_DEVICE:-0}"
+    echo "Using GPU(s): ${CUDA_VISIBLE_DEVICES}"
+fi
 
 # Configuration
 DATA_DIR="reviseqa_data/nl/verified-400/"

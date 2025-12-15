@@ -1,10 +1,20 @@
 #!/bin/bash
 # Evaluate all trained models on reviseqa_data
-# Usage: ./evaluate_all_models.sh [data_dir]
+# Usage: ./evaluate_all_models.sh [data_dir] [gpu_device]
+# Examples:
+#   ./evaluate_all_models.sh reviseqa_data/nl/verified-400/          # Use GPU 0
+#   ./evaluate_all_models.sh reviseqa_data/nl/verified-400/ 1        # Use GPU 1
+#   ./evaluate_all_models.sh reviseqa_data/nl/verified-400/ "0,1"    # Use GPUs 0,1
+#   GPU_DEVICE=2 ./evaluate_all_models.sh reviseqa_data/nl/verified-400/  # Use GPU 2
 
 set -e  # Exit on error
 
-# Source model configurations
+# Set GPU device if provided as second argument
+if [ -n "$2" ]; then
+    export GPU_DEVICE="$2"
+fi
+
+# Source model configurations (this will set CUDA_VISIBLE_DEVICES)
 source model_configs.sh
 
 # Configuration
