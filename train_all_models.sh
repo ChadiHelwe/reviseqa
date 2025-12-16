@@ -74,11 +74,11 @@ echo "PHASE 1: Training Small Models (<=9B)"
 echo "=============================================================================="
 
 # Qwen2.5 7B (Recommended - no HF access needed)
-train_model "$QWEN2_5_7B_INSTRUCT" "qwen2.5-7b"
+# train_model "$QWEN2_5_7B_INSTRUCT" "qwen2.5-7b"
 
 # Gemma 2 9B (Requires HF access)
 # Uncomment if you have access:
-# train_model "$GEMMA2_9B_IT" "gemma2-9b"
+train_model "$GEMMA2_9B_IT" "gemma2-9b"
 
 # Llama 3.1 8B (Requires HF access)
 # Uncomment if you have access:
@@ -98,7 +98,7 @@ echo "PHASE 2: Training Medium Models (10-15B)"
 echo "=============================================================================="
 
 # Qwen2.5 14B (Recommended - no HF access needed)
-train_model "$QWEN2_5_14B_INSTRUCT" "qwen2.5-14b"
+# train_model "$QWEN2_5_14B_INSTRUCT" "qwen2.5-14b"
 
 # Llama 2 13B (Requires HF access)
 # Uncomment if you have access:
@@ -114,7 +114,7 @@ train_model "$QWEN2_5_14B_INSTRUCT" "qwen2.5-14b"
 # train_model "$QWEN2_5_3B_INSTRUCT" "qwen2.5-3b"
 
 # Gemma 7B
-# train_model "$GEMMA_7B_IT" "gemma-7b"
+train_model "$GEMMA_7B_IT" "gemma-7b"
 
 # Llama 3.2 3B
 # train_model "$LLAMA3_2_3B_INSTRUCT" "llama3.2-3b"
