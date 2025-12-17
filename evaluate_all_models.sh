@@ -93,16 +93,16 @@ evaluate_model "$GEMMA2_9B_IT" "./lora_gemma2-9b_folio/final_model" "gemma2-9b-f
 evaluate_model "$GEMMA2_9B_IT" "./lora_gemma2-9b_proofwriter/final_model" "gemma2-9b-proofwriter"
 
 # Llama 3.1 8B on FOLIO
-evaluate_model "$LLAMA3_1_8B_INSTRUCT" "./lora_llama3.1-8b_folio/final_model" "llama3.1-8b-folio"
+# evaluate_model "$LLAMA3_1_8B_INSTRUCT" "./lora_llama3.1-8b_folio/final_model" "llama3.1-8b-folio"
 
 # Llama 3.1 8B on ProofWriter
-evaluate_model "$LLAMA3_1_8B_INSTRUCT" "./lora_llama3.1-8b_proofwriter/final_model" "llama3.1-8b-proofwriter"
+# evaluate_model "$LLAMA3_1_8B_INSTRUCT" "./lora_llama3.1-8b_proofwriter/final_model" "llama3.1-8b-proofwriter"
 
 # Llama 2 7B on FOLIO
-evaluate_model "$LLAMA2_7B_CHAT" "./lora_llama2-7b_folio/final_model" "llama2-7b-folio"
+# evaluate_model "$LLAMA2_7B_CHAT" "./lora_llama2-7b_folio/final_model" "llama2-7b-folio"
 
 # Llama 2 7B on ProofWriter
-evaluate_model "$LLAMA2_7B_CHAT" "./lora_llama2-7b_proofwriter/final_model" "llama2-7b-proofwriter"
+# evaluate_model "$LLAMA2_7B_CHAT" "./lora_llama2-7b_proofwriter/final_model" "llama2-7b-proofwriter"
 
 # =============================================================================
 # EVALUATE MEDIUM MODELS (10-15B)
@@ -120,10 +120,10 @@ evaluate_model "$QWEN2_5_14B_INSTRUCT" "./lora_qwen2.5-14b_folio/final_model" "q
 evaluate_model "$QWEN2_5_14B_INSTRUCT" "./lora_qwen2.5-14b_proofwriter/final_model" "qwen2.5-14b-proofwriter"
 
 # Llama 2 13B on FOLIO
-evaluate_model "$LLAMA2_13B_CHAT" "./lora_llama2-13b_folio/final_model" "llama2-13b-folio"
+# evaluate_model "$LLAMA2_13B_CHAT" "./lora_llama2-13b_folio/final_model" "llama2-13b-folio"
 
 # Llama 2 13B on ProofWriter
-evaluate_model "$LLAMA2_13B_CHAT" "./lora_llama2-13b_proofwriter/final_model" "llama2-13b-proofwriter"
+# evaluate_model "$LLAMA2_13B_CHAT" "./lora_llama2-13b_proofwriter/final_model" "llama2-13b-proofwriter"
 
 # =============================================================================
 # OPTIONAL: Additional Models
@@ -134,8 +134,8 @@ evaluate_model "$LLAMA2_13B_CHAT" "./lora_llama2-13b_proofwriter/final_model" "l
 # Qwen2.5 3B
 # evaluate_model "$QWEN2_5_3B_INSTRUCT" "./lora_qwen2.5-3b_folio/final_model" "qwen2.5-3b-folio"
 
-# Gemma 7B
-# evaluate_model "$GEMMA_7B_IT" "./lora_gemma-7b_folio/final_model" "gemma-7b-folio"
+# Gemma 7B on ProofWriter
+evaluate_model "$GEMMA_7B_IT" "./lora_gemma-7b_proofwriter/final_model" "gemma-7b-proofwriter"
 
 # Llama 3.2 3B
 # evaluate_model "$LLAMA3_2_3B_INSTRUCT" "./lora_llama3.2-3b_folio/final_model" "llama3.2-3b-folio"
