@@ -211,7 +211,11 @@ class LogicDataset:
             base_concl = data.get("conclusion", "")
             question_demo = f"Does the context entail the conclusion '{base_concl}'?"
             edits = data.get("edits", [])
-            demo_answer = edits[-1].get("answer") if edits else data.get("answer")
+            # v1.1 fix (SPEC_ADDENDUM_A §1.4a): the demonstration shows the
+            # ORIGINAL context, so it must state the original answer — the
+            # previous binding to edits[-1]["answer"] was wrong for 207/400
+            # eval examples.
+            demo_answer = data.get("answer")
 
             # original sample
             i0 = LogicData(
